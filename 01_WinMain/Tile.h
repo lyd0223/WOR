@@ -12,22 +12,22 @@ class Tile
 	float mY;
 	float mSizeX;
 	float mSizeY;
-	RECT mRect;
+	D2D1_RECT_F mRect;
 	int mFrameIndexX;
 	int mFrameIndexY;
 	Type mType;
 	
 public:
 	Tile(class Image* image, float x, float y, float sizeX, float sizeY, int frameIndexX, int frameIndexY);
-	void Render(HDC hdc);
+	void Render();
 
-	RECT GetRect() { return mRect; };
+	D2D1_RECT_F GetRect() { return mRect; };
 	Image* GetImage() { return mImage; };
 	int GetFrameIndexX() { return mFrameIndexX; };
 	int GetFrameIndexY() { return mFrameIndexY; };
 	Type GetType() { return mType; };
-
-	void SetRect(RECT rc) { mRect = rc; };
+	
+	void SetRect(D2D1_RECT_F rc) { mRect = rc; };
 	void SetImage(Image* image) { mImage = image; };
 	void SetFrameIndexX(int frameX) { mFrameIndexX = frameX; };
 	void SetFrameIndexY(int frameY) { mFrameIndexY = frameY; };

@@ -24,24 +24,28 @@ Gizmo::~Gizmo()
 	DeleteObject(mNullBrush);
 }
 
-void Gizmo::DrawRect(HDC hdc, RECT rc, Color color)
+void Gizmo::DrawRect(D2D1_RECT_F rc, D2D1::ColorF::Enum color)
 {
-	HPEN pen = mPenList[color];
+	D2D1_RECT_F rect = rc;
 
-	HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, mNullBrush);
-	HPEN oldPen = (HPEN)SelectObject(hdc, pen);
-	RenderRect(hdc, rc);
-	SelectObject(hdc, oldPen);
-	SelectObject(hdc, oldBrush);
+	ID2D1SolidColorBrush* brush;
+	D2DRenderer::GetInstance()->GetRenderTarget()->CreateSolidColorBrush(D2D1::ColorF(color, 1.0f), &brush);
+
+	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
+
+	D2DRenderer::GetInstance()->GetRenderTarget()->DrawRectangle(D2D1::RectF((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom),
+		brush, 1.0f);
+
+	brush->Release();
 }
 
-void Gizmo::DrawEllipse(HDC hdc, float x, float y, float radius, Color color)
-{
-	HPEN pen = mPenList[color];
-
-	HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, mNullBrush);
-	HPEN oldPen = (HPEN)SelectObject(hdc, pen);
-	RenderEllipse(hdc, x, y, radius);
-	SelectObject(hdc, oldPen);
-	SelectObject(hdc, oldBrush);
-}
+//void Gizmo::DrawEllipse(HDC hdc, float x, float y, float radius, Color color)
+//{
+//	HPEN pen = mPenList[color];
+//
+//	HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, mNullBrush);
+//	HPEN oldPen = (HPEN)SelectObject(hdc, pen);
+//	RenderEllipse(hdc, x, y, radius);
+//	SelectObject(hdc, oldPen);
+//	SelectObject(hdc, oldBrush);
+//}

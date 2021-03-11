@@ -189,7 +189,6 @@ void D2DRenderer::RenderTextField(const int x, const int y, const wstring& text,
 	layout->Release();
 	brush->Release();
 }
-
 ///*
 ///**********************************************************************************************
 //## DrawLine ##

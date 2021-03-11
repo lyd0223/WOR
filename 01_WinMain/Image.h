@@ -37,12 +37,16 @@ private:
 	Image() = delete;
 	Image(ID2D1Bitmap* const bitmap, const TagLoadedImageInfo& loadinfo);
 	Image(ID2D1Bitmap* const bitmap, const TagLoadedImageInfo& loadinfo, const int maxFrameX, const int maxFrameY);
+
 	virtual ~Image();
 	Image operator = (const Image& image) {}
 public:
-	void Render(const Vector2& position);
-	void FrameRender(const Vector2& position, const int frameX, const int frameY);
-
+	void Render(const float x, const float y);
+	void ScaleRender(const float x, const float y, const float sizeX, const float sizeY);
+	void FrameRender(const float x, const float y, const int frameX, const int frameY);
+	void ScaleFrameRender(const float x, const float y, const int frameX, const int frameY, const int sizeX, const int sizeY);
+	wstring GetKey() { return mLoadInfo.key; };
+	void SetKey(wstring key) { mLoadInfo.key = key; };
 	void ResetRenderOption();
 
 	void SetSize(const Vector2& vec) { this->mSize = vec; }

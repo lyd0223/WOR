@@ -18,7 +18,7 @@ public:
 	~SceneManager();
 
 	void Update();
-	void Render(HDC hdc);
+	void Render();
 
 	void AddScene(const wstring& sceneName,Scene* scene);
 	//로딩없이 로드하는 함수

@@ -29,6 +29,6 @@ void LoadingScene::Update()
 	mLoadIndex++;
 }
 
-void LoadingScene::Render(HDC hdc)
+void LoadingScene::Render()
 {
 }

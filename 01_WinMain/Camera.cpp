@@ -50,21 +50,21 @@ void Camera::Render(HDC hdc)
 {
 	//쓸일이 없다 . . . . 
 }
-//
-//void Camera::Render(HDC hdc, Image * image, int x, int y)
-//{
-//	image->Render(hdc, x - mRect.left, y - mRect.top);
-//}
-//
+
+void Camera::Render(Image * image, float x, float y)
+{
+	image->Render(x - mRect.left, y - mRect.top);
+}
+
 //void Camera::Render(HDC hdc, Image * image, int x, int y, int tempX, int tempY, int tempWidth, int tempHeight)
 //{
 //	image->Render(hdc, x - mRect.left, y - mRect.top, tempX, tempY, tempWidth, tempHeight);
 //}
 //
-//void Camera::FrameRender(HDC hdc, Image * image, int x, int y, int frameX, int frameY)
-//{
-//	image->FrameRender(hdc, x - mRect.left, y - mRect.top, frameX, frameY);
-//}
+void Camera::FrameRender(Image * image, float x, float y, int frameX, int frameY)
+{
+	image->FrameRender(x - mRect.left, y - mRect.top, frameX, frameY);
+}
 //
 //void Camera::AlphaRender(HDC hdc, Image * image, int x, int y, float alpha)
 //{
@@ -96,36 +96,36 @@ void Camera::Render(HDC hdc)
 //	image->AlphaScaleFrameRender(hdc, x - mRect.left, y - mRect.top, frameX, frameY, width, height, alpha);
 //}
 
-void Camera::RenderRect(HDC hdc, RECT rc)
+void Camera::RenderRect(D2D1_RECT_F rc)
 {
 	rc.left -= mRect.left;
 	rc.right -= mRect.left;
 	rc.top -= mRect.top;
 	rc.bottom -= mRect.top;
-	::RenderRect(hdc, rc);
+	::RenderRect(rc);
 }
 
-void Camera::RenderGizmoRect(HDC hdc, RECT rc)
+void Camera::RenderGizmoRect( D2D1_RECT_F rc)
 {
 	rc.left -= mRect.left;
 	rc.right -= mRect.left;
 	rc.top -= mRect.top;
 	rc.bottom -= mRect.top;
-	Gizmo::GetInstance()->DrawRect(hdc, rc,Gizmo::Color::Red);
+	Gizmo::GetInstance()->DrawRect(rc,D2D1::ColorF::Red);
 }
 
-void Camera::RenderEllipse(HDC hdc, float x, float y, float radius)
-{
-	RenderEllipse(hdc, x - mRect.left, y - mRect.top, radius);
-}
+//void Camera::RenderEllipse(HDC hdc, float x, float y, float radius)
+//{
+//	RenderEllipse(hdc, x - mRect.left, y - mRect.top, radius);
+//}
 
 bool Camera::IsInCameraArea(float x, float y, float width, float height)
 {
-	RECT rc = RectMakeCenter(x, y, width, height);
+	D2D1_RECT_F rc = RectMakeCenter(x, y, width, height);
 	return IsInCameraArea(rc);
 }
 
-bool Camera::IsInCameraArea(RECT rc)
+bool Camera::IsInCameraArea(D2D1_RECT_F rc)
 {
 	if (rc.right < mRect.left)return false;
 	if (rc.left > mRect.right)return false;

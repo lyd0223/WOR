@@ -24,10 +24,10 @@ void SceneManager::Update()
 		mCurrentScene->Update();
 }
 
-void SceneManager::Render(HDC hdc)
+void SceneManager::Render()
 {
 	if (mCurrentScene != nullptr)
-		mCurrentScene->Render(hdc);
+		mCurrentScene->Render();
 }
 
 void SceneManager::AddScene(const wstring& sceneName,Scene * scene)

@@ -8,7 +8,7 @@ protected:
 	float mY;
 	float mSizeX;
 	float mSizeY;
-	RECT mRect;
+	D2D1_RECT_F mRect;
 
 	bool mIsActive;		//활성화 상태
 	bool mIsDestroy;	//삭제할지 말지
@@ -32,7 +32,7 @@ public:
 	inline void SetSizeX(float x) { mSizeX = x; }
 	inline float GetSizeY()const { return mSizeY; }
 	inline void SetSizeY(float y) { mSizeY = y; }
-	inline RECT GetRect()const { return mRect; }
+	inline D2D1_RECT_F GetRect()const { return mRect; }
 
 	inline bool GetIsActive()const { return mIsActive; }
 	inline void SetIsActive(bool b) { mIsActive = b; }

@@ -10,6 +10,7 @@ class Image;
 class MainGame
 {
 	Image* mImage;
+	Image* mImage2;
 	float mAngle;
 public:
 	void Init();

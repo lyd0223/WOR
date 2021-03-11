@@ -17,7 +17,7 @@ private:
 	Gizmo();
 	~Gizmo();
 public:
-	void DrawRect(HDC hdc, RECT rc, Color color);
+	void DrawRect(D2D1_RECT_F rc, D2D1::ColorF::Enum color);
 	void DrawEllipse(HDC hdc, float x, float y, float radius, Color color);
 };
 

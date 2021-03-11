@@ -7,7 +7,7 @@ class TilePallete
 	int FrameY;
 	float PositionX;
 	float PositionY;
-	RECT Rect;
+	D2D1_RECT_F Rect;
 	float Width;
 	float Height;
 

@@ -11,9 +11,9 @@
 void Scene_MapTool::Init()
 {
 	
-	ImageManager::GetInstance()->LoadFromFile(L"TileSet", Resources(L"Tile/Tile.bmp"), 512, 512, 16, 16, false);
-	ImageManager::GetInstance()->LoadFromFile(L"Set", Resources(L"Tile/Set.bmp"), 300, 720, false);
-	mBackGroundImage = IMAGEMANAGER->FindImage(L"Set");
+	ImageManager::GetInstance()->LoadFromFile(L"TileSet", Resources(L"Tile/Tile.bmp"), 16, 16);
+	ImageManager::GetInstance()->LoadFromFile(L"Set", Resources(L"Tile/Set.bmp"));
+	mBackGroundImage = ImageManager::GetInstance()->FindImage(L"Set");
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"TileSet");
 
 	mPalleteDownButton = RectMakeCenter(1130,700,30,30);
@@ -170,7 +170,7 @@ void Scene_MapTool::Update()
 			{
 				Camera* camera = CameraManager::GetInstance()->GetMainCamera();
 
-				RECT rctemp = mTileList[y][x]->GetRect();
+				D2D1_RECT_F rctemp = mTileList[y][x]->GetRect();
 				//마우스가 목표타일안에있을때.
 				if ( _mousePosition.x < WINSIZEX-300 &&					 
 					PtInRect(&rctemp, { _mousePosition.x - WINSIZEX/2+150 + (LONG)camera->GetX() , _mousePosition.y -WINSIZEY/2+ (LONG)camera->GetY()}))						   	
@@ -210,22 +210,22 @@ void Scene_MapTool::Update()
 	}
 }
 
-void Scene_MapTool::Render(HDC hdc)
+void Scene_MapTool::Render()
 {
-	RECT cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
+	D2D1_RECT_F cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	for (int y = 0; y < TileCountY; y++)
 	{
 		for (int x = 0; x < TileCountX; x++)
 		{
-			RECT tileRect = mTileList[y][x]->GetRect();
+			D2D1_RECT_F tileRect = mTileList[y][x]->GetRect();
 			if (cameraRect.right > tileRect.left && cameraRect.left < tileRect.right && cameraRect.bottom > tileRect.top && cameraRect.top < tileRect.bottom)
 			{
-				mTileList[y][x]->Render(hdc);
+				mTileList[y][x]->Render();
 			}
 		}
 	}
 	
-	mBackGroundImage->Render(hdc, WINSIZEX - 300, 0);
+	mBackGroundImage->ScaleRender(WINSIZEX - 150, WINSIZEY/2,300,WINSIZEY);
 	for (int y = 0; y < PalleteSizeY; y++)
 	{
 		for (int x = 0; x < PalleteSizeX; x++)
@@ -233,43 +233,45 @@ void Scene_MapTool::Render(HDC hdc)
 			
 			mPallete[y][x]->Image->ScaleFrameRender
 			(
-				hdc,
-				mPallete[y][x]->Rect.left, 
-				mPallete[y][x]->Rect.top, 
+				(mPallete[y][x]->Rect.right + mPallete[y][x]->Rect.left)/2 ,
+				(mPallete[y][x]->Rect.top + mPallete[y][x]->Rect.bottom)/2,
 				mPallete[y][x]->FrameX,
 				mPallete[y][x]->FrameY,
 				mPallete[y][x]->Width, 
 				mPallete[y][x]->Height
 
 			);
-			Gizmo::GetInstance()->DrawRect(hdc, mPallete[y][x]->Rect, Gizmo::Color::Red);
+			Gizmo::GetInstance()->DrawRect(mPallete[y][x]->Rect, D2D1::ColorF::Red);
 		}
 	}
-	RenderRect(hdc, mPalleteDownButton);
-	RenderRect(hdc, mPalleteUpButton);
-	RenderRect(hdc, mPalleteLeftButton);
-	RenderRect(hdc, mPalleteRihgtButton);
-	RenderRect(hdc, mSaveButton);
+	
+	RenderRect(mPalleteDownButton);
+	RenderRect(mPalleteUpButton);
+	RenderRect(mPalleteLeftButton);
+	RenderRect(mPalleteRihgtButton);
+	RenderRect(mSaveButton);
 	wstring saveStr = L"Save";
-	TextOut(hdc, mSaveButton.left, mSaveButton.top, saveStr.c_str(), saveStr.length());
-	RenderRect(hdc, mLoadButton);
+	D2DRenderer::GetInstance()->RenderText(mSaveButton.left, mSaveButton.top, saveStr, 10.f, D2DRenderer::DefaultBrush::Blue);
+	RenderRect(mLoadButton);
 	wstring saveStr2 = L"Load";
-	TextOut(hdc, mLoadButton.left, mLoadButton.top, saveStr2.c_str(), saveStr2.length());
-	RenderRect(hdc, mGameStartButton);
+	D2DRenderer::GetInstance()->RenderText(mLoadButton.left, mLoadButton.top, saveStr2, 10.f ,D2DRenderer::DefaultBrush::Blue);
+	RenderRect(mGameStartButton);
 	wstring saveStr3 = L"Start";
-	TextOut(hdc, mGameStartButton.left, mGameStartButton.top, saveStr3.c_str(), saveStr3.length());
-	RenderRect(hdc, mRedoButton);
+	D2DRenderer::GetInstance()->RenderText(mGameStartButton.left, mGameStartButton.top, saveStr3, 1.f, D2DRenderer::DefaultBrush::Blue);
+	RenderRect(mRedoButton);
 	wstring saveStr4 = L"Redo";
-	TextOut(hdc, mRedoButton.left, mRedoButton.top, saveStr4.c_str(), saveStr4.length());
-	RenderRect(hdc, mUndoButton);
+	D2DRenderer::GetInstance()->RenderText(mRedoButton.left, mRedoButton.top, saveStr4, 10.f, D2DRenderer::DefaultBrush::Blue);
+	RenderRect(mUndoButton);
 	wstring saveStr5 = L"Undo";
-	TextOut(hdc, mUndoButton.left, mUndoButton.top, saveStr5.c_str(), saveStr5.length());
+	D2DRenderer::GetInstance()->RenderText(mUndoButton.left, mUndoButton.top, saveStr5, 10.f, D2DRenderer::DefaultBrush::Blue);
 
-	TextOut(hdc, 50, 50, to_wstring(_mousePosition.x).c_str(), to_wstring(_mousePosition.x).length());
-	TextOut(hdc, 50, 70, to_wstring(_mousePosition.y).c_str(), to_wstring(_mousePosition.x).length());
 
-	if(_mousePosition.x < WINSIZEX-300)
-		mCurrentPallete->Image->AlphaFrameRender(hdc, _mousePosition.x -TileSize/2, _mousePosition.y -TileSize/2, mCurrentPallete->FrameX,mCurrentPallete->FrameY,0.1f);
+	/*if (_mousePosition.x < WINSIZEX - 300)
+	{
+		mCurrentPallete->Image->SetAlpha(0.1f);
+		mCurrentPallete->Image->FrameRender(_mousePosition.x -TileSize/2, _mousePosition.y -TileSize/2, mCurrentPallete->FrameX,mCurrentPallete->FrameY);
+
+	}*/
 }
 
 void Scene_MapTool::Save()
@@ -286,7 +288,7 @@ void Scene_MapTool::Save()
 			for (int x = 0; x < TileCountX; x++)
 			{
 				string str;
-				wstring key = mTileList[y][x]->GetImage()->GetKeyName();
+				wstring key = mTileList[y][x]->GetImage()->GetKey();
 				str.assign(key.begin(),key.end());
 
 				saveStream << str.c_str();

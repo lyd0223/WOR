@@ -18,15 +18,14 @@ Tile::Tile(Image* image, float x, float y, float sizeX, float sizeY, int frameIn
 
 }
 
-void Tile::Render(HDC hdc)
+void Tile::Render()
 {
-	/*CameraManager::GetInstance()->GetMainCamera()->RenderRect(hdc, mRect);
 	if (mImage != nullptr)
 	{
-		CameraManager::GetInstance()->GetMainCamera()->FrameRender(hdc, mImage, mX, mY, mFrameIndexX, mFrameIndexY);
+		CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX+mSizeX/2, mY+mSizeY/2, mFrameIndexX, mFrameIndexY);
 	}
 
-	CameraManager::GetInstance()->GetMainCamera()->RenderGizmoRect(hdc, mRect);*/
+	CameraManager::GetInstance()->GetMainCamera()->RenderGizmoRect(mRect);
 	
 }
 
