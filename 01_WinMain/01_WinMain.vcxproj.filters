@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="MainGame">
+      <UniqueIdentifier>{c41c9b98-a31b-4d9e-82a2-bfabc2c89dda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork">
+      <UniqueIdentifier>{125a9a4b-d6cf-4037-9e54-0fb4519c206d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Random">
+      <UniqueIdentifier>{219329fd-0bdf-4ce2-b382-6095da14c0ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Input">
+      <UniqueIdentifier>{75cd5072-d518-4bc6-841c-5675d8848ae3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Image">
+      <UniqueIdentifier>{4ad6b531-7d7b-4111-be06-f2bad4da87c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Figure">
+      <UniqueIdentifier>{c81da49d-f8e8-47d3-831a-e79e4d881ce0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Math">
+      <UniqueIdentifier>{fd572bdf-356e-468e-a803-eca354b8868c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\ImageManager">
+      <UniqueIdentifier>{595cc926-f5ed-4cbd-ae5b-5afef7a3c034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GameObject">
+      <UniqueIdentifier>{a19f892f-52cd-4850-9a33-9c2165a1e4d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Camera">
+      <UniqueIdentifier>{d52a9290-4164-4636-89a3-4c2bffdd3c23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\SoundManager">
+      <UniqueIdentifier>{e2a38dc5-4980-41b4-b73a-d784af0dc78d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Time">
+      <UniqueIdentifier>{c320e730-2234-46c8-bdc1-828700d121ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\ObjectManager">
+      <UniqueIdentifier>{6215046f-ec51-44bf-97c0-c412b278199e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Scene">
+      <UniqueIdentifier>{1c4af559-3b64-424a-b909-e41be6ac5c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene">
+      <UniqueIdentifier>{aa9c857f-4c08-41fa-988a-b6dd3143474c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Animation">
+      <UniqueIdentifier>{4e941a03-cb9b-4e38-ab9a-e5525b61b9ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Object">
+      <UniqueIdentifier>{dd6cd637-c9b4-4dd0-bb6e-5f1aef095a25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GameEvent">
+      <UniqueIdentifier>{d1911068-58c6-4da3-9516-415c40175f80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Tile">
+      <UniqueIdentifier>{2d45677b-91ef-4a61-a1a2-d5401ea479aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Command">
+      <UniqueIdentifier>{a053923a-1adb-4858-9b4c-0444db8eb3b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Gizmo">
+      <UniqueIdentifier>{8da33e9b-ba62-442e-9306-3566db3c97a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\ImageD2D">
+      <UniqueIdentifier>{d98cca70-9fa6-4eb8-8f7c-a8ce118acd07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\D2D">
+      <UniqueIdentifier>{3ed860f3-ee0a-4b06-89d1-95be56a0fc30}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="01_WinMain.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.h">
+      <Filter>FrameWork\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>FrameWork\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>FrameWork\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Figure.h">
+      <Filter>FrameWork\Figure</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>FrameWork\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DefineHeader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>FrameWork\ImageManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>FrameWork\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>FrameWork\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>FrameWork\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>FrameWork\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundPlayer.h">
+      <Filter>FrameWork\SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>FrameWork\ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingScene.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>FrameWork\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEvent.h">
+      <Filter>FrameWork\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEventManager.h">
+      <Filter>FrameWork\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>MainGame\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="ICommand.h">
+      <Filter>FrameWork\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="TilePallete.h">
+      <Filter>MainGame\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Gizmo.h">
+      <Filter>FrameWork\Gizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="D2DRenderer.h">
+      <Filter>FrameWork\D2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>FrameWork\Math</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="01_WinMain.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame + MainProc.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>FrameWork\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>FrameWork\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>FrameWork\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>FrameWork\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>FrameWork\ImageManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>FrameWork\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>FrameWork\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>FrameWork\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>FrameWork\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundPlayer.cpp">
+      <Filter>FrameWork\SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>FrameWork\ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingScene.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>FrameWork\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEvent.cpp">
+      <Filter>FrameWork\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEventManager.cpp">
+      <Filter>FrameWork\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>MainGame\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="ICommand.cpp">
+      <Filter>FrameWork\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="TilePallete.cpp">
+      <Filter>MainGame\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Gizmo.cpp">
+      <Filter>FrameWork\Gizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="D2DRenderer.cpp">
+      <Filter>FrameWork\D2D</Filter>
+    </ClCompile>
+    <ClCompile Include="D2DRenderer+Draw.cpp">
+      <Filter>FrameWork\D2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>FrameWork\Math</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="01_WinMain.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="01_WinMain.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
