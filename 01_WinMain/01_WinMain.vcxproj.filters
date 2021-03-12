@@ -183,6 +183,9 @@
     <ClInclude Include="Scene_MapTool.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>MainGame\Object\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -271,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="Scene_MapTool.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>MainGame\Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
