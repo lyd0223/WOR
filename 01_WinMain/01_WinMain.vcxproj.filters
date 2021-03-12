@@ -82,6 +82,9 @@
     <Filter Include="FrameWork\D2D">
       <UniqueIdentifier>{3ed860f3-ee0a-4b06-89d1-95be56a0fc30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\Player">
+      <UniqueIdentifier>{5fcb1c73-0516-4c7b-936c-d66ce5fe1f65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
