@@ -82,6 +82,12 @@
     <Filter Include="FrameWork\D2D">
       <UniqueIdentifier>{3ed860f3-ee0a-4b06-89d1-95be56a0fc30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Enemy">
+      <UniqueIdentifier>{e99a451f-1fdd-4f32-b295-957f0a67b4c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Enemy\FireBoss">
+      <UniqueIdentifier>{fb5567fd-c94b-4867-bf8f-3702dd25829f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -180,6 +186,12 @@
     <ClInclude Include="Scene_MapTool.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="FireBoss.h">
+      <Filter>MainGame\Enemy\FireBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -268,6 +280,12 @@
     </ClCompile>
     <ClCompile Include="Scene_MapTool.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBoss.cpp">
+      <Filter>MainGame\Enemy\FireBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>MainGame\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
