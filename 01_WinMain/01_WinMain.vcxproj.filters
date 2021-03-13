@@ -85,6 +85,15 @@
     <Filter Include="MainGame\Object\Player">
       <UniqueIdentifier>{5fcb1c73-0516-4c7b-936c-d66ce5fe1f65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Scene\MapTool">
+      <UniqueIdentifier>{e233cd5d-cb37-4c9e-915b-f9a8775a7e54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\Tutorial">
+      <UniqueIdentifier>{34ad50ec-9f21-459a-bf4d-1563f1e7801f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Button">
+      <UniqueIdentifier>{51fe028d-46ca-4ef3-840a-840cabb5c5de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -181,10 +190,13 @@
       <Filter>FrameWork\Math</Filter>
     </ClInclude>
     <ClInclude Include="Scene_MapTool.h">
-      <Filter>MainGame\Scene</Filter>
+      <Filter>MainGame\Scene\MapTool</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>MainGame\Object\Player</Filter>
+    <ClInclude Include="Scene_Tutorial.h">
+      <Filter>MainGame\Scene\Tutorial</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>MainGame\Button</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -273,10 +285,13 @@
       <Filter>FrameWork\Math</Filter>
     </ClCompile>
     <ClCompile Include="Scene_MapTool.cpp">
-      <Filter>MainGame\Scene</Filter>
+      <Filter>MainGame\Scene\MapTool</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>MainGame\Object\Player</Filter>
+    <ClCompile Include="Scene_Tutorial.cpp">
+      <Filter>MainGame\Scene\Tutorial</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>MainGame\Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

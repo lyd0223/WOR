@@ -14,15 +14,34 @@ Tile::Tile(Image* image, float x, float y, float sizeX, float sizeY, int frameIn
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 	mFrameIndexX = frameIndexX;
 	mFrameIndexY = frameIndexY;
-	
-
+}
+void Tile::Update()
+{
+	if (mImage->GetKey() == L"")
+	{
+		mType = Type::Cliff;
+	}
+	else if (mImage->GetKey() == L"")
+	{
+		mType = Type::Cliff;
+	}
+	else if (mImage->GetKey() == L"")
+	{
+		mType = Type::Cliff;
+	}
+	else if (mImage->GetKey() == L"")
+	{
+		mType = Type::Cliff;
+	}
 }
 
 void Tile::Render()
 {
 	if (mImage != nullptr)
 	{
-		CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX+mSizeX/2, mY+mSizeY/2, mFrameIndexX, mFrameIndexY);
+		mImage->SetScale(2.f);
+		CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX+(mSizeX/2.f), mY+(mSizeY/2.f), mFrameIndexX, mFrameIndexY);
+		int t = 0;
 	}
 
 	CameraManager::GetInstance()->GetMainCamera()->RenderGizmoRect(mRect);

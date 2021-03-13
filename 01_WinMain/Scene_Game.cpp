@@ -4,13 +4,14 @@
 #include <fstream>
 #include "Tile.h"
 #include "Player.h"
+#include "Image.h"
 void Scene_Game::Init()
 {
 	mPlayer = new Player("Player", 200, 500);
 
 	mPlayer->Init();
 
-	Image* tileImage = IMAGEMANAGER->FindImage(L"TileSet");
+	Image* tileImage = ImageManager::GetInstance()->FindImage(L"TileSet");
 	for (int y = 0; y < TileCountY; y++)
 	{
 		for (int x = 0; x < TileCountX; x++)

@@ -33,8 +33,7 @@ void Gizmo::DrawRect(D2D1_RECT_F rc, D2D1::ColorF::Enum color)
 
 	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
 
-	D2DRenderer::GetInstance()->GetRenderTarget()->DrawRectangle(D2D1::RectF((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom),
-		brush, 1.0f);
+	D2DRenderer::GetInstance()->GetRenderTarget()->DrawRectangle(D2D1::RectF(rect.left, rect.top, rect.right, rect.bottom),	brush, 1.0f);
 
 	brush->Release();
 }

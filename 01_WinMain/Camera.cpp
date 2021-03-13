@@ -8,10 +8,10 @@ void Camera::Init()
 	mTarget = nullptr;
 	mX = 0;
 	mY = 0;
-	mSizeX = WINSIZEX-300;
+	mSizeX = WINSIZEX;
 	mSizeY = WINSIZEY;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-	mMoveSpeed = 5.f;
+	mMoveSpeed = 10.f;
 	
 }
 
@@ -43,10 +43,19 @@ void Camera::Update()
 		if (Input::GetInstance()->GetKey('S'))mY += mMoveSpeed;
 		mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 		break;
+	case Camera::Mode::MapTool:
+		mSizeX = WINSIZEX - 300;
+		mSizeY = WINSIZEY;
+		if (Input::GetInstance()->GetKey('A'))mX -= mMoveSpeed;
+		if (Input::GetInstance()->GetKey('D'))mX += mMoveSpeed;
+		if (Input::GetInstance()->GetKey('W'))mY -= mMoveSpeed;
+		if (Input::GetInstance()->GetKey('S'))mY += mMoveSpeed;
+		mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+		break;
 	}
 }
 
-void Camera::Render(HDC hdc)
+void Camera::Render()
 {
 	//쓸일이 없다 . . . . 
 }
@@ -95,6 +104,11 @@ void Camera::FrameRender(Image * image, float x, float y, int frameX, int frameY
 //{
 //	image->AlphaScaleFrameRender(hdc, x - mRect.left, y - mRect.top, frameX, frameY, width, height, alpha);
 //}
+
+void Camera::RenderText(float x1, float y1, wstring text, int size)
+{
+	D2DRenderer::GetInstance()->RenderText(x1-mRect.left, y1-mRect.top, text, size,D2DRenderer::DefaultBrush::Red);
+}
 
 void Camera::RenderRect(D2D1_RECT_F rc)
 {

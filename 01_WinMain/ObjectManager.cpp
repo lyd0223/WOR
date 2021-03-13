@@ -68,7 +68,7 @@ void ObjectManager::Render(HDC hdc)
 		{
 			if (iter->second[i]->GetIsActive() == true)
 			{
-				iter->second[i]->Render(hdc);
+				iter->second[i]->Render();
 			}
 		}
 	}
