@@ -23,11 +23,12 @@ void Scene_Tutorial::Init()
 				TileSize, TileSize,
 				0, 0
 			);
+			//ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mTileList[y][x]);
 		}
 	}
 	Load();
 	
-	mPlayer = new Player("Player",600,1200);
+	mPlayer = new Player("Player",600,1600);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 
 	ObjectManager::GetInstance()->Init();
@@ -49,6 +50,39 @@ void Scene_Tutorial::Update()
 {
 	CameraManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();
+
+	//º®À»´À³¥¶§
+	for (int y = mPlayer->GetY() / TileSize - 1; y < mPlayer->GetY() / TileSize + 1; y++)
+	{
+		for (int x = mPlayer->GetX() / TileSize - 1; x < mPlayer->GetX() / TileSize + 1; x++)
+		{
+			D2D1_RECT_F tileRect = mTileList[y][x]->GetRect();
+			D2D1_RECT_F playerRect = mPlayer->GetRect();
+			D2D1_RECT_F tempRect;
+			if (mTileList[y][x]->GetType() == Type::Wall)
+			{
+				if (IntersectRect(tempRect, &tileRect, &playerRect))
+				{
+					if (y == (int)mPlayer->GetY() / TileSize && x == (int)mPlayer->GetX() / TileSize - 1)
+						mPlayer->SetX(mPlayer->GetX() + mPlayer->GetSpeed());
+					else if (y == (int)mPlayer->GetY() / TileSize && x == (int)mPlayer->GetX() / TileSize + 1)
+						mPlayer->SetX(mPlayer->GetX() - mPlayer->GetSpeed());
+					else if (y == (int)mPlayer->GetY() / TileSize - 1 && x == (int)mPlayer->GetX() / TileSize)
+						mPlayer->SetY(mPlayer->GetY() + mPlayer->GetSpeed());
+					else if (y == (int)mPlayer->GetY() / TileSize + 1 && x == (int)mPlayer->GetX() / TileSize)
+						mPlayer->SetY(mPlayer->GetY() - mPlayer->GetSpeed());
+				}
+			}
+		}
+	}
+	if (mTileList[(int)mPlayer->GetY() / TileSize][(int)mPlayer->GetX() / TileSize]->GetType() == Type::Cliff)
+	{
+		
+	}
+	else if (mTileList[(int)mPlayer->GetY() / TileSize][(int)mPlayer->GetX() / TileSize]->GetType() == Type::Floor)
+	{
+		
+	}
 }
 
 void Scene_Tutorial::Render()
@@ -59,12 +93,11 @@ void Scene_Tutorial::Render()
 	{
 		for (int x = 0; x < TileCountX; x++)
 		{
-				D2D1_RECT_F tileRect = mTileList[y][x]->GetRect();
-				if (cameraRect.right > tileRect.left && cameraRect.left < tileRect.right && cameraRect.bottom > tileRect.top && cameraRect.top < tileRect.bottom)
-				{
-					mTileList[y][x]->Render();
-				}
-			
+			D2D1_RECT_F tileRect = mTileList[y][x]->GetRect();
+			if (cameraRect.right > tileRect.left && cameraRect.left < tileRect.right && cameraRect.bottom > tileRect.top && cameraRect.top < tileRect.bottom)
+			{
+				mTileList[y][x]->Render();
+			}
 		}
 	}
 
