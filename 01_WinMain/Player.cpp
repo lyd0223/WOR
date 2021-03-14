@@ -225,9 +225,9 @@ void Player::Update()
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 
-void Player::Render(HDC hdc)
+void Player::Render()
 {
-	RenderRect(hdc, mRect);
+	RenderRect( mRect);
 	//for (int y = 0; y < TileCountY; ++y)
 	//{
 	//	for (int x = 0; x < TileCountX; ++x)
@@ -236,7 +236,7 @@ void Player::Render(HDC hdc)
 	//	}
 	//}
 
-	mImage->FrameRenderFromBottom(hdc, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
+	mImage->FrameRender( mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 }
 
 void Player::AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)

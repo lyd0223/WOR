@@ -73,7 +73,7 @@ public:
 	void Init()override;
 	void Release()override;
 	void Update()override;
-	void Render(HDC hdc)override;
+	void Render()override;
 	void AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime);
 	void AnimationReverseSet(Animation** animation, bool Rivers, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime);
 	void AnimationChange(Animation* changeanimation);
