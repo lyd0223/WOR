@@ -97,6 +97,9 @@
     <Filter Include="MainGame\Object\Effect">
       <UniqueIdentifier>{76fc8eaf-0247-4d18-9e28-89a37f62a032}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\Button">
+      <UniqueIdentifier>{7954765f-ed8c-4ac1-a411-63a66f838cef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -195,9 +198,6 @@
     <ClInclude Include="Scene_MapTool.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>MainGame\Object\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>MainGame\Object\Enemy</Filter>
     </ClInclude>
@@ -215,6 +215,9 @@
     </ClInclude>
     <ClInclude Include="MeteorShockWave.h">
       <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>MainGame\Object\Button</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -305,9 +308,6 @@
     <ClCompile Include="Scene_MapTool.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>MainGame\Object\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>MainGame\Object\Enemy</Filter>
     </ClCompile>
@@ -325,6 +325,9 @@
     </ClCompile>
     <ClCompile Include="MeteorShockWave.cpp">
       <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>MainGame\Object\Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

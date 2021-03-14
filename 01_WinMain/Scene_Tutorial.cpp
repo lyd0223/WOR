@@ -21,6 +21,7 @@ void Scene_Tutorial::Init()
 				TileSize, TileSize,
 				0, 0
 			);
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mTileList[y][x]);
 
 		}
 	}
