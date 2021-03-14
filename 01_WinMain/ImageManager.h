@@ -18,4 +18,3 @@ public:
 private:
 	ID2D1Bitmap* CreateD2DBitmapFromFile(const wstring& file);
 };
-

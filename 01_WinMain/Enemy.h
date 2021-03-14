@@ -13,6 +13,8 @@ protected:
 	float mSpeed;
 	
 public:
+	Enemy(const string& name);
+
 	void Init() override;
 	void Release() override;
 	void Update() override;
@@ -24,4 +26,5 @@ public:
 	void SetAngle(float angle) { mAngle = angle; }
 	float GetSpeed() { return mSpeed; }
 	void SetSpeed(float speed) { mSpeed = speed; }
+	
 };

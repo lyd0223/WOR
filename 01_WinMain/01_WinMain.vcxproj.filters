@@ -85,6 +85,18 @@
     <Filter Include="MainGame\Object\Player">
       <UniqueIdentifier>{5fcb1c73-0516-4c7b-936c-d66ce5fe1f65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\Enemy">
+      <UniqueIdentifier>{67db523c-7cf5-41cc-ab2b-f71d136059a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Object\Enemy\FireBoss">
+      <UniqueIdentifier>{cf57a609-9fee-4caa-8dd4-82a8fe61b3ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Object\Skill">
+      <UniqueIdentifier>{f157eafd-9c6b-4d80-a358-4d73e7c8a010}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Object\Effect">
+      <UniqueIdentifier>{76fc8eaf-0247-4d18-9e28-89a37f62a032}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -186,6 +198,24 @@
     <ClInclude Include="Player.h">
       <Filter>MainGame\Object\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBoss.h">
+      <Filter>MainGame\Object\Enemy\FireBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBall.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Meteor.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="MagicCircle.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="MeteorShockWave.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -277,6 +307,24 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>MainGame\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBoss.cpp">
+      <Filter>MainGame\Object\Enemy\FireBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBall.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Meteor.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="MagicCircle.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="MeteorShockWave.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

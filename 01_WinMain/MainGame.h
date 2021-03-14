@@ -6,11 +6,20 @@
 */
 
 class Image;
-
+class FireBoss;
+class FireBall;
+class Player;
 class MainGame
 {
-	Image* mImage;
-	Image* mImage2;
+
+	FireBoss* mFireBoss;
+	FireBall* mFireBall;
+	
+	D2D1_RECT_F mRect;
+	float mX;
+	float mY;
+	float mSizeX;
+	float mSizeY;
 	float mAngle;
 public:
 	void Init();

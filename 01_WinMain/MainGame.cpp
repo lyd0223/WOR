@@ -5,6 +5,9 @@
 
 #include "Scene_MapTool.h"
 #include "Scene_Game.h"
+#include "FireBoss.h"
+#include "Player.h"
+#include "FireBall.h"
 /*
 Scene : 스테이지 단위를 씬이라고 함
 */
@@ -20,11 +23,24 @@ void MainGame::Init()
 	mBackBuffer->CreateEmpty(WINSIZEX, WINSIZEY);*/
 	SceneManager::GetInstance()->AddScene(L"MapTool", new Scene_MapTool);
 	SceneManager::GetInstance()->LoadScene(L"MapTool");
-	ImageManager::GetInstance()->LoadFromFile(L"ex", Resources(L"FinalBossArena-sharedassets14.assets-5.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"ex2", Resources(L"FinalBossArena-sharedassets14.assets-5.png"), 1, 1);
-	mImage = ImageManager::GetInstance()->FindImage(L"ex2");
 
-	mAngle = 0.f;
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, new FireBoss);
+	float x = 1000;
+	float y = 70;
+	
+	mFireBoss = new FireBoss("FireBoss",  x, y);
+	mFireBoss->Init();
+
+	mX = WINSIZEX / 2;
+	mY = WINSIZEY / 2;
+	mSizeX = 50;
+	mSizeY = 50;
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	
+	mAngle = Math::GetAngle(mFireBoss->GetX(), mFireBoss->GetY(), mX, mY);
+	
+	mFireBall = new FireBall("FireBall", mFireBoss->GetX(), mFireBoss->GetY(), mAngle);
+	mFireBall->Init();
 }
 
 /*
@@ -44,8 +60,15 @@ Update : 매 프레임 실행되는 함수, 여기서 연산 처리 한다.
 */
 void MainGame::Update()
 {
-	mAngle += 360 * Time::GetInstance()->DeltaTime();
+	//mAngle += 360 * Time::GetInstance()->DeltaTime();
 	//SceneManager::GetInstance()->Update();
+	if (Input::GetInstance()->GetKeyDown(VK_SPACE)) {
+		mFireBall = new FireBall("FireBall", mFireBoss->GetX(), mFireBoss->GetY(), mAngle);
+		mFireBall->Init();
+	}
+	mAngle = Math::GetAngle(mFireBoss->GetX(), mFireBoss->GetY(), mX, mY);
+	mFireBoss->Update();
+	mFireBall->Update();
 }
 
 /*
@@ -68,30 +91,33 @@ void MainGame::Render(HDC hdc)
 	////후면버퍼 내용을 윈도우 창에 고속 복사
 	//mBackBuffer->Render(hdc, 0, 0);
 
-	D2DRenderer::GetInstance()->BeginRender(D2D1::ColorF::Black);
+	D2DRenderer::GetInstance()->BeginRender(D2D1::ColorF::Aqua);
 	//이 안에서 그려라
 	{
+		mFireBoss->Render(hdc);
+		mFireBall->Render(hdc);
+		RenderRect(mRect);
 
-		mImage->SetSize(Vector2(100, 100));
-		mImage->SetScale(3.0f);
-		mImage->SetAngle(mAngle);
-		mImage->SetAlpha(0.3f);
-		mImage->FrameRender(WINSIZEX / 2 - 100, WINSIZEY / 2 - 100, 0, 0);
-		D2D1_RECT_F rc = { 100.f,100.f,200.f,200.f };
-		D2D1_RECT_F rc2 = { 150.f,150.f,250.f,250.f };
-		
-		RenderRect(rc, D2D1::ColorF::Red);
-		RenderRect(rc2, D2D1::ColorF::Red);
-		D2D1_RECT_F rctemp;
-		if (IntersectRect(rctemp, &rc, &rc2))
-		{
-			RenderRect(rctemp, D2D1::ColorF::White);
-		}
-		
-			
-		D2DRenderer::GetInstance()
-			->RenderText(WINSIZEX / 2-150, WINSIZEY / 2-100, L"쓰는건 알아서 씁시다 ",
-				30.f, D2DRenderer::DefaultBrush::Blue);
+		//mImage->SetSize(Vector2(100, 100));
+		//mImage->SetScale(3.0f);
+		//mImage->SetAngle(mAngle);
+		//mImage->SetAlpha(0.3f);
+		//mImage->FrameRender(WINSIZEX / 2 - 100, WINSIZEY / 2 - 100, 0, 0);
+		//D2D1_RECT_F rc = { 100.f,100.f,200.f,200.f };
+		//D2D1_RECT_F rc2 = { 150.f,150.f,250.f,250.f };
+		//
+		//RenderRect(rc, D2D1::ColorF::Red);
+		//RenderRect(rc2, D2D1::ColorF::Red);
+		//D2D1_RECT_F rctemp;
+		//if (IntersectRect(rctemp, &rc, &rc2))
+		//{
+		//	RenderRect(rctemp, D2D1::ColorF::White);
+		//}
+		//
+		//	
+		//D2DRenderer::GetInstance()
+		//	->RenderText(WINSIZEX / 2-150, WINSIZEY / 2-100, L"쓰는건 알아서 씁시다 ",
+		//		30.f, D2DRenderer::DefaultBrush::Blue);
 
 		//SceneManager::GetInstance()->Render();
 	}

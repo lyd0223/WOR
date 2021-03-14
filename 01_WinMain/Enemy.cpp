@@ -3,6 +3,11 @@
 #include "Image.h"
 #include "Player.h"
 
+Enemy::Enemy(const string & name)
+	:GameObject(name)
+{
+}
+
 void Enemy::Init()
 {
 }
