@@ -2,7 +2,7 @@
 #include "MainGame.h"
 
 #include "Image.h"
-
+#include"Scene_Tutorial.h"
 #include "Scene_MapTool.h"
 #include "Scene_Game.h"
 #include "FireBoss.h"
@@ -22,7 +22,8 @@ void MainGame::Init()
 	/*mBackBuffer = new Image();
 	mBackBuffer->CreateEmpty(WINSIZEX, WINSIZEY);*/
 	SceneManager::GetInstance()->AddScene(L"MapTool", new Scene_MapTool);
-	SceneManager::GetInstance()->LoadScene(L"MapTool");
+	SceneManager::GetInstance()->AddScene(L"Tutorial", new Scene_Tutorial);
+	SceneManager::GetInstance()->LoadScene(L"Tutorial");
 
 	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, new FireBoss);
 	float x = 1000;
@@ -61,14 +62,14 @@ Update : 매 프레임 실행되는 함수, 여기서 연산 처리 한다.
 void MainGame::Update()
 {
 	//mAngle += 360 * Time::GetInstance()->DeltaTime();
-	//SceneManager::GetInstance()->Update();
-	if (Input::GetInstance()->GetKeyDown(VK_SPACE)) {
-		mFireBall = new FireBall("FireBall", mFireBoss->GetX(), mFireBoss->GetY(), mAngle);
-		mFireBall->Init();
-	}
-	mAngle = Math::GetAngle(mFireBoss->GetX(), mFireBoss->GetY(), mX, mY);
-	mFireBoss->Update();
-	mFireBall->Update();
+	SceneManager::GetInstance()->Update();
+	//if (Input::GetInstance()->GetKeyDown(VK_SPACE)) {
+	//	mFireBall = new FireBall("FireBall", mFireBoss->GetX(), mFireBoss->GetY(), mAngle);
+	//	mFireBall->Init();
+	//}
+	//mAngle = Math::GetAngle(mFireBoss->GetX(), mFireBoss->GetY(), mX, mY);
+	//mFireBoss->Update();
+	//mFireBall->Update();
 }
 
 /*
@@ -94,9 +95,9 @@ void MainGame::Render(HDC hdc)
 	D2DRenderer::GetInstance()->BeginRender(D2D1::ColorF::Aqua);
 	//이 안에서 그려라
 	{
-		mFireBoss->Render();
-		mFireBall->Render();
-		RenderRect(mRect);
+		//mFireBoss->Render();
+		//mFireBall->Render();
+		//RenderRect(mRect);
 
 		//mImage->SetSize(Vector2(100, 100));
 		//mImage->SetScale(3.0f);
@@ -119,7 +120,7 @@ void MainGame::Render(HDC hdc)
 		//	->RenderText(WINSIZEX / 2-150, WINSIZEY / 2-100, L"쓰는건 알아서 씁시다 ",
 		//		30.f, D2DRenderer::DefaultBrush::Blue);
 
-		//SceneManager::GetInstance()->Render();
+		SceneManager::GetInstance()->Render();
 	}
 	D2DRenderer::GetInstance()->EndRender();
 }

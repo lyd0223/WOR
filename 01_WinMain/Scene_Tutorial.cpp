@@ -73,15 +73,33 @@ void Scene_Tutorial::Update()
 						mPlayer->SetY(mPlayer->GetY() - mPlayer->GetSpeed());
 				}
 			}
+			if (mTileList[y][x]->GetType() == Type::Cliff)
+			{
+				if (IntersectRect(tempRect, &tileRect, &playerRect))
+				{
+					float playerX = mPlayer->GetX();
+					float playerY = mPlayer->GetY();
+					if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == playerRect.bottom)
+						playerY -= TileSize;
+					if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == playerRect.top)
+						playerY += TileSize;
+					if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == playerRect.left)
+						playerX += TileSize;
+					if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == playerRect.right)
+						playerX -= TileSize;
+				}
+
+			}
 		}
 	}
-	if (mTileList[(int)mPlayer->GetY() / TileSize][(int)mPlayer->GetX() / TileSize]->GetType() == Type::Cliff)
+	
+	if (mTileList[(int)mPlayer->GetY() / TileSize][(int)mPlayer->GetX() / TileSize]->GetType() == Type::Floor)
 	{
-		
+		mPlayer->GetSpeed();
 	}
-	else if (mTileList[(int)mPlayer->GetY() / TileSize][(int)mPlayer->GetX() / TileSize]->GetType() == Type::Floor)
+	else if (mTileList[(int)mPlayer->GetY() / TileSize][(int)mPlayer->GetX() / TileSize]->GetType() == Type::Thorn)
 	{
-		
+		mPlayer->GetSpeed() - 2.f;
 	}
 }
 
@@ -98,9 +116,15 @@ void Scene_Tutorial::Render()
 			{
 				mTileList[y][x]->Render();
 			}
+			if (Input::GetInstance()->GetKey('J'))
+			{
+				if (mTileList[y][x]->GetType() == Type::Cliff)
+				{
+					RenderRect(mTileList[y][x]->GetRect());
+				}
+			}
 		}
 	}
-
 	ObjectManager::GetInstance()->Render();
 }
 
