@@ -9,8 +9,7 @@ protected:
 	float mSizeX;
 	float mSizeY;
 	D2D1_RECT_F mRect;
-	float mSpeed;
-	float mAngle;
+	
 
 	bool mIsActive;		//활성화 상태
 	bool mIsDestroy;	//삭제할지 말지

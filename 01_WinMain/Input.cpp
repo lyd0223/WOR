@@ -19,20 +19,20 @@ bool Input::GetKeyDown(int key)
 	//해당 키가 눌려있다면
 	if (GetAsyncKeyState(key) & 0x8000)
 	{
-		if (key == VK_UP) {
-			if (mKeyDownList[VK_DOWN])
+		if (key == 'W') {
+			if (mKeyDownList['S'])
 				return false;
 		}
-		else if (key == VK_DOWN) {
-			if (mKeyDownList[VK_UP])
+		else if (key == 'S') {
+			if (mKeyDownList['W'])
 				return false;
 		}
-		else if (key == VK_LEFT) {
-			if (mKeyDownList[VK_RIGHT])
+		else if (key == 'A') {
+			if (mKeyDownList['D'])
 				return false;
 		}
-		else if (key == VK_RIGHT) {
-			if (mKeyDownList[VK_LEFT])
+		else if (key == 'D') {
+			if (mKeyDownList['A'])
 				return false;
 		}
 		//해당키가 눌리지 않았다면
@@ -58,20 +58,20 @@ bool Input::GetKeyUp(int key)
 		return false;
 	if (GetAsyncKeyState(key) & 0x8000)
 	{
-		if (key == VK_UP) {
-			if (mKeyUpList[VK_DOWN])
+		if (key == 'W') {
+			if (mKeyUpList['S'])
 				return false;
 		}
-		else if (key == VK_DOWN) {
-			if (mKeyUpList[VK_UP])
+		else if (key == 'S') {
+			if (mKeyUpList['W'])
 				return false;
 		}
-		else if (key == VK_LEFT) {
-			if (mKeyUpList[VK_RIGHT])
+		else if (key == 'A') {
+			if (mKeyUpList['D'])
 				return false;
 		}
-		else if (key == VK_RIGHT) {
-			if (mKeyUpList[VK_LEFT])
+		else if (key == 'D') {
+			if (mKeyUpList['A'])
 				return false;
 		}
 		mKeyUpList[key] = true;
@@ -93,20 +93,20 @@ bool Input::GetKey(int key)
 	if (!mIsKeyCheck)
 		return false;
 	if (GetAsyncKeyState(key) & 0x8000) {
-		if (key == VK_UP) {
-			if (mKeyList[VK_DOWN])
+		if (key == 'W') {
+			if (mKeyList['S'])
 				return false;
 		}
-		else if (key == VK_DOWN) {
-			if (mKeyList[VK_UP])
+		else if (key == 'S') {
+			if (mKeyList['W'])
 				return false;
 		}
-		else if (key == VK_LEFT) {
-			if (mKeyList[VK_RIGHT])
+		else if (key == 'A') {
+			if (mKeyList['D'])
 				return false;
 		}
-		else if (key == VK_RIGHT) {
-			if (mKeyList[VK_LEFT])
+		else if (key == 'D') {
+			if (mKeyList['A'])
 				return false;
 		}
 		mKeyList[key] = true;

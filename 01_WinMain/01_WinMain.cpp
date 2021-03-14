@@ -71,12 +71,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, false);
 
 	SetWindowPos(_hWnd, NULL, WINSTARTX, WINSTARTY,
-		windowRect.right - windowRect.left, 
+		windowRect.right - windowRect.left,
 		windowRect.bottom - windowRect.top, SWP_NOZORDER | SWP_NOMOVE);
 	// }}
 
 	//4. 윈도우 창 화면에 보여지게 요청
-	ShowWindow(_hWnd, cmdShow);	
+	ShowWindow(_hWnd, cmdShow);
 
 	//윈도우 메시지 루프
 	//GetMessage : 메시지가 올때까지 기다리며 메세지가 생기면 메세지 큐에서 메세지를 가져온다. 
@@ -121,7 +121,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 			TranslateMessage(&message);
 			DispatchMessage(&message);
-		}	
+		}
 		else
 		{
 			Time::GetInstance()->Update();

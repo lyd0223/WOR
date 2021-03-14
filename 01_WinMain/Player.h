@@ -37,6 +37,8 @@ class Player : public GameObject
 {
 	PlayerState mPlayerState;
 	Image* mImage;
+	float mSpeed;
+	float mAngle;
 	//class Tile* TileList[TileCountY][TileCountY];
 
 	class Animation* mRightIdleAnimation;
@@ -75,7 +77,8 @@ public:
 	void AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime);
 	void AnimationReverseSet(Animation** animation, bool Rivers, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime);
 	void AnimationChange(Animation* changeanimation);
-
+	float GetSpeed() { return mSpeed; }
+	float GetAngle() { return mAngle; }
 	//void SetTileList(Tile* tileList[TileCountY][TileCountX])
 	//{
 	//	for (int y = 0; y < TileCountY; ++y)
