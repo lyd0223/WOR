@@ -96,14 +96,10 @@ void FireBoss::Update()
 
 }
 
-void FireBoss::Render(HDC hdc)
+void FireBoss::Render()
 {
 	mImage->SetScale(1.5f);
 	mImage->FrameRender(mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
-	wstring AnimationXstr = to_wstring(mCurrentAnimation->GetNowFrameX());
-	wstring AnimationYstr = to_wstring(mCurrentAnimation->GetNowFrameY());
-	TextOut(hdc, 5, 5, AnimationXstr.c_str(), AnimationXstr.length());
-	TextOut(hdc, 5, 20, AnimationYstr.c_str(), AnimationYstr.length());
 }
 
 void FireBoss::AnimationSet(Animation ** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)

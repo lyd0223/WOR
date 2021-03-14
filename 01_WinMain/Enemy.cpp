@@ -20,6 +20,6 @@ void Enemy::Update()
 {
 }
 
-void Enemy::Render(HDC hdc)
+void Enemy::Render()
 {
 }

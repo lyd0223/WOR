@@ -40,7 +40,7 @@ void Meteor::Update()
 
 }
 
-void Meteor::Render(HDC hdc)
+void Meteor::Render()
 {
 	mImage->FrameRender(mX, mY, mMeteorAnimation->GetNowFrameX(), mMeteorAnimation->GetNowFrameY());
 }

@@ -94,8 +94,8 @@ void MainGame::Render(HDC hdc)
 	D2DRenderer::GetInstance()->BeginRender(D2D1::ColorF::Aqua);
 	//이 안에서 그려라
 	{
-		mFireBoss->Render(hdc);
-		mFireBall->Render(hdc);
+		mFireBoss->Render();
+		mFireBall->Render();
 		RenderRect(mRect);
 
 		//mImage->SetSize(Vector2(100, 100));

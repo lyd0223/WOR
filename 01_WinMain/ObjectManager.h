@@ -27,7 +27,7 @@ public:
 	void Init();
 	void Release();
 	void Update();
-	void Render(HDC hdc);
+	void Render();
 
 	void AddObject(ObjectLayer layer, class GameObject* object);
 	class GameObject* FindObject(const string& name);

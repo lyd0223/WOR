@@ -59,7 +59,7 @@ void ObjectManager::Update()
 	}
 }
 
-void ObjectManager::Render(HDC hdc)
+void ObjectManager::Render()
 {
 	ObjectIter iter = mObjectList.begin();
 	for (; iter != mObjectList.end(); ++iter)

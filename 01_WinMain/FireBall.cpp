@@ -60,7 +60,7 @@ void FireBall::Update()
 	}
 }
 
-void FireBall::Render(HDC hdc)
+void FireBall::Render()
 {
 	mImage->SetAngle(mAngle * -(180 / PI));
 	mImage->SetScale(1.f);

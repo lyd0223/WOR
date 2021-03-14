@@ -43,10 +43,10 @@ void MagicCircle::Update()
 		mCastingSkillList.push_back(mMeteor);
 	}
 
-	for(GameObject* )
+	//for(GameObject* )
 }
 
-void MagicCircle::Render(HDC hdc)
+void MagicCircle::Render()
 {
 	mImage->FrameRender(mX, mY, mCircleMakeAnimation->GetNowFrameX(), mCircleMakeAnimation->GetNowFrameY());
 }
