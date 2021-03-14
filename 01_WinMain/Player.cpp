@@ -17,7 +17,7 @@ Player::Player(const string& name, float x, float y)
 void Player::Init()
 {
 
-	IMAGEMANAGER->LoadFromFile(L"Player", Resources(L"Player/WizardPlayer.bmp"), 1000, 2500, 10, 25, true);
+	ImageManager::GetInstance()->LoadFromFile(L"Player", Resources(L"Player/WizardPlayer.png"), 10, 25);
 	mImage = ImageManager::GetInstance()->FindImage(L"Player");
 	mPlayerState = PlayerState::DownIdle;
 	mSpeed = 5.f;
