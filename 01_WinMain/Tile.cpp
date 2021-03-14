@@ -41,10 +41,8 @@ void Tile::Render()
 	{
 		mImage->SetScale(2.f);
 		CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX+(mSizeX/2.f), mY+(mSizeY/2.f), mFrameIndexX, mFrameIndexY);
-		int t = 0;
+		
 	}
-
-	CameraManager::GetInstance()->GetMainCamera()->RenderGizmoRect(mRect);
 	
 }
 

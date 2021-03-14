@@ -18,46 +18,7 @@ void Button::Init()
 
 void Button::Update()
 {
-	/*if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
-	{
-		if (PtInRect(&mRect, _mousePosition))
-		{
-			if(mName=="Load")
-				Load();
-		}
-		else if (PtInRect(&mSaveButton, _mousePosition))
-		{
-			Save();
-		}
-		else if (PtInRect(&mGameStartButton, _mousePosition))
-		{
-			SceneManager::GetInstance()->LoadScene(L"Tutorial");
-			return;
-		}
-		else if (PtInRect(&mRedoButton, _mousePosition))
-			Redo();
-		else if (PtInRect(&mUndoButton, _mousePosition))
-			Undo();
-
-		else if (PtInRect(&mPalleteRihgtButton, _mousePosition))
-		{
-
-			mPalletePageX++;
-		}
-		else if (PtInRect(&mPalleteLeftButton, _mousePosition))
-		{
-
-			mPalletePageX--;
-		}
-		if (PtInRect(&mPalleteUpButton, _mousePosition))
-		{
-			mPalletePageY--;
-		}
-		if (PtInRect(&mPalleteDownButton, _mousePosition))
-		{
-			mPalletePageY++;
-		}
-	}*/
+	
 }
 
 void Button::Release()

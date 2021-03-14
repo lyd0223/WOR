@@ -2,6 +2,7 @@
 #include "FireBoss.h"
 #include "Image.h"
 #include "Animation.h"
+#include "Player.h"
 
 FireBoss::FireBoss(const string& name, float x, float y)
 	:Enemy(name)
@@ -18,6 +19,10 @@ void FireBoss::Init()
 	mSizeX = 100;
 	mSizeY = 100;
 	mImage->SetSize(Vector2(mSizeX, mSizeY));
+	mEllipse.point.x = mX + mSizeX / 2;
+	mEllipse.point.y = mY + mSizeY / 2;
+	mEllipse.radiusX = 100.f;
+	mEllipse.radiusY = 100.f;
 
 	AnimationSet(&mLeftIdleAnimation, false, true, 0, 1, 0, 1, 0.2f);
 	AnimationSet(&mRightIdleAnimation, false, true, 0, 0, 0, 0, 0.2f);
@@ -117,4 +122,39 @@ void FireBoss::AnimationChange(Animation * changeanimation)
 	mCurrentAnimation->Stop();
 	mCurrentAnimation = changeanimation;
 	mCurrentAnimation->Play();
+}
+
+void FireBoss::StempPattern()
+{
+	if (mX < mPlayer->GetX()) AnimationChange(mRightStempAnimation);
+	else AnimationChange(mLeftStempAnimation);
+
+	if (mCurrentAnimation->GetNowFrameX() == 11) {
+		
+	}
+}
+
+void FireBoss::ThreeRushPattern()
+{
+
+}
+
+void FireBoss::FireBallThrowPattern()
+{
+
+}
+
+void FireBoss::MeteorPattern()
+{
+
+}
+
+void FireBoss::DragonArcWavePattern()
+{
+
+}
+
+void FireBoss::KickPattern()
+{
+	
 }

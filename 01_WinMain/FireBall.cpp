@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "FireBoss.h"
 #include "Animation.h"
+#include "FlameEffect.h"
 
 FireBall::FireBall(const string & name, float x, float y, float angle)
 	:GameObject(name)
@@ -19,17 +20,11 @@ FireBall::FireBall(const string & name, float x, float y, float angle)
 	mSizeY = mImage->GetHeight();
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 	mSpeed = 10.f;
-	// 여기서 세팅해줘도 안돌아감
 	
 }
 
 void FireBall::Init()
 {
-	//뭐가문제?
-	
-	// 이미지가 처음 세팅 될때 안돌아감
-	// 그니까 저거 파이어볼 돌리면되는거죠?
-	// ㅇㅋㅇㅋ
 
 	AnimationSet(&mFireBallReadyAnimation, false, false, 0, 0, 3, 0, 0.1f);
 	AnimationSet(&mFireBallFireAnimation, false, true, 4, 0, 8, 0, 0.1f);
@@ -51,6 +46,8 @@ void FireBall::Update()
 	if (mState == FireBallState::Ready && mCurrentAnimation->GetNowFrameX() == 3) {
 		mState = FireBallState::Fire;
 		AnimationChange(mFireBallFireAnimation);
+		mFlameEffect = new FlameEffect("FlameEffect", mX, mY, mAngle);
+		mFlameEffect->Init();
 	}
 
 	if (mState == FireBallState::Fire) {
@@ -58,13 +55,22 @@ void FireBall::Update()
 		mY += -sinf(mAngle) * mSpeed;
 		mRect = RectMake(mX, mY, mSizeX, mSizeY);
 	}
+
+	if (mFlameEffect != nullptr) {
+		mFlameEffect->Update();
+		if (mFlameEffect->GetIsDestroy()) {
+			mFlameEffect->Release();
+			SafeDelete(mFlameEffect)
+		}
+	}
 }
 
 void FireBall::Render()
 {
 	mImage->SetAngle(mAngle * -(180 / PI));
-	mImage->SetScale(1.f);
+	mImage->SetScale(2.f);
 	mImage->FrameRender(mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
+	if (mFlameEffect != nullptr) mFlameEffect->Render();
 }
 
 void FireBall::AnimationSet(Animation ** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)

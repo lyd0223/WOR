@@ -16,17 +16,16 @@ void Scene_MapTool::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"TutorialTile", Resources(L"Tile/TutorialMap.png"), 74, 43);
 	ImageManager::GetInstance()->LoadFromFile(L"TileSet", Resources(L"Tile/Tile.bmp"), 16, 16);
 	ImageManager::GetInstance()->LoadFromFile(L"Set", Resources(L"Tile/Set.bmp"));
+	//Struct
+	ImageManager::GetInstance()->LoadFromFile(L"Tree1", Resources(L"Tile/Structure/Tree1.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"Tree2", Resources(L"Tile/Structure/Tree2.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"Flag", Resources(L"Tile/Structure/Flag.png"));
+
 	mBackGroundImage = ImageManager::GetInstance()->FindImage(L"Set");
 	Image* tileImage2 = ImageManager::GetInstance()->FindImage(L"TutorialTile");
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"TileSet");
 
-	mPalleteDownButton = new Button("PalleteDown", 1130, 700, 30, 30);
-	mPalleteUpButton = new Button("PalleteUpButton", 1130, 115, 30, 30);
-	mPalleteLeftButton = new Button("PalleteLeftButton", 990, 400, 30, 30);
-	mPalleteRihgtButton = new Button("PalleteRihgtButton", 1270, 400, 30, 30);
-
-	mPalletePageX = 0; 
-	mPalletePageY = 0;
+	
 
 	//타일 만들기
 	for (int y = 0; y < TileCountY; y++)
@@ -42,6 +41,16 @@ void Scene_MapTool::Init()
 			);
 		}
 	}
+	mPalleteMainButton = new Button("Main", 1010, 200, 50, 50);
+	mPalleteLeftButton = new Button("Left", 1200, 200, 50, 50);
+	mPalleteRihgtButton = new Button("Rihgt", 1250, 200, 50, 50);
+
+	mPalleteFloorButton = new Button("Floors", 1130, 300, 100, 50);
+	mPalleteWallButton = new Button("Walls", 1130, 350, 100, 50);
+	mPalleteCliffButton = new Button("Cliffs", 1130, 400, 100, 50);
+	mPalleteThornButton = new Button("Thorns", 1130, 450, 100, 50);
+	mPalleteStructureButton = new Button("Structures", 1130, 500, 100, 50);
+	mPalleteMapButton = new Button("Map", 1130, 550, 100, 50);
 
 	//빠레트만들기
 	int palleteStartX = WINSIZEX - 275;
@@ -62,6 +71,35 @@ void Scene_MapTool::Init()
 			
 		}
 	}
+	//Structure
+	mPallete_Structure1 = new TilePallete();
+	mPallete_Structure1->Image = ImageManager::GetInstance()->FindImage(L"Tree1");
+	mPallete_Structure1->PositionX = WINSIZEX - 300;
+	mPallete_Structure1->PositionY = 230;
+	mPallete_Structure1->Width = TileSize * 3 / 2;
+	mPallete_Structure1->Height = TileSize * 4 / 2;
+	mPallete_Structure1->Rect = RectMake(mPallete_Structure1->PositionX, mPallete_Structure1->PositionY, mPallete_Structure1->Width, mPallete_Structure1->Height);
+	mPallete_Structure2 = new TilePallete();
+	mPallete_Structure2->Image = ImageManager::GetInstance()->FindImage(L"Tree2");
+	mPallete_Structure2->PositionX = WINSIZEX - 200;
+	mPallete_Structure2->PositionY = 230;
+	mPallete_Structure2->Width = TileSize * 3 / 2;
+	mPallete_Structure2->Height = TileSize * 4 / 2;
+	mPallete_Structure2->Rect = RectMake(mPallete_Structure2->PositionX, mPallete_Structure2->PositionY, mPallete_Structure2->Width, mPallete_Structure2->Height);
+	mPallete_Structure3 = new TilePallete();
+	mPallete_Structure3->Image = ImageManager::GetInstance()->FindImage(L"Flag");
+	mPallete_Structure3->PositionX = WINSIZEX - 100;
+	mPallete_Structure3->PositionY = 230;
+	mPallete_Structure3->Width = TileSize * 3 / 2;
+	mPallete_Structure3->Height = TileSize * 4 / 2;
+	mPallete_Structure3->Rect = RectMake(mPallete_Structure3->PositionX, mPallete_Structure3->PositionY, mPallete_Structure3->Width, mPallete_Structure3->Height);
+	/*mPallete_Structure4 = new TilePallete();
+	mPallete_Structure4->Image = ImageManager::GetInstance()->FindImage(L"Tree1");
+	mPallete_Structure4->PositionX = WINSIZEX - 300;
+	mPallete_Structure4->PositionY = 300;
+	mPallete_Structure4->Width = TileSize * 3 / 2;
+	mPallete_Structure4->Height = TileSize * 4 / 2;
+	mPallete_Structure4->Rect = RectMake(mPallete_Structure4->PositionX, mPallete_Structure4->PositionY, mPallete_Structure4->Width, mPallete_Structure4->Height);*/
 	//튜토리얼 파레트
 	mPallete2 = new TilePallete();
 	mPallete2->Image = tileImage2;
@@ -70,13 +108,22 @@ void Scene_MapTool::Init()
 	mPallete2->Width = TileSize * 4;
 	mPallete2->Height = TileSize * 2;
 	mPallete2->Rect = RectMake(mPallete2->PositionX, mPallete2->PositionY, mPallete2->Width, mPallete2->Height);
+	//
 	
+
+	//버튼
+	
+
+	mPalletePageX = 0;
+	mPalletePageY = 0;
+
 	mSaveButton = new Button("SaveButton", WINSIZEX - 150, 25, 100, 50);
 	mLoadButton = new Button("LoadButton", WINSIZEX - 150, 75, 100, 50); 
 	mRedoButton = new Button("RedoButton", WINSIZEX - 50, 25, 100, 50); 
 	mUndoButton = new Button("UndoButton", WINSIZEX - 50, 75, 100, 50); 
 	mGameStartButton = new Button("GameStartButton", WINSIZEX - 250,50, 100, 100); 
 	mCurrentPallete = mPallete[0][0];
+	//
 
 	Camera* camera = new Camera();
 	camera->ChangeMode(Camera::Mode::MapTool);
@@ -104,13 +151,87 @@ void Scene_MapTool::Release()
 
 void Scene_MapTool::Update()
 {
-	if (Input::GetInstance()->GetKeyDown('0')) mClickType = ClickType::FloorTypeSetClick;
-	if (Input::GetInstance()->GetKeyDown('1')) mClickType = ClickType::WallTypeSetClick;
-	if (Input::GetInstance()->GetKeyDown('2')) mClickType = ClickType::CliffTypeSetClick;
-	if (Input::GetInstance()->GetKeyDown('3')) mClickType = ClickType::ThornTypeSetClick;
-	if (Input::GetInstance()->GetKeyDown('4')) mClickType = ClickType::TileSetClick;
-
 	CameraManager::GetInstance()->GetMainCamera()->Update();
+
+	
+	//빠레트페이지변경
+	D2D1_RECT_F rctemp;
+	if (mPalletePage == PalletePage::Main)
+	{
+		if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
+		{
+			rctemp = mPalleteFloorButton->GetRect();
+			if (PtInRect(&rctemp, _mousePosition)) mPalletePage = PalletePage::Floors;
+		
+			rctemp = mPalleteWallButton->GetRect();
+			if (PtInRect(&rctemp, _mousePosition)) mPalletePage = PalletePage::Walls;
+		
+			rctemp = mPalleteCliffButton->GetRect();
+			if (PtInRect(&rctemp, _mousePosition)) mPalletePage = PalletePage::Cliffs;
+		
+			rctemp = mPalleteThornButton->GetRect();
+			if (PtInRect(&rctemp, _mousePosition)) mPalletePage = PalletePage::Thorns;
+		
+			rctemp = mPalleteMapButton->GetRect();
+			if (PtInRect(&rctemp, _mousePosition)) mPalletePage = PalletePage::Maps;
+		
+			rctemp = mPalleteStructureButton->GetRect();
+			if (PtInRect(&rctemp, _mousePosition)) mPalletePage = PalletePage::Structures;
+		
+		}
+	}
+	else
+	{
+		//tile type 변경
+		if (Input::GetInstance()->GetKeyDown('0')) mClickType = ClickType::FloorTypeSetClick;
+		if (Input::GetInstance()->GetKeyDown('1')) mClickType = ClickType::WallTypeSetClick;
+		if (Input::GetInstance()->GetKeyDown('2')) mClickType = ClickType::CliffTypeSetClick;
+		if (Input::GetInstance()->GetKeyDown('3')) mClickType = ClickType::ThornTypeSetClick;
+		if (Input::GetInstance()->GetKeyDown('4')) mClickType = ClickType::TileSetClick;
+		
+		rctemp = mPalleteMainButton->GetRect();
+		if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
+		{
+			if (PtInRect(&rctemp, _mousePosition))
+				mPalletePage = PalletePage::Main;
+		}
+		if (mPalletePage == PalletePage::Floors)
+		{
+
+		}
+		if (mPalletePage == PalletePage::Walls)
+		{
+
+		}
+		if (mPalletePage == PalletePage::Cliffs)
+		{
+
+		}
+		if (mPalletePage == PalletePage::Thorns)
+		{
+
+		}
+		if (mPalletePage == PalletePage::Structures)
+		{
+			
+			
+		}
+		if (mPalletePage == PalletePage::Maps)
+		{
+			if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
+			{
+				rctemp = mPallete_Structure1->Rect;
+				if (PtInRect(&rctemp, _mousePosition))
+				{
+					mCurrentPallete = mPallete_Structure1;
+				}
+			}
+		}
+
+	}
+
+
+
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 	{
 
@@ -129,7 +250,7 @@ void Scene_MapTool::Update()
 		{
 			mCurrentPallete = mPallete2;
 		}
-
+		//
 		D2D1_RECT_F rctemp;
 		rctemp = mLoadButton->GetRect();
 		if (PtInRect(&rctemp, _mousePosition))
@@ -165,78 +286,39 @@ void Scene_MapTool::Update()
 
 			mPalletePageX--;
 		}
-		rctemp = mPalleteUpButton->GetRect();
-		if (PtInRect(&rctemp, _mousePosition))
-		{
-			mPalletePageY--;
-		}
-		rctemp = mPalleteDownButton->GetRect();
-		if (PtInRect(&rctemp, _mousePosition))
-		{
-			mPalletePageY++;
-		}
 	}
 	
 	//타일 바꾸기
 	
-		if (Input::GetInstance()->GetKey(VK_LBUTTON))
+	if (Input::GetInstance()->GetKey(VK_LBUTTON))
+	{
+		if (mClickType == ClickType::TileSetClick)
 		{
-			if (mClickType == ClickType::TileSetClick)
+			//튜토리얼빠레트일때
+
+			if (mCurrentPallete->Image->GetKey() == L"TutorialTile")
 			{
-				//튜토리얼빠레트일때
-				
-				if (mCurrentPallete->Image->GetKey() == L"TutorialTile")
+				if (_mousePosition.x < WINSIZEX - 300)
 				{
-					if (_mousePosition.x < WINSIZEX - 300)
+					for (int y = 0; y < 43; y++)
 					{
-						for (int y = 0; y < 43; y++)
+						for (int x = 0; x < 74; x++)
 						{
-							for (int x = 0; x < 74; x++)
-							{
-								mTileList[y][x]->SetImage(mCurrentPallete->Image);
-							}
+							mTileList[y][x]->SetImage(mCurrentPallete->Image);
 						}
-						for (int y = 0; y < 43; y++)
+					}
+					for (int y = 0; y < 43; y++)
+					{
+						for (int x = 0; x < 74; x++)
 						{
-							for (int x = 0; x < 74; x++)
-							{
-								
-								mTileList[y][x]->SetFrameIndexY(y);
-								mTileList[y][x]->SetFrameIndexX(x);
-							}
+
+							mTileList[y][x]->SetFrameIndexY(y);
+							mTileList[y][x]->SetFrameIndexX(x);
 						}
 					}
 				}
-				else
-				{
-					for (int y = 0; y < TileCountY; y++)
-					{
-						for (int x = 0; x < TileCountX; x++)
-						{
-							Camera* camera = CameraManager::GetInstance()->GetMainCamera();
-
-							D2D1_RECT_F rctemp = mTileList[y][x]->GetRect();
-							//마우스가 목표타일안에있을때.
-							if (_mousePosition.x < WINSIZEX - 300 &&
-								PtInRect(&rctemp, { _mousePosition.x - WINSIZEX / 2 + 150 + (LONG)camera->GetX() , _mousePosition.y - WINSIZEY / 2 + (LONG)camera->GetY() }))
-							{
-								//빠레트와 목표 타일이 다를때.
-								if (mTileList[y][x]->GetImage() != mCurrentPallete->GetImage() ||
-									mTileList[y][x]->GetFrameIndexX() != mCurrentPallete->GetFrameX() ||
-									mTileList[y][x]->GetFrameIndexY() != mCurrentPallete->GetFrameY())
-								{
-									IBrushTile* command = new IBrushTile(mTileList[y][x], mCurrentPallete);
-									PushCommand(command);
-								}
-
-							}
-
-						}
-					}
-				}
-				
 			}
-			else 
+			else
 			{
 				for (int y = 0; y < TileCountY; y++)
 				{
@@ -249,22 +331,51 @@ void Scene_MapTool::Update()
 						if (_mousePosition.x < WINSIZEX - 300 &&
 							PtInRect(&rctemp, { _mousePosition.x - WINSIZEX / 2 + 150 + (LONG)camera->GetX() , _mousePosition.y - WINSIZEY / 2 + (LONG)camera->GetY() }))
 						{
-							//타입 설정해주기.
-							if (mClickType == ClickType::WallTypeSetClick)
-								mTileList[y][x]->SetType(Type::Wall);
-							else if (mClickType == ClickType::ThornTypeSetClick)
-								mTileList[y][x]->SetType(Type::Thorn);
-							else if (mClickType == ClickType::CliffTypeSetClick)
-								mTileList[y][x]->SetType(Type::Cliff);
-							else if (mClickType == ClickType::FloorTypeSetClick)
-								mTileList[y][x]->SetType(Type::Floor);
+							//빠레트와 목표 타일이 다를때.
+							if (mTileList[y][x]->GetImage() != mCurrentPallete->GetImage() ||
+								mTileList[y][x]->GetFrameIndexX() != mCurrentPallete->GetFrameX() ||
+								mTileList[y][x]->GetFrameIndexY() != mCurrentPallete->GetFrameY())
+							{
+								IBrushTile* command = new IBrushTile(mTileList[y][x], mCurrentPallete);
+								PushCommand(command);
+							}
+
 						}
+
 					}
 				}
 			}
-			
-			
+
 		}
+		else
+		{
+			for (int y = 0; y < TileCountY; y++)
+			{
+				for (int x = 0; x < TileCountX; x++)
+				{
+					Camera* camera = CameraManager::GetInstance()->GetMainCamera();
+
+					D2D1_RECT_F rctemp = mTileList[y][x]->GetRect();
+					//마우스가 목표타일안에있을때.
+					if (_mousePosition.x < WINSIZEX - 300 &&
+						PtInRect(&rctemp, { _mousePosition.x - WINSIZEX / 2 + 150 + (LONG)camera->GetX() , _mousePosition.y - WINSIZEY / 2 + (LONG)camera->GetY() }))
+					{
+						//타입 설정해주기.
+						if (mClickType == ClickType::WallTypeSetClick)
+							mTileList[y][x]->SetType(Type::Wall);
+						else if (mClickType == ClickType::ThornTypeSetClick)
+							mTileList[y][x]->SetType(Type::Thorn);
+						else if (mClickType == ClickType::CliffTypeSetClick)
+							mTileList[y][x]->SetType(Type::Cliff);
+						else if (mClickType == ClickType::FloorTypeSetClick)
+							mTileList[y][x]->SetType(Type::Floor);
+					}
+				}
+			}
+		}
+
+
+	}
 	
 
 	
@@ -290,6 +401,8 @@ void Scene_MapTool::Update()
 
 void Scene_MapTool::Render()
 {
+
+	//타일그리는부분
 	D2D1_RECT_F cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	for (int y = 0; y < TileCountY; y++)
 	{
@@ -299,6 +412,7 @@ void Scene_MapTool::Render()
 			if (cameraRect.right > tileRect.left && cameraRect.left < tileRect.right && cameraRect.bottom > tileRect.top && cameraRect.top < tileRect.bottom)
 			{
 				mTileList[y][x]->Render();
+				CameraManager::GetInstance()->GetMainCamera()->RenderGizmoRect(mTileList[y][x]->GetRect());
 				CameraManager::GetInstance()->GetMainCamera()->RenderText
 				(
 					mTileList[y][x]->GetX() + 5, mTileList[y][x]->GetY() + 5,
@@ -309,46 +423,104 @@ void Scene_MapTool::Render()
 					mTileList[y][x]->GetX() + 5, mTileList[y][x]->GetY() + 15,
 					to_wstring((int)mTileList[y][x]->GetType()) ,10
 				);
-				
 			}
 			
 		}
 	}
-	
-	mBackGroundImage->ScaleRender(WINSIZEX - 150, WINSIZEY/2,300,WINSIZEY);
-	for (int y = 0; y < PalleteSizeY; y++)
-	{
-		for (int x = 0; x < PalleteSizeX; x++)
-		{
-			
-			mPallete[y][x]->Image->ScaleFrameRender
-			(
-				(mPallete[y][x]->Rect.right + mPallete[y][x]->Rect.left)/2 ,
-				(mPallete[y][x]->Rect.top + mPallete[y][x]->Rect.bottom)/2,
-				mPallete[y][x]->FrameX,
-				mPallete[y][x]->FrameY,
-				mPallete[y][x]->Width, 
-				mPallete[y][x]->Height
 
-			);
-			Gizmo::GetInstance()->DrawRect(mPallete[y][x]->Rect, D2D1::ColorF::Red);
-		}
-	}
-	mPallete2->Image->SetScale(4.0f);
-	mPallete2->Image->Render(
-		(mPallete2->Rect.right + mPallete2->Rect.left) / 2,
-		(mPallete2->Rect.top + mPallete2->Rect.bottom) / 2);
-	Gizmo::GetInstance()->DrawRect(mPallete2->Rect, D2D1::ColorF::Red);
-	
-	mPalleteDownButton->Render();
-	mPalleteUpButton->Render();
-	mPalleteLeftButton->Render();
-	mPalleteRihgtButton->Render();
+	//빠레트그리는부분
+	mBackGroundImage->ScaleRender(WINSIZEX - 150, WINSIZEY/2,300,WINSIZEY);
 	mSaveButton->Render();
 	mLoadButton->Render();
 	mGameStartButton->Render();
 	mRedoButton->Render();
 	mUndoButton->Render();
+	if (mPalletePage == PalletePage::Main)
+	{
+		mPalleteMainButton->Render();
+		mPalleteFloorButton->Render();
+		mPalleteWallButton->Render();
+		mPalleteCliffButton->Render();
+		mPalleteThornButton->Render();
+		mPalleteStructureButton->Render();
+		mPalleteMapButton->Render();
+	}
+	else
+	{
+		mPalleteMainButton->Render();
+		mPalleteLeftButton->Render();
+		mPalleteRihgtButton->Render();
+		if (mPalletePage == PalletePage::Floors)
+		{
+
+		}
+		else if (mPalletePage == PalletePage::Walls)
+		{
+
+		}
+		else if (mPalletePage == PalletePage::Cliffs)
+		{
+
+		}
+		else if (mPalletePage == PalletePage::Structures)
+		{
+			mPallete_Structure1->Image->ScaleRender
+			(
+				(mPallete_Structure1->Rect.right + mPallete_Structure1->Rect.left)/2 ,
+				(mPallete_Structure1->Rect.top + mPallete_Structure1->Rect.bottom)/2 ,
+				mPallete_Structure1->Width,
+				mPallete_Structure1->Height
+			);
+			Gizmo::GetInstance()->DrawRect(mPallete_Structure1->Rect, D2D1::ColorF::Red);
+			mPallete_Structure2->Image->ScaleRender
+			(
+				(mPallete_Structure2->Rect.right + mPallete_Structure2->Rect.left)/2,
+				(mPallete_Structure2->Rect.top + mPallete_Structure2->Rect.bottom)/2,
+				mPallete_Structure2->Width,
+				mPallete_Structure2->Height
+			);
+			Gizmo::GetInstance()->DrawRect(mPallete_Structure2->Rect, D2D1::ColorF::Red);
+			mPallete_Structure3->Image->ScaleRender
+			(
+				(mPallete_Structure3->Rect.right + mPallete_Structure3->Rect.left) / 2,
+				(mPallete_Structure3->Rect.top + mPallete_Structure3->Rect.bottom) / 2,
+				mPallete_Structure2->Width,
+				mPallete_Structure2->Height
+			);
+			Gizmo::GetInstance()->DrawRect(mPallete_Structure3->Rect,D2D1::ColorF::Red);
+			
+		}
+		else if (mPalletePage == PalletePage::Maps)
+		{
+			/*for (int y = 0; y < PalleteSizeY; y++)
+			{
+				for (int x = 0; x < PalleteSizeX; x++)
+				{
+
+					mPallete[y][x]->Image->ScaleFrameRender
+					(
+						(mPallete[y][x]->Rect.right + mPallete[y][x]->Rect.left) / 2,
+						(mPallete[y][x]->Rect.top + mPallete[y][x]->Rect.bottom) / 2,
+						mPallete[y][x]->FrameX,
+						mPallete[y][x]->FrameY,
+						mPallete[y][x]->Width,
+						mPallete[y][x]->Height
+					);
+					Gizmo::GetInstance()->DrawRect(mPallete[y][x]->Rect, D2D1::ColorF::Red);
+				}
+			}*/
+			mPallete2->Image->SetScale(4.0f);
+			mPallete2->Image->Render(
+				(mPallete2->Rect.right + mPallete2->Rect.left) / 2,
+				(mPallete2->Rect.top + mPallete2->Rect.bottom) / 2);
+			Gizmo::GetInstance()->DrawRect(mPallete2->Rect, D2D1::ColorF::Red);
+		}
+	}
+
+	
+	
+	
+	
 	
 
 
