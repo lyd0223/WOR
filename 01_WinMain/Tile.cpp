@@ -17,7 +17,7 @@ Tile::Tile(Image* image, float x, float y, float sizeX, float sizeY, int frameIn
 }
 void Tile::Update()
 {
-	if (mImage->GetKey() == L"")
+	/*if (mImage->GetKey() == L"")
 	{
 		mType = Type::Cliff;
 	}
@@ -32,7 +32,7 @@ void Tile::Update()
 	else if (mImage->GetKey() == L"")
 	{
 		mType = Type::Cliff;
-	}
+	}*/
 }
 
 void Tile::Render()

@@ -32,9 +32,7 @@ enum class PlayerState :int
 
 };
 #define AnimationTime 0.3f
-#define TileCountX 10
-#define TileCountY 10
-#define TileSize 50
+#define TileSize 64
 class Player : public GameObject
 {
 	PlayerState mPlayerState;

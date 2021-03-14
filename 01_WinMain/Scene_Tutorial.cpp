@@ -3,11 +3,13 @@
 #include "Image.h"
 #include "Tile.h"
 #include "Camera.h"
+#include "Player.h"
 #include <fstream>
 
 void Scene_Tutorial::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"TutorialTile", Resources(L"Tile/TutorialMap.png"),74,43);
+	ImageManager::GetInstance()->LoadFromFile(L"TileSet", Resources(L"Tile/Tile.bmp"), 16, 16);
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"TutorialTile");
 	
 	for (int y = 0; y < TileCountY; y++)
@@ -21,42 +23,52 @@ void Scene_Tutorial::Init()
 				TileSize, TileSize,
 				0, 0
 			);
-			ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mTileList[y][x]);
-
 		}
 	}
 	Load();
 	
+	mPlayer = new Player("Player",600,1200);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
+
+	ObjectManager::GetInstance()->Init();
+
 	Camera* camera = new Camera();
 
 	camera->Init();
-	camera->ChangeMode(Camera::Mode::Free);
+	camera->ChangeMode(Camera::Mode::Follow);
+	camera->SetTarget(mPlayer);
 	CameraManager::GetInstance()->SetMainCamera(camera);
 }
 
 void Scene_Tutorial::Release()
 {
+	ObjectManager::GetInstance()->Release();
 }
 
 void Scene_Tutorial::Update()
 {
 	CameraManager::GetInstance()->Update();
+	ObjectManager::GetInstance()->Update();
 }
 
 void Scene_Tutorial::Render()
 {
 	D2D1_RECT_F cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
+
 	for (int y = 0; y < TileCountY; y++)
 	{
 		for (int x = 0; x < TileCountX; x++)
 		{
-			D2D1_RECT_F tileRect = mTileList[y][x]->GetRect();
-			if (cameraRect.right > tileRect.left && cameraRect.left < tileRect.right && cameraRect.bottom > tileRect.top && cameraRect.top < tileRect.bottom)
-			{
-				mTileList[y][x]->Render();
-			}
+				D2D1_RECT_F tileRect = mTileList[y][x]->GetRect();
+				if (cameraRect.right > tileRect.left && cameraRect.left < tileRect.right && cameraRect.bottom > tileRect.top && cameraRect.top < tileRect.bottom)
+				{
+					mTileList[y][x]->Render();
+				}
+			
 		}
 	}
+
+	ObjectManager::GetInstance()->Render();
 }
 
 void Scene_Tutorial::Load()

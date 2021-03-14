@@ -4,6 +4,7 @@
 #include"Animation.h"
 #include "Player.h"
 #include"Tile.h"
+#include "Camera.h"
 
 
 
@@ -227,7 +228,7 @@ void Player::Update()
 
 void Player::Render()
 {
-	RenderRect( mRect);
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	//for (int y = 0; y < TileCountY; ++y)
 	//{
 	//	for (int x = 0; x < TileCountX; ++x)
@@ -235,8 +236,7 @@ void Player::Render()
 	//		RenderRect(hdc,TileList[y][x]->mRect);
 	//	}
 	//}
-
-	mImage->FrameRender( mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
+	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 }
 
 void Player::AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)
