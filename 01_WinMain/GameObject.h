@@ -39,5 +39,10 @@ public:
 	inline void SetIsActive(bool b) { mIsActive = b; }
 	inline bool GetIsDestroy()const { return mIsDestroy; }
 	inline void SetIsDestroy(bool b) { mIsDestroy = b; }
+
+	bool operator <(GameObject* gameobject)
+	{
+		return this->GetRect().bottom < gameobject->GetRect().bottom;
+	}
 };
 

@@ -12,6 +12,7 @@ enum class ObjectLayer : int
 	Tile,
 	Player,
 	Enemy ,
+	Structure,
 	UI ,
 	End
 };
@@ -22,6 +23,8 @@ class ObjectManager
 private:
 	typedef map<ObjectLayer, vector<class GameObject*>>::iterator ObjectIter;
 	map<ObjectLayer, vector<class GameObject*>> mObjectList;
+	//map<class Scene, map<ObjectLayer, vector<class GameObject*>>> mObjectListOfScene;
+
 public:
 	ObjectManager();
 

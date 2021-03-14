@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ObjectManager.h"
-
 #include "GameObject.h"
+#include "Scene.h"
 ObjectManager::ObjectManager()
 {
 	//ObjectLayer 별로 벡터 하나씩 맵에 집어 넣는다.
@@ -62,13 +62,34 @@ void ObjectManager::Update()
 void ObjectManager::Render()
 {
 	ObjectIter iter = mObjectList.begin();
+	vector<GameObject*> renderingOrderVector;
+
 	for (; iter != mObjectList.end(); ++iter)
 	{
+		//그리는순서
+		if (iter->first == (ObjectLayer)5)
+		{
+			//정렬 후 그려주기.
+			sort(renderingOrderVector.begin(), renderingOrderVector.end());
+			for (int i = 0; i < renderingOrderVector.size(); i++)
+			{
+				renderingOrderVector[i]->Render();
+			}
+			renderingOrderVector.clear();
+		}
+		
 		for (int i = 0; i < iter->second.size(); ++i)
 		{
 			if (iter->second[i]->GetIsActive() == true)
 			{
-				iter->second[i]->Render();
+				if (iter->first == ObjectLayer::Player &&
+					iter->first == ObjectLayer::Enemy &&
+					iter->first == ObjectLayer::Structure)
+				{
+					renderingOrderVector.push_back(iter->second[i]);
+				}
+				else
+					iter->second[i]->Render();
 			}
 		}
 	}
