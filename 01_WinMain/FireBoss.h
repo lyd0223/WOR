@@ -46,7 +46,9 @@ class FireBoss : public Enemy
 
 	BossPattern mPattern;
 
-	D2D1_ELLIPSE mEllipse;
+	int mNum;
+	float mFrameCount;
+	float mAngle;
 public:
 	FireBoss(const string& name, float x, float y);
 
@@ -58,6 +60,7 @@ public:
 	void AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime);
 	void AnimationChange(Animation* changeanimation);
 	
+
 	void StempPattern();
 	void ThreeRushPattern();
 	void FireBallThrowPattern();

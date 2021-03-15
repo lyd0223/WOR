@@ -22,6 +22,8 @@ class MagicCircle : public GameObject
 	HitSpark* mHitSpark;
 	CastingSkill mCastingSkill;
 
+	int mFrameIndexX;
+	float mTimeCount;
 	float mAngle;
 public:
 	MagicCircle(const string& name, float x, float y, CastingSkill mCastingSkill);
@@ -30,6 +32,8 @@ public:
 	void Release() override;
 	void Update() override;
 	void Render() override;
+
+	int GetFrameIndexX() { return mFrameIndexX; }
 
 	void MakeFlameList();
 };

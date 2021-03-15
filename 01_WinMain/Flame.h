@@ -12,6 +12,7 @@ class Flame : public GameObject
 	float mEndPositionX;
 	float mEndPositionY;
 public:
+	Flame(const string& name) : GameObject(name) {};
 	Flame(const string& name, float x, float y, float angle);
 
 	void Init() override;

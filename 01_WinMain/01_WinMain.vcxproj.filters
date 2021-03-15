@@ -100,6 +100,9 @@
     <Filter Include="MainGame\Object\Button">
       <UniqueIdentifier>{7954765f-ed8c-4ac1-a411-63a66f838cef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\SkillManager">
+      <UniqueIdentifier>{e7cf2638-80d1-4995-b692-7fb8f2474dc1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -237,6 +240,9 @@
     <ClInclude Include="HitSpark.h">
       <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="SkillManager.h">
+      <Filter>MainGame\Object\SkillManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -364,6 +370,9 @@
     </ClCompile>
     <ClCompile Include="HitSpark.cpp">
       <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillManager.cpp">
+      <Filter>MainGame\Object\SkillManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

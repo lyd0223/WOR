@@ -2,6 +2,7 @@
 #include "Flame.h"
 #include "Image.h"
 #include "Animation.h"
+#include "Camera.h"
 
 Flame::Flame(const string & name, float x, float y, float angle)
 	: GameObject(name)
@@ -49,7 +50,7 @@ void Flame::Update()
 void Flame::Render()
 {
 	mImage->SetScale(0.3f);
-	mImage->FrameRender(mX, mY, mFlameAnimation->GetNowFrameX(), mFlameAnimation->GetNowFrameY());
+	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mFlameAnimation->GetNowFrameX(), mFlameAnimation->GetNowFrameY());
 }
 
 void Flame::MakeCircleFlame()

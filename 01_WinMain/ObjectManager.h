@@ -8,12 +8,14 @@ GameObject 관리하는 클래스
 //enum (열거자) : 정수를 다른 이름으로 표현하는 것
 enum class ObjectLayer : int
 {
-	Background = 0, 
+	Background = 0,
 	Tile,
 	Player,
-	Enemy ,
+	Enemy,
 	Structure,
-	UI ,
+	UI,
+	Skill,
+
 	End
 };
 

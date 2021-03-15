@@ -2,6 +2,7 @@
 #include "FlameEffect.h"
 #include "Image.h"
 #include "Animation.h"
+#include "Camera.h"
 
 FlameEffect::FlameEffect(const string & name, float x, float y, float angle)
 	: GameObject(name)
@@ -42,7 +43,7 @@ void FlameEffect::Update()
 void FlameEffect::Render()
 {
 	if (mFlameEffectAnimation != nullptr) {
-		mImage->SetAngle(mAngle * (360 / PI));
-		mImage->FrameRender(mX, mY, mFlameEffectAnimation->GetNowFrameX(), mFlameEffectAnimation->GetNowFrameY());
+		mImage->SetAngle(mAngle * -(180 / PI));
+		CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mFlameEffectAnimation->GetNowFrameX(), mFlameEffectAnimation->GetNowFrameY());
 	}
 }

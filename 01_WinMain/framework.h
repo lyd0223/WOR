@@ -51,6 +51,7 @@ using namespace std;
 #include "ObjectManager.h"
 #include "SceneManager.h"
 #include "GameEventManager.h"
+#include "SkillManager.h"
 #include "D2DRenderer.h"
 #include "Vector2.h"
 

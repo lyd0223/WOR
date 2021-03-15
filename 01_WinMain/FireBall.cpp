@@ -5,6 +5,7 @@
 #include "FireBoss.h"
 #include "Animation.h"
 #include "FlameEffect.h"
+#include "Camera.h"
 
 FireBall::FireBall(const string & name, float x, float y, float angle)
 	:GameObject(name)
@@ -50,6 +51,8 @@ void FireBall::Update()
 		mFlameEffect->Init();
 	}
 
+
+
 	if (mState == FireBallState::Fire) {
 		mX += cosf(mAngle) * mSpeed;
 		mY += -sinf(mAngle) * mSpeed;
@@ -69,8 +72,8 @@ void FireBall::Render()
 {
 	mImage->SetAngle(mAngle * -(180 / PI));
 	mImage->SetScale(2.f);
-	mImage->FrameRender(mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 	if (mFlameEffect != nullptr) mFlameEffect->Render();
+	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 }
 
 void FireBall::AnimationSet(Animation ** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)

@@ -13,6 +13,7 @@ class Meteor : public GameObject
 	float mAngle;
 	float mSpeed;
 public:
+	Meteor(const string& name) : GameObject(name) {};
 	Meteor(const string& name, float x, float y);
 
 	void Init() override;

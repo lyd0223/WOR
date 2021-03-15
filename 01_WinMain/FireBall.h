@@ -25,6 +25,7 @@ class FireBall : public GameObject
 	float mAngle;
 	float mSpeed;
 public:
+	FireBall(const string& name) : GameObject(name) {};
 	FireBall(const string& name, float x, float y, float angle);
 
 	void Init() override;

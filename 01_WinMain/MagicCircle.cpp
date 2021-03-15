@@ -4,7 +4,7 @@
 #include "Animation.h"
 #include "Meteor.h"
 #include "Flame.h"
-#include "HitSpark.h"
+#include "Camera.h"
 
 MagicCircle::MagicCircle(const string & name, float x, float y, CastingSkill castingSkill)
 	:GameObject(name)
@@ -39,24 +39,25 @@ void MagicCircle::Release()
 void MagicCircle::Update()
 {
 	mCircleMakeAnimation->Update();
-
+	mFrameIndexX = mCircleMakeAnimation->GetNowFrameX();
 	if (mCircleMakeAnimation->GetNowFrameX() == 15 && mCastingSkill == CastingSkill::Meteor) {
 		mMeteor = new Meteor("Meteor", mX, mY);
 		mMeteor->Init();
 	}
-
-	int wolrdTime = Time::GetInstance()->GetWorldTime();
-	if (wolrdTime % 2 > 0.5) {
-		if (mCircleMakeAnimation->GetNowFrameX() == 23 && mCastingSkill == CastingSkill::Burn) {
+	
+ 	mTimeCount += Time::GetInstance()->DeltaTime();
+	if (mCircleMakeAnimation->GetNowFrameX() == 23) {
+		if (mTimeCount > 1) {
 			MakeFlameList();
+			mTimeCount = 0;
 		}
 	}
-	
-	if ((mCircleMakeAnimation->GetNowFrameX() == 23 && mMeteor == nullptr)) {
+
+	/*if ((mCircleMakeAnimation->GetNowFrameX() == 23 && mMeteor == nullptr)) {
 		mHitSpark = new HitSpark("HitSpark", mX, mY, 0);
 		mHitSpark->Init();
 		mIsDestroy = true;
-	}
+	}*/
 
 	if (mMeteor != nullptr) {
 		mMeteor->Update();
@@ -64,14 +65,6 @@ void MagicCircle::Update()
 			mMeteor->Release();
 			SafeDelete(mMeteor)
 		} 
-	}
-
-	if (mHitSpark != nullptr) {
-		mHitSpark->Update();
-		if (mHitSpark->GetIsDestroy()) {
-			mHitSpark->Release();
-			SafeDelete(mHitSpark);
-		}
 	}
 
 	for (int i = 0; i < mFlameList.size(); i++) {
@@ -88,9 +81,9 @@ void MagicCircle::Update()
 void MagicCircle::Render()
 {
 	mImage->SetAngle(mAngle * -(180 / PI));
-	mImage->FrameRender(mX, mY, mCircleMakeAnimation->GetNowFrameX(), mCircleMakeAnimation->GetNowFrameY());
+	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCircleMakeAnimation->GetNowFrameX(), mCircleMakeAnimation->GetNowFrameY());
 	if(mMeteor != nullptr) mMeteor->Render();
-	if (mHitSpark != nullptr) mHitSpark->Render();
+	//if (mHitSpark != nullptr) mHitSpark->Render();
 	for (Flame* flame : mFlameList) flame->Render();
 }
 
