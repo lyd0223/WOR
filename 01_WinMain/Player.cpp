@@ -41,10 +41,10 @@ void Player::Init()
 	AnimationSet(&mUpHitAnimation, true, true, 5, 0, 5, 0, AnimationTime);
 	AnimationSet(&mLeftHitAnimation, true, true, 6, 0, 6, 0, AnimationTime);
 	AnimationSet(&mRightHitAnimation, true, true, 0, 7, 0, 7, AnimationTime);
-	AnimationSet(&mDownRunAnimation, false, true, 0, 1, 9, 1, AnimationTime);
-	AnimationSet(&mUpRunAnimation, false, true, 0, 2, 9, 2, AnimationTime);
-	AnimationSet(&mRightRunAnimation, false, true, 0, 3, 9, 3, AnimationTime);
-	AnimationReverseSet(&mLeftRunAnimation, false, true, 9, 4, 0, 4, AnimationTime);
+	AnimationSet(&mDownRunAnimation, false, true, 0, 1, 9, 1, 0.1f);
+	AnimationSet(&mUpRunAnimation, false, true, 0, 2, 9, 2, 0.1f);
+	AnimationSet(&mRightRunAnimation, false, true, 0, 3, 9, 3, 0.1f);
+	AnimationReverseSet(&mLeftRunAnimation, false, true, 9, 4, 0, 4, 0.1f);
 	AnimationSet(&mDownAttackAnimation, false, false, 0, 5, 9, 5, AnimationTime);
 	AnimationSet(&mRightDashAnimation, false, false, 0, 7, 9, 7, AnimationTime);
 	AnimationSet(&mLeftDashAnimation, false, false, 0, 8, 9, 8, AnimationTime);
@@ -95,68 +95,98 @@ void Player::Update()
 	//int indexY = mY / TileSize;
 	//int indexX = mX / TileSize;
 	//---------------------------------
-	//À§
-	if (Input::GetInstance()->GetKeyDown('W'))
+	//°ÙÅ°´Ù¿î
+	if (!Input::GetInstance()->GetKey('S'))
 	{
-
-		AnimationChange(mUpRunAnimation);
-		mPlayerState = PlayerState::UpRun;
+		if (Input::GetInstance()->GetKeyDown('W'))
+		{
+			if (mCurrentAnimation != mUpRunAnimation) AnimationChange(mUpRunAnimation);
+			mPlayerState = PlayerState::UpRun;
+		}
 	}
+	if (!Input::GetInstance()->GetKey('W'))
+	{
+		if (Input::GetInstance()->GetKeyDown('S'))
+		{
+			if (mCurrentAnimation != mDownRunAnimation) AnimationChange(mDownRunAnimation);
+			mPlayerState = PlayerState::DownRun;
+		}
+
+	}
+	if (!Input::GetInstance()->GetKey('A'))
+	{
+		if (Input::GetInstance()->GetKeyDown('D'))
+		{
+			if (mCurrentAnimation != mRightRunAnimation) AnimationChange(mRightRunAnimation);
+			mPlayerState = PlayerState::RightRun;
+		}
+	}
+	if (!Input::GetInstance()->GetKey('D'))
+	{
+		if (Input::GetInstance()->GetKeyDown('A'))
+		{
+			if (mCurrentAnimation != mLeftRunAnimation) AnimationChange(mLeftRunAnimation);
+			mPlayerState = PlayerState::LeftRun;
+		}
+	}
+	
+	//°ÙÅ°
 	if (Input::GetInstance()->GetKey('W'))
 	{
 		mY -= mSpeed;
-	}
-	if (Input::GetInstance()->GetKeyUp('W'))
-	{
-		AnimationChange(mUpIdleAnimation);
-		mPlayerState = PlayerState::UpIdle;
-	}
-	//¾Æ·¡
-	if (Input::GetInstance()->GetKeyDown('S'))
-	{
-
-		AnimationChange(mDownRunAnimation);
-		mPlayerState = PlayerState::DownRun;
 	}
 	if (Input::GetInstance()->GetKey('S'))
 	{
 		mY += mSpeed;
 	}
-	if (Input::GetInstance()->GetKeyUp('S'))
-	{
-		AnimationChange(mDownIdleAnimation);
-		mPlayerState = PlayerState::DownIdle;
-	}
-	//¿À¸¥ÂÊ
-	if (Input::GetInstance()->GetKeyDown('D'))
-	{
-
-		AnimationChange(mRightRunAnimation);
-		mPlayerState = PlayerState::RightRun;
-	}
 	if (Input::GetInstance()->GetKey('D'))
 	{
 		mX += mSpeed;
-	}
-	if (Input::GetInstance()->GetKeyUp('D'))
-	{
-		AnimationChange(mRightIdleAnimation);
-		mPlayerState = PlayerState::RightIdle;
-	}
-	//¿ÞÂÊ
-	if (Input::GetInstance()->GetKeyDown('A'))
-	{
-		AnimationChange(mLeftRunAnimation);
-		mPlayerState = PlayerState::LeftRun;
 	}
 	if (Input::GetInstance()->GetKey('A'))
 	{
 		mX -= mSpeed;
 	}
-	if (Input::GetInstance()->GetKeyUp('A'))
+	// °ÙÅ°¾÷
+	if (!Input::GetInstance()->GetKey('S') &&
+		!Input::GetInstance()->GetKey('A') &&
+		!Input::GetInstance()->GetKey('D'))
 	{
-		AnimationChange(mLeftIdleAnimation);
-		mPlayerState = PlayerState::LeftIdle;
+		if (Input::GetInstance()->GetKeyUp('W'))
+		{
+			AnimationChange(mUpIdleAnimation);
+			mPlayerState = PlayerState::UpIdle;
+		}
+	}
+	if (!Input::GetInstance()->GetKey('W') &&
+		!Input::GetInstance()->GetKey('A') &&
+		!Input::GetInstance()->GetKey('D'))
+	{
+		if (Input::GetInstance()->GetKeyUp('S'))
+		{
+			AnimationChange(mDownIdleAnimation);
+			mPlayerState = PlayerState::DownIdle;
+		}
+	}
+	if (!Input::GetInstance()->GetKey('A') &&
+		!Input::GetInstance()->GetKey('W') &&
+		!Input::GetInstance()->GetKey('S'))
+	{
+		if (Input::GetInstance()->GetKeyUp('D'))
+		{
+			AnimationChange(mRightIdleAnimation);
+			mPlayerState = PlayerState::RightIdle;
+		}
+	}
+	if (!Input::GetInstance()->GetKey('D') &&
+		!Input::GetInstance()->GetKey('W') &&
+		!Input::GetInstance()->GetKey('S'))
+	{
+		if (Input::GetInstance()->GetKeyUp('A'))
+		{
+			AnimationChange(mLeftIdleAnimation);
+			mPlayerState = PlayerState::LeftIdle;
+		}
 	}
 	//°ø°Ý
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
