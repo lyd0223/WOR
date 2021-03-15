@@ -7,80 +7,53 @@
 Input::Input()
 {
 	//처음엔 모든 키를 눌려있지 않은 상태로 초기화
-	ZeroMemory(mKeyDownList, sizeof(bool) * KEYMAX);
-	ZeroMemory(mKeyUpList, sizeof(bool) * KEYMAX);
-	ZeroMemory(mKeyList, sizeof(bool) * KEYMAX);
+	mKeyCurrent.reset();
+	mKeyPast.reset();
+
 }
-bool Input::GetKeyDown(int key)
+Input::~Input() {}
+
+/****************************************************
+## Update ##
+*****************************************************/
+void Input::Update()
 {
-	if (!mIsKeyCheck)
-		return false;
-	//GetAsyncKeyState : 현재 키가 눌렸는지 안눌렸는지 등 키에 대한 상태를 반환해주는 함수
-	//해당 키가 눌려있다면
+	//계속 과거키를 현재키로 갱신해준다
+	mKeyPast = mKeyCurrent;
+}
+
+
+bool Input::GetKeyDown(const int& key)
+{
+	//해당 키를 누른 상태
 	if (GetAsyncKeyState(key) & 0x8000)
 	{
-		if (key == 'W') {
-			if (mKeyDownList['S'])
-				return false;
-		}
-		else if (key == 'S') {
-			if (mKeyDownList['W'])
-				return false;
-		}
-		else if (key == 'A') {
-			if (mKeyDownList['D'])
-				return false;
-		}
-		else if (key == 'D') {
-			if (mKeyDownList['A'])
-				return false;
-		}
-		//해당키가 눌리지 않았다면
-		if (mKeyDownList[key] == false)
+		//그 키가 눌려있지 않았다면
+		if (!mKeyPast[key])
 		{
-			mKeyDownList[key] = true;
+			//현재키를 눌린 상태로 바꾸고 return true
+			mKeyCurrent.set(key, true);
 			return true;
 		}
 	}
-	//해당 키가 눌려있지 않다면
-	else
-	{
-		//키눌림 상태는 false
-		mKeyDownList[key] = false;
-	}
+	//해당 키를 누르지 않은 상태
+	else mKeyCurrent.set(key, false);   //현재키를 누르지 않은 상태로 바꿈
 
 	return false;
 }
 
-bool Input::GetKeyUp(int key)
+bool Input::GetKeyUp(const int& key)
 {
-	if (!mIsKeyCheck)
-		return false;
-	if (GetAsyncKeyState(key) & 0x8000)
-	{
-		if (key == 'W') {
-			if (mKeyUpList['S'])
-				return false;
-		}
-		else if (key == 'S') {
-			if (mKeyUpList['W'])
-				return false;
-		}
-		else if (key == 'A') {
-			if (mKeyUpList['D'])
-				return false;
-		}
-		else if (key == 'D') {
-			if (mKeyUpList['A'])
-				return false;
-		}
-		mKeyUpList[key] = true;
-	}
+	//해당 키를 누른 상태					현재키를 눌린 상태로 바꿈
+	if (GetAsyncKeyState(key) & 0x8000) mKeyCurrent.set(key, true);
+	//해당 키를 누르지 않은 상태
 	else
 	{
-		if (mKeyUpList[key] == true)
+		//그 키가 눌려있었다면
+		if (mKeyPast[key])
 		{
-			mKeyUpList[key] = false;
+			//현재키를 누르지 않은 상태로 바꾸고 return true
+			mKeyCurrent.set(key, false);
 			return true;
 		}
 	}
@@ -88,40 +61,16 @@ bool Input::GetKeyUp(int key)
 	return false;
 }
 
-bool Input::GetKey(int key)
+bool Input::GetKey(const int& key)
 {
-	if (!mIsKeyCheck)
-		return false;
-	if (GetAsyncKeyState(key) & 0x8000) {
-		if (key == 'W') {
-			if (mKeyList['S'])
-				return false;
-		}
-		else if (key == 'S') {
-			if (mKeyList['W'])
-				return false;
-		}
-		else if (key == 'A') {
-			if (mKeyList['D'])
-				return false;
-		}
-		else if (key == 'D') {
-			if (mKeyList['A'])
-				return false;
-		}
-		mKeyList[key] = true;
-		return true;
-	}
-	mKeyList[key] = false;
+	if (GetAsyncKeyState(key) & 0x8000) return true;
+
 	return false;
 }
 
-bool Input::GetToggleKey(int key)
+bool Input::ToggleKey(const int& key)
 {
-	if (!mIsKeyCheck)
-		return false;
-	if (GetAsyncKeyState(key) & 0x0001)
-		return true;
+	if (GetKeyState(key) & 0x0001) return true;
 
 	return false;
 }

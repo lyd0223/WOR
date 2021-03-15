@@ -126,6 +126,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 		{
 			Time::GetInstance()->Update();
 			SoundPlayer::GetInstance()->Update();
+			
 			_mainGame->Update();
 			_mainGame->Render(hdc);
 		}
