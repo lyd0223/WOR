@@ -1,5 +1,5 @@
 #pragma once
-#include"GameObject.h"
+#include"MovingObject.h"
 //class Tile;
 enum class PlayerState :int
 {
@@ -31,14 +31,13 @@ enum class PlayerState :int
 
 
 };
-#define AnimationTime 0.3f
+#define AnimationTime 0.1f
 #define TileSize 64
-class Player : public GameObject
+class Player : public MovingObject
 {
 	PlayerState mPlayerState;
 	Image* mImage;
-	float mSpeed;
-	float mAngle;
+
 	//class Tile* TileList[TileCountY][TileCountY];
 
 	class Animation* mRightIdleAnimation;

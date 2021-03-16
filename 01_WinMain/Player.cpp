@@ -9,8 +9,9 @@
 
 
 Player::Player(const string& name, float x, float y)
-	:GameObject(name)
+	
 {
+	mName = name;
 	mX = x;
 	mY = y;
 }
@@ -133,20 +134,99 @@ void Player::Update()
 	//°ÙÅ°
 	if (Input::GetInstance()->GetKey('W'))
 	{
-		mY -= mSpeed;
+		if (mPlayerState == PlayerState::UpRun || mPlayerState == PlayerState::UpIdle || mPlayerState == PlayerState::RightRun || mPlayerState == PlayerState::LeftRun)
+		{
+			mPlayerState = PlayerState::UpRun;
+			if (mCurrentAnimation != mUpRunAnimation)AnimationChange(mUpRunAnimation);
+				mY -= mSpeed;
+			if (Input::GetInstance()->GetKey('S'))
+			{
+				mY += mSpeed;
+				if (mCurrentAnimation != mUpIdleAnimation) AnimationChange(mUpIdleAnimation);
+				mPlayerState = PlayerState::UpIdle;
+			}
+			if (Input::GetInstance()->GetKeyUp('S'))
+			{
+				if (mCurrentAnimation != mUpRunAnimation) AnimationChange(mUpRunAnimation);
+				mPlayerState = PlayerState::UpRun;
+			}
+		}
 	}
 	if (Input::GetInstance()->GetKey('S'))
 	{
-		mY += mSpeed;
+		if (mPlayerState == PlayerState::DownRun || mPlayerState == PlayerState::DownIdle || mPlayerState == PlayerState::RightRun || mPlayerState == PlayerState::LeftRun)
+		{
+			mPlayerState = PlayerState::DownRun;
+			if (mCurrentAnimation != mDownRunAnimation)AnimationChange(mDownRunAnimation);
+			mY += mSpeed;
+			if (Input::GetInstance()->GetKey('W'))
+			{
+				mY -= mSpeed;
+				if (mCurrentAnimation != mDownIdleAnimation) AnimationChange(mDownIdleAnimation);
+				mPlayerState = PlayerState::DownIdle;
+			}
+			if (Input::GetInstance()->GetKeyUp('W'))
+			{
+				if (mCurrentAnimation != mDownRunAnimation) AnimationChange(mDownRunAnimation);
+				mPlayerState = PlayerState::DownRun;
+			}
+		}
 	}
+	
 	if (Input::GetInstance()->GetKey('D'))
 	{
-		mX += mSpeed;
+		
+			if (mPlayerState == PlayerState::UpRun || mPlayerState == PlayerState::DownRun ||mPlayerState == PlayerState::RightRun ||mPlayerState == PlayerState::RightIdle)
+			{
+				mPlayerState = PlayerState::RightRun;
+				if (mCurrentAnimation != mRightRunAnimation)
+					AnimationChange(mRightRunAnimation);
+				
+					mX += mSpeed;
+					if (Input::GetInstance()->GetKey('A'))
+					{
+						//mX -= mSpeed*cosf(mAngle);
+						mX -= mSpeed;
+						if (mCurrentAnimation != mRightIdleAnimation)
+							AnimationChange(mRightIdleAnimation);
+						mPlayerState = PlayerState::RightIdle;
+					}
+					if (Input::GetInstance()->GetKeyUp('A'))
+					{
+						if (mCurrentAnimation != mRightRunAnimation)
+							AnimationChange(mRightRunAnimation);
+						mPlayerState = PlayerState::RightRun;
+					}
+				
+			}
+		
 	}
+
+
 	if (Input::GetInstance()->GetKey('A'))
 	{
-		mX -= mSpeed;
+		if (mPlayerState == PlayerState::LeftRun || mPlayerState == PlayerState::LeftIdle || mPlayerState == PlayerState::UpRun || mPlayerState == PlayerState::DownRun)
+		{
+			
+				mPlayerState = PlayerState::LeftRun;
+				if (mCurrentAnimation != mLeftRunAnimation)AnimationChange(mLeftRunAnimation);
+				mX -=  mSpeed;
+
+				if (Input::GetInstance()->GetKey('D'))
+				{
+					mX += mSpeed;
+					if (mCurrentAnimation != mLeftIdleAnimation) AnimationChange(mLeftIdleAnimation);
+					mPlayerState = PlayerState::LeftIdle;
+				}
+				if (Input::GetInstance()->GetKeyUp('D'))
+				{
+					if (mCurrentAnimation != mLeftRunAnimation) AnimationChange(mLeftRunAnimation);
+					mPlayerState = PlayerState::LeftRun;
+				}
+			
+		}
 	}
+	
 	// °ÙÅ°¾÷
 	if (!Input::GetInstance()->GetKey('S') &&
 		!Input::GetInstance()->GetKey('A') &&
@@ -167,7 +247,7 @@ void Player::Update()
 			AnimationChange(mDownIdleAnimation);
 			mPlayerState = PlayerState::DownIdle;
 		}
-	}
+	} 
 	if (!Input::GetInstance()->GetKey('A') &&
 		!Input::GetInstance()->GetKey('W') &&
 		!Input::GetInstance()->GetKey('S'))
@@ -213,6 +293,27 @@ void Player::Update()
 			mPlayerState = PlayerState::DownAttack;
 		}
 	}
+	//´ë½¬
+	if (Input::GetInstance()->GetKeyDown(VK_SPACE))
+	{
+		if (mPlayerState == PlayerState::RightRun || mPlayerState == PlayerState::RightIdle || mPlayerState == PlayerState::RightDash)
+		{
+			
+			mPlayerState == PlayerState::RightDash;
+			AnimationChange(mRightDashAnimation);
+			if (mCurrentAnimation->GetIsPlay() == false)
+			{
+				mPlayerState = PlayerState::RightIdle;
+				AnimationChange(mRightIdleAnimation);
+			}
+		}
+	}
+	if (mPlayerState == PlayerState::RightDash)
+	{
+		mX += 10;
+	}
+	
+	
 	//---------------------------------
 	//if (indexY != 0 && indexX != 0)
 	//{

@@ -106,6 +106,9 @@
     <Filter Include="MainGame\Object\Structure">
       <UniqueIdentifier>{24c6a2fb-cdd2-492c-9514-aa8eccf43fd2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\MovingObject">
+      <UniqueIdentifier>{146c50c2-4691-4190-8705-154f551ed5ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -249,6 +252,42 @@
     <ClInclude Include="Structure.h">
       <Filter>MainGame\Object\Structure</Filter>
     </ClInclude>
+    <ClInclude Include="BigZombie.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Golem.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Mazition.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="MazitionBullet.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="RapidZombie.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SpearMan.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SwoardMan.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingObject.h">
+      <Filter>FrameWork\MovingObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MuscleMan.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Slime.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Ward.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -382,6 +421,42 @@
     </ClCompile>
     <ClCompile Include="Structure.cpp">
       <Filter>MainGame\Object\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="BigZombie.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Golem.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Mazition.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="MazitionBullet.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="RapidZombie.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="SpearMan.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="SwoardMan.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingObject.cpp">
+      <Filter>FrameWork\MovingObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MuscleMan.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Slime.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Ward.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

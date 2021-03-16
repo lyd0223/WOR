@@ -63,6 +63,21 @@ void Image::Render(const float x, const float y)
 	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(mBitmap, dxArea, mAlpha);
 	ResetRenderOption();
 }
+void Image::RenderFromBottom(const float x, const float y)
+{
+
+	Vector2 size = mSize * sqrtf(mScale);
+
+	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(sqrtf(mScale), sqrtf(mScale), D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y - size.Y);
+
+	D2D1_RECT_F dxArea = D2D1::RectF(0.f, 0.f, size.X, size.Y);
+
+	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(scaleMatrix * rotateMatrix * translateMatrix);
+	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(mBitmap, dxArea, mAlpha);
+	ResetRenderOption();
+}
 void Image::ScaleRender(const float x, const float y,const float sizeX, const float sizeY)
 {
 	Vector2 size;
@@ -110,7 +125,30 @@ void Image::FrameRender(const float x, const float y, const int frameX, const in
 
 	this->ResetRenderOption();
 }
+void Image::FrameRenderFromBottom(const float x, const float y, const int frameX, const int frameY)
+{
+	//현재 프레임인덱스 
+	int frame = frameY * mMaxFrameX + frameX;
 
+	Vector2 size = mSize * sqrtf(mScale);
+
+	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(sqrtf(mScale), sqrtf(mScale), D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y - size.Y);
+
+	//그릴 영역 세팅 
+	D2D1_RECT_F dxArea = D2D1::RectF(0.0f, 0.0f, size.X, size.Y);
+	D2D1_RECT_F dxSrc = D2D1::RectF((float)mFrameInfo[frame].x, (float)mFrameInfo[frame].y,
+		(float)(mFrameInfo[frame].x + mFrameInfo[frame].width),
+		(float)(mFrameInfo[frame].y + mFrameInfo[frame].height));
+	//최종행렬 세팅
+	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(scaleMatrix * rotateMatrix * translateMatrix);
+	//렌더링 요청
+	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(mBitmap, dxArea, mAlpha,
+		D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, &dxSrc);
+
+	this->ResetRenderOption();
+}
 
 void Image::ScaleFrameRender(const float x, const float y, const int frameX, const int frameY, const int sizeX, const int sizeY)
 {

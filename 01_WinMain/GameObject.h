@@ -33,6 +33,7 @@ public:
 	inline void SetSizeX(float x) { mSizeX = x; }
 	inline float GetSizeY()const { return mSizeY; }
 	inline void SetSizeY(float y) { mSizeY = y; }
+	inline void SetRect(D2D1_RECT_F rc) { mRect = rc; }
 	inline D2D1_RECT_F GetRect()const { return mRect; }
 
 	inline bool GetIsActive()const { return mIsActive; }
