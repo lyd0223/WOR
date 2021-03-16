@@ -103,6 +103,9 @@
     <Filter Include="MainGame\Object\SkillManager">
       <UniqueIdentifier>{e7cf2638-80d1-4995-b692-7fb8f2474dc1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\Structure">
+      <UniqueIdentifier>{24c6a2fb-cdd2-492c-9514-aa8eccf43fd2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -243,6 +246,9 @@
     <ClInclude Include="SkillManager.h">
       <Filter>MainGame\Object\SkillManager</Filter>
     </ClInclude>
+    <ClInclude Include="Structure.h">
+      <Filter>MainGame\Object\Structure</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -373,6 +379,9 @@
     </ClCompile>
     <ClCompile Include="SkillManager.cpp">
       <Filter>MainGame\Object\SkillManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Structure.cpp">
+      <Filter>MainGame\Object\Structure</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

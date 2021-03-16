@@ -28,6 +28,7 @@ enum class PalletePage
 class Scene_MapTool :public Scene
 {
 	//vector<vector<class Tile*>> mTileList;
+	vector<class Structure*> mStructureList;
 	class Tile* mTileList[TileCountY][TileCountX];
 	
 	ClickType mClickType;
