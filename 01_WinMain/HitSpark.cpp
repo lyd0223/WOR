@@ -2,6 +2,7 @@
 #include "HitSpark.h"
 #include "Image.h"
 #include "Animation.h"
+#include "Camera.h"
 
 HitSpark::HitSpark(const string & name, float x, float y, int indexY)
 	: GameObject(name)
@@ -13,7 +14,7 @@ HitSpark::HitSpark(const string & name, float x, float y, int indexY)
 
 void HitSpark::Init()
 {
-	ImageManager::GetInstance()->LoadFromFile(L"HitSpark", Resources(L"Effect/HitSpark.png"), 7, 1);
+	ImageManager::GetInstance()->LoadFromFile(L"HitSpark", Resources(L"Effect/HitSpark.png"), 7, 3);
 	mImage = ImageManager::GetInstance()->FindImage(L"HitSpark");
 
 	mHitSparkAnimation = new Animation();
@@ -37,6 +38,7 @@ void HitSpark::Update()
 
 void HitSpark::Render()
 {
+	//mImage->SetAngle(mAngle * (180 / PI));
 	mImage->SetScale(2.f);
-	mImage->FrameRender(mX, mY, mHitSparkAnimation->GetNowFrameX(), mHitSparkAnimation->GetNowFrameY());
+	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mHitSparkAnimation->GetNowFrameX(), mHitSparkAnimation->GetNowFrameY());
 }

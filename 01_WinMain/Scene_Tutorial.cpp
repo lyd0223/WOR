@@ -4,6 +4,7 @@
 #include "Tile.h"
 #include "Camera.h"
 #include "Player.h"
+#include "FireBoss.h"
 #include <fstream>
 
 void Scene_Tutorial::Init()
@@ -30,6 +31,7 @@ void Scene_Tutorial::Init()
 	
 	mPlayer = new Player("Player",600,1600);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, new FireBoss("FireBoss", mPlayer->GetX() + 150, mPlayer->GetY() + 150));
 
 	ObjectManager::GetInstance()->Init();
 
@@ -49,6 +51,7 @@ void Scene_Tutorial::Release()
 void Scene_Tutorial::Update()
 {
 	CameraManager::GetInstance()->Update();
+	SkillManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();
 
 	//º®À»´À³¥¶§

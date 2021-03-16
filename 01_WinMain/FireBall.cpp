@@ -6,6 +6,7 @@
 #include "Animation.h"
 #include "FlameEffect.h"
 #include "Camera.h"
+#include "HitSpark.h"
 
 FireBall::FireBall(const string & name, float x, float y, float angle)
 	:GameObject(name)
@@ -51,9 +52,10 @@ void FireBall::Update()
 		mFlameEffect->Init();
 	}
 
-
-
 	if (mState == FireBallState::Fire) {
+		//HitSpark* hitSpark = new HitSpark("HitSpark", mX, mY, mAngle);
+		//hitSpark->Init();
+		//ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, hitSpark);
 		mX += cosf(mAngle) * mSpeed;
 		mY += -sinf(mAngle) * mSpeed;
 		mRect = RectMake(mX, mY, mSizeX, mSizeY);

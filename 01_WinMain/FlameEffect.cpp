@@ -16,12 +16,12 @@ void FlameEffect::Init()
 {
 	//ImageManager::GetInstance()->LoadFromFile(L"FlameEffect", Resources(L"Effect/FlameEffect.png"), 6, 1);
 	//mImage = ImageManager::GetInstance()->FindImage(L"FlameEffect");
-	ImageManager::GetInstance()->LoadFromFile(L"ExplosionEffect", Resources(L"Effect/ExplosionEffect.png"), 4, 1);
+	ImageManager::GetInstance()->LoadFromFile(L"ExplosionEffect", Resources(L"Effect/BlastEffect.png"), 7, 1);
 	mImage = ImageManager::GetInstance()->FindImage(L"ExplosionEffect");
 
 	mFlameEffectAnimation = new Animation();
-	mFlameEffectAnimation->InitFrameByStartEnd(0, 0, 3, 0, false);
-	mFlameEffectAnimation->SetFrameUpdateTime(0.05f);
+	mFlameEffectAnimation->InitFrameByStartEnd(0, 0, 6, 0, false);
+	mFlameEffectAnimation->SetFrameUpdateTime(0.02f);
 	mFlameEffectAnimation->Play();
 }
 
@@ -43,7 +43,7 @@ void FlameEffect::Update()
 void FlameEffect::Render()
 {
 	if (mFlameEffectAnimation != nullptr) {
-		mImage->SetAngle(mAngle * -(180 / PI));
+		mImage->SetAngle(mAngle * (180 / PI));
 		CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mFlameEffectAnimation->GetNowFrameX(), mFlameEffectAnimation->GetNowFrameY());
 	}
 }

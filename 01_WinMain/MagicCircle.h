@@ -23,7 +23,8 @@ class MagicCircle : public GameObject
 	CastingSkill mCastingSkill;
 
 	int mFrameIndexX;
-	float mTimeCount;
+	float mTimeCount1;
+	float mTimeCount2;
 	float mAngle;
 public:
 	MagicCircle(const string& name, float x, float y, CastingSkill mCastingSkill);

@@ -12,11 +12,12 @@ MagicCircle::MagicCircle(const string & name, float x, float y, CastingSkill cas
 	mX = x;
 	mY = y;
 	mCastingSkill = castingSkill;
+	mIsActive = true;
 }
 
 void MagicCircle::Init()
 {
-	ImageManager::GetInstance()->LoadFromFile(L"MagicCircle", Resources(L"Skill/Circle.png"), 24, 1);
+	ImageManager::GetInstance()->LoadFromFile(L"MagicCircle", Resources(L"Skill/Circle.png"), 25, 1);
 	mImage = ImageManager::GetInstance()->FindImage(L"MagicCircle");
 	mSizeX = mImage->GetWidth() / 24;
 	mSizeY = mImage->GetHeight();
@@ -26,7 +27,7 @@ void MagicCircle::Init()
 
 	mCircleMakeAnimation = new Animation();
 	mCircleMakeAnimation->InitFrameByStartEnd(0, 0, 23, 0, false);
-	mCircleMakeAnimation->SetFrameUpdateTime(0.05f);
+	mCircleMakeAnimation->SetFrameUpdateTime(0.02f);
 
 	mCircleMakeAnimation->Play();
 }
@@ -45,11 +46,18 @@ void MagicCircle::Update()
 		mMeteor->Init();
 	}
 	
- 	mTimeCount += Time::GetInstance()->DeltaTime();
+ 	mTimeCount1 += Time::GetInstance()->DeltaTime();
+	mTimeCount2 += Time::GetInstance()->DeltaTime();
 	if (mCircleMakeAnimation->GetNowFrameX() == 23) {
-		if (mTimeCount > 1) {
+		if (mTimeCount1 > 0.5) {
 			MakeFlameList();
-			mTimeCount = 0;
+			mTimeCount1 = 0;
+		}
+
+		if (mTimeCount2 > 2) {
+			mIsActive = false;
+			//mIsDestroy = true;
+			mTimeCount2 = 0;
 		}
 	}
 
@@ -80,11 +88,14 @@ void MagicCircle::Update()
 
 void MagicCircle::Render()
 {
-	mImage->SetAngle(mAngle * -(180 / PI));
-	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCircleMakeAnimation->GetNowFrameX(), mCircleMakeAnimation->GetNowFrameY());
+	if (mIsActive) {
+		mImage->SetScale(1.5f);
+		mImage->SetAngle(mAngle * -(180 / PI));
+		CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCircleMakeAnimation->GetNowFrameX(), mCircleMakeAnimation->GetNowFrameY());
+		for (Flame* flame : mFlameList) flame->Render();
+	}
 	if(mMeteor != nullptr) mMeteor->Render();
 	//if (mHitSpark != nullptr) mHitSpark->Render();
-	for (Flame* flame : mFlameList) flame->Render();
 }
 
 void MagicCircle::MakeFlameList()
@@ -92,12 +103,13 @@ void MagicCircle::MakeFlameList()
 	float radius = mSizeX / 3;
 	float endX = mX;
 	float endY = mY - mSizeY ;
-	for (int i = 1; i < 7; i++) {
-		float x = mX + (cosf(PI / 3 * i) * radius);
-		float y = mY - (sinf(PI / 3 * i) * radius);
+	for (int i = 1; i < 14; i++) {
+		float x = mX + (cosf(PI / 6 * i) * radius);
+		float y = mY - (sinf(PI / 6 * i) * radius);
 		float angle = Math::GetAngle(x, y, endX, endY) * 180 / PI;
 		Flame* flame = new Flame("Flame" + i, x, y, angle);
 		flame->Init();
+		flame->SetIsMove();
 		flame->SetEndPositionX(endX);
 		flame->SetEndPositionY(endY);
 		mFlameList.push_back(flame);

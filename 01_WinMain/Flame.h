@@ -11,6 +11,8 @@ class Flame : public GameObject
 	float mAngle;
 	float mEndPositionX;
 	float mEndPositionY;
+
+	bool mIsMove;
 public:
 	Flame(const string& name) : GameObject(name) {};
 	Flame(const string& name, float x, float y, float angle);
@@ -24,5 +26,6 @@ public:
 
 	void SetEndPositionX(float x) { mEndPositionX = x; }
 	void SetEndPositionY(float y) { mEndPositionY = y; }
+	void SetIsMove() { mIsMove = true; }
 };
 

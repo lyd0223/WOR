@@ -5,9 +5,10 @@ class SkillManager
 	Singleton(SkillManager)
 
 private:
-	typedef vector<class GameObject*>::iterator SkillIter;
-	vector<class GameObject*> mSkillList;
+	typedef map<string, vector<class GameObject*>>::iterator SkillIter;
+	map<string, vector<class GameObject*>> mSkillList;
 
+	float mFrameCount;
 public:
 	void Init();
 	void Release();
@@ -16,8 +17,9 @@ public:
 
 	void FlameSkill(const string& name, float x, float y, float angle);
 	void FireBallSkill(const string& name, float x, float y, float angle);
-	void MeteorSkill(float x, float y, float angle);
+	void MeteorSkill(const string& name, float x, float y);
+	void KickFlame(const string& name, float x, float y, float angle);
 
-	vector<GameObject*> GetSkillList() { return mSkillList; }
-	class GameObject* FindSkill(const string key);
+	map<string, vector<class GameObject*>> GetSkillList() { return mSkillList; }
+	class vector<GameObject*> FindSkillList(const string key);
 };

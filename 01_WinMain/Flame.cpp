@@ -39,17 +39,22 @@ void Flame::Update()
 		mIsDestroy = true;
 	}
 
-	mAngle = Math::GetAngle(mX, mY, mEndPositionX, mEndPositionY);
+	if (mEndPositionX != 0) {
+		mAngle = Math::GetAngle(mX, mY, mEndPositionX, mEndPositionY);
+	}
 
-	mX += cosf(mAngle) * 1.f;
-	mY += -sinf(mAngle) * 1.f;
-	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	if (mIsMove) {
+		mX += cosf(mAngle) * 2.f;
+		mY += -sinf(mAngle) * 2.f;
+		mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	}
 	
 }
 
 void Flame::Render()
 {
-	mImage->SetScale(0.3f);
+	mImage->SetScale(0.5f);
+	mImage->SetAngle(mAngle * (180 / PI));
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mFlameAnimation->GetNowFrameX(), mFlameAnimation->GetNowFrameY());
 }
 
