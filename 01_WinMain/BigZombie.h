@@ -1,8 +1,8 @@
 #pragma once
-#include "MovingObject.h"
+#include "MonsterObject.h"
 #define AnimationTime 0.1f
 #define TileSize 64
-class BigZombie : public MovingObject
+class BigZombie : public MonsterObject
 {
 protected:
 	Image* mImage;

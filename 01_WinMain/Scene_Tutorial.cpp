@@ -4,6 +4,17 @@
 #include "Tile.h"
 #include "Camera.h"
 #include "Player.h"
+#include"BigZombie.h"
+#include"Golem.h"
+#include"Mazition.h"
+#include"MazitionBullet.h"
+#include"MuscleMan.h"
+#include"RapidZombie.h"
+#include"Slime.h"
+#include"SpearMan.h"
+#include"SwoardMan.h"
+#include"Ward.h"
+#include"Zombie.h"
 #include "FireBoss.h"
 #include <fstream>
 
@@ -31,6 +42,54 @@ void Scene_Tutorial::Init()
 	
 	mPlayer = new Player("Player",600,1600);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
+
+	mBigZombie = new BigZombie("BigZombie", 400, 1600);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mBigZombie);
+
+	mGolem = new Golem("Golem", 200, 1600);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mGolem);
+
+	mMazition = new Mazition("Mazition", 800, 1600);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazition);
+
+	mMazitionBullet = new MazitionBullet("MazitionBullet", 1000, 1600);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazitionBullet);
+
+	mMuscleMan = new MuscleMan("MuscleMan", 200, 1800);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMuscleMan);
+
+	mRapidZombie = new RapidZombie("RapidZombie", 400, 1800);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mRapidZombie);
+
+	mSlime = new Slime("Slime", 600, 1800);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSlime);
+
+	mSwoardMan = new SwoardMan("SwoardMan", 800, 1800);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSwoardMan);
+
+	mSpearMan = new SpearMan("SpearMan", 1000, 1800);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSpearMan);
+
+	mWard = new Ward("Ward", 1200, 1800);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mWard);
+
+	mZombie = new Zombie("Zombie", 1200, 1600);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie);
+
+
+
+	mMonsterList[0] = (MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "BigZombie");
+	mMonsterList[1] = (MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "Golem");
+	mMonsterList[2] = (MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "Mazition");
+	mMonsterList[3] = (MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "MazitionBullet");
+	mMonsterList[4] = (MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "MuscleMan");
+	mMonsterList[5] = (MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "RapidZombie");
+	mMonsterList[6] = (MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "Slime");
+	mMonsterList[7] = (MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "SpearMan");
+	mMonsterList[8] = (MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "SwoardMan");
+	mMonsterList[9] = (MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "Ward");
+	mMonsterList[10] = (MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "Zombie");
+
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, new FireBoss("FireBoss", mPlayer->GetX() + 150, mPlayer->GetY() + 150));
 
 	ObjectManager::GetInstance()->Init();
@@ -39,7 +98,7 @@ void Scene_Tutorial::Init()
 
 	camera->Init();
 	camera->ChangeMode(Camera::Mode::Follow);
-	camera->SetTarget(mPlayer);
+	camera->SetTarget(mBigZombie);
 	CameraManager::GetInstance()->SetMainCamera(camera);
 }
 
@@ -54,7 +113,7 @@ void Scene_Tutorial::Update()
 	SkillManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();
 
-	//벽을느낄때
+	//플레이어가 벽을느낄때
 	for (int y = mPlayer->GetY() / TileSize - 1; y < mPlayer->GetY() / TileSize + 1; y++)
 	{
 		for (int x = mPlayer->GetX() / TileSize - 1; x < mPlayer->GetX() / TileSize + 1; x++)
@@ -104,6 +163,63 @@ void Scene_Tutorial::Update()
 	{
 		mPlayer->GetSpeed() - 2.f;
 	}
+
+	//몬스터가 벽을느낄때
+	for (int z = 0; z < 11; z++)
+	{
+		for (int y = mMonsterList[z]->GetY() / TileSize - 1; y < mMonsterList[z]->GetY() / TileSize + 1; y++)
+		{
+			for (int x = mMonsterList[z]->GetX() / TileSize - 1; x < mMonsterList[z]->GetX() / TileSize + 1; x++)
+			{
+				D2D1_RECT_F tileRect = mTileList[y][x]->GetRect();
+				D2D1_RECT_F monsterRect = mMonsterList[z]->GetRect();
+				D2D1_RECT_F tempRect;
+				if (mTileList[y][x]->GetType() == Type::Wall)
+				{
+					if (IntersectRect(tempRect, &tileRect, &monsterRect))
+					{
+						if (y == (int)mMonsterList[z]->GetY() / TileSize && x == (int)mMonsterList[z]->GetX() / TileSize - 1)
+							mMonsterList[z]->SetX(mMonsterList[z]->GetX() + (tempRect.right-tempRect.left));
+						else if (y == (int)mMonsterList[z]->GetY() / TileSize && x == (int)mMonsterList[z]->GetX() / TileSize + 1)
+							mMonsterList[z]->SetX(mMonsterList[z]->GetX() - (tempRect.right - tempRect.left));
+						else if (y == (int)mMonsterList[z]->GetY() / TileSize - 1 && x == (int)mMonsterList[z]->GetX() / TileSize)
+							mMonsterList[z]->SetY(mMonsterList[z]->GetY() + (tempRect.bottom - tempRect.top));
+						else if (y == (int)mMonsterList[z]->GetY() / TileSize + 1 && x == (int)mMonsterList[z]->GetX() / TileSize)
+							mMonsterList[z]->SetY(mMonsterList[z]->GetY() - (tempRect.bottom - tempRect.top));
+					}
+				}
+				if (mTileList[y][x]->GetType() == Type::Cliff)
+				{
+					if (IntersectRect(tempRect, &tileRect, &monsterRect))
+					{
+						float monsterX = mMonsterList[z]->GetX();
+						float monsterY = mMonsterList[z]->GetY();
+						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == monsterRect.bottom)
+							monsterY -= TileSize;
+						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == monsterRect.top)
+							monsterY += TileSize;
+						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == monsterRect.left)
+							monsterX += TileSize;
+						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == monsterRect.right)
+							monsterX -= TileSize;
+					}
+
+				}
+			}
+		}
+	}
+	for (int z = 0; z < 11; z++)
+	{
+		if (mTileList[(int)mMonsterList[z]->GetY() / TileSize][(int)mMonsterList[z]->GetX() / TileSize]->GetType() == Type::Floor)
+		{
+			mMonsterList[z]->GetSpeed();
+		}
+		else if (mTileList[(int)mMonsterList[z]->GetY() / TileSize][(int)mMonsterList[z]->GetX() / TileSize]->GetType() == Type::Thorn)
+		{
+			mMonsterList[z]->GetSpeed() - 2.f;
+		}
+	}
+
 }
 
 void Scene_Tutorial::Render()

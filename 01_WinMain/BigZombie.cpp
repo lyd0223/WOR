@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Image.h"
-#include "Player.h"
 #include"Camera.h"
 #include"Animation.h"
 #include"BigZombie.h"
@@ -20,8 +19,8 @@ void BigZombie::Init()
 	mImage = ImageManager::GetInstance()->FindImage(L"BigZombie");
 	mMonsterState = MonsterState::RightIdle;
 	mSpeed = 3.f;
-	mSizeX = TileSize + 50;
-	mSizeY = TileSize + 50;
+	mSizeX = TileSize + 75;
+	mSizeY = TileSize + 75;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
@@ -47,7 +46,22 @@ void BigZombie::Release()
 
 void BigZombie::Update()
 {
-	
+	if (Input::GetInstance()->GetKey('W'))
+	{
+		mY -= 5;
+	}
+	if (Input::GetInstance()->GetKey('S'))
+	{
+		mY += 5;
+	}
+	if (Input::GetInstance()->GetKey('A'))
+	{
+		mX -= 5;
+	}
+	if (Input::GetInstance()->GetKey('D'))
+	{
+		mX += 5;
+	}
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }

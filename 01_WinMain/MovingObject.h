@@ -33,6 +33,8 @@ public:
 	void Release()override {};
 	void Update()override{};
 	void Render()override{};
+	float GetSpeed() { return mSpeed; }
+	float GetAngle() { return mAngle; }
 
 	
 };

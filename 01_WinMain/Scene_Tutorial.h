@@ -8,6 +8,18 @@
 class Scene_Tutorial : public Scene
 {
 	class Player* mPlayer;
+	class BigZombie* mBigZombie;
+	class Golem* mGolem;
+	class Mazition* mMazition;
+	class MazitionBullet* mMazitionBullet;
+	class MuscleMan* mMuscleMan;
+	class RapidZombie* mRapidZombie;
+	class Slime* mSlime;
+	class SpearMan* mSpearMan;
+	class SwoardMan* mSwoardMan;
+	class Ward* mWard;
+	class Zombie* mZombie;
+	class MonsterObject* mMonsterList[11];
 	class Tile* mTileList[TileCountY][TileCountX];
 
 public:

@@ -1,5 +1,5 @@
 #pragma once
-#include "MovingObject.h"
+#include "MonsterObject.h"
 #define AnimationTime 0.1f
 #define TileSize 64
 enum class MuscleManState
@@ -9,7 +9,7 @@ enum class MuscleManState
 	AttackReady,
 	Attack
 };
-class MuscleMan : public MovingObject
+class MuscleMan : public MonsterObject
 {
 protected:
 	Image* mImage;

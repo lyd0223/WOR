@@ -54,7 +54,22 @@ void Slime::Release()
 
 void Slime::Update()
 {
-
+	if (Input::GetInstance()->GetKey('W'))
+	{
+		mY -= 5;
+	}
+	if (Input::GetInstance()->GetKey('S'))
+	{
+		mY += 5;
+	}
+	if (Input::GetInstance()->GetKey('A'))
+	{
+		mX -= 5;
+	}
+	if (Input::GetInstance()->GetKey('D'))
+	{
+		mX += 5;
+	}
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }

@@ -109,6 +109,9 @@
     <Filter Include="FrameWork\MovingObject">
       <UniqueIdentifier>{146c50c2-4691-4190-8705-154f551ed5ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\Enemy\MonsetObject">
+      <UniqueIdentifier>{d546738c-d667-4064-9ff9-7701aeedfa2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -291,6 +294,9 @@
     <ClInclude Include="FireWing.h">
       <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="MonsterObject.h">
+      <Filter>MainGame\Object\Enemy\MonsetObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -463,6 +469,9 @@
     </ClCompile>
     <ClCompile Include="FireWing.cpp">
       <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterObject.cpp">
+      <Filter>MainGame\Object\Enemy\MonsetObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
