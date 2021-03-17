@@ -288,6 +288,9 @@
     <ClInclude Include="Ward.h">
       <Filter>MainGame\Object\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="FireWing.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -457,6 +460,9 @@
     </ClCompile>
     <ClCompile Include="Ward.cpp">
       <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="FireWing.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
