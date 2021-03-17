@@ -3,8 +3,6 @@
 #define TileCountX 100
 #define TileCountY 100
 #define TileSize 64
-#define PalleteSizeX 8
-#define PalleteSizeY 8
 #include <stack>
 
 enum class ClickType
@@ -29,27 +27,35 @@ class Scene_MapTool :public Scene
 {
 	//vector<vector<class Tile*>> mTileList;
 	vector<class Structure*> mStructureList;
+	bool mBookIsOpen;
 	class Tile* mTileList[TileCountY][TileCountX];
 	
 	ClickType mClickType;
 
 	PalletePage mPalletePage;
-	
-
-	class TilePallete* mPallete[PalleteSizeY][PalleteSizeX];
+		
+	Image* mPalleteImage;
+	class TilePallete* mPallete_Floor1[2][8];
+	class TilePallete* mPallete_Floor2[5][8];
+	class TilePallete* mPallete_Wall1[2][2];
+	class TilePallete* mPallete_Wall2[3][3];
+	class TilePallete* mPallete_Wall3[2][2];
+	class TilePallete* mPallete_Wall4[3][3];
+	class TilePallete* mPallete_Wall5;
+	class TilePallete* mPallete_Wall6;
+	class TilePallete* mPallete_Wall7;
+	class TilePallete* mPallete_Wall8;
+	class TilePallete* mPallete_Wall9;
+	class TilePallete* mPallete_Wall10;
 	class TilePallete* mPallete2;
 
-	// struct페이지
-	class TilePallete* mPallete_Structure1;
-	class TilePallete* mPallete_Structure2;
-	class TilePallete* mPallete_Structure3;
-	class TilePallete* mPallete_Structure4;
+	class TilePallete* mPallete_Structure[3];
 
 	int mPalletePageX;
-	int mPalletePageY;
 
 	class TilePallete* mCurrentPallete;
 	Image* mBackGroundImage;
+	float mBackGroundX;
 	
 	//버튼
 	class Button* mPalleteMainButton;
