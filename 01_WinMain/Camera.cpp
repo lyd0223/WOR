@@ -117,13 +117,13 @@ void Camera::RenderText(float x1, float y1, wstring text, int size)
 	D2DRenderer::GetInstance()->RenderText(x1-mRect.left, y1-mRect.top, text, size,D2DRenderer::DefaultBrush::Red);
 }
 
-void Camera::RenderRect(D2D1_RECT_F rc)
+void Camera::RenderRect(D2D1_RECT_F rc, D2D1::ColorF color)
 {
 	rc.left -= mRect.left;
 	rc.right -= mRect.left;
 	rc.top -= mRect.top;
 	rc.bottom -= mRect.top;
-	::RenderRect(rc);
+	::RenderRect(rc,color);
 }
 
 void Camera::RenderGizmoRect( D2D1_RECT_F rc, D2D1::ColorF::Enum color)

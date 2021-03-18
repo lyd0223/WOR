@@ -297,6 +297,9 @@
     <ClInclude Include="MonsterObject.h">
       <Filter>MainGame\Object\Enemy\MonsetObject</Filter>
     </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>MainGame\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -472,6 +475,9 @@
     </ClCompile>
     <ClCompile Include="MonsterObject.cpp">
       <Filter>MainGame\Object\Enemy\MonsetObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>MainGame\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

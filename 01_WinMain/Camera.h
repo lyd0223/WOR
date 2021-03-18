@@ -32,7 +32,7 @@ public:
 	void AlphaScaleRender(HDC hdc,class Image* image, int x, int y, int width, int height, float alpha);
 	void AlphaScaleFrameRender(HDC hdc, class Image* image, int x, int y, int frameX, int frameY, int width, int height, float alpha);*/
 	void RenderText(float x1, float y1, wstring text, int size);
-	void RenderRect(D2D1_RECT_F rc);
+	void RenderRect(D2D1_RECT_F rc, D2D1::ColorF color = D2D1::ColorF::Black);
 	void RenderGizmoRect( D2D1_RECT_F rc, D2D1::ColorF::Enum color = D2D1::ColorF::Red);
 	//void RenderEllipse(HDC hdc, float x, float y, float radius);
 
