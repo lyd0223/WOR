@@ -121,7 +121,7 @@ void FireBoss::Update()
 		//Move();
 		//MakePattern();
 		//mFireBossState = FireBossState::Dash;
-		MakePatternFuncList();
+		//MakePatternFuncList();
 	}
 
 	if (mFireBossState == FireBossState::Idle) {

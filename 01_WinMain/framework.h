@@ -55,6 +55,7 @@ using namespace std;
 #include "SkillManager.h"
 #include "D2DRenderer.h"
 #include "Vector2.h"
+#include "PathFinder.h"
 
 extern POINT _mousePosition;	//마우스 좌표
 extern HWND	_hWnd;
