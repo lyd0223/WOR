@@ -7,6 +7,7 @@
 
 TileMap::TileMap(string sceneName)
 {
+	mName = "TileMap";
 	for (int y = 0; y < TileCountY; y++)
 	{
 		for (int x = 0; x < TileCountX; x++)
