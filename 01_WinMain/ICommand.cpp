@@ -8,14 +8,14 @@ IBrushTile::IBrushTile(Tile* tile, TilePallete* excuteData)
 	mTargetTile = tile;
 	mExecutePalleteData = excuteData;
 
-	//mSaveImageKey = mTargetTile->GetImage()->GetKeyName();
+	mSaveImageKey = mTargetTile->GetImage()->GetKey();
 	mSaveFrameX = tile->GetFrameIndexX();
 	mSaveFrameY = tile->GetFrameIndexY();
 }
 
 void IBrushTile::Excute()
 {
-	//mTargetTile->SetImage(IMAGEMANAGER->FindImage(mExecutePalleteData->GetImage()->GetKeyName()));
+	mTargetTile->SetImage(ImageManager::GetInstance()->FindImage(mExecutePalleteData->GetImage()->GetKey()));
 	mTargetTile->SetFrameIndexX(mExecutePalleteData->GetFrameX());
 	mTargetTile->SetFrameIndexY(mExecutePalleteData->GetFrameY());
 }

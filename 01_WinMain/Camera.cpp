@@ -44,7 +44,7 @@ void Camera::Update()
 		mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 		break;
 	case Camera::Mode::MapTool:
-		mSizeX = WINSIZEX - 300;
+		mSizeX = WINSIZEX;
 		mSizeY = WINSIZEY;
 		if (Input::GetInstance()->GetKey('A'))mX -= mMoveSpeed;
 		if (Input::GetInstance()->GetKey('D'))mX += mMoveSpeed;
@@ -64,7 +64,10 @@ void Camera::Render(Image * image, float x, float y)
 {
 	image->Render(x - mRect.left, y - mRect.top);
 }
-
+void Camera::RenderFromBottom(Image* image, float x, float y)
+{
+	image->RenderFromBottom(x - mRect.left, y - mRect.top);
+}
 //void Camera::Render(HDC hdc, Image * image, int x, int y, int tempX, int tempY, int tempWidth, int tempHeight)
 //{
 //	image->Render(hdc, x - mRect.left, y - mRect.top, tempX, tempY, tempWidth, tempHeight);
@@ -73,6 +76,10 @@ void Camera::Render(Image * image, float x, float y)
 void Camera::FrameRender(Image * image, float x, float y, int frameX, int frameY)
 {
 	image->FrameRender(x - mRect.left, y - mRect.top, frameX, frameY);
+}
+void Camera::FrameRenderFromBottom(Image* image, float x, float y, int frameX, int frameY)
+{
+	image->FrameRenderFromBottom(x - mRect.left, y - mRect.top, frameX, frameY);
 }
 //
 //void Camera::AlphaRender(HDC hdc, Image * image, int x, int y, float alpha)
@@ -119,13 +126,13 @@ void Camera::RenderRect(D2D1_RECT_F rc)
 	::RenderRect(rc);
 }
 
-void Camera::RenderGizmoRect( D2D1_RECT_F rc)
+void Camera::RenderGizmoRect( D2D1_RECT_F rc, D2D1::ColorF::Enum color)
 {
 	rc.left -= mRect.left;
 	rc.right -= mRect.left;
 	rc.top -= mRect.top;
 	rc.bottom -= mRect.top;
-	Gizmo::GetInstance()->DrawRect(rc,D2D1::ColorF::Red);
+	Gizmo::GetInstance()->DrawRect(rc,color);
 }
 
 //void Camera::RenderEllipse(HDC hdc, float x, float y, float radius)
