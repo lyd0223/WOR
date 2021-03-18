@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "FireWing.h"
 #include "Flame.h"
+#include "FireBall.h"
 
 FireBoss::FireBoss(const string& name, float x, float y)
 	:Enemy(name)
@@ -39,8 +40,8 @@ void FireBoss::Init()
 	AnimationSet(&mLeftSpecialAttackAnimation, false, false, 9, 1, 11, 1, 0.1f);
 	AnimationSet(&mRightSpecialAttackAnimation,false, false ,9, 0, 11, 0, 0.1f);
 
-	AnimationSet(&mLeftKickAnimation, false, false, 0, 3, 11, 3, 0.05f);
-	AnimationSet(&mRightKickAnimation, false, false, 0, 2, 11, 2, 0.05f);
+	AnimationSet(&mLeftKickAnimation, false, false, 0, 3, 11, 3, 0.07f);
+	AnimationSet(&mRightKickAnimation, false, false, 0, 2, 11, 2, 0.07f);
 
 	AnimationSet(&mLeftAttackReadyAnimation, false, false, 0, 5, 1, 5, 0.1f);;
 	AnimationSet(&mRightAttackReadyAnimation, false, false, 0, 4, 1, 4, 0.1f);
@@ -57,13 +58,12 @@ void FireBoss::Init()
 	AnimationSet(&mRightStempAnimation, false, false, 10, 8, 11, 8, 0.7f);
 
 	mCurrentAnimation = mLeftIdleAnimation;
-	mPattern = BossPattern::Idle;
+	mFireBossState = FireBossState::Idle;
 	mCurrentAnimation->Play();
 
 
 	mPlayer = (Player*) ObjectManager::GetInstance()->FindObject("Player");
 	mAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
-
 }
 
 void FireBoss::Release()
@@ -96,7 +96,6 @@ void FireBoss::Release()
 
 void FireBoss::Update()
 {
-	function<void(void)> func;
 	mCurrentAnimation->Update();
 
 	mAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
@@ -115,74 +114,34 @@ void FireBoss::Update()
 	}
 
 	if (Input::GetInstance()->GetKeyDown(VK_SPACE)) {
+		//AttackReady();
 		//FireBallThrowPattern();
 		//StempPattern();
 		//KickPattern();
+		//Move();
+		//MakePattern();
+		//mFireBossState = FireBossState::Dash;
+		MakePatternFuncList();
+	}
+
+	if (mFireBossState == FireBossState::Idle) {
+		BossStateChange();
+	}
+
+	if (mFireBossState == FireBossState::AttackReady) {
+		AttackReady();
+	}
+
+	if (mFireBossState == FireBossState::Throw) {
+		FireBallThrowPattern();
+	}
+
+	if (mFireBossState == FireBossState::Kick) {
+		KickPattern();
+	}
+
+	if (mFireBossState == FireBossState::Dash) {
 		Move();
-	}
-
-	if (mPattern == BossPattern::Throw && mCurrentAnimation->GetNowFrameX() == 10) {
-
-	}
-
-	if (mPattern == BossPattern::Kick) {
-
-		if (mCurrentAnimation->GetNowFrameX() == 2 || mCurrentAnimation->GetNowFrameX() == 5 || mCurrentAnimation->GetNowFrameX() == 7) {
-			MakeFlame();
-		}
-
-		if (mCurrentAnimation->GetNowFrameX() < 9) {
-			mX += cosf(mKickAngle) * 5.f;
-			mY += -sinf(mKickAngle) * 5.f;
-		}
-		else {
-			mX += cosf(mKickAngle) * 20.f;
-			mY += -sinf(mKickAngle) * 20.f;
-		}
-
-		if (mCurrentAnimation->GetNowFrameX() == 11)	mPattern = BossPattern::Idle;
-	}
-
-	if (mPattern == BossPattern::Dash) {
-		mMoveDistance++;
-		mX += cosf(mAngle) * 10.f;
-		mY += -sinf(mAngle) * 10.f;
-
-		float width = mX - mPlayer->GetX();
-		float height = mY - mPlayer->GetY();
-		float distance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY());
-
-		if (width > height) {
-			if (mX > mPlayer->GetX()) {
-				AnimationChange(mLeftDashAnimation);
-			}
-			else {
-				AnimationChange(mRightDashAnimation);
-			}
-		}
-		else {
-			if (mY > mPlayer->GetY()) {
-				AnimationChange(mUpDashAnimation);
-			}
-			else {
-				AnimationChange(mDownDashAnimation);
-			}
-		}
-
-		if (distance < 100) {
-			if (mX < mPlayer->GetX()) AnimationChange(mRightDashEndAnimation);
-			else AnimationChange(mLeftDashEndAnimation);
-			KickPattern();
-		}
-
-		if (mMoveDistance > 5) {
-			mMoveDistance = 0;
-			Flame* flame = new Flame("Flame", mX, mY, 0.f);
-			flame->SetEndPositionX(0);
-			flame->SetEndPositionY(0);
-			flame->Init();
-			ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, flame);
-		}
 	}
 }
 
@@ -211,27 +170,77 @@ void FireBoss::AnimationChange(Animation * changeanimation)
 
 void FireBoss::Move()
 {
-	mPattern = BossPattern::Dash;
+	mFireBossState = FireBossState::Dash;
+	mX += cosf(mAngle) * 10.f;
+	mY += -sinf(mAngle) * 10.f;
+
+	float width = mX - mPlayer->GetX();
+	float height = mY - mPlayer->GetY();
+	float distance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY());
+
+	if (width > height) {
+		if (mX > mPlayer->GetX()) {
+			AnimationChange(mLeftDashAnimation);
+		}
+		else {
+			AnimationChange(mRightDashAnimation);
+		}
+	}
+	else {
+		if (mY > mPlayer->GetY()) {
+			AnimationChange(mUpDashAnimation);
+		}
+		else {
+			AnimationChange(mDownDashAnimation);
+		}
+	}
+
+	if (distance < 100) {
+		if (mX < mPlayer->GetX()) AnimationChange(mRightDashEndAnimation);
+		else AnimationChange(mLeftDashEndAnimation);
+
+		if (mFireWing == nullptr) {
+			MakeFireWing();
+		}
+
+		//if (mFireWing == nullptr) {
+		KickPattern();
+		//}
+	}
+
+	mMoveDistance++;
+	if (mMoveDistance > 5) {
+		mMoveDistance = 0;
+		Flame* flame = new Flame("Flame", mX, mY, 0.f);
+		flame->SetEndPositionX(0);
+		flame->SetEndPositionY(0);
+		flame->Init();
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, flame);
+	}
 }
 
-void FireBoss::AttckReady()
+void FireBoss::AttackReady()
 {
+	mIsFuncEnd = false;
 	if (mX < mPlayer->GetX()) AnimationChange(mRightAttackReadyAnimation);
 	else AnimationChange(mLeftAttackReadyAnimation);
 
-	mPattern = BossPattern::AttackReady;
+	mFireBossState = FireBossState::AttackReady;
 
-	FireWing* fireWing = new FireWing("FireWing", mX, mY);
+	FireWing* fireWing = new FireWing("FireWing", mX, mY - 80);
 	fireWing->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, fireWing);
+
+	BossStateChange();
 }
 
 void FireBoss::StempPattern()
 {
+	mIsFuncEnd = false;
 	if (mX < mPlayer->GetX()) AnimationChange(mRightStempAnimation);
 	else AnimationChange(mLeftStempAnimation);
 
-	mPattern = BossPattern::Stemp;
+	mFireBossState = FireBossState::Stemp;
 	if (mCurrentAnimation->GetNowFrameX() == 10) {
 		for (int i = 1; i < 5; i++) {
 			float x = mPlayer->GetX() + cosf(PI / 4 * i * 2 + 45) * 150;
@@ -246,37 +255,46 @@ void FireBoss::StempPattern()
 
 void FireBoss::ThreeRushPattern()
 {
-
+	mIsFuncEnd = false;
 }
 
 void FireBoss::FireBallThrowPattern()
 {
+	mIsFuncEnd = false;
 	float width = mX - mPlayer->GetX();
 	float height = mY - mPlayer->GetY();
 
-	mPattern = BossPattern::Throw;
-	if (width > height) {
-		if (mX > mPlayer->GetX()) {
-			AnimationChange(mLeftThrowAnimation);
+	if (mFireBossState != FireBossState::Throw) {
+
+		if (width > height) {
+			if (mX > mPlayer->GetX()) {
+				AnimationChange(mLeftThrowAnimation);
+			}
+			else {
+				AnimationChange(mRightThrowAnimation);
+			}
 		}
 		else {
-			AnimationChange(mRightThrowAnimation);
+			if (mY > mPlayer->GetY()) {
+				AnimationChange(mUpThrowAnimation);
+			}
+			else {
+				AnimationChange(mDownThrowAnimation);
+			}
 		}
-	}
-	else {
-		if (mY > mPlayer->GetY()) {
-			AnimationChange(mUpThrowAnimation);
-		}
-		else {
-			AnimationChange(mDownThrowAnimation);
-		}
+
+		mFireBossState = FireBossState::Throw;
 	}
 	
 	for (int i = 0; i < 5; i++) {
 		float x = mX + (cosf(mAngle - PI / 2 + PI / 4 * i) * 100);
 		float y = mY - (sinf(mAngle - PI / 2 + PI / 4 * i) * 100);
 
-		SkillManager::GetInstance()->FireBallSkill("FireBall", x, y, mAngle);
+		//SkillManager::GetInstance()->FireBallSkill("FireBall" + i, x, y, mAngle, i * 20);
+		FireBall* fireBall = new FireBall("FireBall", x, y, mAngle);
+		fireBall->Init();
+		fireBall->SetDelay(i * 20);
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, fireBall);
 	}
 }
 
@@ -284,6 +302,7 @@ void FireBoss::MeteorPattern()
 {
 	// 보스 맵이 있으면 보스맵 사이즈만큼 랜덤값 
 
+	mIsFuncEnd = false;
 	for (int i = 0; i < 25; i++) {
 		float randomX = 0;
 		float randomY = 0;
@@ -293,24 +312,137 @@ void FireBoss::MeteorPattern()
 
 void FireBoss::DragonArcWavePattern()
 {
-
 }
 
 void FireBoss::KickPattern()
 {
-	if (mX < mPlayer->GetX()) AnimationChange(mRightKickAnimation);
-	else AnimationChange(mLeftKickAnimation);
+	mIsFuncEnd = false;
+	
+	if (mFireBossState != FireBossState::Kick) {
+		if (mX < mPlayer->GetX()) AnimationChange(mRightKickAnimation);
+		else AnimationChange(mLeftKickAnimation);
 
-	mPattern = BossPattern::Kick;
-	mKickAngle = mAngle;
+		mFireBossState = FireBossState::Kick;
+		mKickAngle = mAngle;
+	}
+
+
+
+	if (mCurrentAnimation->GetNowFrameX() == 2 || mCurrentAnimation->GetNowFrameX() == 5 || mCurrentAnimation->GetNowFrameX() == 7) {
+		MakeFlame();
+	}
+	if (mCurrentAnimation->GetNowFrameX() == 9) {
+
+	}
+
+	if (mCurrentAnimation->GetNowFrameX() < 9) {
+		mX += cosf(mKickAngle) * 5.f;
+		mY += -sinf(mKickAngle) * 5.f;
+	}
+	else {
+		mX += cosf(mKickAngle) * 20.f;
+		mY += -sinf(mKickAngle) * 20.f;
+	}
+
+	if (mCurrentAnimation->GetNowFrameX() == 11) {
+		mFireBossState = FireBossState::Idle;
+		mIsFuncEnd = true;
+	}
 }
 
 void FireBoss::MakeFlame()
 {
-	for (int i = 0; i < 18; i++) {
-		float x = mX + (cosf(mKickAngle - PI / 2 + PI / 18 * i) * 100);
-		float y = mY - (sinf(mKickAngle - PI / 2 + PI / 18 * i) * 100);
-
-		SkillManager::GetInstance()->KickFlame("KickFlame" + i, x, y, mKickAngle);
+	for (int i = 0; i < 6; i++) {
+		float x = mX + (cosf(mKickAngle - PI / 2 + PI / 6 * i) * 100);
+		float y = mY - (sinf(mKickAngle - PI / 2 + PI / 6 * i) * 100);
+		float endY = mY - (sinf(mKickAngle - PI / 2 + PI / 6 * i) * 200);
+		float endX = mX + (cosf(mKickAngle - PI / 2 + PI / 6 * i) * 200);
+		SkillManager::GetInstance()->KickFlame("KickFlame" + i, x, y, mKickAngle, endX, endY);
 	}
+}
+
+void FireBoss::MakeFireWing()
+{
+	mFireWing = new FireWing("FireWing", mX, mY);
+	mFireWing->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, mFireWing);
+}
+
+void FireBoss::BossStateChange()
+{
+	if (mFireBossStateList.size() != 0) {
+		mFireBossState = mFireBossStateList[0];
+
+		mFireBossStateList.erase(mFireBossStateList.begin());
+	}
+}
+
+void FireBoss::MakePatternFuncList()
+{
+	mFireBossStateList.clear();
+
+	mFireBossStateList.push_back(FireBossState::AttackReady);
+
+	while (mFireBossStateList.size() < 3) {
+		FireBossState temp = FireBossStateCheck(Random::GetInstance()->RandomInt(2, 6));
+
+		for (int i = 0; i < mFireBossStateList.size(); i++) {
+			if (mFireBossStateList[i] != temp) mFireBossStateList.push_back(temp);
+		}
+	}
+
+	mFireBossStateList.push_back(FireBossState::Refresh);
+
+	//mFireBossStateList.clear();
+
+	//mFireBossStateList.insert(FireBossState::AttackReady);
+
+	//while (mFireBossStateList.size() > 4) {
+	//	int randomInt = Random::GetInstance()->RandomInt(2, 6);
+	//
+	//	mFireBossStateList.insert(FireBossStateCheck(randomInt));
+	//}
+	//
+	//mFireBossStateList.insert(FireBossState::Refresh);
+}
+
+FireBossState FireBoss::FireBossStateCheck(int index)
+{
+	FireBossState temp;
+	switch (index) {
+	case 0:
+		temp = FireBossState::Idle;
+		break;
+	case 1:
+		temp = FireBossState::AttackReady;
+		break;
+	case 2:
+		temp = FireBossState::Dash;
+		break;
+	case 3:
+		temp = FireBossState::Stemp;
+		break;
+	case 4:
+		temp = FireBossState::Throw;
+		break;
+	case 5:
+		temp = FireBossState::Kick;
+		break;
+	case 6:
+		temp = FireBossState::Meteor;
+		break;
+	case 7:
+		temp = FireBossState::DragonArc;
+		break;
+	case 8:
+		temp = FireBossState::SpecialAttack;
+		break;
+	case 9:
+		temp = FireBossState::Refresh;
+		break;
+	case 10:
+		temp = FireBossState::Stun;
+		break;
+	}
+	return temp;
 }

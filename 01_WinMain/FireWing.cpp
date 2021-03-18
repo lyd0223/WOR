@@ -18,7 +18,7 @@ void FireWing::Init()
 
 	mFireWingAnimation = new Animation();
 	mFireWingAnimation->InitFrameByStartEnd(0, 0, 7, 0, false);
-	mFireWingAnimation->SetFrameUpdateTime(0.01f);
+	mFireWingAnimation->SetFrameUpdateTime(0.05f);
 	mFireWingAnimation->Play();
 }
 
@@ -29,10 +29,14 @@ void FireWing::Release()
 
 void FireWing::Update()
 {
+	mFireWingAnimation->Update();
 	mFrameIndexX = mFireWingAnimation->GetNowFrameX();
+
+	if (mFireWingAnimation->GetNowFrameX() == 7) mIsDestroy = true;
 }
 
 void FireWing::Render()
 {
+	mImage->SetScale(3.f);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mFireWingAnimation->GetNowFrameX(), mFireWingAnimation->GetNowFrameY());
 }

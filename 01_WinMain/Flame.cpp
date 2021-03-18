@@ -44,8 +44,8 @@ void Flame::Update()
 	}
 
 	if (mIsMove) {
-		mX += cosf(mAngle) * 2.f;
-		mY += -sinf(mAngle) * 2.f;
+		mX += cosf(mAngle) * 1.f;
+		mY += -sinf(mAngle) * 1.f;
 		mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	}
 	
@@ -53,8 +53,15 @@ void Flame::Update()
 
 void Flame::Render()
 {
+	
+	float ang = 0;
+
+	if (mIsSpin) {
+		ang = Random::GetInstance()->RandomInt(180);
+	}
+	
 	mImage->SetScale(0.5f);
-	mImage->SetAngle(mAngle * (180 / PI));
+	mImage->SetAngle(mAngle * (180 / PI)- ang);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mFlameAnimation->GetNowFrameX(), mFlameAnimation->GetNowFrameY());
 }
 

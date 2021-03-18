@@ -1,16 +1,18 @@
 #pragma once
 #include "Enemy.h"
 
-enum class BossPattern : int {
-	Idle,
-	Dash,
-	Kick,
-	SpecialAttack,
-	AttackReady,
-	Throw,
-	Stun,
-	Refresh,
-	Stemp,
+enum class FireBossState : int {
+	Idle			= 0,
+	AttackReady		= 1,
+	Dash			= 2,
+	Stemp			= 3,
+	Throw			= 4,
+	Kick			= 5,
+	Meteor			= 6,
+	DragonArc		= 7,
+	SpecialAttack	= 8,
+	Refresh			= 9,
+	Stun			= 10,
 
 	End
 };
@@ -59,13 +61,17 @@ class FireBoss : public Enemy
 	class Animation* mCurrentAnimation;
 
 	FireWing* mFireWing;
-	BossPattern mPattern;
+	FireBossState mFireBossState;
+	//set<FireBossState> mFireBossStateList;
+	vector<FireBossState> mFireBossStateList;
 
 	int mNum;
 	float mFrameCount;
 	float mMoveDistance;
 	float mAngle;
 	float mKickAngle;
+	
+	bool mIsFuncEnd;
 public:
 	FireBoss(const string& name, float x, float y);
 
@@ -78,7 +84,7 @@ public:
 	void AnimationChange(Animation* changeanimation);
 	
 	void Move();
-	void AttckReady();
+	void AttackReady();
 	void StempPattern();
 	void ThreeRushPattern();
 	void FireBallThrowPattern();
@@ -86,4 +92,10 @@ public:
 	void DragonArcWavePattern();
 	void KickPattern();
 	void MakeFlame();
+	void MakeFireWing();
+
+	void BossStateChange();
+
+	void MakePatternFuncList();
+	FireBossState FireBossStateCheck(int index);
 };

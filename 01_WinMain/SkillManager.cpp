@@ -40,10 +40,11 @@ void SkillManager::FlameSkill(const string& name, float x, float y, float angle)
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, magicCircle);
 }
 
-void SkillManager::FireBallSkill(const string& name, float x, float y, float angle)
+void SkillManager::FireBallSkill(const string& name, float x, float y, float angle, int delay)
 {
 	FireBall* fireBall = new FireBall(name, x, y, angle);
 	fireBall->Init();
+	fireBall->SetDelay(delay);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, fireBall);
 }
 
@@ -54,10 +55,12 @@ void SkillManager::MeteorSkill(const string& name, float x, float y)
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, magicCircle);
 }
 
-void SkillManager::KickFlame(const string & name, float x, float y, float angle)
+void SkillManager::KickFlame(const string & name, float x, float y, float angle, float endX, float endY)
 {
 	Flame* flame = new Flame(name, x, y, angle);
 	flame->Init();
+	flame->SetEndPositionX(endX);
+	flame->SetEndPositionY(endY);
 	flame->SetIsMove();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, flame);
 }

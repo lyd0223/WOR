@@ -25,10 +25,19 @@ FireBall::FireBall(const string & name, float x, float y, float angle)
 	
 }
 
+FireBall::FireBall(const string & name, float x, float y, float angle, int delay)
+	: GameObject(name)
+{
+	mX = x;
+	mY = y;
+	mAngle = angle;
+	mDelay = delay;
+}
+
 void FireBall::Init()
 {
 
-	AnimationSet(&mFireBallReadyAnimation, false, false, 0, 0, 3, 0, 0.1f);
+	AnimationSet(&mFireBallReadyAnimation, false, false, 0, 0, 4, 0, 0.1f);
 	AnimationSet(&mFireBallFireAnimation, false, true, 4, 0, 8, 0, 0.1f);
 
 	mState = FireBallState::Ready;
@@ -44,12 +53,21 @@ void FireBall::Release()
 
 void FireBall::Update()
 {
+	mFrameCount += Time::GetInstance()->DeltaTime();
+
+	if (mFrameCount < 1) {
+		mDelay--;
+		mFrameCount = 0;
+	}
+
 	mCurrentAnimation->Update();
-	if (mState == FireBallState::Ready && mCurrentAnimation->GetNowFrameX() == 3) {
-		mState = FireBallState::Fire;
-		AnimationChange(mFireBallFireAnimation);
-		mFlameEffect = new FlameEffect("FlameEffect", mX, mY, mAngle);
-		mFlameEffect->Init();
+	if (mState == FireBallState::Ready && mCurrentAnimation->GetNowFrameX() == 4) {
+		if (mDelay < 0) {
+			mState = FireBallState::Fire;
+			AnimationChange(mFireBallFireAnimation);
+			//mFlameEffect = new FlameEffect("FlameEffect", mX, mY, mAngle);
+			//mFlameEffect->Init();
+		}
 	}
 
 	if (mState == FireBallState::Fire) {

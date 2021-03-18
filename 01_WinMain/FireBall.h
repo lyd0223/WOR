@@ -22,17 +22,21 @@ class FireBall : public GameObject
 	class Animation* mFireBallFireAnimation;	// 4, 0, 8, 0
 	class Animation* mCurrentAnimation;
 
+	int mDelay;
+	float mFrameCount;
 	float mAngle;
 	float mSpeed;
 public:
 	FireBall(const string& name) : GameObject(name) {};
 	FireBall(const string& name, float x, float y, float angle);
+	FireBall(const string& name, float x, float y, float angle, int delay);
 
 	void Init() override;
 	void Release() override;
 	void Update() override;
 	void Render() override;
 
+	void SetDelay(int delay) { mDelay = delay; }
 	void AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime);
 	void AnimationChange(Animation* changeanimation);
 };
