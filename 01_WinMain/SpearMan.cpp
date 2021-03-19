@@ -18,7 +18,7 @@ void SpearMan::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"SpearMan", Resources(L"Monster/SpearMan.png"), 8, 6);
 	mImage = ImageManager::GetInstance()->FindImage(L"SpearMan");
-	mMonsterState = MonsterState::RightIdle;
+	mMonsterActState = MonsterActState::RightIdle;
 	mSpeed = 3.f;
 	mSizeX = TileSize;
 	mSizeY = TileSize;

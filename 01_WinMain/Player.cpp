@@ -97,6 +97,7 @@ void Player::Update()
 	//int indexX = mX / TileSize;
 	//---------------------------------
 	//°ÙÅ°´Ù¿î
+	mAngle = Math::GetAngle(mX, mY, _mousePosition.x, _mousePosition.y);
 	if (!Input::GetInstance()->GetKey('S'))
 	{
 		if (Input::GetInstance()->GetKeyDown('W'))
@@ -356,7 +357,7 @@ void Player::Update()
 	//		}
 	//	}
 	//}
-
+	
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
@@ -372,6 +373,7 @@ void Player::Render()
 	//	}
 	//}
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
+
 }
 
 void Player::AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)

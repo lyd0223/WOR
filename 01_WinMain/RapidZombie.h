@@ -19,7 +19,7 @@ protected:
 	Animation* mSpecialAttackAnimation;
 	Animation* mDieAnimation;
 	Animation* mCurrentAnimation;
-	MonsterState mMonsterState;
+	MonsterActState mMonsterActState;
 
 
 public:

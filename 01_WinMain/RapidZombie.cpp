@@ -18,7 +18,7 @@ void RapidZombie::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"RapidZombie", Resources(L"Monster/RapidZombie.png"), 6, 5);
 	mImage = ImageManager::GetInstance()->FindImage(L"RapidZombie");
-	mMonsterState = MonsterState::RightIdle;
+	mMonsterActState = MonsterActState::RightIdle;
 	mSpeed = 3.f;
 	mSizeX = TileSize ;
 	mSizeY = TileSize ;

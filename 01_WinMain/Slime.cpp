@@ -20,7 +20,7 @@ void Slime::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"Slime", Resources(L"Monster/Slime.png"), 10, 4);
 	mImage = ImageManager::GetInstance()->FindImage(L"Slime");
-	mMonsterState = MonsterState::RightIdle;
+	mMonsterActState = MonsterActState::RightIdle;
 	mSpeed = 3.f;
 	mSizeX = TileSize / 2;
 	mSizeY = TileSize/2;

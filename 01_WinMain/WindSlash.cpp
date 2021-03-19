@@ -4,15 +4,7 @@
 #include "Animation.h"
 #include "WindSlash.h"
 
-WindSlash::WindSlash(const string& name, float x, float y, float angle)
-	:GameObject(name)
-{
-	mX = x;
-	mY = y;
-	mAngle = angle;
-	
 
-}
 
 void WindSlash::Init()
 {
@@ -25,11 +17,21 @@ void WindSlash::Init()
 	mAngle = 0.f;
 
 	mSlashAnimation = new Animation;
-	mSlashAnimation->InitFrameByBackStartEnd(0, 2, 4, 2, false);
+	mSlashAnimation->InitFrameByStartEnd(0, 2, 4, 2, false);
 	mSlashAnimation->SetIsLoop(false);
 	mSlashAnimation->SetFrameUpdateTime(0.1f);
 	mSlashAnimation->Play();
 
+
+}
+
+WindSlash::WindSlash(const string& name, float x, float y, float angle)
+	:GameObject(name)
+{
+	mX =   x;
+	mY =   y;
+	mAngle = angle;
+	
 
 }
 
@@ -40,6 +42,7 @@ void WindSlash::Release()
 
 void WindSlash::Update()
 {
+	if (mSlashAnimation->GetNowFrameX() == 4)mIsDestroy = true;
 	
 	mAngle = Math::GetAngle(mX, mY, _mousePosition.x, _mousePosition.y);
 	mX += cosf(mAngle) * mSpeed;
@@ -50,6 +53,6 @@ void WindSlash::Update()
 
 void WindSlash::Render()
 {
-	
+	mImage->SetAngle(mAngle);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mSlashAnimation->GetNowFrameX(), mSlashAnimation->GetNowFrameY());
 }

@@ -18,7 +18,7 @@ void SwoardMan::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"SwoardMan", Resources(L"Monster/SwoardMan.png"), 8, 7);
 	mImage = ImageManager::GetInstance()->FindImage(L"SwoardMan");
-	mMonsterState = MonsterState::RightIdle;
+	mMonsterActState = MonsterActState::RightIdle;
 	mSpeed = 3.f;
 	mSizeX = TileSize;
 	mSizeY = TileSize;

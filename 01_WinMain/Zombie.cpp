@@ -18,7 +18,7 @@ void Zombie::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"Zombie", Resources(L"Monster/Zombie.png"), 10, 4);
 	mImage = ImageManager::GetInstance()->FindImage(L"Zombie");
-	mMonsterState = MonsterState::RightIdle;
+	mMonsterActState = MonsterActState::RightIdle;
 	mSpeed = 3.f;
 	mSizeX = TileSize;
 	mSizeY = TileSize;

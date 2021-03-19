@@ -20,7 +20,7 @@ void Ward::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"Ward", Resources(L"Monster/Ward.png"), 4, 1);
 	mImage = ImageManager::GetInstance()->FindImage(L"Ward");
-	mMonsterState = MonsterState::RightIdle;
+	mMonsterActState = MonsterActState::RightIdle;
 	mSpeed = 3.f;
 	mSizeX = TileSize / 2;
 	mSizeY = TileSize / 2;
