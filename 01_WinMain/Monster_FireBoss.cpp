@@ -4,7 +4,7 @@
 #include "Animation.h"
 #include "Player.h"
 #include "Camera.h"
-#include "FireWing.h"
+#include "Effect_FireWing.h"
 #include "Skill_Flame.h"
 #include "Skill_FireBall.h"
 
@@ -227,7 +227,7 @@ void Monster_FireBoss::AttackReady()
 
 	mFireBossState = FireBossState::AttackReady;
 
-	FireWing* fireWing = new FireWing("FireWing", mX, mY - 80);
+	Effect_FireWing* fireWing = new Effect_FireWing("FireWing", mX, mY - 80);
 	fireWing->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, fireWing);
 
@@ -363,7 +363,7 @@ void Monster_FireBoss::MakeFlame()
 
 void Monster_FireBoss::MakeFireWing()
 {
-	mFireWing = new FireWing("FireWing", mX, mY);
+	mFireWing = new Effect_FireWing("FireWing", mX, mY);
 	mFireWing->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, mFireWing);
 }

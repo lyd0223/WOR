@@ -17,7 +17,7 @@ enum class FireBossState : int {
 	End
 };
 
-class FireWing;
+class Effect_FireWing;
 class Animation;
 class Monster_FireBoss : public MonsterObject
 {
@@ -60,7 +60,7 @@ class Monster_FireBoss : public MonsterObject
 
 	class Animation* mCurrentAnimation;
 
-	FireWing* mFireWing;
+	Effect_FireWing* mFireWing;
 	FireBossState mFireBossState;
 	//set<FireBossState> mFireBossStateList;
 	vector<FireBossState> mFireBossStateList;

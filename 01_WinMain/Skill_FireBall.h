@@ -10,12 +10,12 @@ enum class FireBallState : int {
 
 class Image;
 class Animation;
-class FlameEffect;
+class Effect_FlameEffect;
 class Skill_FireBall : public GameObject
 {
 	Image* mImage;
 
-	FlameEffect* mFlameEffect;
+	Effect_FlameEffect* mFlameEffect;
 	FireBallState mState;
 
 	class Animation* mFireBallReadyAnimation;	// 0, 0, 3, 0

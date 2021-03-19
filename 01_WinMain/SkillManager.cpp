@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "SkillManager.h"
 #include "GameObject.h"
-#include "MagicCircle.h"
+#include "Effect_MagicCircle.h"
 #include "Skill_FireBall.h"
 #include"WindSlash.h"
 #include "Skill_Flame.h"
@@ -38,7 +38,7 @@ void SkillManager::Render()
 
 void SkillManager::FlameSkill(const string& name, float x, float y, float angle)
 {
-	MagicCircle* magicCircle = new MagicCircle(name, x, y, CastingSkill::Burn);
+	Effect_MagicCircle* magicCircle = new Effect_MagicCircle(name, x, y, CastingSkill::Burn);
 	magicCircle->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, magicCircle);
 }
@@ -53,7 +53,7 @@ void SkillManager::FireBallSkill(const string& name, float x, float y, float ang
 
 void SkillManager::MeteorSkill(const string& name, float x, float y)
 {
-	MagicCircle* magicCircle = new MagicCircle(name, x, y, CastingSkill::Meteor);
+	Effect_MagicCircle* magicCircle = new Effect_MagicCircle(name, x, y, CastingSkill::Meteor);
 	magicCircle->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, magicCircle);
 }

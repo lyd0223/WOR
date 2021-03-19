@@ -4,17 +4,17 @@
 #include "Tile.h"
 #include "Camera.h"
 #include "Player.h"
-#include"BigZombie.h"
-#include"Golem.h"
-#include"Mazition.h"
-#include"MazitionBullet.h"
-#include"MuscleMan.h"
-#include"RapidZombie.h"
-#include"Slime.h"
-#include"SpearMan.h"
-#include"SwoardMan.h"
-#include"Ward.h"
-#include"Zombie.h"
+#include "Monster_BigZombie.h"
+#include "Monster_Golem.h"
+#include "Monster_Mazition.h"
+#include "Monster_MazitionBullet.h"
+#include "Monster_MuscleMan.h"
+#include "Monster_RapidZombie.h"
+#include "Monster_Slime.h"
+#include "Monster_SpearMan.h"
+#include "Monster_SwoardMan.h"
+#include "Monster_Ward.h"
+#include "Monster_Zombie.h"
 #include "Monster_FireBoss.h"
 #include "TileMap.h"
 #include "Gizmo.h"
@@ -52,37 +52,37 @@ void Scene_Tutorial::Init()
 	mPlayer = new Player("Player",600,1600);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 
-	mBigZombie = new BigZombie("BigZombie", 400, 1600);
+	mBigZombie = new Monster_BigZombie("BigZombie", 400, 1600);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mBigZombie);
 
-	mGolem = new Golem("Golem", 200, 1600);
+	mGolem = new Monster_Golem("Golem", 200, 1600);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mGolem);
 
-	mMazition = new Mazition("Mazition", 800, 1600);
+	mMazition = new Monster_Mazition("Mazition", 800, 1600);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazition);
 
-	mMazitionBullet = new MazitionBullet("MazitionBullet", 1000, 1600);
+	mMazitionBullet = new Monster_MazitionBullet("MazitionBullet", 1000, 1600);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazitionBullet);
 
-	mMuscleMan = new MuscleMan("MuscleMan", 200, 1800);
+	mMuscleMan = new Monster_MuscleMan("MuscleMan", 200, 1800);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMuscleMan);
 
-	mRapidZombie = new RapidZombie("RapidZombie", 400, 1800);
+	mRapidZombie = new Monster_RapidZombie("RapidZombie", 400, 1800);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mRapidZombie);
 
-	mSlime = new Slime("Slime", 600, 1800);
+	mSlime = new Monster_Slime("Slime", 600, 1800);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSlime);
 
-	mSwoardMan = new SwoardMan("SwoardMan", 800, 1800);
+	mSwoardMan = new Monster_SwoardMan("SwoardMan", 800, 1800);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSwoardMan);
 
-	mSpearMan = new SpearMan("SpearMan", 1000, 1800);
+	mSpearMan = new Monster_SpearMan("SpearMan", 1000, 1800);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSpearMan);
 
-	mWard = new Ward("Ward", 1200, 1800);
+	mWard = new Monster_Ward("Ward", 1200, 1800);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mWard);
 
-	mZombie = new Zombie("Zombie", 1200, 1600);
+	mZombie = new Monster_Zombie("Zombie", 1200, 1600);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie);
 
 

@@ -216,15 +216,6 @@
     <ClInclude Include="Scene_MapTool.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Meteor.h">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="MagicCircle.h">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="MeteorShockWave.h">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>MainGame\Object\Button</Filter>
     </ClInclude>
@@ -234,59 +225,14 @@
     <ClInclude Include="Player.h">
       <Filter>MainGame\Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="BurnMark.h">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="FlameEffect.h">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="HitSpark.h">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="SkillManager.h">
       <Filter>MainGame\Object\SkillManager</Filter>
     </ClInclude>
     <ClInclude Include="Structure.h">
       <Filter>MainGame\Object\Structure</Filter>
     </ClInclude>
-    <ClInclude Include="BigZombie.h">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Golem.h">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Mazition.h">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="MazitionBullet.h">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="RapidZombie.h">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="SpearMan.h">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="SwoardMan.h">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Zombie.h">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="MovingObject.h">
       <Filter>FrameWork\MovingObject</Filter>
-    </ClInclude>
-    <ClInclude Include="MuscleMan.h">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Slime.h">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Ward.h">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="FireWing.h">
-      <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
     <ClInclude Include="MonsterObject.h">
       <Filter>MainGame\Object\Enemy\MonsetObject</Filter>
@@ -311,6 +257,60 @@
     </ClInclude>
     <ClInclude Include="PathFinder.h">
       <Filter>FrameWork\PathFinder</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_BurnMark.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_FireWing.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_FlameEffect.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_HitSpark.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_MagicCircle.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_MeteorShockWave.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_Meteor.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_BigZombie.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_Golem.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_Mazition.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_MazitionBullet.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_MuscleMan.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_RapidZombie.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_Slime.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_SpearMan.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_SwoardMan.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_Ward.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_Zombie.h">
+      <Filter>MainGame\Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -401,15 +401,6 @@
     <ClCompile Include="Scene_MapTool.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Meteor.cpp">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="MagicCircle.cpp">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="MeteorShockWave.cpp">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>MainGame\Object\Button</Filter>
     </ClCompile>
@@ -419,59 +410,14 @@
     <ClCompile Include="Player.cpp">
       <Filter>MainGame\Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="BurnMark.cpp">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="FlameEffect.cpp">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="HitSpark.cpp">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="SkillManager.cpp">
       <Filter>MainGame\Object\SkillManager</Filter>
     </ClCompile>
     <ClCompile Include="Structure.cpp">
       <Filter>MainGame\Object\Structure</Filter>
     </ClCompile>
-    <ClCompile Include="BigZombie.cpp">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Golem.cpp">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Mazition.cpp">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="MazitionBullet.cpp">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="RapidZombie.cpp">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="SpearMan.cpp">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="SwoardMan.cpp">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Zombie.cpp">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="MovingObject.cpp">
       <Filter>FrameWork\MovingObject</Filter>
-    </ClCompile>
-    <ClCompile Include="MuscleMan.cpp">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Slime.cpp">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Ward.cpp">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="FireWing.cpp">
-      <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="MonsterObject.cpp">
       <Filter>MainGame\Object\Enemy\MonsetObject</Filter>
@@ -496,6 +442,60 @@
     </ClCompile>
     <ClCompile Include="PathFinder.cpp">
       <Filter>FrameWork\PathFinder</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_BurnMark.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_FireWing.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_FlameEffect.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_HitSpark.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_MagicCircle.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_MeteorShockWave.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_Meteor.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_BigZombie.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_Golem.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_Mazition.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_MazitionBullet.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_MuscleMan.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_RapidZombie.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_Slime.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_SpearMan.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_SwoardMan.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_Ward.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_Zombie.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

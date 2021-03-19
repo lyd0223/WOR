@@ -4,9 +4,9 @@
 #include "Player.h"
 #include "Monster_FireBoss.h"
 #include "Animation.h"
-#include "FlameEffect.h"
 #include "Camera.h"
-#include "HitSpark.h"
+#include "Effect_FlameEffect.h"
+#include "Effect_HitSpark.h"
 
 Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angle)
 	:GameObject(name)

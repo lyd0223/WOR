@@ -8,17 +8,17 @@
 class Scene_Tutorial : public Scene
 {
 	class Player* mPlayer;
-	class BigZombie* mBigZombie;
-	class Golem* mGolem;
-	class Mazition* mMazition;
-	class MazitionBullet* mMazitionBullet;
-	class MuscleMan* mMuscleMan;
-	class RapidZombie* mRapidZombie;
-	class Slime* mSlime;
-	class SpearMan* mSpearMan;
-	class SwoardMan* mSwoardMan;
-	class Ward* mWard;
-	class Zombie* mZombie;
+	class Monster_BigZombie* mBigZombie;
+	class Monster_Golem* mGolem;
+	class Monster_Mazition* mMazition;
+	class Monster_MazitionBullet* mMazitionBullet;
+	class Monster_MuscleMan* mMuscleMan;
+	class Monster_RapidZombie* mRapidZombie;
+	class Monster_Slime* mSlime;
+	class Monster_SpearMan* mSpearMan;
+	class Monster_SwoardMan* mSwoardMan;
+	class Monster_Ward* mWard;
+	class Monster_Zombie* mZombie;
 	//class MonsterObject* mMonsterList[11];
 	vector<class MonsterObject*> mMonsterList;
 	//class Tile* mTileList[TileCountY][TileCountX];
