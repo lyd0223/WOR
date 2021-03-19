@@ -1,21 +1,21 @@
 #include "pch.h"
-#include "FireBoss.h"
+#include "Monster_FireBoss.h"
 #include "Image.h"
 #include "Animation.h"
 #include "Player.h"
 #include "Camera.h"
 #include "FireWing.h"
-#include "Flame.h"
-#include "FireBall.h"
+#include "Skill_Flame.h"
+#include "Skill_FireBall.h"
 
-FireBoss::FireBoss(const string& name, float x, float y)
-	:Enemy(name)
+Monster_FireBoss::Monster_FireBoss(const string& name, float x, float y)
+	:MonsterObject(name)
 {
 	mX = x;
 	mY = y;
 }
 
-void FireBoss::Init()
+void Monster_FireBoss::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"FireBoss", Resources(L"Enemy/FireBoss/FireBoss.png"), 12, 10);
 	mImage = ImageManager::GetInstance()->FindImage(L"FireBoss");
@@ -66,7 +66,7 @@ void FireBoss::Init()
 	mAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
 }
 
-void FireBoss::Release()
+void Monster_FireBoss::Release()
 {
 	SafeDelete(mLeftIdleAnimation);
 	SafeDelete(mRightIdleAnimation);
@@ -94,7 +94,7 @@ void FireBoss::Release()
 	SafeDelete(mRightStempAnimation);
 }
 
-void FireBoss::Update()
+void Monster_FireBoss::Update()
 {
 	mCurrentAnimation->Update();
 
@@ -145,13 +145,13 @@ void FireBoss::Update()
 	}
 }
 
-void FireBoss::Render()
+void Monster_FireBoss::Render()
 {
 	mImage->SetScale(3.f);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 }
 
-void FireBoss::AnimationSet(Animation ** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)
+void Monster_FireBoss::AnimationSet(Animation ** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)
 {
 	*animation = new Animation;
 	Animation* a = *animation;
@@ -161,14 +161,14 @@ void FireBoss::AnimationSet(Animation ** animation, bool Reverse, bool Loop, int
 	a->SetFrameUpdateTime(animationTime);
 }
 
-void FireBoss::AnimationChange(Animation * changeanimation)
+void Monster_FireBoss::AnimationChange(Animation * changeanimation)
 {
 	mCurrentAnimation->Stop();
 	mCurrentAnimation = changeanimation;
 	mCurrentAnimation->Play();
 }
 
-void FireBoss::Move()
+void Monster_FireBoss::Move()
 {
 	mFireBossState = FireBossState::Dash;
 	mX += cosf(mAngle) * 10.f;
@@ -211,7 +211,7 @@ void FireBoss::Move()
 	mMoveDistance++;
 	if (mMoveDistance > 5) {
 		mMoveDistance = 0;
-		Flame* flame = new Flame("Flame", mX, mY, 0.f);
+		Skill_Flame* flame = new Skill_Flame("Flame", mX, mY, 0.f);
 		flame->SetEndPositionX(0);
 		flame->SetEndPositionY(0);
 		flame->Init();
@@ -219,7 +219,7 @@ void FireBoss::Move()
 	}
 }
 
-void FireBoss::AttackReady()
+void Monster_FireBoss::AttackReady()
 {
 	mIsFuncEnd = false;
 	if (mX < mPlayer->GetX()) AnimationChange(mRightAttackReadyAnimation);
@@ -234,7 +234,7 @@ void FireBoss::AttackReady()
 	BossStateChange();
 }
 
-void FireBoss::StempPattern()
+void Monster_FireBoss::StempPattern()
 {
 	mIsFuncEnd = false;
 	if (mX < mPlayer->GetX()) AnimationChange(mRightStempAnimation);
@@ -253,12 +253,12 @@ void FireBoss::StempPattern()
 	}
 }
 
-void FireBoss::ThreeRushPattern()
+void Monster_FireBoss::ThreeRushPattern()
 {
 	mIsFuncEnd = false;
 }
 
-void FireBoss::FireBallThrowPattern()
+void Monster_FireBoss::FireBallThrowPattern()
 {
 	mIsFuncEnd = false;
 	float width = mX - mPlayer->GetX();
@@ -291,14 +291,14 @@ void FireBoss::FireBallThrowPattern()
 		float y = mY - (sinf(mAngle - PI / 2 + PI / 4 * i) * 100);
 
 		//SkillManager::GetInstance()->FireBallSkill("FireBall" + i, x, y, mAngle, i * 20);
-		FireBall* fireBall = new FireBall("FireBall", x, y, mAngle);
+		Skill_FireBall* fireBall = new Skill_FireBall("FireBall", x, y, mAngle);
 		fireBall->Init();
 		fireBall->SetDelay(i * 20);
 		ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, fireBall);
 	}
 }
 
-void FireBoss::MeteorPattern()
+void Monster_FireBoss::MeteorPattern()
 {
 	// 보스 맵이 있으면 보스맵 사이즈만큼 랜덤값 
 
@@ -310,11 +310,11 @@ void FireBoss::MeteorPattern()
 	}
 }
 
-void FireBoss::DragonArcWavePattern()
+void Monster_FireBoss::DragonArcWavePattern()
 {
 }
 
-void FireBoss::KickPattern()
+void Monster_FireBoss::KickPattern()
 {
 	mIsFuncEnd = false;
 	
@@ -350,7 +350,7 @@ void FireBoss::KickPattern()
 	}
 }
 
-void FireBoss::MakeFlame()
+void Monster_FireBoss::MakeFlame()
 {
 	for (int i = 0; i < 6; i++) {
 		float x = mX + (cosf(mKickAngle - PI / 2 + PI / 6 * i) * 100);
@@ -361,14 +361,14 @@ void FireBoss::MakeFlame()
 	}
 }
 
-void FireBoss::MakeFireWing()
+void Monster_FireBoss::MakeFireWing()
 {
 	mFireWing = new FireWing("FireWing", mX, mY);
 	mFireWing->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, mFireWing);
 }
 
-void FireBoss::BossStateChange()
+void Monster_FireBoss::BossStateChange()
 {
 	if (mFireBossStateList.size() != 0) {
 		mFireBossState = mFireBossStateList[0];
@@ -377,7 +377,7 @@ void FireBoss::BossStateChange()
 	}
 }
 
-void FireBoss::MakePatternFuncList()
+void Monster_FireBoss::MakePatternFuncList()
 {
 	mFireBossStateList.clear();
 
@@ -406,7 +406,7 @@ void FireBoss::MakePatternFuncList()
 	//mFireBossStateList.insert(FireBossState::Refresh);
 }
 
-FireBossState FireBoss::FireBossStateCheck(int index)
+FireBossState Monster_FireBoss::FireBossStateCheck(int index)
 {
 	FireBossState temp;
 	switch (index) {

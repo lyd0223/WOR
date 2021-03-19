@@ -21,5 +21,5 @@ public:
 public:
 	int CalcHeuristic(int idX1, int idY1, int idX2, int idY2, int tileSize);
 
-	vector<class Tile*> FindPath(const vector<vector<class Tile*>>& tileList, int startIndexX, int startIndexY, int arrivalX, int arrivalY);
+	vector<class Tile*> FindPath(class TileMap* tileList, int startIndexX, int startIndexY, int arrivalX, int arrivalY);
 };

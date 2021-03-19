@@ -3,7 +3,7 @@
 #include "Image.h"
 #include "Animation.h"
 #include "Meteor.h"
-#include "Flame.h"
+#include "Skill_Flame.h"
 #include "Camera.h"
 
 MagicCircle::MagicCircle(const string & name, float x, float y, CastingSkill castingSkill)
@@ -92,7 +92,7 @@ void MagicCircle::Render()
 		mImage->SetScale(1.5f);
 		mImage->SetAngle(mAngle * -(180 / PI));
 		CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCircleMakeAnimation->GetNowFrameX(), mCircleMakeAnimation->GetNowFrameY());
-		for (Flame* flame : mFlameList) flame->Render();
+		for (Skill_Flame* flame : mFlameList) flame->Render();
 	}
 	if(mMeteor != nullptr) mMeteor->Render();
 	//if (mHitSpark != nullptr) mHitSpark->Render();
@@ -107,14 +107,14 @@ void MagicCircle::MakeFlameList()
 		float x = mX + (cosf(PI / 6 * i) * radius);
 		float y = mY - (sinf(PI / 6 * i) * radius);
 		float angle = Math::GetAngle(x, y, endX, endY) * 180 / PI;
-		Flame* flame = new Flame("Flame" + i, x, y, angle);
+		Skill_Flame* flame = new Skill_Flame("Flame" + i, x, y, angle);
 		flame->Init();
 		flame->SetIsMove();
 		flame->SetEndPositionX(endX);
 		flame->SetEndPositionY(endY);
 		mFlameList.push_back(flame);
 	}
-	Flame* flame = new Flame("Flame", mX, mY, 0);
+	Skill_Flame* flame = new Skill_Flame("Flame", mX, mY, 0);
 	flame->Init();
 	flame->SetEndPositionX(endX);
 	flame->SetEndPositionY(endY);

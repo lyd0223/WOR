@@ -7,7 +7,7 @@
 
 
 Zombie::Zombie(const string& name, float x, float y)
-
+	: MonsterObject(name)
 {
 	mName = name;
 	mX = x;

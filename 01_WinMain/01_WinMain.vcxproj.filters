@@ -216,15 +216,6 @@
     <ClInclude Include="Scene_MapTool.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="FireBoss.h">
-      <Filter>MainGame\Object\Enemy\FireBoss</Filter>
-    </ClInclude>
-    <ClInclude Include="FireBall.h">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClInclude>
     <ClInclude Include="Meteor.h">
       <Filter>MainGame\Object\Skill</Filter>
     </ClInclude>
@@ -245,9 +236,6 @@
     </ClInclude>
     <ClInclude Include="BurnMark.h">
       <Filter>MainGame\Object\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Flame.h">
-      <Filter>MainGame\Object\Skill</Filter>
     </ClInclude>
     <ClInclude Include="FlameEffect.h">
       <Filter>MainGame\Object\Effect</Filter>
@@ -311,6 +299,18 @@
     </ClInclude>
     <ClInclude Include="WindSlash.h">
       <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_FireBoss.h">
+      <Filter>MainGame\Object\Enemy\FireBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_FireBall.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_Flame.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFinder.h">
+      <Filter>FrameWork\PathFinder</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -401,15 +401,6 @@
     <ClCompile Include="Scene_MapTool.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="FireBoss.cpp">
-      <Filter>MainGame\Object\Enemy\FireBoss</Filter>
-    </ClCompile>
-    <ClCompile Include="FireBall.cpp">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClCompile>
     <ClCompile Include="Meteor.cpp">
       <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
@@ -430,9 +421,6 @@
     </ClCompile>
     <ClCompile Include="BurnMark.cpp">
       <Filter>MainGame\Object\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Flame.cpp">
-      <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
     <ClCompile Include="FlameEffect.cpp">
       <Filter>MainGame\Object\Effect</Filter>
@@ -496,6 +484,18 @@
     </ClCompile>
     <ClCompile Include="WindSlash.cpp">
       <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_FireBoss.cpp">
+      <Filter>MainGame\Object\Enemy\FireBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_FireBall.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_Flame.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFinder.cpp">
+      <Filter>FrameWork\PathFinder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

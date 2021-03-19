@@ -3,7 +3,7 @@
 
 class Image;
 class Animation;
-class Flame : public GameObject
+class Skill_Flame : public GameObject
 {
 	Image* mImage;
 	Animation* mFlameAnimation;
@@ -15,8 +15,8 @@ class Flame : public GameObject
 	bool mIsMove;
 	bool mIsSpin;
 public:
-	Flame(const string& name) : GameObject(name) {};
-	Flame(const string& name, float x, float y, float angle);
+	Skill_Flame(const string& name) : GameObject(name) {};
+	Skill_Flame(const string& name, float x, float y, float angle);
 
 	void Init() override;
 	void Release() override;

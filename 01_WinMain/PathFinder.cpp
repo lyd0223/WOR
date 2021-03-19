@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "PathFinder.h"
 #include "Tile.h"
+#include "TileMap.h"
 
 #define TileSize 64
 
@@ -12,14 +13,14 @@ int PathFinder::CalcHeuristic(int idX1, int idY1, int idX2, int idY2, int tileSi
 	return (dx - diagonal + dy - diagonal) * tileSize + diagonal * tileSize* sqrtf(2);
 }
 
-vector<class Tile*> PathFinder::FindPath(const vector<vector<class Tile*>>& tileList, int startIndexX, int startIndexY, int arrivalX, int arrivalY)
+vector<class Tile*> PathFinder::FindPath(class TileMap* tileList, int startIndexX, int startIndexY, int arrivalX, int arrivalY)
 {
 	vector<Tile*> result;
 
 	if (startIndexX == arrivalX && startIndexY == arrivalY) return result;
 
-	int tileCountX = tileList[0].size();
-	int tileCountY = tileList.size();
+	int tileCountX = TileCountX;
+	int tileCountY = TileCountY;
 
 	if (startIndexX < 0 || startIndexX >= tileCountX) return result;
 	if (startIndexY < 0 || startIndexY >= tileCountY) return result;
@@ -41,8 +42,8 @@ vector<class Tile*> PathFinder::FindPath(const vector<vector<class Tile*>>& tile
 
 	vector<Tile*> openList;
 
-	Tile* startTile = tileList[startIndexY][startIndexX];
-	Tile* arrivalTile = tileList[arrivalY][arrivalX];
+	Tile* startTile = tileList->GetTileList(startIndexX, startIndexY);
+	Tile* arrivalTile = tileList->GetTileList(arrivalX, arrivalY);
 	Tile* currentTile = startTile;
 
 	while (true) {
@@ -51,6 +52,7 @@ vector<class Tile*> PathFinder::FindPath(const vector<vector<class Tile*>>& tile
 		int currentIndexX = currentTile->GetFrameIndexX();
 		int currentIndexY = currentTile->GetFrameIndexY();
 
+		bool b=0;
 		for (int y = currentIndexY - 1; y <= currentIndexY + 1; y++) {
 
 			if (y < 0 || y >= tileCountY) continue;
@@ -63,26 +65,32 @@ vector<class Tile*> PathFinder::FindPath(const vector<vector<class Tile*>>& tile
 
 				if (dummyList[y][x].IsClose == true) continue;
 
-				if (tileList[y][x]->GetType() == Type::Wall ||
-					tileList[y][x]->GetType() == Type::Cliff) {
+				if (tileList->GetTileList(x, y)->GetType() == Type::Wall ||
+					tileList->GetTileList(x, y)->GetType() == Type::Cliff)
+				{
 					dummyList[y][x].IsClose = true;
 					dummyList[y][x].IsOpen = true;
+					b = 1;
+					if (b) return result;
 					continue;
 				}
 
-				if (dummyList[y][x].IsOpen == false) {
+				if (dummyList[y][x].IsOpen == false) 
+				{
 					dummyList[y][x].IsOpen = true;
 					dummyList[y][x].Parent = currentTile;
 					dummyList[y][x].CostFromStart = dummyList[currentTile->GetFrameIndexY()][currentTile->GetFrameIndexX()].CostFromStart + 1;
 					dummyList[y][x].CostToEnd = CalcHeuristic(x, y, arrivalX, arrivalY, TileSize);
 					dummyList[y][x].CostTotal = dummyList[y][x].CostFromStart + dummyList[y][x].CostToEnd;
 
-					openList.push_back(tileList[y][x]);
+					openList.push_back(tileList->GetTileList(x, y));
 				}
-				else {
+				else 
+				{
 					int newFromCost = dummyList[currentIndexY][currentIndexX].CostFromStart + 1;
 
-					if (newFromCost < dummyList[y][x].CostFromStart) {
+					if (newFromCost < dummyList[y][x].CostFromStart)
+					{
 						dummyList[y][x].CostFromStart = newFromCost;
 						dummyList[y][x].CostToEnd = dummyList[y][x].CostFromStart + dummyList[y][x].CostToEnd;
 						dummyList[y][x].Parent = currentTile;

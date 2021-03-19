@@ -9,7 +9,7 @@
 
 
 Player::Player(const string& name, float x, float y)
-	
+	: MovingObject(name)
 {
 	mName = name;
 	mX = x;

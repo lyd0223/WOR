@@ -11,7 +11,7 @@ enum class FireBallState : int {
 class Image;
 class Animation;
 class FlameEffect;
-class FireBall : public GameObject
+class Skill_FireBall : public GameObject
 {
 	Image* mImage;
 
@@ -27,9 +27,9 @@ class FireBall : public GameObject
 	float mAngle;
 	float mSpeed;
 public:
-	FireBall(const string& name) : GameObject(name) {};
-	FireBall(const string& name, float x, float y, float angle);
-	FireBall(const string& name, float x, float y, float angle, int delay);
+	Skill_FireBall(const string& name) : GameObject(name) {};
+	Skill_FireBall(const string& name, float x, float y, float angle);
+	Skill_FireBall(const string& name, float x, float y, float angle, int delay);
 
 	void Init() override;
 	void Release() override;
@@ -38,5 +38,5 @@ public:
 
 	void SetDelay(int delay) { mDelay = delay; }
 	void AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime);
-	void AnimationChange(Animation* changeanimation);
+	void AnimationChange(Animation* changeAnimation);
 };

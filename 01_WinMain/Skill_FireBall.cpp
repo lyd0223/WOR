@@ -1,14 +1,14 @@
 #include "pch.h"
-#include "FireBall.h"
+#include "Skill_FireBall.h"
 #include "Image.h"
 #include "Player.h"
-#include "FireBoss.h"
+#include "Monster_FireBoss.h"
 #include "Animation.h"
 #include "FlameEffect.h"
 #include "Camera.h"
 #include "HitSpark.h"
 
-FireBall::FireBall(const string & name, float x, float y, float angle)
+Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angle)
 	:GameObject(name)
 {
 
@@ -25,7 +25,7 @@ FireBall::FireBall(const string & name, float x, float y, float angle)
 	
 }
 
-FireBall::FireBall(const string & name, float x, float y, float angle, int delay)
+Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angle, int delay)
 	: GameObject(name)
 {
 	mX = x;
@@ -34,7 +34,7 @@ FireBall::FireBall(const string & name, float x, float y, float angle, int delay
 	mDelay = delay;
 }
 
-void FireBall::Init()
+void Skill_FireBall::Init()
 {
 
 	AnimationSet(&mFireBallReadyAnimation, false, false, 0, 0, 4, 0, 0.1f);
@@ -45,13 +45,13 @@ void FireBall::Init()
 	mCurrentAnimation->Play();
 }
 
-void FireBall::Release()
+void Skill_FireBall::Release()
 {
 	SafeDelete(mFireBallReadyAnimation);
 	SafeDelete(mFireBallFireAnimation);
 }
 
-void FireBall::Update()
+void Skill_FireBall::Update()
 {
 	mFrameCount += Time::GetInstance()->DeltaTime();
 
@@ -88,7 +88,7 @@ void FireBall::Update()
 	}
 }
 
-void FireBall::Render()
+void Skill_FireBall::Render()
 {
 	mImage->SetAngle(mAngle * -(180 / PI));
 	mImage->SetScale(2.f);
@@ -96,7 +96,7 @@ void FireBall::Render()
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 }
 
-void FireBall::AnimationSet(Animation ** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)
+void Skill_FireBall::AnimationSet(Animation ** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)
 {
 	*animation = new Animation;
 	Animation* a = *animation;
@@ -106,9 +106,9 @@ void FireBall::AnimationSet(Animation ** animation, bool Reverse, bool Loop, int
 	a->SetFrameUpdateTime(animationTime);
 }
 
-void FireBall::AnimationChange(Animation * changeanimation)
+void Skill_FireBall::AnimationChange(Animation * changeAnimation)
 {
 	mCurrentAnimation->Stop();
-	mCurrentAnimation = changeanimation;
+	mCurrentAnimation = changeAnimation;
 	mCurrentAnimation->Play();
 }

@@ -23,7 +23,7 @@
     <ProjectGuid>{ADD52605-596E-43E8-879D-E81A28A8BB13}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My01WinMain</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -155,7 +155,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="FireWing.h" />
-    <ClInclude Include="Flame.h" />
     <ClInclude Include="FlameEffect.h" />
     <ClInclude Include="Golem.h" />
     <ClInclude Include="HitSpark.h" />
@@ -163,10 +162,7 @@
     <ClInclude Include="MagicCircle.h" />
     <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="DefineHeader.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Figure.h" />
-    <ClInclude Include="FireBall.h" />
-    <ClInclude Include="FireBoss.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameEvent.h" />
     <ClInclude Include="GameEventManager.h" />
@@ -184,9 +180,11 @@
     <ClInclude Include="Meteor.h" />
     <ClInclude Include="MeteorShockWave.h" />
     <ClInclude Include="MonsterObject.h" />
+    <ClInclude Include="Monster_FireBoss.h" />
     <ClInclude Include="MovingObject.h" />
     <ClInclude Include="MuscleMan.h" />
     <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="PathFinder.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Random.h" />
@@ -197,6 +195,8 @@
     <ClInclude Include="Scene_MapTool.h" />
     <ClInclude Include="Scene_Tutorial.h" />
     <ClInclude Include="SkillManager.h" />
+    <ClInclude Include="Skill_FireBall.h" />
+    <ClInclude Include="Skill_Flame.h" />
     <ClInclude Include="Slime.h" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="SpearMan.h" />
@@ -221,7 +221,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="FireWing.cpp" />
-    <ClCompile Include="Flame.cpp" />
     <ClCompile Include="FlameEffect.cpp" />
     <ClCompile Include="Golem.cpp" />
     <ClCompile Include="HitSpark.cpp" />
@@ -229,9 +228,6 @@
     <ClCompile Include="MagicCircle.cpp" />
     <ClCompile Include="D2DRenderer+Draw.cpp" />
     <ClCompile Include="D2DRenderer.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="FireBall.cpp" />
-    <ClCompile Include="FireBoss.cpp" />
     <ClCompile Include="GameEvent.cpp" />
     <ClCompile Include="GameEventManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -249,9 +245,11 @@
     <ClCompile Include="Meteor.cpp" />
     <ClCompile Include="MeteorShockWave.cpp" />
     <ClCompile Include="MonsterObject.cpp" />
+    <ClCompile Include="Monster_FireBoss.cpp" />
     <ClCompile Include="MovingObject.cpp" />
     <ClCompile Include="MuscleMan.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="PathFinder.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -266,6 +264,8 @@
     <ClCompile Include="Scene_MapTool.cpp" />
     <ClCompile Include="Scene_Tutorial.cpp" />
     <ClCompile Include="SkillManager.cpp" />
+    <ClCompile Include="Skill_FireBall.cpp" />
+    <ClCompile Include="Skill_Flame.cpp" />
     <ClCompile Include="Slime.cpp" />
     <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="SpearMan.cpp" />

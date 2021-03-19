@@ -1,5 +1,5 @@
 #pragma once
-#include "Enemy.h"
+#include "MonsterObject.h"
 
 enum class FireBossState : int {
 	Idle			= 0,
@@ -19,7 +19,7 @@ enum class FireBossState : int {
 
 class FireWing;
 class Animation;
-class FireBoss : public Enemy
+class Monster_FireBoss : public MonsterObject
 {
 	class Animation* mLeftIdleAnimation;			// 0, 1
 	class Animation* mRightIdleAnimation;			// 0, 0
@@ -73,7 +73,7 @@ class FireBoss : public Enemy
 	
 	bool mIsFuncEnd;
 public:
-	FireBoss(const string& name, float x, float y);
+	Monster_FireBoss(const string& name, float x, float y);
 
 	void Init() override;
 	void Release() override;

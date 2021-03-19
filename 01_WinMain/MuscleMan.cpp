@@ -6,7 +6,7 @@
 #include"MuscleMan.h"
 
 MuscleMan::MuscleMan(const string& name, float x, float y)
-
+	: MonsterObject(name)
 {
 	mName = name;
 	mX = x;

@@ -10,7 +10,7 @@ enum class CastingSkill : int {
 
 class Image;
 class Meteor;
-class Flame;
+class Skill_Flame;
 class HitSpark;
 class Animation;
 class MagicCircle : public GameObject
@@ -18,7 +18,7 @@ class MagicCircle : public GameObject
 	Image* mImage;
 	Animation* mCircleMakeAnimation;
 	Meteor* mMeteor;
-	vector<Flame*> mFlameList;
+	vector<Skill_Flame*> mFlameList;
 	HitSpark* mHitSpark;
 	CastingSkill mCastingSkill;
 

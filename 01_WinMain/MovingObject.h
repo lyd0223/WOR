@@ -36,6 +36,8 @@ protected:
 
 
 public:
+	MovingObject(const string& name) : GameObject(name) {};
+
 	void Init()override {};
 	void Release()override {};
 	void Update()override{};

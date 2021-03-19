@@ -19,7 +19,8 @@ class Scene_Tutorial : public Scene
 	class SwoardMan* mSwoardMan;
 	class Ward* mWard;
 	class Zombie* mZombie;
-	class MonsterObject* mMonsterList[11];
+	//class MonsterObject* mMonsterList[11];
+	vector<class MonsterObject*> mMonsterList;
 	//class Tile* mTileList[TileCountY][TileCountX];
 	class TileMap* mTileMap;
 	

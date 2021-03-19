@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "Flame.h"
+#include "Skill_Flame.h"
 #include "Image.h"
 #include "Animation.h"
 #include "Camera.h"
 
-Flame::Flame(const string & name, float x, float y, float angle)
+Skill_Flame::Skill_Flame(const string & name, float x, float y, float angle)
 	: GameObject(name)
 {
 	mX = x;
@@ -12,7 +12,7 @@ Flame::Flame(const string & name, float x, float y, float angle)
 	mAngle = angle;
 }
 
-void Flame::Init()
+void Skill_Flame::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"Flame", Resources(L"Skill/Flame.png"), 32, 1);
 	mImage = ImageManager::GetInstance()->FindImage(L"Flame");
@@ -27,12 +27,12 @@ void Flame::Init()
 	mFlameAnimation->Play();
 }
 
-void Flame::Release()
+void Skill_Flame::Release()
 {
 	SafeDelete(mFlameAnimation)
 }
 
-void Flame::Update()
+void Skill_Flame::Update()
 {
 	mFlameAnimation->Update();
 	if (mFlameAnimation->GetNowFrameX() == 31) {
@@ -51,7 +51,7 @@ void Flame::Update()
 	
 }
 
-void Flame::Render()
+void Skill_Flame::Render()
 {
 	
 	float ang = 0;
@@ -65,7 +65,7 @@ void Flame::Render()
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mFlameAnimation->GetNowFrameX(), mFlameAnimation->GetNowFrameY());
 }
 
-void Flame::MakeCircleFlame()
+void Skill_Flame::MakeCircleFlame()
 {
 
 }

@@ -4,10 +4,10 @@
 #include"Animation.h"
 #include"Player.h"
 #include"BigZombie.h"
-
+#include "Tile.h"
 
 BigZombie::BigZombie(const string& name, float x, float y)
-	
+	:MonsterObject(name)
 {
 	mName = name;
 	mX = x; 
@@ -22,7 +22,7 @@ void BigZombie::Init()
 	mSpeed = 3.f;
 	mSizeX = TileSize + 75;
 	mSizeY = TileSize + 75;
-	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
 	AnimationSet(&mRightWalkAnimation, false, false, 1, 0, 5, 0, AnimationTime);
@@ -48,39 +48,33 @@ void BigZombie::Release()
 void BigZombie::Update()
 {
 	
-	if (Input::GetInstance()->GetKey('W'))
+
+	if (mPathList.size() != 0)
 	{
-		mY -= 5;
-	}
-	if (Input::GetInstance()->GetKey('S'))
-	{
-		mY += 5;
-	}
-	if (Input::GetInstance()->GetKey('A'))
-	{
-		mX -= 5;
-	}
-	if (Input::GetInstance()->GetKey('D'))
-	{
-		mX += 5;
+		float nextX = mPathList[1]->GetX();
+		float nextY = mPathList[1]->GetY();
+		float angle = Math::GetAngle(mX, mY, nextX, nextY);
+
+		mX += cosf(angle) * mSpeed;
+		mY += -sinf(angle) * mSpeed;
 	}
 	
-	float mmX = mPlayer->GetX();
-	mAngle = Math::GetAngle(mPlayer->GetX(), mPlayer->GetY(), mX, mY);
-	if (mMonsterState == MonsterState::Chase)
-	{
 
-	}
 	mPlayer->Update();
 	mCurrentAnimation->Update();
-	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mRect = RectMake(mX, mY, TileSize, TileSize);
 }
 
 void BigZombie::Render()
 {
 	mImage->SetScale(4.f);
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+	for (int i = 0; i < mPathList.size(); i++) 
+	{
+		D2D1_RECT_F rc = RectMakeCenter(mPathList[i]->GetX(), mPathList[i]->GetY(), TileSize, TileSize);
+		CameraManager::GetInstance()->GetMainCamera()->RenderRect(rc);
+	}
 	
 }
 void BigZombie::AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)

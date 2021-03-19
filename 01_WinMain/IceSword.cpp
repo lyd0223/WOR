@@ -4,7 +4,7 @@
 #include "Animation.h"
 #include "IceSword.h"
 
-IceSword::IceSword(const string& name, float x, float y, float )
+IceSword::IceSword(const string& name, float x, float y)
 	:GameObject(name)
 {
 	mX = x ;

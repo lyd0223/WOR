@@ -2,6 +2,7 @@
 #include "TileMap.h"
 #include "Tile.h"
 #include "Camera.h"
+#include "Gizmo.h"
 
 #include <fstream>
 
@@ -49,6 +50,7 @@ void TileMap::Render()
 			if (cameraRect.right > tileRect.left && cameraRect.left < tileRect.right && cameraRect.bottom > tileRect.top && cameraRect.top < tileRect.bottom)
 			{
 				mTileList[y][x]->Render();
+				//CameraManager::GetInstance()->GetMainCamera()->RenderGizmoRect({ tileRect.left + 1, tileRect.top + 1,tileRect.right - 1,tileRect.bottom - 1 }, D2D1::ColorF::Red);
 			}
 			
 		}
