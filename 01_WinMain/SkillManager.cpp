@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "Effect_MagicCircle.h"
 #include "Skill_FireBall.h"
-#include"WindSlash.h"
+#include "Skill_WindSlash.h"
 #include "Skill_Flame.h"
 
 void SkillManager::Init()
@@ -70,7 +70,7 @@ void SkillManager::KickFlame(const string & name, float x, float y, float angle,
 
 void SkillManager::WindSlashSkill(const string& name, float x, float y, float angle)
 {
-	WindSlash* windSlash = new WindSlash(name, x, y, angle);
+	Skill_WindSlash* windSlash = new Skill_WindSlash(name, x, y, angle);
 	windSlash->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, windSlash);
 }

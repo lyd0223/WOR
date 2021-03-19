@@ -240,12 +240,6 @@
     <ClInclude Include="TileMap.h">
       <Filter>MainGame\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="IceSword.h">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="WindSlash.h">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClInclude>
     <ClInclude Include="Monster_FireBoss.h">
       <Filter>MainGame\Object\Enemy\FireBoss</Filter>
     </ClInclude>
@@ -311,6 +305,12 @@
     </ClInclude>
     <ClInclude Include="Monster_Zombie.h">
       <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_IceSword.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_WindSlash.h">
+      <Filter>MainGame\Object\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -425,12 +425,6 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>MainGame\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="IceSword.cpp">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="WindSlash.cpp">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClCompile>
     <ClCompile Include="Monster_FireBoss.cpp">
       <Filter>MainGame\Object\Enemy\FireBoss</Filter>
     </ClCompile>
@@ -496,6 +490,12 @@
     </ClCompile>
     <ClCompile Include="Monster_Zombie.cpp">
       <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_IceSword.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_WindSlash.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

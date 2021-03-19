@@ -3,7 +3,7 @@
 
 class Image;
 class Animation;
-class IceSword : public GameObject
+class Skill_IceSword : public GameObject
 {
 	Image* mImage;
 	
@@ -14,8 +14,8 @@ class IceSword : public GameObject
 	float mAngle;
 	float mSpeed;
 public:
-	IceSword(const string& name) : GameObject(name) {};
-	IceSword(const string& name, float x, float y);
+	Skill_IceSword(const string& name) : GameObject(name) {};
+	Skill_IceSword(const string& name, float x, float y);
 
 	void Init() override;
 	void Release() override;

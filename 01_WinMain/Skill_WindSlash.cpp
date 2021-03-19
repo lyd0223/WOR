@@ -2,11 +2,18 @@
 #include"Camera.h"
 #include "Image.h"
 #include "Animation.h"
-#include "WindSlash.h"
+#include "Skill_WindSlash.h"
 
 
+Skill_WindSlash::Skill_WindSlash(const string& name, float x, float y, float angle)
+	:GameObject(name)
+{
+	mX =   x;
+	mY =   y;
+	mAngle = angle;
+}
 
-void WindSlash::Init()
+void Skill_WindSlash::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"WindSlash", Resources(L"Skill/WindSlash.png"), 5, 3);
 	mImage = ImageManager::GetInstance()->FindImage(L"WindSlash");
@@ -25,22 +32,12 @@ void WindSlash::Init()
 
 }
 
-WindSlash::WindSlash(const string& name, float x, float y, float angle)
-	:GameObject(name)
-{
-	mX =   x;
-	mY =   y;
-	mAngle = angle;
-	
-
-}
-
-void WindSlash::Release()
+void Skill_WindSlash::Release()
 {
 	SafeDelete(mSlashAnimation);
 }
 
-void WindSlash::Update()
+void Skill_WindSlash::Update()
 {
 	if (mSlashAnimation->GetNowFrameX() == 4)mIsDestroy = true;
 	
@@ -51,7 +48,7 @@ void WindSlash::Update()
 	mSlashAnimation->Update();
 }
 
-void WindSlash::Render()
+void Skill_WindSlash::Render()
 {
 	mImage->SetAngle(mAngle);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mSlashAnimation->GetNowFrameX(), mSlashAnimation->GetNowFrameY());

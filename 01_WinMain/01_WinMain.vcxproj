@@ -158,7 +158,7 @@
     <ClInclude Include="Effect_FlameEffect.h" />
     <ClInclude Include="Monster_Golem.h" />
     <ClInclude Include="Effect_HitSpark.h" />
-    <ClInclude Include="IceSword.h" />
+    <ClInclude Include="Skill_IceSword.h" />
     <ClInclude Include="Effect_MagicCircle.h" />
     <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="DefineHeader.h" />
@@ -209,7 +209,7 @@
     <ClInclude Include="Time.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Monster_Ward.h" />
-    <ClInclude Include="WindSlash.h" />
+    <ClInclude Include="Skill_WindSlash.h" />
     <ClInclude Include="Monster_Zombie.h" />
   </ItemGroup>
   <ItemGroup>
@@ -224,7 +224,7 @@
     <ClCompile Include="Effect_FlameEffect.cpp" />
     <ClCompile Include="Monster_Golem.cpp" />
     <ClCompile Include="Effect_HitSpark.cpp" />
-    <ClCompile Include="IceSword.cpp" />
+    <ClCompile Include="Skill_IceSword.cpp" />
     <ClCompile Include="Effect_MagicCircle.cpp" />
     <ClCompile Include="D2DRenderer+Draw.cpp" />
     <ClCompile Include="D2DRenderer.cpp" />
@@ -277,7 +277,7 @@
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Monster_Ward.cpp" />
-    <ClCompile Include="WindSlash.cpp" />
+    <ClCompile Include="Skill_WindSlash.cpp" />
     <ClCompile Include="Monster_Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>

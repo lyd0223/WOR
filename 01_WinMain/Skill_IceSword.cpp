@@ -2,9 +2,9 @@
 #include"Camera.h"
 #include "Image.h"
 #include "Animation.h"
-#include "IceSword.h"
+#include "Skill_IceSword.h"
 
-IceSword::IceSword(const string& name, float x, float y)
+Skill_IceSword::Skill_IceSword(const string& name, float x, float y)
 	:GameObject(name)
 {
 	mX = x ;
@@ -15,7 +15,7 @@ IceSword::IceSword(const string& name, float x, float y)
 	
 }
 
-void IceSword::Init()
+void Skill_IceSword::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"IceSword", Resources(L"Skill/IceSword.png"), 1, 1);
 	mImage = ImageManager::GetInstance()->FindImage(L"IceSword");
@@ -27,12 +27,12 @@ void IceSword::Init()
 	
 }
 
-void IceSword::Release()
+void Skill_IceSword::Release()
 {
 	
 }
 
-void IceSword::Update()
+void Skill_IceSword::Update()
 {
 	mImageAngle += 360.f * Time::GetInstance()->DeltaTime();
 
@@ -42,7 +42,7 @@ void IceSword::Update()
 
 }
 
-void IceSword::Render()
+void Skill_IceSword::Render()
 {
 	mImage->SetAngle(mImageAngle);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage,mX,mY,0,0);
