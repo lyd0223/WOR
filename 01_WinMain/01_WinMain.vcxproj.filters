@@ -115,6 +115,9 @@
     <Filter Include="FrameWork\PathFinder">
       <UniqueIdentifier>{f064ed55-5dba-4064-a86c-88a6b58cb7e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\NewFilter1">
+      <UniqueIdentifier>{cb3b9d0d-fc85-4c8e-bfc7-d71aa7b03ea7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
