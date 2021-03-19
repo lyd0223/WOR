@@ -272,7 +272,7 @@ void Player::Update()
 	//АјАн
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 	{
-		mAngle = Math::GetAngle(mX, mY, _mousePosition.x, _mousePosition.y);
+		mAngle = 180 / PI * Math::GetAngle(mX, mY, CameraManager::GetInstance()->GetMainCamera()->GetMousePosition().x, CameraManager::GetInstance()->GetMainCamera()->GetMousePosition().y);
 		if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
 		{
 			AnimationChange(mRightThrowSkillandAttackAnimation);

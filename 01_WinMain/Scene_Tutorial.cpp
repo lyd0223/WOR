@@ -156,4 +156,12 @@ void Scene_Tutorial::Update()
 void Scene_Tutorial::Render()
 {
 	ObjectManager::GetInstance()->Render();
+	string str = to_string(_mousePosition.x) + "," + to_string(_mousePosition.y);
+	wstring wstr;
+	wstr.assign(str.begin(), str.end());
+	ObjectManager::GetInstance()->Render();
+	D2DRenderer::GetInstance()->RenderText(100, WINSIZEY / 100, wstr, 30.f);
+	D2DRenderer::GetInstance()->RenderText(300, WINSIZEY / 200, to_wstring(mPlayer->GetAngle()), 30.f);
+
+
 }

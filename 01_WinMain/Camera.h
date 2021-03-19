@@ -41,5 +41,6 @@ public:
 
 	inline float GetMoveSpeed()const { return mMoveSpeed; }
 	inline void SetMoveSpeed(float speed) { mMoveSpeed = speed; }
+	inline POINT GetMousePosition() { return mMousePosition; }
 };
 

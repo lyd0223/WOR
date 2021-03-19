@@ -41,7 +41,6 @@ void Skill_WindSlash::Update()
 {
 	if (mSlashAnimation->GetNowFrameX() == 4)mIsDestroy = true;
 	
-	mAngle = Math::GetAngle(mX, mY, _mousePosition.x, _mousePosition.y);
 	mX += cosf(mAngle) * mSpeed;
 	mY -= sinf(mAngle) * mSpeed;
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);
