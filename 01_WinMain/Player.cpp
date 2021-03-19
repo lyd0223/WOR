@@ -97,7 +97,9 @@ void Player::Update()
 	//int indexX = mX / TileSize;
 	//---------------------------------
 	//겟키다운
-	mAngle = Math::GetAngle(mX, mY, _mousePosition.x, _mousePosition.y);
+	D2D1_RECT_F rctemp = CameraManager::GetInstance()->GetMainCamera()->GetRect();
+	mAngle = Math::GetAngle(mX, mY, _mousePosition.x + rctemp.left, _mousePosition.y + rctemp.top);
+
 	if (!Input::GetInstance()->GetKey('S'))
 	{
 		if (Input::GetInstance()->GetKeyDown('W'))
@@ -272,30 +274,31 @@ void Player::Update()
 	//공격
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 	{
-		mAngle = 180 / PI * Math::GetAngle(mX, mY, CameraManager::GetInstance()->GetMainCamera()->GetMousePosition().x, CameraManager::GetInstance()->GetMainCamera()->GetMousePosition().y);
+		D2D1_RECT_F rctemp = CameraManager::GetInstance()->GetMainCamera()->GetRect();
+		mAngle =  Math::GetAngle(mX, mY, _mousePosition.x + rctemp.left,_mousePosition.y+ rctemp.top);
 		if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
 		{
 			AnimationChange(mRightThrowSkillandAttackAnimation);
 			mPlayerState = PlayerState::RightAttack;
-			SkillManager::GetInstance()->WindSlashSkill("WindSlash", mX, mY, mAngle);
+			SkillManager::GetInstance()->WindSlashSkill("WindSlash", mX, mY, 180 / PI * mAngle);
 		}
 		else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
 		{
 			AnimationChange(mUpAttackAnimation);
 			mPlayerState = PlayerState::UpAttack;
-			SkillManager::GetInstance()->WindSlashSkill("WindSlash", mX, mY, mAngle);
+			SkillManager::GetInstance()->WindSlashSkill("WindSlash", mX, mY, 180 / PI * mAngle);
 		}
 		else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
 		{
 			AnimationChange(mLeftThrowSkillandAttackAnimation);
 			mPlayerState = PlayerState::LeftAttack;
-			SkillManager::GetInstance()->WindSlashSkill("WindSlash", mX, mY, mAngle);
+			SkillManager::GetInstance()->WindSlashSkill("WindSlash", mX, mY, 180 / PI * mAngle);
 		}
 		else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
 		{
 			AnimationChange(mDownAttackAnimation);
 			mPlayerState = PlayerState::DownAttack;
-			SkillManager::GetInstance()->WindSlashSkill("WindSlash", mX, mY, mAngle);
+			SkillManager::GetInstance()->WindSlashSkill("WindSlash", mX, mY, 180 / PI * mAngle);
 		}
 	}
 	//대쉬
