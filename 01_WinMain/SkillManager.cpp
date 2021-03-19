@@ -2,9 +2,9 @@
 #include "SkillManager.h"
 #include "GameObject.h"
 #include "MagicCircle.h"
-#include "FireBall.h"
+#include "Skill_FireBall.h"
 #include"WindSlash.h"
-#include "Flame.h"
+#include "Skill_Flame.h"
 
 void SkillManager::Init()
 {
@@ -34,6 +34,8 @@ void SkillManager::Render()
 
 }
 
+
+
 void SkillManager::FlameSkill(const string& name, float x, float y, float angle)
 {
 	MagicCircle* magicCircle = new MagicCircle(name, x, y, CastingSkill::Burn);
@@ -43,7 +45,7 @@ void SkillManager::FlameSkill(const string& name, float x, float y, float angle)
 
 void SkillManager::FireBallSkill(const string& name, float x, float y, float angle, int delay)
 {
-	FireBall* fireBall = new FireBall(name, x, y, angle);
+	Skill_FireBall* fireBall = new Skill_FireBall(name, x, y, angle);
 	fireBall->Init();
 	fireBall->SetDelay(delay);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, fireBall);
@@ -58,7 +60,7 @@ void SkillManager::MeteorSkill(const string& name, float x, float y)
 
 void SkillManager::KickFlame(const string & name, float x, float y, float angle, float endX, float endY)
 {
-	Flame* flame = new Flame(name, x, y, angle);
+	Skill_Flame* flame = new Skill_Flame(name, x, y, angle);
 	flame->Init();
 	flame->SetEndPositionX(endX);
 	flame->SetEndPositionY(endY);
