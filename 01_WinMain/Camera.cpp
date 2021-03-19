@@ -11,6 +11,8 @@ void Camera::Init()
 	mSizeX = WINSIZEX;
 	mSizeY = WINSIZEY;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mMousePosition.x = _mousePosition.x - mRect.left;
+	mMousePosition.y = _mousePosition.y - mRect.top;
 	mMoveSpeed = 10.f;
 	
 }
@@ -22,6 +24,8 @@ void Camera::Release()
 
 void Camera::Update()
 {
+	mMousePosition.x = _mousePosition.x - mRect.left;
+	mMousePosition.y = _mousePosition.y - mRect.top;
 	switch (mMode)
 	{
 	case Camera::Mode::Follow:

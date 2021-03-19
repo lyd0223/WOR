@@ -11,7 +11,7 @@ public:
 protected:
 	Mode mMode;
 	GameObject* mTarget;		//ÂÑ¾Æ°¡¾ßÇÒ Å¸°Ù
-
+	POINT mMousePosition;
 	float mMoveSpeed;
 public:
 	void Init()override; 
