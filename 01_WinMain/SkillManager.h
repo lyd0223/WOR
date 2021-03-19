@@ -19,6 +19,7 @@ public:
 	void FireBallSkill(const string& name, float x, float y, float angle, int delay);
 	void MeteorSkill(const string& name, float x, float y);
 	void KickFlame(const string& name, float x, float y, float angle, float endX, float endY);
+	void WindSlashSkill(const string& name, float x, float y, float angle);
 
 	map<string, vector<class GameObject*>> GetSkillList() { return mSkillList; }
 	class vector<GameObject*> FindSkillList(const string key);

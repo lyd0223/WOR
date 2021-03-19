@@ -1,6 +1,13 @@
 #pragma once
 #include"GameObject.h"
+
 enum class MonsterState
+{
+	Idle,
+	Chase,
+	Attack
+};
+enum class MonsterActState
 {
 	LeftIdle,
 	RightIdle,
@@ -23,7 +30,7 @@ protected:
 	int mHp;
 	float mSpeed;
 	float mAngle;
-	MonsterState mMonsterState;
+	MonsterActState mMonsterActState;
 	
 	
 

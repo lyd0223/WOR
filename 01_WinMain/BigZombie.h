@@ -17,6 +17,8 @@ protected:
 	Animation* mSpecialAttackAnimation;
 	Animation* mDieAnimation;
 	Animation* mCurrentAnimation;
+	Player* mPlayer;
+	MonsterActState mMonsterActState;
 	MonsterState mMonsterState;
 
 
@@ -36,5 +38,6 @@ public:
 	void AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime);
 	void AnimationReverseSet(Animation** animation, bool Rivers, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime);
 	void AnimationChange(Animation* changeanimation);
+
 
 };

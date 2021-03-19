@@ -17,7 +17,7 @@ void Mazition::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"Mazition", Resources(L"Monster/Mazition.png"), 6, 5);
 	mImage = ImageManager::GetInstance()->FindImage(L"Mazition");
-	mMonsterState = MonsterState::RightIdle;
+	mMonsterActState = MonsterActState::RightIdle;
 	mSpeed = 3.f;
 	mSizeX = TileSize + 50;
 	mSizeY = TileSize + 50;

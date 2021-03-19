@@ -23,7 +23,7 @@
     <ProjectGuid>{ADD52605-596E-43E8-879D-E81A28A8BB13}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My01WinMain</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -159,6 +159,7 @@
     <ClInclude Include="FlameEffect.h" />
     <ClInclude Include="Golem.h" />
     <ClInclude Include="HitSpark.h" />
+    <ClInclude Include="IceSword.h" />
     <ClInclude Include="MagicCircle.h" />
     <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="DefineHeader.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="Time.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Ward.h" />
+    <ClInclude Include="WindSlash.h" />
     <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +225,7 @@
     <ClCompile Include="FlameEffect.cpp" />
     <ClCompile Include="Golem.cpp" />
     <ClCompile Include="HitSpark.cpp" />
+    <ClCompile Include="IceSword.cpp" />
     <ClCompile Include="MagicCircle.cpp" />
     <ClCompile Include="D2DRenderer+Draw.cpp" />
     <ClCompile Include="D2DRenderer.cpp" />
@@ -274,6 +277,7 @@
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Ward.cpp" />
+    <ClCompile Include="WindSlash.cpp" />
     <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -112,6 +112,9 @@
     <Filter Include="MainGame\Object\Enemy\MonsetObject">
       <UniqueIdentifier>{d546738c-d667-4064-9ff9-7701aeedfa2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\PathFinder">
+      <UniqueIdentifier>{f064ed55-5dba-4064-a86c-88a6b58cb7e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -300,6 +303,12 @@
     <ClInclude Include="TileMap.h">
       <Filter>MainGame\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="IceSword.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="WindSlash.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -478,6 +487,12 @@
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <Filter>MainGame\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="IceSword.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="WindSlash.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

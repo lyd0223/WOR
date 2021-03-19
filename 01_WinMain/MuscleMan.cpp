@@ -17,7 +17,7 @@ void MuscleMan::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"MuscleMan", Resources(L"Monster/MuscleMan.png"), 6, 2);
 	mImage = ImageManager::GetInstance()->FindImage(L"MuscleMan");
-	mMonsterState = MonsterState::RightIdle;
+	mMonsterActState = MonsterActState::RightIdle;
 	mSpeed = 3.f;
 	mSizeX = TileSize + 50;
 	mSizeY = TileSize + 50;

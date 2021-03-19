@@ -2,6 +2,7 @@
 #include "Image.h"
 #include"Camera.h"
 #include"Animation.h"
+#include"Player.h"
 #include"BigZombie.h"
 
 
@@ -17,12 +18,12 @@ void BigZombie::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"BigZombie", Resources(L"Monster/Bigzombie.png"), 7, 5);
 	mImage = ImageManager::GetInstance()->FindImage(L"BigZombie");
-	mMonsterState = MonsterState::RightIdle;
+	mMonsterActState = MonsterActState::RightIdle;
 	mSpeed = 3.f;
 	mSizeX = TileSize + 75;
 	mSizeY = TileSize + 75;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-
+	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
 	AnimationSet(&mRightWalkAnimation, false, false, 1, 0, 5, 0, AnimationTime);
 	AnimationSet(&mRightAttackAnimation, false, false, 0, 1, 4, 1, AnimationTime);
@@ -46,6 +47,7 @@ void BigZombie::Release()
 
 void BigZombie::Update()
 {
+	
 	if (Input::GetInstance()->GetKey('W'))
 	{
 		mY -= 5;
@@ -62,6 +64,14 @@ void BigZombie::Update()
 	{
 		mX += 5;
 	}
+	
+	float mmX = mPlayer->GetX();
+	mAngle = Math::GetAngle(mPlayer->GetX(), mPlayer->GetY(), mX, mY);
+	if (mMonsterState == MonsterState::Chase)
+	{
+
+	}
+	mPlayer->Update();
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }

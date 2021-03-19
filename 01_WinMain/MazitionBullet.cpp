@@ -17,7 +17,7 @@ void MazitionBullet::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"MazitionBullet", Resources(L"Monster/MazitionBullet.png"), 5, 1);
 	mImage = ImageManager::GetInstance()->FindImage(L"MazitionBullet");
-	mMonsterState = MonsterState::RightIdle;
+	mMonsterActState = MonsterActState::RightIdle;
 	mSpeed = 3.f;
 	mSizeX = TileSize/2;
 	mSizeY = TileSize / 2;

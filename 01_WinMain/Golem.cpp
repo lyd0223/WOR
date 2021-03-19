@@ -18,7 +18,7 @@ void Golem::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"Golem", Resources(L"Monster/Golem.png"), 6, 4);
 	mImage = ImageManager::GetInstance()->FindImage(L"Golem");
-	mMonsterState = MonsterState::RightIdle;
+	mMonsterActState = MonsterActState::RightIdle;
 	mSpeed = 3.f;
 	mSizeX = TileSize + 50;
 	mSizeY = TileSize + 50;
