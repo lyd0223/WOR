@@ -312,6 +312,9 @@
     <ClInclude Include="Skill_WindSlash.h">
       <Filter>MainGame\Object\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="SkillObject.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -495,6 +498,9 @@
       <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
     <ClCompile Include="Skill_WindSlash.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillObject.cpp">
       <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
   </ItemGroup>

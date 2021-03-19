@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "SkillObject.h"
 
 enum class FireBallState : int {
 	Ready,
@@ -11,10 +11,8 @@ enum class FireBallState : int {
 class Image;
 class Animation;
 class Effect_FlameEffect;
-class Skill_FireBall : public GameObject
+class Skill_FireBall : public SkillObject
 {
-	Image* mImage;
-
 	Effect_FlameEffect* mFlameEffect;
 	FireBallState mState;
 
@@ -27,7 +25,7 @@ class Skill_FireBall : public GameObject
 	float mAngle;
 	float mSpeed;
 public:
-	Skill_FireBall(const string& name) : GameObject(name) {};
+	Skill_FireBall(const string& name) : SkillObject(name) {};
 	Skill_FireBall(const string& name, float x, float y, float angle);
 	Skill_FireBall(const string& name, float x, float y, float angle, int delay);
 

@@ -9,24 +9,17 @@
 #include "Effect_HitSpark.h"
 
 Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angle)
-	:GameObject(name)
+	:SkillObject(name)
 {
 
 	mX = x;
 	mY = y;
 	mAngle = angle;
 
-	ImageManager::GetInstance()->LoadFromFile(L"FireBall", Resources(L"Skill/FireBall.png"), 9, 1);
-	mImage = ImageManager::GetInstance()->FindImage(L"FireBall");
-	mSizeX = mImage->GetWidth();
-	mSizeY = mImage->GetHeight();
-	mRect = RectMake(mX, mY, mSizeX, mSizeY);
-	mSpeed = 10.f;
-	
 }
 
 Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angle, int delay)
-	: GameObject(name)
+	: SkillObject(name)
 {
 	mX = x;
 	mY = y;
@@ -36,6 +29,16 @@ Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angl
 
 void Skill_FireBall::Init()
 {
+
+	ImageManager::GetInstance()->LoadFromFile(L"FireBall", Resources(L"Skill/FireBall.png"), 9, 1);
+	mImage = ImageManager::GetInstance()->FindImage(L"FireBall");
+	mSizeX = mImage->GetWidth();
+	mSizeY = mImage->GetHeight();
+	mRect = RectMake(mX, mY, mSizeX, mSizeY);
+	mSpeed = 10.f;
+
+	mSkillElement = SkillElement::Fire;
+	mSkillType = SkillType::Throw;
 
 	AnimationSet(&mFireBallReadyAnimation, false, false, 0, 0, 4, 0, 0.1f);
 	AnimationSet(&mFireBallFireAnimation, false, true, 4, 0, 8, 0, 0.1f);
