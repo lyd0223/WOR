@@ -72,17 +72,21 @@ void Scene_MapTool::Init()
 	
 
 	//타일 만들기
+	
 	for (int y = 0; y < TileCountY; y++)
 	{
+		vector<Tile*> tilelist;
+		mTileList.push_back(tilelist);
 		for (int x = 0; x < TileCountX; x++)
 		{
-			mTileList[y][x] = new Tile
+			Tile* tile = new Tile
 			(
 				ImageManager::GetInstance()->FindImage(L"Fire8Walls"),
 				TileSize *x, TileSize*y, 
 				TileSize, TileSize,
 				1,1
 			);
+			mTileList[y].push_back(tile);
 		}
 	}
 	//버튼

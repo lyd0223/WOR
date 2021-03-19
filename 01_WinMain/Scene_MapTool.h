@@ -28,7 +28,8 @@ class Scene_MapTool :public Scene
 	//vector<vector<class Tile*>> mTileList;
 	vector<class Structure*> mStructureList;
 	bool mBookIsOpen;
-	class Tile* mTileList[TileCountY][TileCountX];
+	//class Tile* mTileList[TileCountY][TileCountX]; 
+	vector<vector<class Tile*>> mTileList;
 	
 	ClickType mClickType;
 
