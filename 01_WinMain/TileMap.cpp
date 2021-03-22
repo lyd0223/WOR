@@ -3,26 +3,30 @@
 #include "Tile.h"
 #include "Camera.h"
 #include "Gizmo.h"
-
+#include "Structure.h"
 #include <fstream>
+#include "Image.h"
 
 TileMap::TileMap(string sceneName)
 {
 	mName = "TileMap";
 	for (int y = 0; y < TileCountY; y++)
 	{
+		vector<Tile*> tilelist;
+		mTileList.push_back(tilelist);
 		for (int x = 0; x < TileCountX; x++)
 		{
-			mTileList[y][x] = new Tile
+			Tile* tile = new Tile
 			(
 				NULL,
 				TileSize * x, TileSize * y,
 				TileSize, TileSize,
-				0, 0
+				0,0
 			);
-
+			mTileList[y].push_back(tile);
 		}
 	}
+	
 	Load(sceneName);
 }
 void TileMap::Init()
@@ -117,7 +121,56 @@ void TileMap::Load(string sceneName)
 				mTileList[y][x]->SetFrameIndexY(IndexY);
 			}
 		}
+		//스트럭쳐 불러오기
+		while (true)
+		{
+			string tempstr;
+			string key;
+			int IndexX = 0;
+			int IndexY = 0;
+			getline(loadStream, tempstr);
+			if (tempstr == "/")
+			{
+				return;
+			}
+			int tempint = 0;
+			int n = 0;
+			for (int i = 0; i < tempstr.length(); i++)
+			{
+				if (tempstr[i] == ',' && n == 0)
+				{
+					int t = i - tempint;
+					key = tempstr.substr(tempint, t);
+					tempint = i + 1;
+					n++;
+				}
+				else if (tempstr[i] == ',' && n == 1)
+				{
+					int t = i - tempint + 1;
+					IndexY = stoi(tempstr.substr(tempint, t));
+					tempint = i + 1;
+					n++;
+				}
+				else if (i == tempstr.length() - 1 && n == 2)
+				{
+					int t = i - tempint + 2;
+					IndexX = stoi(tempstr.substr(tempint, t));
 
+				}
+			}
+			wstring wstr;
+			wstr.assign(key.begin(), key.end());
+			Structure* st = new Structure
+			(
+				key,
+				ImageManager::GetInstance()->FindImage(wstr),
+				(float)IndexX * TileSize + TileSize / 2,
+				(float)IndexY * TileSize + TileSize / 2,
+				ImageManager::GetInstance()->FindImage(wstr)->GetWidth(),
+				ImageManager::GetInstance()->FindImage(wstr)->GetHeight()
+			);
+			mStructureList.push_back(st);
+		}
 	}
 }
 

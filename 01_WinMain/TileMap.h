@@ -8,7 +8,8 @@
 class TileMap : public GameObject
 {
 
-	class Tile* mTileList[TileCountY][TileCountX];
+	vector<vector<class Tile*>> mTileList;
+	vector<class Structure*> mStructureList;
 	
 public:
 	TileMap(string sceneName);
@@ -17,9 +18,8 @@ public:
 	void Release()override;
 	void Render()override;
 	void Load(string sceneName);
-
-	inline class Tile* GetTileList(int x, int y) { return mTileList[y][x]; };
-
-
+	inline vector<class Structure*> GetStructureList() { return mStructureList; };
+	inline vector<vector<class Tile*>> GetTileList() { return mTileList; };
+	inline Tile* GetTileList(int x, int y) { return mTileList[y][x]; };
 };
 

@@ -46,7 +46,11 @@ class Scene_MapTool :public Scene
 	
 	class TilePallete* mPallete2;
 
-	class TilePallete* mPallete_Structure[3];
+	vector<class TilePallete*> mPallete_Structure;
+	vector<class TilePallete*> mPallete_Structure2;
+	vector<class TilePallete*> mPallete_Structure3;
+	vector<class TilePallete*> mPallete_BackGround;
+
 	D2D1_RECT_F mShiftRect;
 	int mPalletePageX;
 

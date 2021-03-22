@@ -16,53 +16,7 @@ void Scene_MapTool::Init()
 	mBookIsOpen = 1;
 	mClickType = ClickType::TileSetClick;
 	
-	ImageManager::GetInstance()->LoadFromFile(L"TutorialTile", Resources(L"Tile/TutorialMap.png"), 74, 43);
-	ImageManager::GetInstance()->LoadFromFile(L"TileSet", Resources(L"Tile/Tile.bmp"), 16, 16);
-	ImageManager::GetInstance()->LoadFromFile(L"Set", Resources(L"Tile/Set.bmp"));
-	ImageManager::GetInstance()->LoadFromFile(L"Page", Resources(L"Tile/Page.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"MainPage", Resources(L"Tile/MainPage.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Pallete", Resources(L"Tile/Pallete.png"));
 
-	//버튼이미지
-	ImageManager::GetInstance()->LoadFromFile(L"Save", Resources(L"Tile/Button/Save.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Load", Resources(L"Tile/Button/Load.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Redo", Resources(L"Tile/Button/Redo.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Undo", Resources(L"Tile/Button/Undo.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Back", Resources(L"Tile/Button/Back.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Left", Resources(L"Tile/Button/Left.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Right", Resources(L"Tile/Button/Right.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Floors", Resources(L"Tile/Button/Floors.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Walls", Resources(L"Tile/Button/Walls.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Cliffs", Resources(L"Tile/Button/Cliffs.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Thorns", Resources(L"Tile/Button/Thorns.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Maps", Resources(L"Tile/Button/Maps.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Structures", Resources(L"Tile/Button/Structures.png"));
-
-	//Floors
-	ImageManager::GetInstance()->LoadFromFile(L"FireFloor", Resources(L"Tile/Floor/Fire_Floor.png"),8,2);
-	ImageManager::GetInstance()->LoadFromFile(L"HouseFloor", Resources(L"Tile/Floor/House_Floor.png"),8,5);
-	//Walls
-	ImageManager::GetInstance()->LoadFromFile(L"Fire4Walls", Resources(L"Tile/Wall/Fire_4Walls.png"),2,2);
-	ImageManager::GetInstance()->LoadFromFile(L"Fire8Walls", Resources(L"Tile/Wall/Fire_8Walls.png"),3,3);
-	ImageManager::GetInstance()->LoadFromFile(L"House4Walls", Resources(L"Tile/Wall/House_4Walls.png"),2,2);
-	ImageManager::GetInstance()->LoadFromFile(L"House8Walls", Resources(L"Tile/Wall/House_8Walls.png"),3,3);
-	ImageManager::GetInstance()->LoadFromFile(L"FireWall1", Resources(L"Tile/Wall/Fire_Wall1.png"),3,3);
-	ImageManager::GetInstance()->LoadFromFile(L"FireWall2", Resources(L"Tile/Wall/Fire_Wall2.png"),3,3);
-	ImageManager::GetInstance()->LoadFromFile(L"FireWall3", Resources(L"Tile/Wall/Fire_Wall3.png"),3,3);
-	ImageManager::GetInstance()->LoadFromFile(L"HouseWall1", Resources(L"Tile/Wall/House_Wall1.png"),3,3);
-	ImageManager::GetInstance()->LoadFromFile(L"HouseWall2", Resources(L"Tile/Wall/House_Wall2.png"),3,3);
-	ImageManager::GetInstance()->LoadFromFile(L"HouseWall3", Resources(L"Tile/Wall/House_Wall3.png"),3,3);
-
-	//Cliffs
-
-	//Thorns
-
-	//Structs
-	ImageManager::GetInstance()->LoadFromFile(L"Tree1", Resources(L"Tile/Structure/Tree1.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Tree2", Resources(L"Tile/Structure/Tree2.png"));
-	ImageManager::GetInstance()->LoadFromFile(L"Flag", Resources(L"Tile/Structure/Flag.png"));
-
-	
 	mBackGroundImage = ImageManager::GetInstance()->FindImage(L"Page");
 	mBackGroundX = WINSIZEX - 200;
 
@@ -271,34 +225,168 @@ void Scene_MapTool::Init()
 	//Thorns
 
 	//Structures
-	mPallete_Structure[0] = new TilePallete();
-	mPallete_Structure[0]->Image = ImageManager::GetInstance()->FindImage(L"Tree1");
-	mPallete_Structure[0]->PositionX = WINSIZEX - 350;
-	mPallete_Structure[0]->PositionY = 230;
-	mPallete_Structure[0]->Width = TileSize * 3/2;
-	mPallete_Structure[0]->Height = TileSize * 4/2;
-	mPallete_Structure[0]->Rect = RectMake(mPallete_Structure[0]->PositionX, mPallete_Structure[0]->PositionY, mPallete_Structure[0]->Width, mPallete_Structure[0]->Height);
-	mPallete_Structure[1] = new TilePallete();
-	mPallete_Structure[1]->Image = ImageManager::GetInstance()->FindImage(L"Tree2");
-	mPallete_Structure[1]->PositionX = WINSIZEX - 250;
-	mPallete_Structure[1]->PositionY = 230;
-	mPallete_Structure[1]->Width = TileSize * 3/2;
-	mPallete_Structure[1]->Height = TileSize * 4/2;
-	mPallete_Structure[1]->Rect = RectMake(mPallete_Structure[1]->PositionX, mPallete_Structure[1]->PositionY, mPallete_Structure[1]->Width, mPallete_Structure[1]->Height);
-	mPallete_Structure[2] = new TilePallete();
-	mPallete_Structure[2]->Image = ImageManager::GetInstance()->FindImage(L"Flag");
-	mPallete_Structure[2]->PositionX = WINSIZEX - 150;
-	mPallete_Structure[2]->PositionY = 230;
-	mPallete_Structure[2]->Width = TileSize ;
-	mPallete_Structure[2]->Height = TileSize * 4/2;
-	mPallete_Structure[2]->Rect = RectMake(mPallete_Structure[2]->PositionX, mPallete_Structure[2]->PositionY, mPallete_Structure[2]->Width, mPallete_Structure[2]->Height);
-	/*mPallete_Structure4 = new TilePallete();
-	mPallete_Structure4->Image = ImageManager::GetInstance()->FindImage(L"Tree1");
-	mPallete_Structure4->PositionX = WINSIZEX - 300;
-	mPallete_Structure4->PositionY = 300;
-	mPallete_Structure4->Width = TileSize * 3 / 2;
-	mPallete_Structure4->Height = TileSize * 4 / 2;
-	mPallete_Structure4->Rect = RectMake(mPallete_Structure4->PositionX, mPallete_Structure4->PositionY, mPallete_Structure4->Width, mPallete_Structure4->Height);*/
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"Tree1");
+		pallete->PositionX = WINSIZEX - 350;
+		pallete->PositionY = 230;
+		pallete->Width = TileSize * 3 / 2;
+		pallete->Height = TileSize * 4 / 2;
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure.push_back(pallete);
+	}
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"Tree2");
+		pallete->PositionX = WINSIZEX - 250;
+		pallete->PositionY = 230;
+		pallete->Width = TileSize * 3 / 2;
+		pallete->Height = TileSize * 4 / 2;
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure.push_back(pallete);
+	}
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"Flag");
+		pallete->PositionX = WINSIZEX - 150;
+		pallete->PositionY = 230;
+		pallete->Width = TileSize;
+		pallete->Height = TileSize * 4 / 2;
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure.push_back(pallete);
+	}
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"BookShelf");
+		pallete->PositionX = WINSIZEX - 350;
+		pallete->PositionY = 380;
+		pallete->Width = pallete->Image->GetWidth();
+		pallete->Height = pallete->Image->GetHeight();
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure.push_back(pallete);
+	}
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"Bed");
+		pallete->PositionX = WINSIZEX - 200;
+		pallete->PositionY = 380;
+		pallete->Width = pallete->Image->GetWidth();
+		pallete->Height = pallete->Image->GetHeight();
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure.push_back(pallete);
+	}
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"Book1");
+		pallete->PositionX = WINSIZEX - 360;
+		pallete->PositionY = 230;
+		pallete->Width = pallete->Image->GetWidth();
+		pallete->Height = pallete->Image->GetHeight();
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure2.push_back(pallete);
+	}
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"Book2");
+		pallete->PositionX = WINSIZEX - 300;
+		pallete->PositionY = 230;
+		pallete->Width = pallete->Image->GetWidth();
+		pallete->Height = pallete->Image->GetHeight();
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure2.push_back(pallete);
+	}
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"Book3");
+		pallete->PositionX = WINSIZEX - 240;
+		pallete->PositionY = 230;
+		pallete->Width = pallete->Image->GetWidth();
+		pallete->Height = pallete->Image->GetHeight();
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure2.push_back(pallete);
+	}
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"Book4");
+		pallete->PositionX = WINSIZEX - 180;
+		pallete->PositionY = 230;
+		pallete->Width = pallete->Image->GetWidth();
+		pallete->Height = pallete->Image->GetHeight();
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure2.push_back(pallete);
+	}
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"Book5");
+		pallete->PositionX = WINSIZEX - 120;
+		pallete->PositionY = 230;
+		pallete->Width = pallete->Image->GetWidth();
+		pallete->Height = pallete->Image->GetHeight();
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure2.push_back(pallete);
+	}
+	
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"Table");
+		pallete->PositionX = WINSIZEX - 350;
+		pallete->PositionY = 350;
+		pallete->Width = pallete->Image->GetWidth();
+		pallete->Height = pallete->Image->GetHeight();
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure2.push_back(pallete);
+	}
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"SmallTable");
+		pallete->PositionX = WINSIZEX - 200;
+		pallete->PositionY = 350;
+		pallete->Width = pallete->Image->GetWidth();
+		pallete->Height = pallete->Image->GetHeight();
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure2.push_back(pallete);
+	}
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"Chair");
+		pallete->PositionX = WINSIZEX - 150;
+		pallete->PositionY = 350;
+		pallete->Width = pallete->Image->GetWidth();
+		pallete->Height = pallete->Image->GetHeight();
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure2.push_back(pallete);
+	}
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"Portal");
+		pallete->PositionX = WINSIZEX - 350;
+		pallete->PositionY = 420;
+		pallete->Width = pallete->Image->GetWidth();
+		pallete->Height = pallete->Image->GetHeight();
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure2.push_back(pallete);
+	}
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"ScareCrow");
+		pallete->PositionX = WINSIZEX - 200;
+		pallete->PositionY = 420;
+		pallete->Width = pallete->Image->GetWidth();
+		pallete->Height = pallete->Image->GetHeight();
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure2.push_back(pallete);
+	}
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"Gate");
+		pallete->PositionX = WINSIZEX - 350;
+		pallete->PositionY = 230;
+		pallete->Width = pallete->Image->GetWidth();
+		pallete->Height = pallete->Image->GetHeight();
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure3.push_back(pallete);
+	}
+
 	//튜토리얼 파레트
 	mPallete2 = new TilePallete();
 	mPallete2->Image = tileImage2;
@@ -540,18 +628,28 @@ void Scene_MapTool::Update()
 			{
 				if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 				{
-					if (mBookIsOpen && PtInRect(&mPallete_Structure[0]->Rect, _mousePosition))
+					for (int i = 0; i < mPallete_Structure.size(); i++)
 					{
-						mCurrentPallete = mPallete_Structure[0];
+						if (mBookIsOpen && mPalletePageX == 0 && PtInRect(&mPallete_Structure[i]->Rect, _mousePosition))
+						{
+							mCurrentPallete = mPallete_Structure[i];
+						}
 					}
-					if (mBookIsOpen && PtInRect(&mPallete_Structure[1]->Rect, _mousePosition))
+					for (int i = 0; i < mPallete_Structure2.size(); i++)
 					{
-						mCurrentPallete = mPallete_Structure[1];
+						if (mBookIsOpen && mPalletePageX == 1 && PtInRect(&mPallete_Structure2[i]->Rect, _mousePosition))
+						{
+							mCurrentPallete = mPallete_Structure2[i];
+						}
 					}
-					if (mBookIsOpen && PtInRect(&mPallete_Structure[2]->Rect, _mousePosition))
+					for (int i = 0; i < mPallete_Structure3.size(); i++)
 					{
-						mCurrentPallete = mPallete_Structure[2];
+						if (mBookIsOpen && mPalletePageX == 2 && PtInRect(&mPallete_Structure3[i]->Rect, _mousePosition))
+						{
+							mCurrentPallete = mPallete_Structure3[i];
+						}
 					}
+					
 				}
 
 			}
@@ -677,29 +775,29 @@ void Scene_MapTool::Update()
 							(mBookIsOpen && _mousePosition.x < WINSIZEX - 400 &&
 								PtInRect(&rctemp, { _mousePosition.x - WINSIZEX / 2 + (LONG)camera->GetX() , _mousePosition.y - WINSIZEY / 2 + (LONG)camera->GetY() })))
 						{
-							if (mCurrentPallete->Image->GetKey() == L"Fire4Walls"||
-								mCurrentPallete->Image->GetKey() == L"Fire8Walls"||
-								mCurrentPallete->Image->GetKey() == L"House4Walls"||
+							if (mCurrentPallete->Image->GetKey() == L"Fire4Walls" ||
+								mCurrentPallete->Image->GetKey() == L"Fire8Walls" ||
+								mCurrentPallete->Image->GetKey() == L"House4Walls" ||
 								mCurrentPallete->Image->GetKey() == L"House8Walls")
 							{
 								IBrushTile* command = new IBrushTile(mTileList[y][x], mCurrentPallete);
 								PushCommand(command);
 								mTileList[y][x]->SetType(Type::Wall);
 							}
-							else if (mCurrentPallete->Image->GetKey() == L"FireWall1"||
-								mCurrentPallete->Image->GetKey() == L"FireWall2"||
-								mCurrentPallete->Image->GetKey() == L"FireWall3"||
-								mCurrentPallete->Image->GetKey() == L"HouseWall1"||
-								mCurrentPallete->Image->GetKey() == L"HouseWall2"||
+							else if (mCurrentPallete->Image->GetKey() == L"FireWall1" ||
+								mCurrentPallete->Image->GetKey() == L"FireWall2" ||
+								mCurrentPallete->Image->GetKey() == L"FireWall3" ||
+								mCurrentPallete->Image->GetKey() == L"HouseWall1" ||
+								mCurrentPallete->Image->GetKey() == L"HouseWall2" ||
 								mCurrentPallete->Image->GetKey() == L"HouseWall3")
 							{
-								for (int y2 = y-1; y2 <= y+1; y2++)
+								for (int y2 = y - 1; y2 <= y + 1; y2++)
 								{
-									for (int x2 = x-1; x2 <= x+1; x2++)
+									for (int x2 = x - 1; x2 <= x + 1; x2++)
 									{
 										mTileList[y2][x2]->SetImage(mCurrentPallete->Image);
-										mTileList[y2][x2]->SetFrameIndexY(y2-y+1);
-										mTileList[y2][x2]->SetFrameIndexX(x2-x+1);
+										mTileList[y2][x2]->SetFrameIndexY(y2 - y + 1);
+										mTileList[y2][x2]->SetFrameIndexX(x2 - x + 1);
 										mTileList[y2][x2]->SetType(Type::Wall);
 									}
 								}
@@ -762,6 +860,171 @@ void Scene_MapTool::Update()
 								mTileList[y][x]->SetType(Type::Wall);
 								mStructureList.push_back(st);
 							}
+							else if (mCurrentPallete->Image->GetKey() == L"BookShelf")
+							{
+								Structure* st = new Structure
+								(
+									"BookShelf",
+									ImageManager::GetInstance()->FindImage(L"BookShelf"),
+									mTileList[y - 1][x]->GetX() + TileSize / 2,
+									mTileList[y - 1][x]->GetY() + TileSize / 2,
+									mCurrentPallete->Width,
+									mCurrentPallete->Height
+								);
+								mTileList[y][x]->SetType(Type::Wall);
+								mStructureList.push_back(st);
+							}
+							else if (mCurrentPallete->Image->GetKey() == L"Bed")
+							{
+								Structure* st = new Structure
+								(
+									"Bed",
+									ImageManager::GetInstance()->FindImage(L"Bed"),
+									mTileList[y - 1][x]->GetX() + TileSize / 2,
+									mTileList[y - 1][x]->GetY() + TileSize / 2,
+									mCurrentPallete->Width,
+									mCurrentPallete->Height
+								);
+								mTileList[y][x]->SetType(Type::Wall);
+								mStructureList.push_back(st);
+							}
+							else if (mCurrentPallete->Image->GetKey() == L"Chair")
+							{
+							Structure* st = new Structure
+							(
+								"Chair",
+								ImageManager::GetInstance()->FindImage(L"Chair"),
+								mTileList[y - 1][x]->GetX() + TileSize / 2,
+								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mCurrentPallete->Width,
+								mCurrentPallete->Height
+							);
+							mTileList[y][x]->SetType(Type::Wall);
+							mStructureList.push_back(st);
+							}
+							else if (mCurrentPallete->Image->GetKey() == L"Book1")
+							{
+							Structure* st = new Structure
+							(
+								"Book1",
+								ImageManager::GetInstance()->FindImage(L"Book1"),
+								mTileList[y - 1][x]->GetX() + TileSize / 2,
+								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mCurrentPallete->Width,
+								mCurrentPallete->Height
+							);
+							mStructureList.push_back(st);
+							}
+							else if (mCurrentPallete->Image->GetKey() == L"Book2")
+							{
+							Structure* st = new Structure
+							(
+								"Book2",
+								ImageManager::GetInstance()->FindImage(L"Book2"),
+								mTileList[y - 1][x]->GetX() + TileSize / 2,
+								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mCurrentPallete->Width,
+								mCurrentPallete->Height
+							);
+							mStructureList.push_back(st);
+							}
+							else if (mCurrentPallete->Image->GetKey() == L"Book3")
+							{
+							Structure* st = new Structure
+							(
+								"Book3",
+								ImageManager::GetInstance()->FindImage(L"Book3"),
+								mTileList[y - 1][x]->GetX() + TileSize / 2,
+								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mCurrentPallete->Width,
+								mCurrentPallete->Height
+							);
+							mStructureList.push_back(st);
+							}
+							else if (mCurrentPallete->Image->GetKey() == L"Book4")
+							{
+							Structure* st = new Structure
+							(
+								"Book4",
+								ImageManager::GetInstance()->FindImage(L"Book4"),
+								mTileList[y - 1][x]->GetX() + TileSize / 2,
+								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mCurrentPallete->Width,
+								mCurrentPallete->Height
+							);
+							mStructureList.push_back(st);
+							}
+							else if (mCurrentPallete->Image->GetKey() == L"Book5")
+							{
+							Structure* st = new Structure
+							(
+								"Book5",
+								ImageManager::GetInstance()->FindImage(L"Book5"),
+								mTileList[y - 1][x]->GetX() + TileSize / 2,
+								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mCurrentPallete->Width,
+								mCurrentPallete->Height
+							);
+							mStructureList.push_back(st);
+							}
+							else if (mCurrentPallete->Image->GetKey() == L"Table")
+							{
+							Structure* st = new Structure
+							(
+								"Table",
+								ImageManager::GetInstance()->FindImage(L"Table"),
+								mTileList[y - 1][x]->GetX() + TileSize / 2,
+								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mCurrentPallete->Width,
+								mCurrentPallete->Height
+							);
+							mTileList[y][x]->SetType(Type::Wall);
+							mStructureList.push_back(st);
+							}
+							else if (mCurrentPallete->Image->GetKey() == L"SmallTable")
+							{
+							Structure* st = new Structure
+							(
+								"SmallTable",
+								ImageManager::GetInstance()->FindImage(L"SmallTable"),
+								mTileList[y - 1][x]->GetX() + TileSize / 2,
+								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mCurrentPallete->Width,
+								mCurrentPallete->Height
+							);
+							mTileList[y][x]->SetType(Type::Wall);
+							mStructureList.push_back(st);
+							}
+							else if (mCurrentPallete->Image->GetKey() == L"Portal")
+							{
+							Structure* st = new Structure
+							(
+								"Portal",
+								ImageManager::GetInstance()->FindImage(L"Portal"),
+								mTileList[y - 1][x]->GetX() + TileSize / 2,
+								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mCurrentPallete->Width,
+								mCurrentPallete->Height
+							);
+							mTileList[y][x]->SetType(Type::Wall);
+							mStructureList.push_back(st);
+							}
+							else if (mCurrentPallete->Image->GetKey() == L"Gate")
+							{
+							Structure* st = new Structure
+							(
+								"Gate",
+								ImageManager::GetInstance()->FindImage(L"Gate"),
+								mTileList[y - 1][x]->GetX() + TileSize / 2,
+								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mCurrentPallete->Width,
+								mCurrentPallete->Height
+							);
+							mStructureList.push_back(st);
+							}
+
+
+
 							//나머지.
 							else if (mTileList[y][x]->GetImage() != mCurrentPallete->GetImage() ||
 								mTileList[y][x]->GetFrameIndexX() != mCurrentPallete->GetFrameX() ||
@@ -828,6 +1091,22 @@ void Scene_MapTool::Render()
 			if (cameraRect.right > tileRect.left && cameraRect.left < tileRect.right && cameraRect.bottom > tileRect.top && cameraRect.top < tileRect.bottom)
 			{
 				mTileList[y][x]->Render();
+				
+			}
+		}
+	}
+	//스트럭쳐 그리는부분
+	for (int i = 0; i < mStructureList.size(); i++)
+	{
+		mStructureList[i]->Render();
+	}
+	for (int y = 0; y < TileCountY; y++)
+	{
+		for (int x = 0; x < TileCountX; x++)
+		{
+			D2D1_RECT_F tileRect = mTileList[y][x]->GetRect();
+			if (cameraRect.right > tileRect.left && cameraRect.left < tileRect.right && cameraRect.bottom > tileRect.top && cameraRect.top < tileRect.bottom)
+			{
 				CameraManager::GetInstance()->GetMainCamera()->RenderGizmoRect(mTileList[y][x]->GetRect());
 				CameraManager::GetInstance()->GetMainCamera()->RenderText
 				(
@@ -837,23 +1116,18 @@ void Scene_MapTool::Render()
 				CameraManager::GetInstance()->GetMainCamera()->RenderText
 				(
 					mTileList[y][x]->GetX() + 5, mTileList[y][x]->GetY() + 15,
-					to_wstring((int)mTileList[y][x]->GetType()) ,10
+					to_wstring((int)mTileList[y][x]->GetType()), 10
 				);
 			}
 			//마우스가 타일렉트안에들어오면, 테두리바까줌
 			if (!mBookIsOpen &&
 				PtInRect(&tileRect, { _mousePosition.x - WINSIZEX / 2 + (LONG)CameraManager::GetInstance()->GetMainCamera()->GetX() , _mousePosition.y - WINSIZEY / 2 + (LONG)CameraManager::GetInstance()->GetMainCamera()->GetY() }) ||
 				(mBookIsOpen && _mousePosition.x < WINSIZEX - 400 &&
-				PtInRect(&tileRect, { _mousePosition.x - WINSIZEX / 2 + (LONG)CameraManager::GetInstance()->GetMainCamera()->GetX() , _mousePosition.y - WINSIZEY / 2 + (LONG)CameraManager::GetInstance()->GetMainCamera()->GetY() })))
+					PtInRect(&tileRect, { _mousePosition.x - WINSIZEX / 2 + (LONG)CameraManager::GetInstance()->GetMainCamera()->GetX() , _mousePosition.y - WINSIZEY / 2 + (LONG)CameraManager::GetInstance()->GetMainCamera()->GetY() })))
 			{
-				CameraManager::GetInstance()->GetMainCamera()->RenderGizmoRect({ tileRect.left+1, tileRect.top+1,tileRect.right - 1,tileRect.bottom-1 }, D2D1::ColorF::Red);
+				CameraManager::GetInstance()->GetMainCamera()->RenderGizmoRect({ tileRect.left + 1, tileRect.top + 1,tileRect.right - 1,tileRect.bottom - 1 }, D2D1::ColorF::Red);
 			}
 		}
-	}
-	//스트럭쳐 그리는부분
-	for (int i = 0; i < mStructureList.size(); i++)
-	{
-		mStructureList[i]->Render();
 	}
 	//빠레트그리는부분
 	mBackGroundImage->ScaleRender(mBackGroundX, WINSIZEY/2,500,WINSIZEY);
@@ -1032,32 +1306,59 @@ void Scene_MapTool::Render()
 			}
 			else if (mPalletePage == PalletePage::Structures)
 			{
-				mPallete_Structure[0]->Image->SetScale(0.5f);
-				mPallete_Structure[0]->Image->Render
-				(
-					(mPallete_Structure[0]->Rect.right + mPallete_Structure[0]->Rect.left) / 2,
-					(mPallete_Structure[0]->Rect.top + mPallete_Structure[0]->Rect.bottom) / 2
-				);
-				mPallete_Structure[1]->Image->SetScale(0.5f);
-				mPallete_Structure[1]->Image->Render
-				(
-					(mPallete_Structure[1]->Rect.right + mPallete_Structure[1]->Rect.left) / 2,
-					(mPallete_Structure[1]->Rect.top + mPallete_Structure[1]->Rect.bottom) / 2
-				);
-				mPallete_Structure[2]->Image->SetScale(0.5f);
-				mPallete_Structure[2]->Image->Render
-				(
-					(mPallete_Structure[2]->Rect.right + mPallete_Structure[2]->Rect.left) / 2,
-					(mPallete_Structure[2]->Rect.top + mPallete_Structure[2]->Rect.bottom) / 2
-				);
-				for (int i = 0; i < 3; i++)
+				if (mPalletePageX == 0)
 				{
-					mPalleteImage->ScaleRender(
-						(mPallete_Structure[i]->Rect.right + mPallete_Structure[i]->Rect.left) / 2,
-						(mPallete_Structure[i]->Rect.top + mPallete_Structure[i]->Rect.bottom) / 2,
-						mPallete_Structure[i]->Width,
-						mPallete_Structure[i]->Height
-					);
+					for (int i = 0; i < mPallete_Structure.size(); i++)
+					{
+						mPallete_Structure[i]->Image->SetScale(0.5f);
+						mPallete_Structure[i]->Image->Render
+						(
+							(mPallete_Structure[i]->Rect.right + mPallete_Structure[i]->Rect.left) / 2,
+							(mPallete_Structure[i]->Rect.top + mPallete_Structure[i]->Rect.bottom) / 2
+						);
+						mPalleteImage->ScaleRender(
+							(mPallete_Structure[i]->Rect.right + mPallete_Structure[i]->Rect.left) / 2,
+							(mPallete_Structure[i]->Rect.top + mPallete_Structure[i]->Rect.bottom) / 2,
+							mPallete_Structure[i]->Width,
+							mPallete_Structure[i]->Height
+						);
+					}
+				}
+				else if(mPalletePageX == 1)
+				{
+					for (int i = 0; i < mPallete_Structure2.size(); i++)
+					{
+						mPallete_Structure2[i]->Image->SetScale(0.5f);
+						mPallete_Structure2[i]->Image->Render
+						(
+							(mPallete_Structure2[i]->Rect.right + mPallete_Structure2[i]->Rect.left) / 2,
+							(mPallete_Structure2[i]->Rect.top + mPallete_Structure2[i]->Rect.bottom) / 2
+						);
+						mPalleteImage->ScaleRender(
+							(mPallete_Structure2[i]->Rect.right + mPallete_Structure2[i]->Rect.left) / 2,
+							(mPallete_Structure2[i]->Rect.top + mPallete_Structure2[i]->Rect.bottom) / 2,
+							mPallete_Structure2[i]->Width,
+							mPallete_Structure2[i]->Height
+						);
+					}
+				}
+				else if (mPalletePageX == 2)
+				{
+					for (int i = 0; i < mPallete_Structure3.size(); i++)
+					{
+						mPallete_Structure3[i]->Image->SetScale(0.5f);
+						mPallete_Structure3[i]->Image->Render
+						(
+							(mPallete_Structure3[i]->Rect.right + mPallete_Structure3[i]->Rect.left) / 2,
+							(mPallete_Structure3[i]->Rect.top + mPallete_Structure3[i]->Rect.bottom) / 2
+						);
+						mPalleteImage->ScaleRender(
+							(mPallete_Structure3[i]->Rect.right + mPallete_Structure3[i]->Rect.left) / 2,
+							(mPallete_Structure3[i]->Rect.top + mPallete_Structure3[i]->Rect.bottom) / 2,
+							mPallete_Structure3[i]->Width,
+							mPallete_Structure3[i]->Height
+						);
+					}
 				}
 			}
 			else if (mPalletePage == PalletePage::Maps)
@@ -1095,7 +1396,7 @@ void Scene_MapTool::Render()
 			CameraManager::GetInstance()->GetMainCamera()->RenderRect(mShiftRect, D2D1::ColorF::White);
 	
 	
-
+	
 
 	if (!mBookIsOpen || (mBookIsOpen && _mousePosition.x < WINSIZEX - 400))
 	{
