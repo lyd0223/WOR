@@ -35,6 +35,12 @@ void Gizmo::DrawRect(D2D1_RECT_F rc, D2D1::ColorF::Enum color)
 
 	D2DRenderer::GetInstance()->GetRenderTarget()->DrawRectangle(D2D1::RectF(rect.left, rect.top, rect.right, rect.bottom),	brush, 1.0f);
 
+	string str = to_string((int)rect.left / 64) + ", " + to_string((int)rect.top / 64);
+	wstring wstr;
+	wstr.assign(str.begin(), str.end());
+
+	D2DRenderer::GetInstance()->RenderText(rect.left, rect.top, wstr, 15.f);
+
 	brush->Release();
 }
 

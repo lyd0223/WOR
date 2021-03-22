@@ -47,7 +47,6 @@ void Monster_BigZombie::Release()
 
 void Monster_BigZombie::Update()
 {
-	
 
 	if (mPathList.size() != 0)
 	{
@@ -60,7 +59,7 @@ void Monster_BigZombie::Update()
 	}
 	
 
-	mPlayer->Update();
+	//mPlayer->Update();
 	mCurrentAnimation->Update();
 	mRect = RectMake(mX, mY, TileSize, TileSize);
 }
@@ -70,13 +69,8 @@ void Monster_BigZombie::Render()
 	mImage->SetScale(4.f);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
-	for (int i = 0; i < mPathList.size(); i++) 
-	{
-		D2D1_RECT_F rc = RectMakeCenter(mPathList[i]->GetX(), mPathList[i]->GetY(), TileSize, TileSize);
-		CameraManager::GetInstance()->GetMainCamera()->RenderRect(rc);
-	}
-	
 }
+
 void Monster_BigZombie::AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)
 {
 	*animation = new Animation;

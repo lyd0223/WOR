@@ -36,5 +36,8 @@ public:
 	void Release() override {};
 	void Update() override {};
 	void Render() override {};
+
+	SkillType GetSkillType() { return mSkillType; }
+	SkillElement GetSkillElement() { return mSkillElement; }
 };
 

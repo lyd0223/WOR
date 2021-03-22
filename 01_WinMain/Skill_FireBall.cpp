@@ -32,9 +32,9 @@ void Skill_FireBall::Init()
 
 	ImageManager::GetInstance()->LoadFromFile(L"FireBall", Resources(L"Skill/FireBall.png"), 9, 1);
 	mImage = ImageManager::GetInstance()->FindImage(L"FireBall");
-	mSizeX = mImage->GetWidth();
+	mSizeX = mImage->GetWidth() / 9;
 	mSizeY = mImage->GetHeight();
-	mRect = RectMake(mX, mY, mSizeX, mSizeY);
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mSpeed = 10.f;
 
 	mSkillElement = SkillElement::Fire;
@@ -97,6 +97,7 @@ void Skill_FireBall::Render()
 	mImage->SetScale(2.f);
 	if (mFlameEffect != nullptr) mFlameEffect->Render();
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 }
 
 void Skill_FireBall::AnimationSet(Animation ** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)

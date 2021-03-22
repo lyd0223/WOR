@@ -101,7 +101,7 @@ inline bool PtInRect(D2D1_RECT_F* rc, POINT pt)
 	return false;
 }
 
-inline bool IntersectRect(D2D1_RECT_F& rc,const D2D1_RECT_F* rc1,const D2D1_RECT_F* rc2)
+inline bool IntersectRect(D2D1_RECT_F& rc, const D2D1_RECT_F* rc1, const D2D1_RECT_F* rc2)
 {
 	
 	if (rc1->top <= rc2->bottom &&

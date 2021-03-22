@@ -115,7 +115,7 @@ void Monster_FireBoss::Update()
 
 	if (Input::GetInstance()->GetKeyDown(VK_SPACE)) {
 		//AttackReady();
-		//FireBallThrowPattern();
+		FireBallThrowPattern();
 		//StempPattern();
 		//KickPattern();
 		//Move();
@@ -264,37 +264,47 @@ void Monster_FireBoss::FireBallThrowPattern()
 	float width = mX - mPlayer->GetX();
 	float height = mY - mPlayer->GetY();
 
-	if (mFireBossState != FireBossState::Throw) {
-
-		if (width > height) {
-			if (mX > mPlayer->GetX()) {
+	if (mFireBossState != FireBossState::Throw)
+	{
+		if (width > height) 
+		{
+			if (mX > mPlayer->GetX()) 
+			{
 				AnimationChange(mLeftThrowAnimation);
 			}
-			else {
+			else 
+			{
 				AnimationChange(mRightThrowAnimation);
 			}
 		}
-		else {
-			if (mY > mPlayer->GetY()) {
+		else 
+		{
+			if (mY > mPlayer->GetY()) 
+			{
 				AnimationChange(mUpThrowAnimation);
 			}
-			else {
+			else 
+			{
 				AnimationChange(mDownThrowAnimation);
 			}
 		}
 
 		mFireBossState = FireBossState::Throw;
 	}
-	
-	for (int i = 0; i < 5; i++) {
-		float x = mX + (cosf(mAngle - PI / 2 + PI / 4 * i) * 100);
-		float y = mY - (sinf(mAngle - PI / 2 + PI / 4 * i) * 100);
 
-		//SkillManager::GetInstance()->FireBallSkill("FireBall" + i, x, y, mAngle, i * 20);
-		Skill_FireBall* fireBall = new Skill_FireBall("FireBall", x, y, mAngle);
-		fireBall->Init();
-		fireBall->SetDelay(i * 20);
-		ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, fireBall);
+	if (ObjectManager::GetInstance()->FindObject("FireBall") == nullptr) 
+	{
+		for (int i = 0; i < 5; i++) 
+		{
+			float x = mX + (cosf(mAngle - PI / 2 + PI / 4 * i) * 100);
+			float y = mY - (sinf(mAngle - PI / 2 + PI / 4 * i) * 100);
+
+			//SkillManager::GetInstance()->FireBallSkill("FireBall" + i, x, y, mAngle, i * 20);
+			Skill_FireBall* fireBall = new Skill_FireBall("FireBall", x, y, mAngle);
+			fireBall->Init();
+			fireBall->SetDelay(i * 20);
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, fireBall);
+		}
 	}
 }
 
