@@ -315,6 +315,12 @@
     <ClInclude Include="SkillObject.h">
       <Filter>MainGame\Object\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="Skill_IceSpear.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_SummonIceSpear.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -501,6 +507,12 @@
       <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
     <ClCompile Include="SkillObject.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_IceSpear.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_SummonIceSpear.cpp">
       <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
   </ItemGroup>

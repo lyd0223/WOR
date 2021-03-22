@@ -5,6 +5,8 @@
 #include "Skill_FireBall.h"
 #include "Skill_WindSlash.h"
 #include "Skill_Flame.h"
+#include "Skill_IceSpear.h"
+#include "Skill_SummonIceSpear.h"
 #include "Tile.h"
 #include "TileMap.h"
 
@@ -29,7 +31,9 @@ void SkillManager::Update()
 			// 몬스터 충돌
 			for (int j = 0; j < monsterList.size(); j++) 
 			{
-				if (IntersectRect(temp, &skillList[i]->GetRect(), &monsterList[j]->GetRect())) 
+				D2D1_RECT_F skillrc = skill->GetRect();
+				D2D1_RECT_F monsterrc = monsterList[j]->GetRect();
+				if (IntersectRect(temp, &skillrc, &monsterrc))
 				{
 					skill->SetIsDestroy(true);
 					break;
@@ -43,8 +47,9 @@ void SkillManager::Update()
 				{
 					TileMap* tileMap = (TileMap*)tileList[0];
 					Tile* tile = (Tile*)tileMap->GetTileList(x, y);
-
-					if (tile->GetType() == Type::Wall && IntersectRect(temp, &skill->GetRect(), &tile->GetRect()))
+					D2D1_RECT_F skillrc = skill->GetRect();
+					D2D1_RECT_F tilerc = tile->GetRect();
+					if (tile->GetType() == Type::Wall && IntersectRect(temp, &skillrc, &tilerc))
 					{
 						skill->SetIsDestroy(true);
 						break;
@@ -92,6 +97,20 @@ void SkillManager::WindSlashSkill(const string& name, float x, float y, float an
 	Skill_WindSlash* windSlash = new Skill_WindSlash(name, x, y, angle);
 	windSlash->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, windSlash);
+}
+
+void SkillManager::IceSpearSkill(const string& name, float x, float y, float angle)
+{
+	Skill_IceSpear* iceSpear = new Skill_IceSpear(name, x, y, angle);
+	iceSpear->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, iceSpear);
+}
+
+void SkillManager::SummonIceSpearSkill(const string& name, float x, float y, float angle)
+{
+	Skill_SummonIceSpear* summonIceSpear = new Skill_SummonIceSpear(name, x, y, angle);
+	summonIceSpear->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, summonIceSpear);
 }
 
 //vector<GameObject*> SkillManager::FindSkillList(const string key)

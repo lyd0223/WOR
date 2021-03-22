@@ -27,7 +27,11 @@ enum class PlayerState :int
 	UpThrowSkill,
 	DownThrowSkill,
 	LeftThrowSkillandAttack,
-	RightThrowSkillandAttack
+	RightThrowSkillandAttack,
+	UpThrowWating,
+	DownThorwWating,
+	RightThrowWating,
+	LeftThrowWaitng
 
 
 };
@@ -63,8 +67,14 @@ class Player : public MovingObject
 	class Animation* mDownThrowSkillAnimation;
 	class Animation* mLeftThrowSkillandAttackAnimation;
 	class Animation* mRightThrowSkillandAttackAnimation;
+	class Animation* mUpThrowWatingAnimation;
+	class Animation* mDownThrowWatingAnimation;
+	class Animation* mLeftThrowWatingAnimation;
+	class Animation* mRightThrowWationgAnimation;
+	float lineX;
+	float lineY;
 
-
+	bool mIsAct;
 	class Animation* mCurrentAnimation;
 public:
 	Player(const string& name, float x, float y);

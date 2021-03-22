@@ -28,7 +28,7 @@ protected:
 	Image* mImage;
 	SkillType mSkillType;
 	SkillElement mSkillElement;
-
+	float mAngle;
 public:
 	SkillObject(const string& name) : GameObject(name) {};
 
@@ -39,5 +39,6 @@ public:
 
 	SkillType GetSkillType() { return mSkillType; }
 	SkillElement GetSkillElement() { return mSkillElement; }
+	void SetAngle(float angle) { mAngle = angle; }
 };
 

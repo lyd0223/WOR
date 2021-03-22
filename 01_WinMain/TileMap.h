@@ -19,5 +19,7 @@ public:
 	void Load(string sceneName);
 
 	inline class Tile* GetTileList(int x, int y) { return mTileList[y][x]; };
+
+
 };
 

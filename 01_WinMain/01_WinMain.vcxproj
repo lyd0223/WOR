@@ -23,7 +23,7 @@
     <ProjectGuid>{ADD52605-596E-43E8-879D-E81A28A8BB13}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My01WinMain</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -159,6 +159,7 @@
     <ClInclude Include="Monster_Golem.h" />
     <ClInclude Include="Effect_HitSpark.h" />
     <ClInclude Include="SkillObject.h" />
+    <ClInclude Include="Skill_IceSpear.h" />
     <ClInclude Include="Skill_IceSword.h" />
     <ClInclude Include="Effect_MagicCircle.h" />
     <ClInclude Include="D2DRenderer.h" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Skill_FireBall.h" />
     <ClInclude Include="Skill_Flame.h" />
     <ClInclude Include="Monster_Slime.h" />
+    <ClInclude Include="Skill_SummonIceSpear.h" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="Monster_SpearMan.h" />
     <ClInclude Include="Structure.h" />
@@ -226,6 +228,7 @@
     <ClCompile Include="Monster_Golem.cpp" />
     <ClCompile Include="Effect_HitSpark.cpp" />
     <ClCompile Include="SkillObject.cpp" />
+    <ClCompile Include="Skill_IceSpear.cpp" />
     <ClCompile Include="Skill_IceSword.cpp" />
     <ClCompile Include="Effect_MagicCircle.cpp" />
     <ClCompile Include="D2DRenderer+Draw.cpp" />
@@ -269,6 +272,7 @@
     <ClCompile Include="Skill_FireBall.cpp" />
     <ClCompile Include="Skill_Flame.cpp" />
     <ClCompile Include="Monster_Slime.cpp" />
+    <ClCompile Include="Skill_SummonIceSpear.cpp" />
     <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="Monster_SpearMan.cpp" />
     <ClCompile Include="Structure.cpp" />

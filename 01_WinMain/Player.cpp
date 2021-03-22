@@ -5,7 +5,7 @@
 #include "Player.h"
 #include"Tile.h"
 #include "Camera.h"
-
+#include "SkillObject.h"
 
 
 Player::Player(const string& name, float x, float y)
@@ -57,6 +57,10 @@ void Player::Init()
 	AnimationSet(&mRightThrowSkillandAttackAnimation, false, false, 0, 12, 7, 12, AnimationTime);
 	AnimationSet(&mUpDashAnimation, false, false, 0, 18, 9, 18, AnimationTime);
 	AnimationSet(&mDownDashAnimation, false, false, 0, 19, 9, 19, AnimationTime);
+	AnimationSet(&mUpThrowWatingAnimation, false, false, 1, 14, 1, 14, AnimationTime);
+	AnimationSet(&mDownThrowWatingAnimation, false, false, 0, 6, 0, 6, AnimationTime);
+	AnimationSet(&mRightThrowWationgAnimation, false, false, 1, 12, 1, 12, AnimationTime);
+	AnimationSet(&mLeftThrowWatingAnimation, false, false, 6, 12, 6, 12, AnimationTime);
 
 	mCurrentAnimation = mDownIdleAnimation;
 	mCurrentAnimation->Play();
@@ -97,7 +101,8 @@ void Player::Update()
 	//int indexX = mX / TileSize;
 	//---------------------------------
 	//겟키다운
-	mAngle = Math::GetAngle(mX, mY, _mousePosition.x, _mousePosition.y);
+	D2D1_RECT_F rctemp = CameraManager::GetInstance()->GetMainCamera()->GetRect();
+	mAngle = Math::GetAngle(mX, mY, _mousePosition.x + rctemp.left, _mousePosition.y + rctemp.top);
 	if (!Input::GetInstance()->GetKey('S'))
 	{
 		if (Input::GetInstance()->GetKeyDown('W'))
@@ -272,31 +277,154 @@ void Player::Update()
 	//공격
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 	{
-		mAngle = 180 / PI * Math::GetAngle(mX, mY, CameraManager::GetInstance()->GetMainCamera()->GetMousePosition().x, CameraManager::GetInstance()->GetMainCamera()->GetMousePosition().y);
+		
 		if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
 		{
 			AnimationChange(mRightThrowSkillandAttackAnimation);
 			mPlayerState = PlayerState::RightAttack;
-			SkillManager::GetInstance()->WindSlashSkill("WindSlash", mX, mY, mAngle);
+			SkillManager::GetInstance()->WindSlashSkill("WindSlash", lineX, lineY, mAngle);
 		}
 		else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
 		{
 			AnimationChange(mUpAttackAnimation);
 			mPlayerState = PlayerState::UpAttack;
-			SkillManager::GetInstance()->WindSlashSkill("WindSlash", mX, mY, mAngle);
+			SkillManager::GetInstance()->WindSlashSkill("WindSlash", lineX, lineY, mAngle);
 		}
 		else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
 		{
+
 			AnimationChange(mLeftThrowSkillandAttackAnimation);
 			mPlayerState = PlayerState::LeftAttack;
-			SkillManager::GetInstance()->WindSlashSkill("WindSlash", mX, mY, mAngle);
+			SkillManager::GetInstance()->WindSlashSkill("WindSlash", lineX, lineY, mAngle);
 		}
 		else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
 		{
 			AnimationChange(mDownAttackAnimation);
 			mPlayerState = PlayerState::DownAttack;
-			SkillManager::GetInstance()->WindSlashSkill("WindSlash", mX, mY, mAngle);
+			SkillManager::GetInstance()->WindSlashSkill("WindSlash", lineX, lineY, mAngle);
 		}
+	}
+	
+	// 우클릭 스킬
+	if (Input::GetInstance()->GetKeyDown(VK_RBUTTON))
+	{
+	
+		if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
+		{
+			AnimationChange(mRightThrowWationgAnimation);
+			mPlayerState = PlayerState::RightThrowWating;
+			
+		}
+		else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
+		{
+			AnimationChange(mUpThrowWatingAnimation);
+			mPlayerState = PlayerState::UpThrowWating;
+			
+		}
+		else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
+		{
+			AnimationChange(mLeftThrowWatingAnimation);
+			mPlayerState = PlayerState::LeftThrowWaitng;
+			
+		}
+		else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
+		{
+			AnimationChange(mDownThrowWatingAnimation);
+			mPlayerState = PlayerState::DownThorwWating;
+			
+		}
+	}
+	if (Input::GetInstance()->GetKey(VK_RBUTTON))
+	{
+		//SkillObject* skill = nullptr;
+		if (mIsAct == false)
+		{
+			if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
+			{
+				SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX -20, mY, mAngle);
+			}
+			else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
+			{
+				SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX, mY, mAngle);
+			}
+			else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
+			{
+				SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX + 35, mY - 20, mAngle);
+			}
+			else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
+			{
+				SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX + 20, mY - 20, mAngle);
+			}
+			mIsAct = true;
+		}
+
+		//if (skill == nullptr)
+		SkillObject* skill = (SkillObject*)ObjectManager::GetInstance()->FindObject("SummonIceSpear");
+
+		if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
+		{
+			AnimationChange(mRightThrowWationgAnimation);
+			mPlayerState = PlayerState::RightThrowWating;
+			skill->SetX(mX - 25);
+			skill->SetY(mY-5);
+			skill->SetAngle(mAngle);
+			
+		}
+		else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
+		{
+			AnimationChange(mUpThrowWatingAnimation);
+			mPlayerState = PlayerState::UpThrowWating;
+			skill->SetX(mX );
+			skill->SetY(mY);
+			skill->SetAngle(mAngle); 
+		}
+		else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
+		{
+			AnimationChange(mLeftThrowWatingAnimation);
+			mPlayerState = PlayerState::LeftThrowWaitng;
+			skill->SetX(mX + 55);
+			skill->SetY(mY - 20);
+			skill->SetAngle(mAngle);
+		}
+		else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
+		{
+			AnimationChange(mDownThrowWatingAnimation);
+			mPlayerState = PlayerState::DownThorwWating;
+			skill->SetX(mX + 25);
+			skill->SetY(mY - 50);
+			skill->SetAngle(mAngle);
+
+		}
+	}
+	if (Input::GetInstance()->GetKeyUp(VK_RBUTTON))
+	{
+
+		if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
+		{
+			AnimationChange(mRightThrowSkillandAttackAnimation);
+			mPlayerState = PlayerState::RightAttack;
+			SkillManager::GetInstance()->IceSpearSkill("IceSpear", mX - 20, mY, mAngle);
+		}
+		else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
+		{
+			AnimationChange(mUpThrowSkillAnimation);
+			mPlayerState = PlayerState::UpAttack;
+			SkillManager::GetInstance()->IceSpearSkill("IceSpear", mX, mY, mAngle);
+		}
+		else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
+		{
+			AnimationChange(mLeftThrowSkillandAttackAnimation);
+			mPlayerState = PlayerState::LeftAttack;
+			SkillManager::GetInstance()->IceSpearSkill("IceSpear", mX + 35, mY - 20, mAngle);
+		}
+		else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
+		{
+			AnimationChange(mDownThrowSkillAnimation);
+			mPlayerState = PlayerState::DownAttack;
+			SkillManager::GetInstance()->IceSpearSkill("IceSpear", mX + 20, mY - 20, mAngle);
+		}
+		
+		mIsAct = false;
 	}
 	//대쉬
 	if (Input::GetInstance()->GetKeyDown(VK_SPACE))
@@ -357,7 +485,8 @@ void Player::Update()
 	//		}
 	//	}
 	//}
-	
+	lineX = mX + 50 * cosf(mAngle);
+	lineY = mY - 50 * sinf(mAngle);
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
@@ -372,7 +501,13 @@ void Player::Render()
 	//		RenderRect(hdc,TileList[y][x]->mRect);
 	//	}
 	//}
+	mImage->SetScale(1.5f);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
+	string str = to_string(_mousePosition.x) + "," + to_string(_mousePosition.y);
+	wstring wstr;
+	wstr.assign(str.begin(), str.end());
+	D2DRenderer::GetInstance()->RenderText(100, WINSIZEY / 100, wstr, 30.f);
+	D2DRenderer::GetInstance()->RenderText(300, WINSIZEY / 200, to_wstring(mAngle), 30.f);
 
 }
 

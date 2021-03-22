@@ -52,38 +52,38 @@ void Scene_Tutorial::Init()
 	mPlayer = new Player("Player",600,1600);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 
-	mBigZombie = new Monster_BigZombie("BigZombie", 400, 1600);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mBigZombie);
-
-	mGolem = new Monster_Golem("Golem", 200, 1600);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mGolem);
-
-	mMazition = new Monster_Mazition("Mazition", 800, 1600);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazition);
-
-	mMazitionBullet = new Monster_MazitionBullet("MazitionBullet", 1000, 1600);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazitionBullet);
-
-	mMuscleMan = new Monster_MuscleMan("MuscleMan", 200, 1800);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMuscleMan);
-
-	mRapidZombie = new Monster_RapidZombie("RapidZombie", 400, 1800);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mRapidZombie);
-
-	mSlime = new Monster_Slime("Slime", 600, 1800);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSlime);
-
-	mSwoardMan = new Monster_SwoardMan("SwoardMan", 800, 1800);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSwoardMan);
-
-	mSpearMan = new Monster_SpearMan("SpearMan", 1000, 1800);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSpearMan);
-
-	mWard = new Monster_Ward("Ward", 1200, 1800);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mWard);
-
-	mZombie = new Monster_Zombie("Zombie", 1200, 1600);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie);
+	//mBigZombie = new Monster_BigZombie("BigZombie", 400, 1600);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mBigZombie);
+	//
+	//mGolem = new Monster_Golem("Golem", 200, 1600);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mGolem);
+	//
+	//mMazition = new Monster_Mazition("Mazition", 800, 1600);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazition);
+	//
+	//mMazitionBullet = new Monster_MazitionBullet("MazitionBullet", 1000, 1600);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazitionBullet);
+	//
+	//mMuscleMan = new Monster_MuscleMan("MuscleMan", 200, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMuscleMan);
+	//
+	//mRapidZombie = new Monster_RapidZombie("RapidZombie", 400, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mRapidZombie);
+	//
+	//mSlime = new Monster_Slime("Slime", 600, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSlime);
+	//
+	//mSwoardMan = new Monster_SwoardMan("SwoardMan", 800, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSwoardMan);
+	//
+	//mSpearMan = new Monster_SpearMan("SpearMan", 1000, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSpearMan);
+	//
+	//mWard = new Monster_Ward("Ward", 1200, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mWard);
+	//
+	//mZombie = new Monster_Zombie("Zombie", 1200, 1600);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie);
 
 
 
@@ -140,28 +140,23 @@ void Scene_Tutorial::Update()
 
 	//mMonsterList[0]->SetPathList(path);
 
-	for (int i = 0; i < mMonsterList.size(); i++)
-	{
-		if (mMonsterList[i]->GetIsActive())
-		{
-			mMonsterList[i]->SetPathList(
-				PathFinder::GetInstance()->FindPath((TileMap*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Tile, "TileMap"),
-					mMonsterList[i]->GetX() / TileSize, mMonsterList[i]->GetY() / TileSize,
-					mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize)
-			);
-		}
-	}
+	//for (int i = 0; i < mMonsterList.size(); i++)
+	//{
+	//	if (mMonsterList[i]->GetIsActive())
+	//	{
+	//		mMonsterList[i]->SetPathList(
+	//			PathFinder::GetInstance()->FindPath((TileMap*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Tile, "TileMap"),
+	//				mMonsterList[i]->GetX() / TileSize, mMonsterList[i]->GetY() / TileSize,
+	//				mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize)
+	//		);
+	//	}
+	//}
 }
 
 void Scene_Tutorial::Render()
 {
 	ObjectManager::GetInstance()->Render();
-	string str = to_string(_mousePosition.x) + "," + to_string(_mousePosition.y);
-	wstring wstr;
-	wstr.assign(str.begin(), str.end());
-	ObjectManager::GetInstance()->Render();
-	D2DRenderer::GetInstance()->RenderText(100, WINSIZEY / 100, wstr, 30.f);
-	D2DRenderer::GetInstance()->RenderText(300, WINSIZEY / 200, to_wstring(mPlayer->GetAngle()), 30.f);
+	
 
 
 }
