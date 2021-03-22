@@ -59,6 +59,11 @@ public:
 		const float alpha = 1.0f,
 		const DWRITE_TEXT_ALIGNMENT& align = DWRITE_TEXT_ALIGNMENT_LEADING,
 		const wstring& font = L"¸¼Àº°íµñ");
+	//·¢Æ®¿¡ ÅØ½ºÆ® Ãâ·Â
+	void DrawTextToRect(D2D1_RECT_F rect, const wstring& text, const COLORREF& color,
+		const int size, 
+		const DWRITE_TEXT_ALIGNMENT& align = DWRITE_TEXT_ALIGNMENT_CENTER,
+		const wstring& font = L"¸¼Àº°íµñ");
 };
 
 #define _D2DRenderer D2DRenderer::GetInstance()

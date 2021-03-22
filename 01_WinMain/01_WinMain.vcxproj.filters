@@ -330,6 +330,9 @@
     <ClInclude Include="Load_Image.h">
       <Filter>FrameWork\Load</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_TitleScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -529,6 +532,9 @@
     </ClCompile>
     <ClCompile Include="Load_Image.cpp">
       <Filter>FrameWork\Load</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_TitleScene.cpp">
+      <Filter>MainGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

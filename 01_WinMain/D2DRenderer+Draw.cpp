@@ -189,6 +189,30 @@ void D2DRenderer::RenderTextField(const int x, const int y, const wstring& text,
 	layout->Release();
 	brush->Release();
 }
+
+void D2DRenderer::DrawTextToRect(D2D1_RECT_F rect, const wstring & text, const COLORREF & color, const int size, const DWRITE_TEXT_ALIGNMENT & align, const wstring & font)
+{
+
+	IDWriteTextFormat* format = nullptr;
+
+	format->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+	format->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+
+	ID2D1SolidColorBrush* brush;
+	mD2DRenderTarget->CreateSolidColorBrush(D2D1::ColorF(color), &brush);
+
+	D2DRenderer::GetInstance()->GetRenderTarget()->DrawTextW(
+		text.c_str(),
+		text.length(),
+		format,
+		rect,
+		brush
+	);
+
+	brush->Release();
+	format->Release();
+}
+
 ///*
 ///**********************************************************************************************
 //## DrawLine ##
