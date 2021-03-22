@@ -7,6 +7,7 @@
 #include "Skill_Flame.h"
 #include "Skill_IceSpear.h"
 #include "Skill_SummonIceSpear.h"
+#include "Skill_IceSword.h"
 #include "Tile.h"
 #include "TileMap.h"
 
@@ -111,6 +112,13 @@ void SkillManager::SummonIceSpearSkill(const string& name, float x, float y, flo
 	Skill_SummonIceSpear* summonIceSpear = new Skill_SummonIceSpear(name, x, y, angle);
 	summonIceSpear->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, summonIceSpear);
+}
+
+void SkillManager::IceSwordSkill(const string& name, float x, float y, float angle)
+{
+	Skill_IceSword* iceSword = new Skill_IceSword(name, x, y, angle);
+	iceSword->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, iceSword);
 }
 
 //vector<GameObject*> SkillManager::FindSkillList(const string key)

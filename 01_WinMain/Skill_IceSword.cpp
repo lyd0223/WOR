@@ -4,7 +4,7 @@
 #include "Animation.h"
 #include "Skill_IceSword.h"
 
-Skill_IceSword::Skill_IceSword(const string& name, float x, float y)
+Skill_IceSword::Skill_IceSword(const string& name, float x, float y ,float angle)
 	:GameObject(name)
 {
 	mX = x ;

@@ -19,6 +19,7 @@ public:
 	void WindSlashSkill(const string& name, float x, float y, float angle);
 	void IceSpearSkill(const string& name, float x, float y, float angle);
 	void SummonIceSpearSkill(const string& name, float x, float y, float angle);
+	void IceSwordSkill(const string& name, float x, float y, float angle);
 
 	//map<string, vector<class GameObject*>> GetSkillList() { return mSkillList; }
 	//class vector<GameObject*> FindSkillList(const string key);

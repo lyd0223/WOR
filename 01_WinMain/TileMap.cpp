@@ -122,7 +122,7 @@ void TileMap::Load(string sceneName)
 			}
 		}
 		//스트럭쳐 불러오기
-		while (true)
+		/*while (true)
 		{
 			string tempstr;
 			string key;
@@ -170,7 +170,7 @@ void TileMap::Load(string sceneName)
 				ImageManager::GetInstance()->FindImage(wstr)->GetHeight()
 			);
 			mStructureList.push_back(st);
-		}
+		}*/
 	}
 }
 

@@ -37,10 +37,13 @@ enum class PlayerState :int
 };
 #define AnimationTime 0.1f
 #define TileSize 64
+#define TileCountX 100
+#define TileCountY 100
 class Player : public MovingObject
 {
 	PlayerState mPlayerState;
 	Image* mImage;
+	float mMoveAngle;
 
 	//class Tile* TileList[TileCountY][TileCountY];
 

@@ -15,7 +15,7 @@ class Skill_IceSword : public GameObject
 	float mSpeed;
 public:
 	Skill_IceSword(const string& name) : GameObject(name) {};
-	Skill_IceSword(const string& name, float x, float y);
+	Skill_IceSword(const string& name, float x, float y, float angle);
 
 	void Init() override;
 	void Release() override;
