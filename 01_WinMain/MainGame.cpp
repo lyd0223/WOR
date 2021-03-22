@@ -5,6 +5,7 @@
 #include"Scene_Tutorial.h"
 #include "Scene_MapTool.h"
 #include "Scene_Game.h"
+#include "Scene_TitleScene.h"
 
 /*
 Scene : 스테이지 단위를 씬이라고 함
@@ -19,7 +20,8 @@ void MainGame::Init()
 {
 	SceneManager::GetInstance()->AddScene(L"MapTool", new Scene_MapTool);
 	SceneManager::GetInstance()->AddScene(L"Tutorial", new Scene_Tutorial);
-	SceneManager::GetInstance()->LoadScene(L"Tutorial");
+	SceneManager::GetInstance()->AddScene(L"Title", new Scene_TitleScene);
+	SceneManager::GetInstance()->LoadScene(L"Title");
 }
 
 /*
