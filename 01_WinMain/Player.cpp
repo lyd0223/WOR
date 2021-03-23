@@ -23,7 +23,7 @@ void Player::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"Player", Resources(L"Player/WizardPlayer.png"), 10, 25);
 	mImage = ImageManager::GetInstance()->FindImage(L"Player");
 	mPlayerState = PlayerState::DownIdle;
-	mSpeed = 5.f;
+	mSpeed = 500.f;
 	mSizeX = TileSize - 10;
 	mSizeY = TileSize - 10;
 	mAngle = 0.f;
@@ -653,13 +653,13 @@ void Player::Update()
 					if (IntersectRect(tempRect, &tileRect, &mRect))
 					{
 						if (y == (int)mY / TileSize && x == (int)mX / TileSize - 1)
-							mX += mSpeed;
+							mX = tileRect.right + mSizeX/2;
 						else if (y == (int)mY / TileSize && x == (int)mX / TileSize + 1)
-							mX -= mSpeed;
+							mX = tileRect.left - mSizeX/2;
 						else if (y == (int)mY / TileSize - 1 && x == (int)mX / TileSize)
-							mY += mSpeed;
+							mY = tileRect.bottom + mSizeY/2;
 						else if (y == (int)mY / TileSize + 1 && x == (int)mX / TileSize)
-							mY -= mSpeed;
+							mY = tileRect.top - mSizeY/2;
 
 						
 					}
