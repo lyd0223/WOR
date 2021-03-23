@@ -10,10 +10,32 @@ protected:
 	Player* mPlayer;
 	vector<class Tile*> mPathList;
 
+	float mRange;
+	float mAtkSpeed;
+	float mAtkFrameCount;
+	float mMonsterToPlayerDistance;
+	float mMonsterToPlayerAngle;
+	int mHitCount;
+	
+	bool mIsCollision;
 public:
 	MonsterObject(const string& name);
 
 	vector<class Tile*> GetPathList() { return mPathList; }
 	void SetPathList(vector<class Tile*> pathList) { mPathList = pathList; }
+	
+	void SetRange(float range) { mRange = range; }
+	float GetRange() { return mRange; }
+	void SetAtkSpeed(float atkSpeed) { mAtkSpeed = atkSpeed; }
+	float GetAtkSpeed() { return mAtkSpeed; }
+	void SetHitCount(int hitCount) { mHitCount = hitCount; }
+	int GetHitCount() { return mHitCount; }
+	void SetMonsterToPlayerDistance(float distance) { mMonsterToPlayerDistance = distance; }
+	float GetMonsterToPlayerDistance() { return mMonsterToPlayerDistance; }
+	void SetMonsterToPlayerAngle(float angle) { mMonsterToPlayerAngle = angle; }
+	float GetMonsterToPlayerAngle() { return mMonsterToPlayerAngle; }
+
+	void SetIsCollision(bool IsCollision) { mIsCollision = IsCollision; }
+	bool GetIsCollision() { return mIsCollision; }
 };
 

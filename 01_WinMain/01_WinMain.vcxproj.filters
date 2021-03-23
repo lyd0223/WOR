@@ -121,6 +121,9 @@
     <Filter Include="FrameWork\Load">
       <UniqueIdentifier>{b57ab8f1-10be-42e1-b0a5-3876a412a024}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\Effect\ParticleManager">
+      <UniqueIdentifier>{c60a5fc4-86bd-4808-b7fe-c83b152bbe37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -270,9 +273,6 @@
     <ClInclude Include="Effect_MagicCircle.h">
       <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="Effect_MeteorShockWave.h">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="Skill_Meteor.h">
       <Filter>MainGame\Object\Skill</Filter>
     </ClInclude>
@@ -332,6 +332,18 @@
     </ClInclude>
     <ClInclude Include="Scene_TitleScene.h">
       <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_FireParticle.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>MainGame\Object\Effect\ParticleManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_IceBreakParticle.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_ShorkWave.h">
+      <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -473,9 +485,6 @@
     <ClCompile Include="Effect_MagicCircle.cpp">
       <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Effect_MeteorShockWave.cpp">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="Skill_Meteor.cpp">
       <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
@@ -535,6 +544,18 @@
     </ClCompile>
     <ClCompile Include="Scene_TitleScene.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_FireParticle.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>MainGame\Object\Effect\ParticleManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_IceBreakParticle.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_ShorkWave.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
