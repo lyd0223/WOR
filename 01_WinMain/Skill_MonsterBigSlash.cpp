@@ -2,24 +2,24 @@
 #include"Camera.h"
 #include "Image.h"
 #include "Animation.h"
-#include "Skill_WindSlash.h"
+#include "Skill_MonsterBigSlash.h"
 
 
-Skill_WindSlash::Skill_WindSlash(const string& name, float x, float y, float angle)
+Skill_MonsterBigSlash::Skill_MonsterBigSlash(const string& name, float x, float y, float angle)
 	:SkillObject(name)
 {
-	mX =   x;
-	mY =   y;
+	mX = x;
+	mY = y;
 	mAngle = angle;
 }
 
-void Skill_WindSlash::Init()
+void Skill_MonsterBigSlash::Init()
 {
-	ImageManager::GetInstance()->LoadFromFile(L"WindSlash", Resources(L"Skill/WindSlash.png"), 5, 3);
-	mImage = ImageManager::GetInstance()->FindImage(L"WindSlash");
+	ImageManager::GetInstance()->LoadFromFile(L"MonsterBigSlash", Resources(L"Skill/MonsterSlash.png"), 5, 3);
+	mImage = ImageManager::GetInstance()->FindImage(L"MonsterBigSlash");
 
-	mSizeX = mImage->GetWidth();
-	mSizeY = mImage->GetHeight();
+	mSizeX = mImage->GetWidth() / 5 ;
+	mSizeY = mImage->GetHeight() / 3;
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 
 
@@ -32,12 +32,12 @@ void Skill_WindSlash::Init()
 
 }
 
-void Skill_WindSlash::Release()
+void Skill_MonsterBigSlash::Release()
 {
 	SafeDelete(mSlashAnimation);
 }
 
-void Skill_WindSlash::Update()
+void Skill_MonsterBigSlash::Update()
 {
 	if (mSlashAnimation->GetNowFrameX() == 4)mIsDestroy = true;
 	//D2D1_RECT_F rctemp = CameraManager::GetInstance()->GetMainCamera()->GetRect();
@@ -48,9 +48,10 @@ void Skill_WindSlash::Update()
 	mSlashAnimation->Update();
 }
 
-void Skill_WindSlash::Render()
+void Skill_MonsterBigSlash::Render()
 {
-	mImage->SetScale(1.5f);
-	mImage->SetAngle(mAngle * -(180/PI));
+	mImage->SetScale(3.f);
+	mImage->SetAngle(mAngle * -(180 / PI));
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mSlashAnimation->GetNowFrameX(), mSlashAnimation->GetNowFrameY());
 }

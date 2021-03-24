@@ -20,7 +20,8 @@ protected:
 	Animation* mDieAnimation;
 	Animation* mCurrentAnimation;
 	MonsterActState mMonsterActState;
-
+	MonsterState mMonsterState;
+	bool mIsAct;
 
 public:
 	Monster_Mazition(const string& name, float x, float y);

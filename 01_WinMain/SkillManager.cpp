@@ -8,6 +8,7 @@
 #include "Skill_IceSpear.h"
 #include "Skill_SummonIceSpear.h"
 #include "Skill_IceSword.h"
+#include "Skill_MonsterBigSlash.h"
 #include "Tile.h"
 #include "TileMap.h"
 
@@ -119,6 +120,13 @@ void SkillManager::IceSwordSkill(const string& name, float x, float y, float ang
 	Skill_IceSword* iceSword = new Skill_IceSword(name, x, y, angle);
 	iceSword->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, iceSword);
+}
+
+void SkillManager::MonsterBigSlashSkill(const string& name, float x, float y, float angle)
+{
+	Skill_MonsterBigSlash* monsterBigSlash = new Skill_MonsterBigSlash(name, x, y, angle);
+	monsterBigSlash->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, monsterBigSlash);
 }
 
 //vector<GameObject*> SkillManager::FindSkillList(const string key)

@@ -20,7 +20,7 @@ protected:
 	Player* mPlayer;
 	MonsterActState mMonsterActState;
 	MonsterState mMonsterState;
-
+	bool mIsAct;
 
 public:
 	Monster_BigZombie(const string& name, float x, float y);

@@ -39,6 +39,7 @@ enum class PlayerState :int
 #define TileSize 64
 #define TileCountX 100
 #define TileCountY 100
+#define BasicSpeed 300.f
 class Player : public MovingObject
 {
 	PlayerState mPlayerState;

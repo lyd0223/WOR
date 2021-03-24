@@ -5,6 +5,7 @@
 #include"Animation.h"
 #include"Monster_Zombie.h"
 #include "Tile.h"
+#include "TileMap.h"
 
 Monster_Zombie::Monster_Zombie(const string& name, float x, float y)
 	: MonsterObject(name)
@@ -66,6 +67,70 @@ void Monster_Zombie::Update()
 
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
+	vector<vector<Tile*>> tilelist = tilemap->GetTileList();
+	for (int y = mY / TileSize - 1; y < mY / TileSize + 1; y++)
+	{
+		for (int x = mX / TileSize - 1; x < mX / TileSize + 1; x++)
+		{
+			if (tilelist[y][x]->GetType() == Type::Wall)
+			{
+				D2D1_RECT_F tileRect = tilelist[y][x]->GetRect();
+				D2D1_RECT_F tempRect;
+				if (tilelist[y][x]->GetType() == Type::Wall)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+						if (y == (int)mY / TileSize && x == (int)mX / TileSize - 1)
+							mX = tileRect.right + mSizeX / 2;
+						else if (y == (int)mY / TileSize && x == (int)mX / TileSize + 1)
+							mX = tileRect.left - mSizeX / 2;
+						else if (y == (int)mY / TileSize - 1 && x == (int)mX / TileSize)
+							mY = tileRect.bottom + mSizeY / 2;
+						else if (y == (int)mY / TileSize + 1 && x == (int)mX / TileSize)
+							mY = tileRect.top - mSizeY / 2;
+
+
+					}
+				}
+				if (tilelist[y][x]->GetType() == Type::Cliff)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+
+						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == mRect.bottom)
+							mY -= TileSize;
+						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == mRect.top)
+							mY += TileSize;
+						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == mRect.left)
+							mX += TileSize;
+						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == mRect.right)
+							mX -= TileSize;
+					}
+
+				}
+				if (tilelist[y][x]->GetType() == Type::Floor)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+						mSpeed = BasicSpeed;
+
+					}
+
+				}
+				if (tilelist[y][x]->GetType() == Type::Thorn)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+						mSpeed = BasicSpeed - 100.f;
+
+					}
+
+				}
+
+			}
+		}
+	}
 }
 
 void Monster_Zombie::Render()

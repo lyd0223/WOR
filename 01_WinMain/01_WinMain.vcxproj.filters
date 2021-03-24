@@ -225,9 +225,6 @@
     <ClInclude Include="Scene_Tutorial.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>MainGame\Object\Player</Filter>
-    </ClInclude>
     <ClInclude Include="SkillManager.h">
       <Filter>MainGame\Object\SkillManager</Filter>
     </ClInclude>
@@ -332,6 +329,15 @@
     </ClInclude>
     <ClInclude Include="Scene_TitleScene.h">
       <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_MonsterBigSlash.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>MainGame\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_WaterBall.h">
+      <Filter>MainGame\Object\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -535,6 +541,12 @@
     </ClCompile>
     <ClCompile Include="Scene_TitleScene.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_MonsterBigSlash.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_WaterBall.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

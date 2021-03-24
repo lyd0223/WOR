@@ -55,8 +55,8 @@ void Scene_Tutorial::Init()
 	//mBigZombie = new Monster_BigZombie("BigZombie", 400, 1600);
 	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mBigZombie);
 	//
-	//mGolem = new Monster_Golem("Golem", 200, 1600);
-	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mGolem);
+	mGolem = new Monster_Golem("Golem", 200, 2000);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mGolem);
 	//
 	//mMazition = new Monster_Mazition("Mazition", 800, 1600);
 	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazition);

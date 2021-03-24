@@ -5,6 +5,7 @@
 #include"Animation.h"
 #include"Monster_Mazition.h"
 #include "Tile.h"
+#include"TileMap.h"
 
 Monster_Mazition::Monster_Mazition(const string& name, float x, float y)
 	: MonsterObject(name)
@@ -19,9 +20,13 @@ void Monster_Mazition::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"Mazition", Resources(L"Monster/Mazition.png"), 6, 5);
 	mImage = ImageManager::GetInstance()->FindImage(L"Mazition");
 	mMonsterActState = MonsterActState::RightIdle;
+	mMonsterState = MonsterState::Idle;
+	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 	mSpeed = 3.f;
-	mSizeX = TileSize + 50;
-	mSizeY = TileSize + 50;
+	mSizeX = mImage->GetFrameSize().__typeToGetX() * 4 - 120;
+	mSizeY = mImage->GetFrameSize().__typeToGetY() * 4 - 50;
+	mIsAct = false;
+
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
@@ -55,18 +60,190 @@ void Monster_Mazition::Release()
 void Monster_Mazition::Update()
 {
 
-	if (mPathList.size() != 0)
+	mMonsterToPlayerDistance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize;
+	mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
+	//아이들
+	if (mMonsterToPlayerDistance >= 5.5f)
 	{
-		float nextX = mPathList[1]->GetX();
-		float nextY = mPathList[1]->GetY();
-		float angle = Math::GetAngle(mX, mY, nextX, nextY);
+		AnimationChange(mRightIdleAnimation);
+		mMonsterActState = MonsterActState::RightIdle;
+		mMonsterState = MonsterState::Idle;
+		//mPathList.clear();
+		mIsAct = false;
 
-		mX += cosf(angle) * mSpeed;
-		mY += -sinf(angle) * mSpeed;
+	}
+	//추격
+	if (mCurrentAnimation->GetIsPlay() == false)
+	{
+		if (mMonsterToPlayerDistance < 5.5f && mMonsterToPlayerDistance >= 2.1f)
+		{
+
+			if (mRightWalkAnimation->GetIsPlay() == false)mIsAct = false;
+			if (mLeftWalkAnimation->GetIsPlay() == false)mIsAct = false;
+			if (mMonsterToPlayerAngle <PI / 2 || mMonsterToPlayerAngle > PI / 2 + PI)
+			{
+
+				if (mIsAct == false)
+				{
+					AnimationChange(mRightWalkAnimation);
+					mMonsterActState = MonsterActState::RightWalk;
+					mMonsterState = MonsterState::Chase;
+					mIsAct = true;
+				}
+			}
+			if (mMonsterToPlayerAngle > PI / 2 && mMonsterToPlayerAngle < PI / 2 + PI)
+			{
+				if (mIsAct == false)
+				{
+					AnimationChange(mLeftWalkAnimation);
+					mMonsterActState == MonsterActState::LeftWalk;
+					mMonsterState = MonsterState::Chase;
+					mIsAct = true;
+				}
+			}
+			//길 찾기
+			if (mPathList.size() != 0)
+			{
+				float nextX = mPathList[1]->GetX();
+				float nextY = mPathList[1]->GetY();
+				float angle = Math::GetAngle(mX, mY, nextX, nextY);
+				float distance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY());
+
+				mX += cosf(angle) * mSpeed;
+				mY += -sinf(angle) * mSpeed;
+			}
+		}
+
+
+		if (mMonsterToPlayerDistance < 2.1f)
+		{
+
+			//오른쪽 공격
+			if (mMonsterToPlayerAngle < (PI / 4) || mMonsterToPlayerAngle >(PI2 - (PI / 4)))
+			{
+				if (mIsAct == true && mCurrentAnimation != mRightAttackAnimation)
+				{
+					AnimationChange(mRightAttackAnimation);
+					mMonsterActState = MonsterActState::RightAttack;
+					mMonsterState = MonsterState::Attack;
+					mIsAct = false;
+				}
+				if (mRightAttackAnimation->GetIsPlay() == false)mIsAct = true;
+
+			}
+			//왼쪽공격
+			else if (mMonsterToPlayerAngle > ((PI / 2) + (PI / 4)) && mMonsterToPlayerAngle < (PI + (PI / 4)))
+			{
+				if (mLeftAttackAnimation->GetIsPlay() == false)mIsAct == true;
+				if (mIsAct == true && mCurrentAnimation != mLeftAttackAnimation)
+				{
+					AnimationChange(mLeftAttackAnimation);
+					mMonsterActState = MonsterActState::LeftAttack;
+					mMonsterState = MonsterState::Attack;
+					mIsAct = false;
+				}
+			}
+			//위
+			else if (mMonsterToPlayerAngle > PI / 4 && mMonsterToPlayerAngle < ((PI / 2) + (PI / 4)))
+			{
+				if (mUpAttackAnimation->GetIsPlay() == false)mIsAct == true;
+				if (mIsAct == true && mCurrentAnimation != mUpAttackAnimation)
+				{
+					AnimationChange(mUpAttackAnimation);
+					mMonsterActState = MonsterActState::UpAttack;
+					mMonsterState = MonsterState::Attack;
+					mIsAct = false;
+				}
+			}
+			//아래
+			else if (mMonsterToPlayerAngle > (PI + (PI / 4)) && mMonsterToPlayerAngle < (PI2 - (PI / 4)))
+			{
+				if (mUpAttackAnimation->GetIsPlay() == false)mIsAct == true;
+				if (mIsAct == true && mCurrentAnimation != mDownAttackAnimation)
+				{
+					AnimationChange(mDownAttackAnimation);
+					mMonsterActState = MonsterActState::DownAttack;
+					mMonsterState = MonsterState::Attack;
+					mIsAct = false;
+				}
+			}
+		}
+
+
+	}
+	if (mHp <= 0)
+	{
+		AnimationChange(mDieAnimation);
+		mMonsterActState = MonsterActState::Die;
+		mMonsterState = MonsterState::Die;
 	}
 
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
+	vector<vector<Tile*>> tilelist = tilemap->GetTileList();
+	for (int y = mY / TileSize - 1; y < mY / TileSize + 1; y++)
+	{
+		for (int x = mX / TileSize - 1; x < mX / TileSize + 1; x++)
+		{
+			if (tilelist[y][x]->GetType() == Type::Wall)
+			{
+				D2D1_RECT_F tileRect = tilelist[y][x]->GetRect();
+				D2D1_RECT_F tempRect;
+				if (tilelist[y][x]->GetType() == Type::Wall)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+						if (y == (int)mY / TileSize && x == (int)mX / TileSize - 1)
+							mX = tileRect.right + mSizeX / 2;
+						else if (y == (int)mY / TileSize && x == (int)mX / TileSize + 1)
+							mX = tileRect.left - mSizeX / 2;
+						else if (y == (int)mY / TileSize - 1 && x == (int)mX / TileSize)
+							mY = tileRect.bottom + mSizeY / 2;
+						else if (y == (int)mY / TileSize + 1 && x == (int)mX / TileSize)
+							mY = tileRect.top - mSizeY / 2;
+
+
+					}
+				}
+				if (tilelist[y][x]->GetType() == Type::Cliff)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+
+						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == mRect.bottom)
+							mY -= TileSize;
+						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == mRect.top)
+							mY += TileSize;
+						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == mRect.left)
+							mX += TileSize;
+						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == mRect.right)
+							mX -= TileSize;
+					}
+
+				}
+				if (tilelist[y][x]->GetType() == Type::Floor)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+						mSpeed = BasicSpeed;
+
+					}
+
+				}
+				if (tilelist[y][x]->GetType() == Type::Thorn)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+						mSpeed = BasicSpeed - 100.f;
+
+					}
+
+				}
+
+			}
+		}
+	}
 }
 
 void Monster_Mazition::Render()

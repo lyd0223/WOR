@@ -5,6 +5,7 @@
 #include"Animation.h"
 #include"Monster_MazitionBullet.h"
 #include "Tile.h"
+#include"TileMap.h"
 
 Monster_MazitionBullet::Monster_MazitionBullet(const string& name, float x, float y)
 	: MonsterObject(name)
@@ -58,6 +59,38 @@ void Monster_MazitionBullet::Update()
 
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
+	vector<vector<Tile*>> tilelist = tilemap->GetTileList();
+	for (int y = mY / TileSize - 1; y < mY / TileSize + 1; y++)
+	{
+		for (int x = mX / TileSize - 1; x < mX / TileSize + 1; x++)
+		{
+			if (tilelist[y][x]->GetType() == Type::Wall)
+			{
+				D2D1_RECT_F tileRect = tilelist[y][x]->GetRect();
+				D2D1_RECT_F tempRect;
+				if (tilelist[y][x]->GetType() == Type::Wall)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+						if (y == (int)mY / TileSize && x == (int)mX / TileSize - 1)
+							mX = tileRect.right + mSizeX / 2;
+						else if (y == (int)mY / TileSize && x == (int)mX / TileSize + 1)
+							mX = tileRect.left - mSizeX / 2;
+						else if (y == (int)mY / TileSize - 1 && x == (int)mX / TileSize)
+							mY = tileRect.bottom + mSizeY / 2;
+						else if (y == (int)mY / TileSize + 1 && x == (int)mX / TileSize)
+							mY = tileRect.top - mSizeY / 2;
+
+
+					}
+				}
+				
+				
+
+			}
+		}
+	}
 }
 
 void Monster_MazitionBullet::Render()

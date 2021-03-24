@@ -20,7 +20,10 @@ protected:
 	Animation* mDieAnimation;
 	Animation* mCurrentAnimation;
 	MonsterActState mMonsterActState;
-	
+	MonsterState mMonsterState;
+	bool mIsAct;
+	float lineX;
+	float lineY;
 
 public:
 	Monster_Golem(const string& name, float x, float y);

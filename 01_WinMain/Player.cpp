@@ -23,7 +23,7 @@ void Player::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"Player", Resources(L"Player/WizardPlayer.png"), 10, 25);
 	mImage = ImageManager::GetInstance()->FindImage(L"Player");
 	mPlayerState = PlayerState::DownIdle;
-	mSpeed = 500.f;
+	mSpeed = BasicSpeed;
 	mSizeX = TileSize - 10;
 	mSizeY = TileSize - 10;
 	mAngle = 0.f;
@@ -634,8 +634,10 @@ void Player::Update()
 	//		}
 	//	}
 	//}
+	//근접공격 라인--
 	lineX = mX + 50 * cosf(mAngle);
 	lineY = mY - 50 * sinf(mAngle);
+	//---
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
@@ -663,6 +665,40 @@ void Player::Update()
 
 						
 					}
+				}
+				if (tilelist[y][x]->GetType() == Type::Cliff)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+						
+						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == mRect.bottom)
+							mY -= TileSize;
+						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == mRect.top)
+							mY += TileSize;
+						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == mRect.left)
+							mX += TileSize;
+						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == mRect.right)
+							mX -= TileSize;
+					}
+
+				}
+				if (tilelist[y][x]->GetType() == Type::Floor)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+						mSpeed = BasicSpeed;
+						
+					}
+
+				}
+				if (tilelist[y][x]->GetType() == Type::Thorn)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+						mSpeed = BasicSpeed - 100.f;
+
+					}
+
 				}
 
 			}

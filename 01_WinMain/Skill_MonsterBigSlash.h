@@ -3,7 +3,7 @@
 
 class Image;
 class Animation;
-class Skill_WindSlash : public SkillObject
+class Skill_MonsterBigSlash : public SkillObject
 {
 	Image* mImage;
 	class Player* mPlayer;
@@ -15,8 +15,8 @@ class Skill_WindSlash : public SkillObject
 	float mSpeed;
 	Animation* mSlashAnimation;
 public:
-	Skill_WindSlash(const string& name) : SkillObject(name) {};
-	Skill_WindSlash(const string& name, float x, float y, float angle);
+	Skill_MonsterBigSlash(const string& name) : SkillObject(name) {};
+	Skill_MonsterBigSlash(const string& name, float x, float y, float angle);
 
 	void Init() override;
 	void Release() override;
