@@ -1,9 +1,9 @@
 #pragma once
-#include "GameObject.h"
+#include "SkillObject.h"
 
 class Image;
 class Animation;
-class Skill_WindSlash : public GameObject
+class Skill_WindSlash : public SkillObject
 {
 	Image* mImage;
 	class Player* mPlayer;
@@ -15,7 +15,7 @@ class Skill_WindSlash : public GameObject
 	float mSpeed;
 	Animation* mSlashAnimation;
 public:
-	Skill_WindSlash(const string& name) : GameObject(name) {};
+	Skill_WindSlash(const string& name) : SkillObject(name) {};
 	Skill_WindSlash(const string& name, float x, float y, float angle);
 
 	void Init() override;

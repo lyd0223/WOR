@@ -68,7 +68,6 @@ void Monster_MuscleMan::Update()
 
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-<<<<<<< Updated upstream
 	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
 	vector<vector<Tile*>> tilelist = tilemap->GetTileList();
 	for (int y = mY / TileSize - 1; y < mY / TileSize + 1; y++)
@@ -133,9 +132,8 @@ void Monster_MuscleMan::Update()
 			}
 		}
 	}
-=======
+
 	mMovingRect = RectMakeCenter(mX, mY + 50, TileSize, TileSize);
->>>>>>> Stashed changes
 }
 
 void Monster_MuscleMan::Render()

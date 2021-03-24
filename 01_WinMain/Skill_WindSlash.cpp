@@ -6,7 +6,7 @@
 
 
 Skill_WindSlash::Skill_WindSlash(const string& name, float x, float y, float angle)
-	:GameObject(name)
+	:SkillObject(name)
 {
 	mX =   x;
 	mY =   y;

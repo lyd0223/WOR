@@ -115,14 +115,14 @@
     <Filter Include="FrameWork\PathFinder">
       <UniqueIdentifier>{f064ed55-5dba-4064-a86c-88a6b58cb7e4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Object\NewFilter1">
-      <UniqueIdentifier>{cb3b9d0d-fc85-4c8e-bfc7-d71aa7b03ea7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="FrameWork\Load">
       <UniqueIdentifier>{b57ab8f1-10be-42e1-b0a5-3876a412a024}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainGame\Object\UserInterface">
       <UniqueIdentifier>{3cd43136-54a9-4c8b-8c72-9ded246acc09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Object\ParticleManager">
+      <UniqueIdentifier>{cb3b9d0d-fc85-4c8e-bfc7-d71aa7b03ea7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -273,9 +273,6 @@
     <ClInclude Include="Effect_MagicCircle.h">
       <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="Effect_MeteorShockWave.h">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="Skill_Meteor.h">
       <Filter>MainGame\Object\Skill</Filter>
     </ClInclude>
@@ -336,8 +333,20 @@
     <ClInclude Include="Scene_TitleScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="UserInterface.h">
-      <Filter>MainGame\Object\UserInterface</Filter>
+    <ClInclude Include="Effect_ShorkWave.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_FireParticle.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_IceBreakParticle.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_MonsterBigSlash.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>MainGame\Object\ParticleManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -479,9 +488,6 @@
     <ClCompile Include="Effect_MagicCircle.cpp">
       <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Effect_MeteorShockWave.cpp">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="Skill_Meteor.cpp">
       <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
@@ -542,8 +548,20 @@
     <ClCompile Include="Scene_TitleScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="UserInterface.cpp">
-      <Filter>MainGame\Object\UserInterface</Filter>
+    <ClCompile Include="Effect_ShorkWave.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_FireParticle.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_IceBreakParticle.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_MonsterBigSlash.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>MainGame\Object\ParticleManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

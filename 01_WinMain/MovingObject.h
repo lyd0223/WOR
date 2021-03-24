@@ -5,7 +5,10 @@ enum class MonsterState
 {
 	Idle,
 	Chase,
-	Attack
+	Attack,
+	Die,
+
+	End
 };
 enum class MonsterActState
 {

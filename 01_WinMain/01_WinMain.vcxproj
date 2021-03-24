@@ -23,7 +23,7 @@
     <ProjectGuid>{ADD52605-596E-43E8-879D-E81A28A8BB13}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My01WinMain</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -149,6 +149,9 @@
   <ItemGroup>
     <ClInclude Include="01_WinMain.h" />
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Effect_FireParticle.h" />
+    <ClInclude Include="Effect_IceBreakParticle.h" />
+    <ClInclude Include="Effect_ShorkWave.h" />
     <ClInclude Include="Load_Image.h" />
     <ClInclude Include="Monster_BigZombie.h" />
     <ClInclude Include="Effect_BurnMark.h" />
@@ -159,6 +162,7 @@
     <ClInclude Include="Effect_FlameEffect.h" />
     <ClInclude Include="Monster_Golem.h" />
     <ClInclude Include="Effect_HitSpark.h" />
+    <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Scene_House.h" />
     <ClInclude Include="Scene_TitleScene.h" />
     <ClInclude Include="SkillObject.h" />
@@ -183,7 +187,6 @@
     <ClInclude Include="Monster_Mazition.h" />
     <ClInclude Include="Monster_MazitionBullet.h" />
     <ClInclude Include="Skill_Meteor.h" />
-    <ClInclude Include="Effect_MeteorShockWave.h" />
     <ClInclude Include="MonsterObject.h" />
     <ClInclude Include="Monster_FireBoss.h" />
     <ClInclude Include="MovingObject.h" />
@@ -203,6 +206,7 @@
     <ClInclude Include="Skill_FireBall.h" />
     <ClInclude Include="Skill_Flame.h" />
     <ClInclude Include="Monster_Slime.h" />
+    <ClInclude Include="Skill_MonsterBigSlash.h" />
     <ClInclude Include="Skill_SummonIceSpear.h" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="Monster_SpearMan.h" />
@@ -213,7 +217,6 @@
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TilePallete.h" />
     <ClInclude Include="Time.h" />
-    <ClInclude Include="UserInterface.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Monster_Ward.h" />
     <ClInclude Include="Skill_WindSlash.h" />
@@ -222,6 +225,9 @@
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp" />
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Effect_FireParticle.cpp" />
+    <ClCompile Include="Effect_IceBreakParticle.cpp" />
+    <ClCompile Include="Effect_ShorkWave.cpp" />
     <ClCompile Include="Load_Image.cpp" />
     <ClCompile Include="Monster_BigZombie.cpp" />
     <ClCompile Include="Effect_BurnMark.cpp" />
@@ -232,6 +238,7 @@
     <ClCompile Include="Effect_FlameEffect.cpp" />
     <ClCompile Include="Monster_Golem.cpp" />
     <ClCompile Include="Effect_HitSpark.cpp" />
+    <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Scene_House.cpp" />
     <ClCompile Include="Scene_TitleScene.cpp" />
     <ClCompile Include="SkillObject.cpp" />
@@ -255,7 +262,6 @@
     <ClCompile Include="Monster_Mazition.cpp" />
     <ClCompile Include="Monster_MazitionBullet.cpp" />
     <ClCompile Include="Skill_Meteor.cpp" />
-    <ClCompile Include="Effect_MeteorShockWave.cpp" />
     <ClCompile Include="MonsterObject.cpp" />
     <ClCompile Include="Monster_FireBoss.cpp" />
     <ClCompile Include="MovingObject.cpp" />
@@ -279,6 +285,7 @@
     <ClCompile Include="Skill_FireBall.cpp" />
     <ClCompile Include="Skill_Flame.cpp" />
     <ClCompile Include="Monster_Slime.cpp" />
+    <ClCompile Include="Skill_MonsterBigSlash.cpp" />
     <ClCompile Include="Skill_SummonIceSpear.cpp" />
     <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="Monster_SpearMan.cpp" />
@@ -288,7 +295,6 @@
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TilePallete.cpp" />
     <ClCompile Include="Time.cpp" />
-    <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Monster_Ward.cpp" />
     <ClCompile Include="Skill_WindSlash.cpp" />
