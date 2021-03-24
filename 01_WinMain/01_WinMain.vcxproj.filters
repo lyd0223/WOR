@@ -363,6 +363,21 @@
     <ClInclude Include="Skill_DragonArc.h">
       <Filter>MainGame\Object\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="Skill_MonsterMiddleSlash.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_MonsterSmallSlash.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_Spear.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_SpearWave.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_WaterBall.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -588,6 +603,21 @@
       <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Skill_DragonArc.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_MonsterMiddleSlash.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_MonsterSmallSlash.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_Spear.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_SpearWave.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_WaterBall.cpp">
       <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
   </ItemGroup>
