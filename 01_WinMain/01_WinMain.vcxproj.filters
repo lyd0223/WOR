@@ -121,6 +121,9 @@
     <Filter Include="FrameWork\Load">
       <UniqueIdentifier>{b57ab8f1-10be-42e1-b0a5-3876a412a024}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\UserInterface">
+      <UniqueIdentifier>{3cd43136-54a9-4c8b-8c72-9ded246acc09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -224,6 +227,9 @@
     </ClInclude>
     <ClInclude Include="Scene_Tutorial.h">
       <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>MainGame\Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="SkillManager.h">
       <Filter>MainGame\Object\SkillManager</Filter>
@@ -330,21 +336,9 @@
     <ClInclude Include="Scene_TitleScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <ClInclude Include="Skill_MonsterBigSlash.h">
-      <Filter>MainGame\Object\Skill</Filter>
+    <ClInclude Include="UserInterface.h">
+      <Filter>MainGame\Object\UserInterface</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>MainGame\Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Skill_WaterBall.h">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClInclude>
-=======
->>>>>>> parent of 6a14ca0 (3/23 파티클 작업)
-=======
->>>>>>> parent of 6a14ca0 (3/23 파티클 작업)
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -548,18 +542,9 @@
     <ClCompile Include="Scene_TitleScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <ClCompile Include="Skill_MonsterBigSlash.cpp">
-      <Filter>MainGame\Object\Skill</Filter>
+    <ClCompile Include="UserInterface.cpp">
+      <Filter>MainGame\Object\UserInterface</Filter>
     </ClCompile>
-    <ClCompile Include="Skill_WaterBall.cpp">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClCompile>
-=======
->>>>>>> parent of 6a14ca0 (3/23 파티클 작업)
-=======
->>>>>>> parent of 6a14ca0 (3/23 파티클 작업)
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="01_WinMain.rc">
