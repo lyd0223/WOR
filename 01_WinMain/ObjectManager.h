@@ -15,6 +15,7 @@ enum class ObjectLayer : int
 	Structure,
 	UI,
 	Skill,
+	Particle,
 
 	End
 };

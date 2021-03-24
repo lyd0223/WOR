@@ -92,7 +92,7 @@ public:
 	void AnimationChange(Animation* changeanimation);
 	float GetSpeed() { return mSpeed; }
 	float GetAngle() { return mAngle; }
-	
+
 	//void SetTileList(Tile* tileList[TileCountY][TileCountX])
 	//{
 	//	for (int y = 0; y < TileCountY; ++y)
