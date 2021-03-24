@@ -203,9 +203,7 @@
     <ClInclude Include="Skill_FireBall.h" />
     <ClInclude Include="Skill_Flame.h" />
     <ClInclude Include="Monster_Slime.h" />
-    <ClInclude Include="Skill_MonsterBigSlash.h" />
     <ClInclude Include="Skill_SummonIceSpear.h" />
-    <ClInclude Include="Skill_WaterBall.h" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="Monster_SpearMan.h" />
     <ClInclude Include="Structure.h" />
@@ -215,6 +213,7 @@
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TilePallete.h" />
     <ClInclude Include="Time.h" />
+    <ClInclude Include="UserInterface.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Monster_Ward.h" />
     <ClInclude Include="Skill_WindSlash.h" />
@@ -280,9 +279,7 @@
     <ClCompile Include="Skill_FireBall.cpp" />
     <ClCompile Include="Skill_Flame.cpp" />
     <ClCompile Include="Monster_Slime.cpp" />
-    <ClCompile Include="Skill_MonsterBigSlash.cpp" />
     <ClCompile Include="Skill_SummonIceSpear.cpp" />
-    <ClCompile Include="Skill_WaterBall.cpp" />
     <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="Monster_SpearMan.cpp" />
     <ClCompile Include="Structure.cpp" />
@@ -291,6 +288,7 @@
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TilePallete.cpp" />
     <ClCompile Include="Time.cpp" />
+    <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Monster_Ward.cpp" />
     <ClCompile Include="Skill_WindSlash.cpp" />
