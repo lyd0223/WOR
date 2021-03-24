@@ -1,7 +1,7 @@
 #pragma once
 #include "MonsterObject.h"
 #define AnimationTime 0.1f
-#define TileSize 64
+#define TileSize 48
 class Animation;
 class Monster_Slime : public MonsterObject
 {
@@ -21,6 +21,9 @@ protected:
 	Animation* mDieAnimation;
 	Animation* mCurrentAnimation;
 	MonsterActState mMonsterActState;
+	MonsterState mMonsterState;
+	bool mIsAct;
+	Player* mPlayer;
 
 public:
 	Monster_Slime(const string& name, float x, float y);

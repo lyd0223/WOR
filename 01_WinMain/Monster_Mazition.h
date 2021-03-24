@@ -1,7 +1,7 @@
 #pragma once
 #include "MonsterObject.h"
 #define AnimationTime 0.1f
-#define TileSize 64
+#define TileSize 48
 class Monster_Mazition : public MonsterObject
 {
 protected:
@@ -22,6 +22,8 @@ protected:
 	MonsterActState mMonsterActState;
 	MonsterState mMonsterState;
 	bool mIsAct;
+	float lineX;
+	float lineY;
 
 public:
 	Monster_Mazition(const string& name, float x, float y);

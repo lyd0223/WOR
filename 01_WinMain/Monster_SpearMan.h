@@ -1,7 +1,7 @@
 #pragma once
 #include "MonsterObject.h"
 #define AnimationTime 0.1f
-#define TileSize 64
+//#define TileSize 64
 class Monster_SpearMan : public MonsterObject
 {
 protected:
@@ -20,6 +20,11 @@ protected:
 	Animation* mDieAnimation;
 	Animation* mCurrentAnimation;
 	MonsterActState mMonsterActState;
+	MonsterState mMonsterState;
+	Player* mPlayer;
+	float lineX;
+	float lineY;
+	bool mIsAct;
 
 
 public:

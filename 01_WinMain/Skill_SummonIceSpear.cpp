@@ -30,7 +30,7 @@ void Skill_SummonIceSpear::Init()
 	mSummonIceSpearAnimation->SetIsLoop(false);
 	mSummonIceSpearAnimation->SetFrameUpdateTime(0.1f);
 	mSummonIceSpearAnimation->Play();
-	mSkillType = SkillType::Throw;
+	
 
 
 }

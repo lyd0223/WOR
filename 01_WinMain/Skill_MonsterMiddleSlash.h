@@ -3,7 +3,7 @@
 
 class Image;
 class Animation;
-class Skill_WaterBall : public SkillObject
+class Skill_MonsterMiddleSlash : public SkillObject
 {
 	Image* mImage;
 	class Player* mPlayer;
@@ -13,13 +13,14 @@ class Skill_WaterBall : public SkillObject
 	float mImageAngle;
 	float mAngle;
 	float mSpeed;
-	Animation* mWaterBallAnimation;
+	Animation* mSlashAnimation;
 public:
-	Skill_WaterBall(const string& name) : SkillObject(name) {};
-	Skill_WaterBall(const string& name, float x, float y, float angle);
+	Skill_MonsterMiddleSlash(const string& name) : SkillObject(name) {};
+	Skill_MonsterMiddleSlash(const string& name, float x, float y, float angle);
 
 	void Init() override;
 	void Release() override;
 	void Update() override;
 	void Render() override;
 };
+

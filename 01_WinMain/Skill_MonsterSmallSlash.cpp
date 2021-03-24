@@ -2,10 +2,10 @@
 #include"Camera.h"
 #include "Image.h"
 #include "Animation.h"
-#include "Skill_MonsterBigSlash.h"
+#include "Skill_MonsterSmallSlash.h"
 
 
-Skill_MonsterBigSlash::Skill_MonsterBigSlash(const string& name, float x, float y, float angle)
+Skill_MonsterSmallSlash::Skill_MonsterSmallSlash(const string& name, float x, float y, float angle)
 	:SkillObject(name)
 {
 	mX = x;
@@ -13,18 +13,19 @@ Skill_MonsterBigSlash::Skill_MonsterBigSlash(const string& name, float x, float 
 	mAngle = angle;
 }
 
-void Skill_MonsterBigSlash::Init()
+void Skill_MonsterSmallSlash::Init()
 {
-	ImageManager::GetInstance()->LoadFromFile(L"MonsterBigSlash", Resources(L"Skill/MonsterSlash.png"), 5, 3);
-	mImage = ImageManager::GetInstance()->FindImage(L"MonsterBigSlash");
+	ImageManager::GetInstance()->LoadFromFile(L"MonsterSmallSlash", Resources(L"Skill/MonsterSlash.png"), 5, 3);
+	mImage = ImageManager::GetInstance()->FindImage(L"MonsterSmallSlash");
 
-	mSizeX = mImage->GetWidth() / 5 ;
+	mSizeX = mImage->GetWidth() / 5;
 	mSizeY = mImage->GetHeight() / 3;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
+	mSkillType = SkillType::Melee;
 
 	mSlashAnimation = new Animation;
-	mSlashAnimation->InitFrameByStartEnd(0, 0, 4, 0, false);
+	mSlashAnimation->InitFrameByStartEnd(0, 2, 4, 2, false);
 	mSlashAnimation->SetIsLoop(false);
 	mSlashAnimation->SetFrameUpdateTime(0.1f);
 	mSlashAnimation->Play();
@@ -32,12 +33,12 @@ void Skill_MonsterBigSlash::Init()
 
 }
 
-void Skill_MonsterBigSlash::Release()
+void Skill_MonsterSmallSlash::Release()
 {
 	SafeDelete(mSlashAnimation);
 }
 
-void Skill_MonsterBigSlash::Update()
+void Skill_MonsterSmallSlash::Update()
 {
 	if (mSlashAnimation->GetNowFrameX() == 4)mIsDestroy = true;
 	//D2D1_RECT_F rctemp = CameraManager::GetInstance()->GetMainCamera()->GetRect();
@@ -48,9 +49,9 @@ void Skill_MonsterBigSlash::Update()
 	mSlashAnimation->Update();
 }
 
-void Skill_MonsterBigSlash::Render()
+void Skill_MonsterSmallSlash::Render()
 {
-	mImage->SetScale(3.f);
+	mImage->SetScale(1.f);
 	mImage->SetAngle(mAngle * -(180 / PI));
 	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mSlashAnimation->GetNowFrameX(), mSlashAnimation->GetNowFrameY());

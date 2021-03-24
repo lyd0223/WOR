@@ -29,6 +29,7 @@ void Player::Init()
 	mAngle = 0.f;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mMoveAngle = 0;
+	mMovingRect = RectMakeCenter(mX, mY+50, TileSize, TileSize);
 	//mDownIdleAnimation = new Animation;
 	//mDownIdleAnimation->InitFrameByStartEnd(0, 0, 0, 0, true);
 	//mDownIdleAnimation->SetIsLoop(false);
@@ -509,7 +510,10 @@ void Player::Update()
 
 		//if (skill == nullptr)
 		SkillObject* skill = (SkillObject*)ObjectManager::GetInstance()->FindObject("SummonIceSpear");
-
+		if (skill == nullptr)
+		{
+			return;
+		}
 		if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
 		{
 			AnimationChange(mRightThrowWationgAnimation);
@@ -640,11 +644,14 @@ void Player::Update()
 	//---
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mMovingRect = RectMakeCenter(mX, mY + 25, TileSize, TileSize);
+	float mMovingX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left)/ 2);
+	float mMovingY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top)/ 2);
 	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
 	vector<vector<Tile*>> tilelist =  tilemap->GetTileList();
-	for (int y = mY/TileSize -1; y < mY / TileSize + 1; y++)
+	for (int y = mMovingY/TileSize -1; y < mMovingY / TileSize + 1; y++)
 	{
-		for (int x = mX / TileSize - 1; x < mX/ TileSize + 1; x++)
+		for (int x = mMovingX / TileSize - 1; x < mMovingX / TileSize + 1; x++)
 		{
 			if (tilelist[y][x]->GetType() == Type::Wall)
 			{
@@ -652,39 +659,41 @@ void Player::Update()
 				D2D1_RECT_F tempRect;
 				if (tilelist[y][x]->GetType() == Type::Wall)
 				{
-					if (IntersectRect(tempRect, &tileRect, &mRect))
+					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
 					{
-						if (y == (int)mY / TileSize && x == (int)mX / TileSize - 1)
-							mX = tileRect.right + mSizeX/2;
-						else if (y == (int)mY / TileSize && x == (int)mX / TileSize + 1)
-							mX = tileRect.left - mSizeX/2;
-						else if (y == (int)mY / TileSize - 1 && x == (int)mX / TileSize)
-							mY = tileRect.bottom + mSizeY/2;
-						else if (y == (int)mY / TileSize + 1 && x == (int)mX / TileSize)
-							mY = tileRect.top - mSizeY/2;
+						float width = tempRect.right - tempRect.left;
+						float height = tempRect.bottom - tempRect.top;
+						if (y == (int)mMovingY / TileSize && x == (int)mMovingX / TileSize - 1)
+							mX += width / 2;
+						else if (y == (int)mMovingY / TileSize && x == (int)mMovingX / TileSize + 1)
+							mX -= width / 2;
+						else if (y == (int)mMovingY / TileSize - 1 && x == (int)mMovingX / TileSize)
+							mY += height / 2;
+						else if (y == (int)mMovingY / TileSize + 1 && x == (int)mMovingX / TileSize)
+							mY -= height / 2;
 
 						
 					}
 				}
 				if (tilelist[y][x]->GetType() == Type::Cliff)
 				{
-					if (IntersectRect(tempRect, &tileRect, &mRect))
+					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
 					{
 						
-						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == mRect.bottom)
+						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == mMovingRect.bottom)
 							mY -= TileSize;
-						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == mRect.top)
+						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == mMovingRect.top)
 							mY += TileSize;
-						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == mRect.left)
+						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == mMovingRect.left)
 							mX += TileSize;
-						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == mRect.right)
+						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == mMovingRect.right)
 							mX -= TileSize;
 					}
 
 				}
 				if (tilelist[y][x]->GetType() == Type::Floor)
 				{
-					if (IntersectRect(tempRect, &tileRect, &mRect))
+					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
 					{
 						mSpeed = BasicSpeed;
 						
@@ -693,7 +702,7 @@ void Player::Update()
 				}
 				if (tilelist[y][x]->GetType() == Type::Thorn)
 				{
-					if (IntersectRect(tempRect, &tileRect, &mRect))
+					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
 					{
 						mSpeed = BasicSpeed - 100.f;
 
@@ -729,6 +738,7 @@ void Player::Render()
 	//	}
 	//}
 	mImage->SetScale(1.5f);
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 	string str = to_string(_mousePosition.x) + "," + to_string(_mousePosition.y);
 	wstring wstr;

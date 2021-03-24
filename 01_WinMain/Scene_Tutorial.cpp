@@ -82,8 +82,8 @@ void Scene_Tutorial::Init()
 	mSwoardMan = new Monster_SwoardMan("SwoardMan", 800, 1800);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSwoardMan);
 	
-	mSpearMan = new Monster_SpearMan("SpearMan", 1000, 1800);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSpearMan);
+	//mSpearMan = new Monster_SpearMan("SpearMan", 200, 1300);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSpearMan);
 	
 	mWard = new Monster_Ward("Ward", 1200, 1800);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mWard);

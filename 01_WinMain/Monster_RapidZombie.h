@@ -1,7 +1,7 @@
 #pragma once
 #include "MonsterObject.h"
 #define AnimationTime 0.1f
-#define TileSize 64
+#define TileSize 48
 class Monster_RapidZombie : public MonsterObject
 {
 protected:
@@ -20,6 +20,11 @@ protected:
 	Animation* mDieAnimation;
 	Animation* mCurrentAnimation;
 	MonsterActState mMonsterActState;
+	MonsterState mMonsterState;
+	Player* mPlayer;
+	bool mIsAct;
+	float lineX;
+	float lineY;
 
 
 public:

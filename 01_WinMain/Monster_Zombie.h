@@ -1,7 +1,7 @@
 #pragma once
 #include "MonsterObject.h"
 #define AnimationTime 0.1f
-#define TileSize 64
+#define TileSize 48
 class Monster_Zombie : public MonsterObject
 {
 protected:

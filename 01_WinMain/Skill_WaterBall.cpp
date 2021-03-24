@@ -8,12 +8,12 @@
 #include "Skill_WaterBall.h"
 
 
-Skill_WaterBall::Skill_WaterBall(const string& name, float x, float y)
+Skill_WaterBall::Skill_WaterBall(const string& name, float x, float y, float angle)
 	:SkillObject(name)
 {
 	mX = x;
 	mY = y;
-	
+	mAngle = angle;
 }
 
 void Skill_WaterBall::Init()
@@ -23,7 +23,7 @@ void Skill_WaterBall::Init()
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 	mSizeX = mImage->GetWidth()/3;
 	mSizeY = mImage->GetHeight();
-	mRect = RectMake(mX, mY, mSizeX, mSizeY);
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mSpeed = 20.f;
 	mSkillType = SkillType::Throw;
 
@@ -32,7 +32,6 @@ void Skill_WaterBall::Init()
 	mWaterBallAnimation->SetIsLoop(false);
 	mWaterBallAnimation->SetFrameUpdateTime(0.1f);
 	mWaterBallAnimation->Play();
-
 
 }
 
@@ -49,13 +48,15 @@ void Skill_WaterBall::Update()
 	//mAngle = Math::GetAngle(mX, mY, _mousePosition.x + rctemp.left, _mousePosition.y + rctemp.top);
 	mX += cosf(mAngle) * mSpeed;
 	mY += -sinf(mAngle) * mSpeed;
-	mRect = RectMake(mX, mY, mSizeX, mSizeY);
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mWaterBallAnimation->Update();
 }
 
 void Skill_WaterBall::Render()
 {
-	mImage->SetScale(2.5f);
+	mImage->SetScale(1.5f);
+	mImage->SetAlpha(0.9f);
 	mImage->SetAngle((mAngle) * -(180 / PI));
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mWaterBallAnimation->GetNowFrameX(), mWaterBallAnimation->GetNowFrameY());
 }

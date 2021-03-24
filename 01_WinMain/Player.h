@@ -36,7 +36,7 @@ enum class PlayerState :int
 
 };
 #define AnimationTime 0.1f
-#define TileSize 64
+#define TileSize 48
 #define TileCountX 100
 #define TileCountY 100
 #define BasicSpeed 300.f

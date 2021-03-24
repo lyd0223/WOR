@@ -63,6 +63,9 @@ void Monster_Golem::Update()
 	
 	mMonsterToPlayerDistance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize;
 	mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
+	if (mHp > 0)
+	{
+
 	if (mCurrentAnimation->GetIsPlay() == false)
 	{
 	//아이들
@@ -223,29 +226,38 @@ void Monster_Golem::Update()
 				mIsAct = true;
 			}
 		}
-
-
 	}
-	if (mHp <= 0)
-	{
-		AnimationChange(mDieAnimation);
-		mMonsterActState = MonsterActState::Die;
-		mMonsterState = MonsterState::Die;
+
+		if (mHp <= 0)
+		{
+			if (mIsAct == false)
+
+			{
+				AnimationChange(mDieAnimation);
+				mMonsterActState = MonsterActState::Die;
+				mMonsterState = MonsterState::Die;
+				mIsAct = true;
+			}
+		}
 	}
+	
 	
 
 	mCurrentAnimation->Update();
 
-	//근접공격 라인--
+	//공격 라인--
 	lineX = mX   +150  * cosf(mMonsterToPlayerAngle);
 	lineY = mY  +150 * -sinf(mMonsterToPlayerAngle);
 	//---
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mMovingRect = RectMakeCenter(mX, mY+85, TileSize * 2, TileSize);
+	float mMovingX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
+	float mMovingY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
 	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
 	vector<vector<Tile*>> tilelist = tilemap->GetTileList();
-	for (int y = mY / TileSize - 1; y < mY / TileSize + 1; y++)
+	for (int y = mMovingY / TileSize - 1; y < mMovingY / TileSize + 1; y++)
 	{
-		for (int x = mX / TileSize - 1; x < mX / TileSize + 1; x++)
+		for (int x = mMovingX / TileSize - 1; x < mMovingX / TileSize + 1; x++)
 		{
 			if (tilelist[y][x]->GetType() == Type::Wall)
 			{
@@ -253,39 +265,41 @@ void Monster_Golem::Update()
 				D2D1_RECT_F tempRect;
 				if (tilelist[y][x]->GetType() == Type::Wall)
 				{
-					if (IntersectRect(tempRect, &tileRect, &mRect))
+					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
 					{
-						if (y == (int)mY / TileSize && x == (int)mX / TileSize - 1)
-							mX = tileRect.right + mSizeX / 2;
-						else if (y == (int)mY / TileSize && x == (int)mX / TileSize + 1)
-							mX = tileRect.left - mSizeX / 2;
-						else if (y == (int)mY / TileSize - 1 && x == (int)mX / TileSize)
-							mY = tileRect.bottom + mSizeY / 2;
-						else if (y == (int)mY / TileSize + 1 && x == (int)mX / TileSize)
-							mY = tileRect.top - mSizeY / 2;
+						float width = tempRect.right - tempRect.left;
+						float height = tempRect.bottom - tempRect.top;
+						if (y == (int)mMovingY / TileSize && x == (int)mMovingX / TileSize - 1)
+							mX += width / 2;
+						else if (y == (int)mMovingY / TileSize && x == (int)mMovingX / TileSize + 1)
+							mX -= width / 2;
+						else if (y == (int)mMovingY / TileSize - 1 && x == (int)mMovingX / TileSize)
+							mY += height / 2;
+						else if (y == (int)mMovingY / TileSize + 1 && x == (int)mMovingX / TileSize)
+							mY -= height / 2;
 
 
 					}
 				}
 				if (tilelist[y][x]->GetType() == Type::Cliff)
 				{
-					if (IntersectRect(tempRect, &tileRect, &mRect))
+					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
 					{
 
-						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == mRect.bottom)
+						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == mMovingRect.bottom)
 							mY -= TileSize;
-						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == mRect.top)
+						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == mMovingRect.top)
 							mY += TileSize;
-						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == mRect.left)
+						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == mMovingRect.left)
 							mX += TileSize;
-						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == mRect.right)
+						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == mMovingRect.right)
 							mX -= TileSize;
 					}
 
 				}
 				if (tilelist[y][x]->GetType() == Type::Floor)
 				{
-					if (IntersectRect(tempRect, &tileRect, &mRect))
+					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
 					{
 						mSpeed = BasicSpeed;
 
@@ -294,7 +308,7 @@ void Monster_Golem::Update()
 				}
 				if (tilelist[y][x]->GetType() == Type::Thorn)
 				{
-					if (IntersectRect(tempRect, &tileRect, &mRect))
+					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
 					{
 						mSpeed = BasicSpeed - 100.f;
 
@@ -310,12 +324,10 @@ void Monster_Golem::Update()
 void Monster_Golem::Render()
 {
 	mImage->SetScale(4.f);
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
 	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRenderFromBottom(mImage, mX, mY+45, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
-	string str = to_string(Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize);
-	wstring wstr;
-	wstr.assign(str.begin(), str.end());
-	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, wstr, 30.f);
+	
 
 }
 void Monster_Golem::AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)

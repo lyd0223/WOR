@@ -3,7 +3,7 @@
 
 class Image;
 class Animation;
-class Skill_WaterBall : public SkillObject
+class Skill_Spear : public SkillObject
 {
 	Image* mImage;
 	class Player* mPlayer;
@@ -13,10 +13,10 @@ class Skill_WaterBall : public SkillObject
 	float mImageAngle;
 	float mAngle;
 	float mSpeed;
-	Animation* mWaterBallAnimation;
+	Animation* mSpearAnimation;
 public:
-	Skill_WaterBall(const string& name) : SkillObject(name) {};
-	Skill_WaterBall(const string& name, float x, float y, float angle);
+	Skill_Spear(const string& name) : SkillObject(name) {};
+	Skill_Spear(const string& name, float x, float y, float angle);
 
 	void Init() override;
 	void Release() override;

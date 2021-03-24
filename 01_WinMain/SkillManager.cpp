@@ -15,10 +15,15 @@
 #include "Skill_SummonIceSpear.h"
 #include "Skill_IceSword.h"
 #include "Skill_MonsterBigSlash.h"
+#include "Skill_WaterBall.h"
+#include "Skill_MonsterSmallSlash.h"
+#include "Skill_Spear.h"
+#include "Skill_SpearWave.h"
+#include "Skill_MonsterMiddleSlash.h"
 #include "Tile.h"
 #include "TileMap.h"
 
-#define TileSize 64
+#define TileSize 48
 
 void SkillManager::Update()
 {
@@ -49,7 +54,7 @@ void SkillManager::Update()
 				D2D1_RECT_F tilerc = tile->GetRect();
 				if (tile->GetType() == Type::Wall && IntersectRect(temp, &skillrc, &tilerc) && skill->GetSkillType() == SkillType::Throw)
 				{
-					if (skill->GetSkillElement() == SkillElement::Fire)
+					if (skill->GetName() == "FireBall")
 					{
 						ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
@@ -61,6 +66,7 @@ void SkillManager::Update()
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 					}
 
+					
 					skill->SetIsDestroy(true);
 					break;
 				}
@@ -91,7 +97,7 @@ void SkillManager::Update()
 				if (IntersectRect(temp, &skillrc, &monsterrc))
 				{
 
-					if (skill->GetSkillElement() == SkillElement::Fire)
+					if (skill->GetName() == "FireBall")
 					{
 						ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
@@ -230,6 +236,41 @@ void SkillManager::MonsterBigSlashSkill(const string& name, float x, float y, fl
 	Skill_MonsterBigSlash* monsterBigSlash = new Skill_MonsterBigSlash(name, x, y, angle);
 	monsterBigSlash->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, monsterBigSlash);
+}
+
+void SkillManager::WaterBallSkill(const string& name, float x, float y, float angle)
+{
+	Skill_WaterBall* waterBall = new Skill_WaterBall(name, x, y, angle);
+	waterBall->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, waterBall);
+}
+
+void SkillManager::MonsterSmallSlashSkill(const string& name, float x, float y, float angle)
+{
+	Skill_MonsterSmallSlash* monsterSmallSlash = new Skill_MonsterSmallSlash(name, x, y, angle);
+	monsterSmallSlash->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, monsterSmallSlash);
+}
+
+void SkillManager::SpearSkill(const string& name, float x, float y, float angle)
+{
+	Skill_Spear* spear = new Skill_Spear(name, x, y, angle);
+	spear->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, spear);
+}
+
+void SkillManager::SpearWaveSkill(const string& name, float x, float y, float angle)
+{
+	Skill_SpearWave* spearWave = new Skill_SpearWave(name, x, y, angle);
+	spearWave->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, spearWave);
+}
+
+void SkillManager::MonsterMiddleSlashSkill(const string& name, float x, float y, float angle)
+{
+	Skill_MonsterMiddleSlash* monsterMiddleSlash = new Skill_MonsterMiddleSlash(name, x, y, angle);
+	monsterMiddleSlash->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, monsterMiddleSlash);
 }
 
 //vector<GameObject*> SkillManager::FindSkillList(const string key)
