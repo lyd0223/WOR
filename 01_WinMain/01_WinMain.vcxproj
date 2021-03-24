@@ -149,8 +149,6 @@
   <ItemGroup>
     <ClInclude Include="01_WinMain.h" />
     <ClInclude Include="Animation.h" />
-    <ClInclude Include="Effect_FireParticle.h" />
-    <ClInclude Include="Effect_IceBreakParticle.h" />
     <ClInclude Include="Load_Image.h" />
     <ClInclude Include="Monster_BigZombie.h" />
     <ClInclude Include="Effect_BurnMark.h" />
@@ -161,7 +159,6 @@
     <ClInclude Include="Effect_FlameEffect.h" />
     <ClInclude Include="Monster_Golem.h" />
     <ClInclude Include="Effect_HitSpark.h" />
-    <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Scene_House.h" />
     <ClInclude Include="Scene_TitleScene.h" />
     <ClInclude Include="SkillObject.h" />
@@ -186,7 +183,7 @@
     <ClInclude Include="Monster_Mazition.h" />
     <ClInclude Include="Monster_MazitionBullet.h" />
     <ClInclude Include="Skill_Meteor.h" />
-    <ClInclude Include="Effect_ShorkWave.h" />
+    <ClInclude Include="Effect_MeteorShockWave.h" />
     <ClInclude Include="MonsterObject.h" />
     <ClInclude Include="Monster_FireBoss.h" />
     <ClInclude Include="MovingObject.h" />
@@ -226,8 +223,6 @@
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp" />
     <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="Effect_FireParticle.cpp" />
-    <ClCompile Include="Effect_IceBreakParticle.cpp" />
     <ClCompile Include="Load_Image.cpp" />
     <ClCompile Include="Monster_BigZombie.cpp" />
     <ClCompile Include="Effect_BurnMark.cpp" />
@@ -238,7 +233,6 @@
     <ClCompile Include="Effect_FlameEffect.cpp" />
     <ClCompile Include="Monster_Golem.cpp" />
     <ClCompile Include="Effect_HitSpark.cpp" />
-    <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Scene_House.cpp" />
     <ClCompile Include="Scene_TitleScene.cpp" />
     <ClCompile Include="SkillObject.cpp" />
@@ -262,7 +256,7 @@
     <ClCompile Include="Monster_Mazition.cpp" />
     <ClCompile Include="Monster_MazitionBullet.cpp" />
     <ClCompile Include="Skill_Meteor.cpp" />
-    <ClCompile Include="Effect_ShorkWave.cpp" />
+    <ClCompile Include="Effect_MeteorShockWave.cpp" />
     <ClCompile Include="MonsterObject.cpp" />
     <ClCompile Include="Monster_FireBoss.cpp" />
     <ClCompile Include="MovingObject.cpp" />

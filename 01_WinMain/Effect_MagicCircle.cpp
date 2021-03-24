@@ -67,12 +67,9 @@ void Effect_MagicCircle::Update()
 		mIsDestroy = true;
 	}*/
 
-	if (mMeteor != nullptr) 
-	{
+	if (mMeteor != nullptr) {
 		mMeteor->Update();
-		if (mX < mMeteor->GetX()) 
-		{
-			ParticleManager::GetInstance()->MakeShorkWaveParticle(mMeteor->GetX(), mMeteor->GetRect().bottom, 3.f);
+		if (mX < mMeteor->GetX()) {
 			mMeteor->Release();
 			SafeDelete(mMeteor)
 		} 

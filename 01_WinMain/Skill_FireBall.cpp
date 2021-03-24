@@ -68,8 +68,8 @@ void Skill_FireBall::Update()
 		if (mDelay < 0) {
 			mState = FireBallState::Fire;
 			AnimationChange(mFireBallFireAnimation);
-			ParticleManager::GetInstance()->MakeFireCircleParticle(mX, mY);
-			ParticleManager::GetInstance()->MakeHitSparkParticle(mX, mY);
+			//mFlameEffect = new FlameEffect("FlameEffect", mX, mY, mAngle);
+			//mFlameEffect->Init();
 		}
 	}
 

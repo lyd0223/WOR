@@ -28,7 +28,7 @@ void Scene_TitleScene::Init()
 	
 	TitleButton temp0{ RectMakeCenter(WINSIZEX / 2, 350 + 0 * 55, 200, 40), L"싱글 플레이어" , 20, true };
 	mButtonList.push_back(temp0);
-	TitleButton temp1{ RectMakeCenter(WINSIZEX / 2, 350 + 1 * 55, 200, 40), L"맵툴", 20, true };
+	TitleButton temp1{ RectMakeCenter(WINSIZEX / 2, 350 + 1 * 55, 200, 40), L"2인 플레이", 20, false };
 	mButtonList.push_back(temp1);
 	TitleButton temp2{ RectMakeCenter(WINSIZEX / 2, 350 + 2 * 55, 200, 40), L"대전", 20, false };
 	mButtonList.push_back(temp2);
@@ -116,9 +116,6 @@ void Scene_TitleScene::Update()
 			{
 			case 0:
 				SceneManager::GetInstance()->LoadScene(L"Tutorial");
-				break;
-			case 1:
-				SceneManager::GetInstance()->LoadScene(L"MapTool");
 				break;
 			case 5:
 				PostQuitMessage(0);
