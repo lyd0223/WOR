@@ -53,6 +53,7 @@ void Scene_Tutorial::Init()
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 	//mBigZombie = new Monster_BigZombie("BigZombie", 400, 1600);
 	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mBigZombie);
@@ -63,6 +64,8 @@ void Scene_Tutorial::Init()
 	mMuscleMan = new Monster_MuscleMan("MuscleMan", 200, 1800);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMuscleMan);
 =======
+=======
+>>>>>>> parent of 6a14ca0 (3/23 파티클 작업)
 	//mBigZombie = new Monster_BigZombie("BigZombie", 400, 1600);
 	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mBigZombie);
 	//
@@ -179,7 +182,10 @@ void Scene_Tutorial::Update()
 	ObjectManager::GetInstance()->Update();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< Updated upstream
+=======
+>>>>>>> parent of 6a14ca0 (3/23 파티클 작업)
 =======
 >>>>>>> parent of 6a14ca0 (3/23 파티클 작업)
 	//vector<Tile*> path = PathFinder::GetInstance()->FindPath((TileMap*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Tile, "TileMap"),
@@ -199,6 +205,7 @@ void Scene_Tutorial::Update()
 	//		);
 	//	}
 	//}
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	mFrameCount += Time::GetInstance()->DeltaTime();
@@ -220,6 +227,8 @@ void Scene_Tutorial::Update()
 	}
 
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of 6a14ca0 (3/23 파티클 작업)
 =======
 >>>>>>> parent of 6a14ca0 (3/23 파티클 작업)
 }
