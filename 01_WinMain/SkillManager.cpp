@@ -1,10 +1,7 @@
 #include "pch.h"
 #include "SkillManager.h"
 #include "GameObject.h"
-#include "MonsterObject.h"
 #include "Effect_MagicCircle.h"
-#include "Effect_FireParticle.h"
-#include "Effect_HitSpark.h"
 #include "Skill_FireBall.h"
 #include "Skill_WindSlash.h"
 #include "Skill_Flame.h"
@@ -27,94 +24,42 @@ void SkillManager::Update()
 
 	for (int i = 0; i < skillList.size(); i++) 
 	{
-		SkillObject* skill = (SkillObject*)skillList[i];
-		D2D1_RECT_F temp;
-		D2D1_RECT_F skillrc = skill->GetRect();
-		
-		int index = (skill->GetRect().right - skill->GetRect().left) / TileSize + 1;
-		int skillX = skill->GetX();
-		int skillY = skill->GetY();
-
-		// 스킬 to 벽 충돌 했을때
-		for (int y = (skill->GetY() / TileSize) - index; y < (skill->GetY() / TileSize) + index; y++)
+		SkillObject* skill = (SkillObject*) skillList[i];
+		if (skill->GetSkillType() == SkillType::Throw) 
 		{
-			for (int x = (skill->GetX() / TileSize) - index; x < (skill->GetX() / TileSize) + index; x++)
+			D2D1_RECT_F temp;
+			int index = (skill->GetRect().right - skill->GetRect().left) / TileSize + 1;
+			
+			// 몬스터 충돌
+			for (int j = 0; j < monsterList.size(); j++) 
 			{
-				TileMap* tileMap = (TileMap*)tileList[0];
-				Tile* tile = (Tile*)tileMap->GetTileList(x, y);
 				D2D1_RECT_F skillrc = skill->GetRect();
-				D2D1_RECT_F tilerc = tile->GetRect();
-				if (tile->GetType() == Type::Wall && IntersectRect(temp, &skillrc, &tilerc))
-				{
-					if (skill->GetSkillElement() == SkillElement::Fire)
-					{
-						ParticleManager::GetInstance()->MakeFireParticle(skillX, skillY, 10);
-						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
-					}
-
-					if (skill->GetName() == "IceSpear")
-					{
-						ParticleManager::GetInstance()->MakeIceBreakParticle(skillX, skillY, 10);
-						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
-					}
-
-					skill->SetIsDestroy(true);
-					break;
-				}
-			}
-		}
-
-		// 스킬 to 몬스터 충돌
-		for (int j = 0; j < monsterList.size(); j++)
-		{
-			MonsterObject* monster = (MonsterObject*)monsterList[j];
-			D2D1_RECT_F monsterrc = monsterList[j]->GetRect();
-
-			// 근접 스킬
-			if (skill->GetSkillType() == SkillType::Melee)
-			{
-				bool isCollision = false;
-				if (IntersectRect(temp, &skillrc, &monsterrc) && 
-					(skill->GetIsCollision() == false && monster->GetIsCollision() == false))
-				{
-					monster->SetIsCollision(true);
-					ParticleManager::GetInstance()->MakeHitSparkParticle(temp.left, temp.top);
-				}
-			}
-
-			// 던지는 스킬
-			if (skill->GetSkillType() == SkillType::Throw) 
-			{
+				D2D1_RECT_F monsterrc = monsterList[j]->GetRect();
 				if (IntersectRect(temp, &skillrc, &monsterrc))
 				{
-
-					if (skill->GetSkillElement() == SkillElement::Fire)
-					{
-						ParticleManager::GetInstance()->MakeFireParticle(skillX, skillY, 10);
-						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
-					}
-
-					if (skill->GetName() == "IceSpear")
-					{
-						ParticleManager::GetInstance()->MakeIceBreakParticle(skillX, skillY, 10);
-						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
-					}
-
 					skill->SetIsDestroy(true);
 					break;
+				}
+			}
+			
+			// 스킬 벽 충돌 했을때
+			for (int y = (skill->GetY() / TileSize) - index; y < (skill->GetY() / TileSize) + index; y++)
+			{
+				for (int x = (skill->GetX() / TileSize) - index; x < (skill->GetX() / TileSize) + index; x++)
+				{
+					TileMap* tileMap = (TileMap*)tileList[0];
+					Tile* tile = (Tile*)tileMap->GetTileList(x, y);
+					D2D1_RECT_F skillrc = skill->GetRect();
+					D2D1_RECT_F tilerc = tile->GetRect();
+					if (tile->GetType() == Type::Wall && IntersectRect(temp, &skillrc, &tilerc))
+					{
+						skill->SetIsDestroy(true);
+						break;
+					}
 				}
 			}
 		}
 	}
-
-	// 몬스터 맵 충돌 처리
-	//for (int i = 0; i < monsterList.size(); i++)
-	//{
-	//	for (int j = 0; j < tileList.size(); j++)
-	//	{
-	//
-	//	}
-	//}
 }
 
 void SkillManager::FlameSkill(const string& name, float x, float y, float angle)

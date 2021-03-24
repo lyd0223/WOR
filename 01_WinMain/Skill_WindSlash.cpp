@@ -18,12 +18,10 @@ void Skill_WindSlash::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"WindSlash", Resources(L"Skill/WindSlash.png"), 5, 3);
 	mImage = ImageManager::GetInstance()->FindImage(L"WindSlash");
 
-	mSizeX = mImage->GetWidth() / 5 * 1.5;
-	mSizeY = mImage->GetHeight() / 3 * 1.5;
+	mSizeX = mImage->GetWidth();
+	mSizeY = mImage->GetHeight();
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 
-	mSkillElement = SkillElement::Wind;
-	mSkillType = SkillType::Melee;
 
 	mSlashAnimation = new Animation;
 	mSlashAnimation->InitFrameByStartEnd(0, 0, 4, 0, false);
@@ -31,7 +29,7 @@ void Skill_WindSlash::Init()
 	mSlashAnimation->SetFrameUpdateTime(0.1f);
 	mSlashAnimation->Play();
 
-	mSkillHitCount = 1;
+
 }
 
 void Skill_WindSlash::Release()

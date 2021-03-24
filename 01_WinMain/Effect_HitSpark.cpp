@@ -19,7 +19,7 @@ void Effect_HitSpark::Init()
 
 	mHitSparkAnimation = new Animation();
 	mHitSparkAnimation->InitFrameByStartEnd(0, mIndexY, 6, mIndexY, false);
-	mHitSparkAnimation->SetFrameUpdateTime(0.03f);
+	mHitSparkAnimation->SetFrameUpdateTime(0.5f);
 	mHitSparkAnimation->Play();
 }
 
@@ -31,8 +31,7 @@ void Effect_HitSpark::Release()
 void Effect_HitSpark::Update()
 {
 	mHitSparkAnimation->Update();
-	if (mHitSparkAnimation->GetNowFrameX() == 6) 
-	{
+	if (mHitSparkAnimation->GetNowFrameX() == 6) {
 		mIsDestroy = true;
 	}
 }

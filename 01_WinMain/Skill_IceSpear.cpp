@@ -26,7 +26,6 @@ void Skill_IceSpear::Init()
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 	mSpeed = 20.f;
 	mSkillType = SkillType::Throw;
-	mSkillElement = SkillElement::Water;
 
 	mIceSpearAnimation = new Animation;
 	mIceSpearAnimation->InitFrameByStartEnd(6, 0, 6, 0, false);
