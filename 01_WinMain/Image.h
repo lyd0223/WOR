@@ -43,7 +43,9 @@ private:
 public:
 	void Render(const float x, const float y);
 	void RenderFromBottom(const float x, const float y);
+	void RenderFromLeft(const float x, const float y);
 	void ScaleRender(const float x, const float y, const float sizeX, const float sizeY);
+	void ScaleRenderFromLeft(const float x, const float y, const float sizeX, const float sizeY);
 	void FrameRender(const float x, const float y, const int frameX, const int frameY);
 	void FrameRenderFromBottom(const float x, const float y, const int frameX, const int frameY);
 	void ScaleFrameRender(const float x, const float y, const int frameX, const int frameY, const int sizeX, const int sizeY);

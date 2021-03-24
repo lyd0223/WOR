@@ -18,6 +18,7 @@
 #include "Monster_FireBoss.h"
 #include "TileMap.h"
 #include "Gizmo.h"
+#include "UserInterface.h"
 #include <fstream>
 
 void Scene_Tutorial::Init()
@@ -43,6 +44,8 @@ void Scene_Tutorial::Init()
 	Load();*/
 
 	//Å¸ÀÏ¸ÊÃß°¡
+	UserInterface* ui = new UserInterface();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, ui);
 
 	mTileMap = new TileMap("Tutorial");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mTileMap);

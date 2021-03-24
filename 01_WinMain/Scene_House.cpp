@@ -7,6 +7,8 @@
 #include "TileMap.h"
 #include "Gizmo.h"
 #include "Load_Image.h"
+#include "Structure.h"
+#include "UserInterface.h"
 #include <fstream>
 
 void Scene_House::Init()
@@ -16,17 +18,27 @@ void Scene_House::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"TileSet", Resources(L"Tile/Tile.bmp"), 16, 16);
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"TutorialTile");
 
-	
+	UserInterface* ui = new UserInterface();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, ui);
 	//타일맵추가
 
 	mTileMap = new TileMap("House");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mTileMap);
 	//
-
+	//스트럭쳐 받아오기
+	mStructureList = mTileMap->GetStructureList();
+	for (int i = 0; i < mStructureList.size(); i++)
+	{
+		if(mStructureList[i]->GetName() == "Portal")
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mStructureList[i]);
+		else
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::Structure, mStructureList[i]);
+	}
+	//
 
 	mPlayer = new Player("Player", 55*TileSize, 55*TileSize);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
-
+	
 	
 	ObjectManager::GetInstance()->Init();
 
@@ -45,7 +57,6 @@ void Scene_House::Release()
 
 void Scene_House::Update()
 {
-	mTileMap;
 	CameraManager::GetInstance()->Update();
 	SkillManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();

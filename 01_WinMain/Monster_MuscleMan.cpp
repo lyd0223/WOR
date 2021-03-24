@@ -60,7 +60,8 @@ void Monster_MuscleMan::Update()
 		point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
 		point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
 
-		if (!PtInRect(&mPathList[0]->GetRect(), point))
+		D2D1_RECT_F rctemp = mPathList[0]->GetRect();
+		if (!PtInRect(&rctemp, point))
 		{
 			mPathList.erase(mPathList.begin());
 		}

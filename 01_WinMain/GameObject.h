@@ -41,9 +41,9 @@ public:
 	inline bool GetIsDestroy()const { return mIsDestroy; }
 	inline void SetIsDestroy(bool b) { mIsDestroy = b; }
 
-	bool operator <(GameObject* gameobject)
+	bool operator<(const GameObject& gameobject)
 	{
-		return this->GetRect().bottom < gameobject->GetRect().bottom;
+		return mRect.bottom < gameobject.GetRect().bottom;
 	}
 };
 

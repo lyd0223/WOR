@@ -66,6 +66,8 @@ void Load_Image::LoadSceneMapToolImage()
 	ImageManager::GetInstance()->LoadFromFile(L"Gate", Resources(L"Tile/Structure/Gate.png"));
 
 	ImageManager::GetInstance()->LoadFromFile(L"Portal", Resources(L"Tile/Structure/Portal.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"PortalOn", Resources(L"Tile/Structure/PortalOn.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"PortalEffect", Resources(L"Tile/Structure/PortalEffect.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"Carpet1", Resources(L"Tile/Structure/Carpet.png"));
 	//ImageManager::GetInstance()->LoadFromFile(L"Carpet2", Resources(L"Tile/Structure/Carpet2.png"));
 

@@ -1,10 +1,10 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "ObjectManager.h"
 #include "GameObject.h"
 #include "Scene.h"
 ObjectManager::ObjectManager()
 {
-	//ObjectLayer º°·Î º¤ÅÍ ÇÏ³ª¾¿ ¸Ê¿¡ Áý¾î ³Ö´Â´Ù.
+	//ObjectLayer ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Â´ï¿½.
 	for (int i = 0; i < (int)ObjectLayer::End; ++i)
 	{
 		vector<GameObject*> emptyVector;
@@ -66,11 +66,15 @@ void ObjectManager::Render()
 
 	for (; iter != mObjectList.end(); ++iter)
 	{
-		//±×¸®´Â¼ø¼­
+		//ï¿½×¸ï¿½ï¿½Â¼ï¿½ï¿½ï¿½
 		if (iter->first == (ObjectLayer)5)
 		{
-			//Á¤·Ä ÈÄ ±×·ÁÁÖ±â.
-			sort(renderingOrderVector.begin(), renderingOrderVector.end());
+			//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½×·ï¿½ï¿½Ö±ï¿½.
+			sort(renderingOrderVector.begin(), renderingOrderVector.end(), 
+				[](GameObject* a, GameObject* b) 
+				{
+					return a->GetRect().bottom < b->GetRect().bottom;
+				});
 			for (int i = 0; i < renderingOrderVector.size(); i++)
 			{
 				renderingOrderVector[i]->Render();
@@ -82,10 +86,10 @@ void ObjectManager::Render()
 		{
 			if (iter->second[i]->GetIsActive() == true)
 			{
-				if (iter->first == ObjectLayer::Player &&
-					iter->first == ObjectLayer::Enemy &&
-					iter->first == ObjectLayer::Skill &&
-					iter->first == ObjectLayer::Structure &&
+				if (iter->first == ObjectLayer::Player ||
+					iter->first == ObjectLayer::Enemy ||
+					iter->first == ObjectLayer::Skill ||
+					iter->first == ObjectLayer::Structure ||
 					iter->first == ObjectLayer::Particle)
 				{
 					renderingOrderVector.push_back(iter->second[i]);
@@ -99,14 +103,14 @@ void ObjectManager::Render()
 
 void ObjectManager::AddObject(ObjectLayer layer, GameObject * object)
 {
-	//mapµµ ¹è¿­¿¬»êÀÚ°¡ Á¤ÀÇµÇ¾î ÀÖ´Ù. 
-	//´Ü, ½ÇÁ¦ ¹è¿­Ã³·³ µ¿ÀÛÇÏ´Â°Ô ¾Æ´Ï¶ó.[]¿¬»êÀÚ ³»ºÎ¿¡ findÇÔ¼ö¸¦ ½á¼­ µ¿ÀÛÇÔ
-	//±×·¡¼­ °á±¹ find¾²´Â°Å¶û ºñ½ÁÇÑµ¥, ´Ù¸¥Á¡ÀÌ¶ó°í ÇÑ´Ù¸é ÇØ´ç Å°°ªÀÇ µ¥ÀÌÅÍ°¡ 
-	//¾øÀ¸¸é »õ·Î »ý¼ºÇØ¹ö¸². ÁÖÀÇÇØ¾ßÇÔ
+	//mapï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ÇµÇ¾ï¿½ ï¿½Ö´ï¿½. 
+	//ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´Â°ï¿½ ï¿½Æ´Ï¶ï¿½.[]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ findï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½á¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//ï¿½×·ï¿½ï¿½ï¿½ ï¿½á±¹ findï¿½ï¿½ï¿½Â°Å¶ï¿½ ï¿½ï¿½ï¿½ï¿½Ñµï¿½, ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ ï¿½Ñ´Ù¸ï¿½ ï¿½Ø´ï¿½ Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ 
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¹ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½
 	mObjectList[layer].push_back(object);
 }
 
-//ÇØ´ç ÀÌ¸§ÀÇ ¿ÀºêÁ§Æ® Ã£¾Æ¿À±â
+//ï¿½Ø´ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ã£ï¿½Æ¿ï¿½ï¿½ï¿½
 GameObject * ObjectManager::FindObject(const string & name)
 {
 	ObjectIter iter = mObjectList.begin();
@@ -123,7 +127,7 @@ GameObject * ObjectManager::FindObject(const string & name)
 	return nullptr;
 }
 
-//ÇØ´ç ÀÌ¸§ÀÇ ¿ÀºêÁ§Æ® Ã£±â
+//ï¿½Ø´ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ã£ï¿½ï¿½
 GameObject * ObjectManager::FindObject(ObjectLayer layer, const string & name)
 {
 	ObjectIter iter = mObjectList.find(layer);

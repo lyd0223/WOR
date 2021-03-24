@@ -39,7 +39,7 @@ void Tile::Render()
 {
 	if (mImage != nullptr)
 	{
-		mImage->SetScale(2.f);
+		mImage->SetScale(1.5f);
 		CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX+(mSizeX/2.f), mY+(mSizeY/2.f), mFrameIndexX, mFrameIndexY);
 		
 	}

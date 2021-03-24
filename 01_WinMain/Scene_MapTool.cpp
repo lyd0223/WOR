@@ -8,11 +8,14 @@
 #include "Gizmo.h"
 #include "Button.h"
 #include "Structure.h"
-
+#include "Load_Image.h"
 #include <fstream>
 
 void Scene_MapTool::Init()
 {
+
+	Load_Image::GetInstance()->LoadSceneMapToolImage();
+
 	mBookIsOpen = 1;
 	mClickType = ClickType::TileSetClick;
 	

@@ -78,6 +78,21 @@ void Image::RenderFromBottom(const float x, const float y)
 	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(mBitmap, dxArea, mAlpha);
 	ResetRenderOption();
 }
+void Image::RenderFromLeft(const float x, const float y)
+{
+
+	Vector2 size = mSize * sqrtf(mScale);
+
+	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(sqrtf(mScale), sqrtf(mScale), D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x, y);
+
+	D2D1_RECT_F dxArea = D2D1::RectF(0.f, 0.f, size.X, size.Y);
+
+	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(scaleMatrix * rotateMatrix * translateMatrix);
+	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(mBitmap, dxArea, mAlpha);
+	ResetRenderOption();
+}
 void Image::ScaleRender(const float x, const float y,const float sizeX, const float sizeY)
 {
 	Vector2 size;
@@ -90,6 +105,25 @@ void Image::ScaleRender(const float x, const float y,const float sizeX, const fl
 	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
 	//이동 행렬을 만들어준다.
 	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x - size.X / 2.f, y - size.Y / 2.f);
+
+	D2D1_RECT_F dxArea = D2D1::RectF(0.f, 0.f, size.X, size.Y);
+
+	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(scaleMatrix * rotateMatrix * translateMatrix);
+	D2DRenderer::GetInstance()->GetRenderTarget()->DrawBitmap(mBitmap, dxArea, mAlpha);
+	ResetRenderOption();
+}
+void Image::ScaleRenderFromLeft(const float x, const float y, const float sizeX, const float sizeY)
+{
+	Vector2 size;
+	size.__typeToSet_X(sizeX);
+	size.__typeToSet_Y(sizeY);
+
+	//스케일 행렬을 만들어준다
+	D2D1::Matrix3x2F scaleMatrix = D2D1::Matrix3x2F::Scale(mScale, mScale, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	//회전 행렬을 만들어준다. 
+	D2D1::Matrix3x2F rotateMatrix = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(size.X / 2.f, size.Y / 2.f));
+	//이동 행렬을 만들어준다.
+	D2D1::Matrix3x2F translateMatrix = D2D1::Matrix3x2F::Translation(x , y);
 
 	D2D1_RECT_F dxArea = D2D1::RectF(0.f, 0.f, size.X, size.Y);
 

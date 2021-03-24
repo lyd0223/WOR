@@ -9,7 +9,7 @@ class Scene_House : public Scene
 {
 	class Player* mPlayer;
 	class TileMap* mTileMap;
-
+	vector<class Structure*> mStructureList;
 
 public:
 	void Init()override;

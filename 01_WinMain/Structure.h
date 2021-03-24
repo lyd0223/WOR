@@ -3,6 +3,9 @@
 class Structure : public GameObject
 {
 	Image* mImage;
+	Image* mPortalImage;
+	bool mPortalOn;
+
 public:
 	Structure(const string& name, Image* image, float x, float y, float sizex, float sizey);
 	void Init()override;

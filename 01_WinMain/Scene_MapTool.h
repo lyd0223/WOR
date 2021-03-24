@@ -2,7 +2,7 @@
 #include "Scene.h"
 #define TileCountX 100
 #define TileCountY 100
-#define TileSize 64
+#define TileSize 48
 #include <stack>
 
 enum class ClickType
