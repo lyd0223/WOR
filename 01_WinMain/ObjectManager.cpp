@@ -67,7 +67,7 @@ void ObjectManager::Render()
 	for (; iter != mObjectList.end(); ++iter)
 	{
 		//�׸��¼���
-		if (iter->first == (ObjectLayer)5)
+		if (iter->first == (ObjectLayer)7)
 		{
 			//���� �� �׷��ֱ�.
 			sort(renderingOrderVector.begin(), renderingOrderVector.end(), 

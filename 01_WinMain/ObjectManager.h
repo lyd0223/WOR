@@ -13,9 +13,9 @@ enum class ObjectLayer : int
 	Player,
 	Enemy,
 	Structure,
-	UI,
 	Skill,
 	Particle,
+	UI,
 
 	End
 };
