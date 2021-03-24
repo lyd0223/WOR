@@ -34,6 +34,7 @@ protected:
 	float mSpeed;
 	float mAngle;
 	MonsterActState mMonsterActState;
+	D2D1_RECT_F mMovingRect;
 	
 	
 
@@ -47,7 +48,8 @@ public:
 	void Render()override{};
 	float GetSpeed() { return mSpeed; }
 	float GetAngle() { return mAngle; }
-
+	void SetMovingRect(D2D1_RECT_F rc) { mMovingRect = rc; }
+	D2D1_RECT_F GetMovingRect() { return mMovingRect; }
 	
 };
 

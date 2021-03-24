@@ -9,7 +9,6 @@ protected:
 	Image* mImage;
 	Player* mPlayer;
 	vector<class Tile*> mPathList;
-	D2D1_RECT_F mMovingRect;
 
 	float mRange;
 	float mAtkSpeed;
@@ -24,8 +23,6 @@ public:
 
 	void SetPathList(vector<class Tile*> pathList) { mPathList = pathList; }
 	vector<class Tile*> GetPathList() { return mPathList; }
-	void SetMovingRect(D2D1_RECT_F rc) { mMovingRect = rc; }
-	D2D1_RECT_F GetMovingRect() { return mMovingRect; }
 	
 	void SetRange(float range) { mRange = range; }
 	float GetRange() { return mRange; }

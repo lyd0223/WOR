@@ -21,6 +21,7 @@ protected:
 	Animation* mCurrentAnimation;
 	MuscleManState mMuscleManState;
 
+	D2D1_RECT_F rc;
 
 public:
 	Monster_MuscleMan(const string& name, float x, float y);

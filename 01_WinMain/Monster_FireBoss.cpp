@@ -122,7 +122,7 @@ void Monster_FireBoss::Update()
 		//MakePattern();
 		//mFireBossState = FireBossState::Dash;
 		//MakePatternFuncList();
-		MeteorPattern();
+		//MeteorPattern();
 	}
 
 	if (mFireBossState == FireBossState::Idle) {

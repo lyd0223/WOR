@@ -47,17 +47,20 @@ void Monster_MuscleMan::Release()
 
 void Monster_MuscleMan::Update()
 {
+	// ÀÌµ¿
 	if (mPathList.size() > 1)
 	{
-		float nextX = mPathList[1]->GetX();
-		float nextY = mPathList[1]->GetY();
-		float angle = Math::GetAngle(mX, mY, nextX, nextY);
+		float centerX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
+		float centerY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
+		float nextX = mPathList[1]->GetX() + (TileSize / 2);
+		float nextY = mPathList[1]->GetY() + (TileSize / 2);
+		float angle = Math::GetAngle(centerX, centerY, nextX, nextY);
 		
 		POINT point;
 		point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
 		point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
 
-		if (PtInRect(&mPathList[0]->GetRect(), point))
+		if (!PtInRect(&mPathList[0]->GetRect(), point))
 		{
 			mPathList.erase(mPathList.begin());
 		}
@@ -139,13 +142,7 @@ void Monster_MuscleMan::Update()
 void Monster_MuscleMan::Render()
 {
 	mImage->SetScale(2.f);
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
-	for (int i = 0; i < mPathList.size(); i++)
-	{
-		CameraManager::GetInstance()->GetMainCamera()->RenderRect(mPathList[i]->GetRect());
-	}
-
 }
 void Monster_MuscleMan::AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)
 {
