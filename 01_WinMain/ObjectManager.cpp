@@ -85,7 +85,8 @@ void ObjectManager::Render()
 				if (iter->first == ObjectLayer::Player &&
 					iter->first == ObjectLayer::Enemy &&
 					iter->first == ObjectLayer::Skill &&
-					iter->first == ObjectLayer::Structure)
+					iter->first == ObjectLayer::Structure &&
+					iter->first == ObjectLayer::Particle)
 				{
 					renderingOrderVector.push_back(iter->second[i]);
 				}
