@@ -9,6 +9,13 @@ class Skill_DragonArc : public SkillObject
 	float mSpeed;
 	float mFrameCount;
 
+	float mMoveAngle;
+	float mUpAngle;
+	float mDownAngle;
+
+	float mLineX;
+	float mLineY;
+
 	bool mIsUp;
 public:
 	Skill_DragonArc(const string& name, float x, float y, float angle, bool isUp);

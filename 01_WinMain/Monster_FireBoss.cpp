@@ -123,6 +123,7 @@ void Monster_FireBoss::Update()
 		//mFireBossState = FireBossState::Dash;
 		//MakePatternFuncList();
 		//MeteorPattern();
+		SkillManager::GetInstance()->DragonArcSkill("DragonArc", mX, mY, mAngle, true);
 	}
 
 	if (mFireBossState == FireBossState::Idle) {

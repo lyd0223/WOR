@@ -60,27 +60,27 @@ void Monster_MuscleMan::Update()
 		mY -= 10;
 	}
 	// ÀÌµ¿
-	if (mPathList.size() > 1)
-	{
-		float centerX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
-		float centerY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
-		float nextX = mPathList[1]->GetX() + (TileSize / 2);
-		float nextY = mPathList[1]->GetY() + (TileSize / 2);
-		float angle = Math::GetAngle(centerX, centerY, nextX, nextY);
-		
-		POINT point;
-		point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
-		point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
+	//if (mPathList.size() > 1)
+	//{
+	//	float centerX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
+	//	float centerY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
+	//	float nextX = mPathList[1]->GetX() + (TileSize / 2);
+	//	float nextY = mPathList[1]->GetY() + (TileSize / 2);
+	//	float angle = Math::GetAngle(centerX, centerY, nextX, nextY);
+	//	
+	//	POINT point;
+	//	point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
+	//	point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
 
-		D2D1_RECT_F rctemp = mPathList[0]->GetRect();
-		if (!PtInRect(&rctemp, point))
-		{
-			mPathList.erase(mPathList.begin());
-		}
+	//	D2D1_RECT_F rctemp = mPathList[0]->GetRect();
+	//	if (!PtInRect(&rctemp, point))
+	//	{
+	//		mPathList.erase(mPathList.begin());
+	//	}
 
-		mX += cosf(angle) * mSpeed;
-		mY += -sinf(angle) * mSpeed;
-	}
+	//	mX += cosf(angle) * mSpeed;
+	//	mY += -sinf(angle) * mSpeed;
+	//}
 
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);

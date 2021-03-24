@@ -54,19 +54,25 @@ void SkillManager::Update()
 				D2D1_RECT_F tilerc = tile->GetRect();
 				if (tile->GetType() == Type::Wall && IntersectRect(temp, &skillrc, &tilerc) && skill->GetSkillType() == SkillType::Throw)
 				{
-					if (skill->GetName() == "FireBall")
+					if (skill->GetName() == "FireBall" ||
+						skill->GetName() == "DragonArc")
 					{
 						ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
-						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						//ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 					}
 
 					if (skill->GetName() == "IceSpear")
 					{
 						ParticleManager::GetInstance()->MakeIceBreakParticle(skillX, skillY, 10);
-						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						//ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 					}
 
-					
+					if (skill->GetName() == "WaterBall")
+					{
+						ParticleManager::GetInstance()->MakeWaterExplosion(skillX, skillY);
+					}
+
+					ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 					skill->SetIsDestroy(true);
 					break;
 				}
@@ -100,15 +106,21 @@ void SkillManager::Update()
 					if (skill->GetName() == "FireBall")
 					{
 						ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
-						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						
 					}
 
 					if (skill->GetName() == "IceSpear")
 					{
 						ParticleManager::GetInstance()->MakeIceBreakParticle(skillX, skillY, 10);
-						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						
 					}
 
+					if (skill->GetName() == "WaterBall")
+					{
+						ParticleManager::GetInstance()->MakeWaterExplosion(skillX, skillY);
+					}
+
+					ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 					skill->SetIsDestroy(true);
 					break;
 				}
@@ -168,6 +180,7 @@ void SkillManager::Update()
 void SkillManager::DragonArcSkill(const string & name, float x, float y, float angle, bool isUp)
 {
 	Skill_DragonArc* dragonArc = new Skill_DragonArc(name, x, y, angle, isUp);
+	dragonArc->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, dragonArc);
 }
 

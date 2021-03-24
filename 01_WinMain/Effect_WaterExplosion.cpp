@@ -13,7 +13,7 @@ Effect_WaterExplosion::Effect_WaterExplosion(const string & name, float x, float
 
 void Effect_WaterExplosion::Init()
 {
-	ImageManager::GetInstance()->LoadFromFile(L"WaterExplosion", Resources(L"Effect_WaterExplosion.png"), 7, 1);
+	ImageManager::GetInstance()->LoadFromFile(L"WaterExplosion", Resources(L"Effect/WaterExplosion.png"), 7, 1);
 	mImage = ImageManager::GetInstance()->FindImage(L"WaterExplosion");
 
 	mAnimation = new Animation();
