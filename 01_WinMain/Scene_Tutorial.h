@@ -24,7 +24,7 @@ class Scene_Tutorial : public Scene
 	//class Tile* mTileList[TileCountY][TileCountX];
 	class TileMap* mTileMap;
 	
-
+	float mFrameCount;
 public:
 	void Init()override;
 	void Release()override;
