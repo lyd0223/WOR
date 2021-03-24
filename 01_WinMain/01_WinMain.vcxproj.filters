@@ -330,6 +330,7 @@
     <ClInclude Include="Scene_TitleScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Skill_MonsterBigSlash.h">
       <Filter>MainGame\Object\Skill</Filter>
     </ClInclude>
@@ -339,6 +340,8 @@
     <ClInclude Include="Skill_WaterBall.h">
       <Filter>MainGame\Object\Skill</Filter>
     </ClInclude>
+=======
+>>>>>>> parent of 6a14ca0 (3/23 파티클 작업)
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -542,12 +545,15 @@
     <ClCompile Include="Scene_TitleScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Skill_MonsterBigSlash.cpp">
       <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
     <ClCompile Include="Skill_WaterBall.cpp">
       <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
+=======
+>>>>>>> parent of 6a14ca0 (3/23 파티클 작업)
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="01_WinMain.rc">

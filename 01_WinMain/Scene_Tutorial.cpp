@@ -52,6 +52,7 @@ void Scene_Tutorial::Init()
 	mPlayer = new Player("Player",600,1600);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 	//mBigZombie = new Monster_BigZombie("BigZombie", 400, 1600);
 	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mBigZombie);
@@ -61,6 +62,42 @@ void Scene_Tutorial::Init()
 =======
 	mMuscleMan = new Monster_MuscleMan("MuscleMan", 200, 1800);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMuscleMan);
+=======
+	//mBigZombie = new Monster_BigZombie("BigZombie", 400, 1600);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mBigZombie);
+	//
+	//mGolem = new Monster_Golem("Golem", 200, 1600);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mGolem);
+	//
+	//mMazition = new Monster_Mazition("Mazition", 800, 1600);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazition);
+	//
+	//mMazitionBullet = new Monster_MazitionBullet("MazitionBullet", 1000, 1600);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazitionBullet);
+	//
+	//mMuscleMan = new Monster_MuscleMan("MuscleMan", 200, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMuscleMan);
+	//
+	//mRapidZombie = new Monster_RapidZombie("RapidZombie", 400, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mRapidZombie);
+	//
+	//mSlime = new Monster_Slime("Slime", 600, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSlime);
+	//
+	//mSwoardMan = new Monster_SwoardMan("SwoardMan", 800, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSwoardMan);
+	//
+	//mSpearMan = new Monster_SpearMan("SpearMan", 1000, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSpearMan);
+	//
+	//mWard = new Monster_Ward("Ward", 1200, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mWard);
+	//
+	//mZombie = new Monster_Zombie("Zombie", 1200, 1600);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie);
+
+
+>>>>>>> parent of 6a14ca0 (3/23 파티클 작업)
 
 	mBigZombie = new Monster_BigZombie("BigZombie", 400, 1600);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mBigZombie);
@@ -141,7 +178,10 @@ void Scene_Tutorial::Update()
 	SkillManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
+=======
+>>>>>>> parent of 6a14ca0 (3/23 파티클 작업)
 	//vector<Tile*> path = PathFinder::GetInstance()->FindPath((TileMap*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Tile, "TileMap"),
 	//	mMonsterList[0]->GetX() / TileSize, mMonsterList[0]->GetY() / TileSize,
 	//	mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
@@ -159,6 +199,7 @@ void Scene_Tutorial::Update()
 	//		);
 	//	}
 	//}
+<<<<<<< HEAD
 =======
 	mFrameCount += Time::GetInstance()->DeltaTime();
 
@@ -179,6 +220,8 @@ void Scene_Tutorial::Update()
 	}
 
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of 6a14ca0 (3/23 파티클 작업)
 }
 
 void Scene_Tutorial::Render()
