@@ -16,7 +16,7 @@ enum class SkillElement : int {
 	Water,
 	Elect,
 	Earth,
-	Chaos,
+	Wind,
 
 	End
 };
@@ -29,6 +29,9 @@ protected:
 	SkillType mSkillType;
 	SkillElement mSkillElement;
 	float mAngle;
+	int mSkillHitCount;
+
+	bool mIsCollision;
 public:
 	SkillObject(const string& name) : GameObject(name) {};
 
@@ -40,5 +43,9 @@ public:
 	SkillType GetSkillType() { return mSkillType; }
 	SkillElement GetSkillElement() { return mSkillElement; }
 	void SetAngle(float angle) { mAngle = angle; }
+	int GetSkillHitCount() { return mSkillHitCount; }
+	
+	void SetIsCollision(bool isCollision) {	mIsCollision = isCollision; }
+	bool GetIsCollision() { return mIsCollision; }
 };
 

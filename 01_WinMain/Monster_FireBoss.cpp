@@ -21,7 +21,7 @@ void Monster_FireBoss::Init()
 	mImage = ImageManager::GetInstance()->FindImage(L"FireBoss");
 
 	mSizeX = mImage->GetWidth() / 12;
-	mSizeY = mImage->GetHeight() / 10;
+	mSizeY = mImage->GetHeight() / 10 * 2;
 
 	AnimationSet(&mLeftIdleAnimation, false, true, 0, 1, 0, 1, 0.2f);
 	AnimationSet(&mRightIdleAnimation, false, true, 0, 0, 0, 0, 0.2f);
@@ -115,13 +115,14 @@ void Monster_FireBoss::Update()
 
 	if (Input::GetInstance()->GetKeyDown(VK_SPACE)) {
 		//AttackReady();
-		FireBallThrowPattern();
+		//FireBallThrowPattern();
 		//StempPattern();
 		//KickPattern();
 		//Move();
 		//MakePattern();
 		//mFireBossState = FireBossState::Dash;
 		//MakePatternFuncList();
+		MeteorPattern();
 	}
 
 	if (mFireBossState == FireBossState::Idle) {
@@ -130,6 +131,7 @@ void Monster_FireBoss::Update()
 
 	if (mFireBossState == FireBossState::AttackReady) {
 		AttackReady();
+		mFireBossState = FireBossState::Idle;
 	}
 
 	if (mFireBossState == FireBossState::Throw) {
@@ -143,12 +145,15 @@ void Monster_FireBoss::Update()
 	if (mFireBossState == FireBossState::Dash) {
 		Move();
 	}
+
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 
 void Monster_FireBoss::Render()
 {
 	mImage->SetScale(3.f);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 }
 
 void Monster_FireBoss::AnimationSet(Animation ** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)
@@ -221,10 +226,11 @@ void Monster_FireBoss::Move()
 
 void Monster_FireBoss::AttackReady()
 {
-	mIsFuncEnd = false;
+	
 	if (mX < mPlayer->GetX()) AnimationChange(mRightAttackReadyAnimation);
 	else AnimationChange(mLeftAttackReadyAnimation);
 
+	ParticleManager::GetInstance()->MakeShorkWaveParticle(mX, mRect.bottom, 1.5f);
 	mFireBossState = FireBossState::AttackReady;
 
 	Effect_FireWing* fireWing = new Effect_FireWing("FireWing", mX, mY - 80);
