@@ -30,7 +30,7 @@ void Monster_MuscleMan::Init()
 	AnimationSet(&mAttackAnimation, false, false, 4, 0, 4, 0, AnimationTime);
 	AnimationSet(&mAttackReadyAnimation, false, false, 1, 0, 3, 0, AnimationTime);
 
-
+	mMovingRect = RectMakeCenter(mX, mY + 50, TileSize, TileSize);
 
 	mCurrentAnimation = mIdleAnimation;
 	mCurrentAnimation->Play();
@@ -47,12 +47,20 @@ void Monster_MuscleMan::Release()
 
 void Monster_MuscleMan::Update()
 {
-
-	if (mPathList.size() != 0)
+	if (mPathList.size() > 1)
 	{
 		float nextX = mPathList[1]->GetX();
 		float nextY = mPathList[1]->GetY();
 		float angle = Math::GetAngle(mX, mY, nextX, nextY);
+		
+		POINT point;
+		point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
+		point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
+
+		if (PtInRect(&mPathList[0]->GetRect(), point))
+		{
+			mPathList.erase(mPathList.begin());
+		}
 
 		mX += cosf(angle) * mSpeed;
 		mY += -sinf(angle) * mSpeed;
@@ -60,6 +68,7 @@ void Monster_MuscleMan::Update()
 
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+<<<<<<< Updated upstream
 	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
 	vector<vector<Tile*>> tilelist = tilemap->GetTileList();
 	for (int y = mY / TileSize - 1; y < mY / TileSize + 1; y++)
@@ -124,13 +133,20 @@ void Monster_MuscleMan::Update()
 			}
 		}
 	}
+=======
+	mMovingRect = RectMakeCenter(mX, mY + 50, TileSize, TileSize);
+>>>>>>> Stashed changes
 }
 
 void Monster_MuscleMan::Render()
 {
 	mImage->SetScale(2.f);
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
+	for (int i = 0; i < mPathList.size(); i++)
+	{
+		CameraManager::GetInstance()->GetMainCamera()->RenderRect(mPathList[i]->GetRect());
+	}
 
 }
 void Monster_MuscleMan::AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)
