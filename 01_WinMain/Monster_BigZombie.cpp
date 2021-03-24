@@ -11,7 +11,7 @@ Monster_BigZombie::Monster_BigZombie(const string& name, float x, float y)
 	:MonsterObject(name)
 {
 	mName = name;
-	mX = x; 
+	mX = x;
 	mY = y;
 }
 
@@ -22,11 +22,11 @@ void Monster_BigZombie::Init()
 	mMonsterActState = MonsterActState::RightIdle;
 	mMonsterState = MonsterState::Idle;
 	mSpeed = 3.f;
-	mSizeX = mImage->GetFrameSize().__typeToGetX()*4 - 120;
-	mSizeY = mImage->GetFrameSize().__typeToGetY()*4 - 100;
+	mSizeX = mImage->GetFrameSize().__typeToGetX() * 4 - 120;
+	mSizeY = mImage->GetFrameSize().__typeToGetY() * 4 - 100;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
-	mMonsterToPlayerDistance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY())/TileSize;
+	mMonsterToPlayerDistance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize;
 	mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
 	AnimationSet(&mRightWalkAnimation, false, false, 1, 0, 5, 0, AnimationTime);
@@ -53,105 +53,108 @@ void Monster_BigZombie::Update()
 {
 	mMonsterToPlayerDistance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize;
 	mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
-	//아이들
-	if (mMonsterToPlayerDistance >= 5.5f)
+	if (mHp > 0)
 	{
-		AnimationChange(mRightIdleAnimation);
-		mMonsterActState = MonsterActState::RightIdle;
-		mMonsterState = MonsterState::Idle;
-		//mPathList.clear();
-		mIsAct = false;
-		
-	}
-	if (mCurrentAnimation->GetIsPlay() == false)
-	{
-		if (mMonsterToPlayerDistance < 5.5f && mMonsterToPlayerDistance >= 2.1f)
-		{
 
-			if (mRightWalkAnimation->GetIsPlay() == false)mIsAct = false;
-			if (mIsAct == false)
+		//아이들
+		if (mMonsterToPlayerDistance >= 5.5f)
+		{
+			AnimationChange(mRightIdleAnimation);
+			mMonsterActState = MonsterActState::RightIdle;
+			mMonsterState = MonsterState::Idle;
+			//mPathList.clear();
+			mIsAct = false;
+
+		}
+		if (mCurrentAnimation->GetIsPlay() == false)
+		{
+			if (mMonsterToPlayerDistance < 5.5f && mMonsterToPlayerDistance >= 2.1f)
 			{
-				AnimationChange(mRightWalkAnimation);
-				mMonsterActState = MonsterActState::RightWalk;
-				mMonsterState = MonsterState::Chase;
+
+				if (mRightWalkAnimation->GetIsPlay() == false)mIsAct = false;
+				if (mIsAct == false)
+				{
+					AnimationChange(mRightWalkAnimation);
+					mMonsterActState = MonsterActState::RightWalk;
+					mMonsterState = MonsterState::Chase;
+					mIsAct = true;
+				}
+				//길 찾기
+				if (mPathList.size() != 0)
+				{
+					float nextX = mPathList[1]->GetX();
+					float nextY = mPathList[1]->GetY();
+					float angle = Math::GetAngle(mX, mY, nextX, nextY);
+					float distance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY());
+
+					mX += cosf(angle) * mSpeed;
+					mY += -sinf(angle) * mSpeed;
+				}
+			}
+
+
+			if (mMonsterToPlayerDistance < 2.1f)
+			{
+
+				//오른쪽 공격
+				if (mMonsterToPlayerAngle <= PI / 2 || mMonsterToPlayerAngle >= PI + PI / 2)
+				{
+					if (mIsAct == true && mCurrentAnimation != mRightAttackAnimation)
+					{
+						AnimationChange(mRightAttackAnimation);
+						mMonsterActState = MonsterActState::RightAttack;
+						mMonsterState = MonsterState::Attack;
+						mIsAct = false;
+					}
+					if (mRightAttackAnimation->GetIsPlay() == false)mIsAct = true;
+					if (mRightAttackAnimation->GetIsPlay() == false)
+						mRect = RectMakeCenter(mX, mY, 150, mSizeX);
+				}
+				//왼쪽공격
+				if (mMonsterToPlayerAngle > PI / 2 && mMonsterToPlayerAngle < PI + PI / 2)
+				{
+					if (mLeftAttackAnimation->GetIsPlay() == false)mIsAct == true;
+					if (mIsAct == true && mCurrentAnimation != mLeftAttackAnimation)
+					{
+						AnimationChange(mLeftAttackAnimation);
+						mMonsterActState = MonsterActState::LeftAttack;
+						mMonsterState = MonsterState::Attack;
+						mIsAct = false;
+					}
+
+					if (mLeftAttackAnimation->GetIsPlay() == false)
+						mRect = RectMakeCenter(mX, mY, 150, mSizeX);
+
+				}
+			}
+		}
+
+		if (mHp <= 0)
+		{
+			if (mIsAct == false)
+
+			{
+				AnimationChange(mDieAnimation);
+				mMonsterActState = MonsterActState::Die;
+				mMonsterState = MonsterState::Die;
 				mIsAct = true;
 			}
-			//길 찾기
-			if (mPathList.size() > 1)
-			{
-				float nextX = mPathList[1]->GetX();
-				float nextY = mPathList[1]->GetY();
-				float angle = Math::GetAngle(mX, mY, nextX, nextY);
-
-				POINT point;
-				point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
-				point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
-				
-				D2D1_RECT_F rctemp = mPathList[0]->GetRect();
-				if (!PtInRect(&rctemp, point))
-				{
-					mPathList.erase(mPathList.begin());
-				}
-
-				mX += cosf(angle) * mSpeed;
-				mY += -sinf(angle) * mSpeed;
-			}
 		}
-
-
-		if (mMonsterToPlayerDistance < 2.1f)
-		{
-
-			//오른쪽 공격
-			if (mMonsterToPlayerAngle <= PI / 2 || mMonsterToPlayerAngle >= PI + PI / 2)
-			{
-				if (mIsAct == true && mCurrentAnimation != mRightAttackAnimation)
-				{
-					AnimationChange(mRightAttackAnimation);
-					mMonsterActState = MonsterActState::RightAttack;
-					mMonsterState = MonsterState::Attack;
-					mIsAct = false;
-				}
-				if (mRightAttackAnimation->GetIsPlay() == false)mIsAct = true;
-				if (mRightAttackAnimation->GetIsPlay() == false)
-					mRect = RectMakeCenter(mX, mY, 150, mSizeX);
-			}
-			//왼쪽공격
-			if (mMonsterToPlayerAngle > PI / 2 && mMonsterToPlayerAngle < PI + PI / 2)
-			{
-				if (mLeftAttackAnimation->GetIsPlay() == false)mIsAct == true;
-				if (mIsAct == true && mCurrentAnimation != mLeftAttackAnimation)
-				{
-					AnimationChange(mLeftAttackAnimation);
-					mMonsterActState = MonsterActState::LeftAttack;
-					mMonsterState = MonsterState::Attack;
-					mIsAct = false;
-				}
-
-				if (mLeftAttackAnimation->GetIsPlay() == false)
-					mRect = RectMakeCenter(mX, mY, 150, mSizeX);
-
-			}
-		}
-
-
 	}
-	if (mHp <= 0)
-	{
-		AnimationChange(mDieAnimation);
-		mMonsterActState = MonsterActState::Die;
-		mMonsterState = MonsterState::Die;
-	}
-	
+
+
 	mCurrentAnimation->Update();
-	
+
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mMovingRect = RectMakeCenter(mX, mY + 55, TileSize * 2, TileSize);
 	//발판상호작용
+	float mMovingX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
+	float mMovingY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
 	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
 	vector<vector<Tile*>> tilelist = tilemap->GetTileList();
-	for (int y = mY / TileSize - 1; y < mY / TileSize + 1; y++)
+	for (int y = mMovingY / TileSize - 1; y < mMovingY / TileSize + 1; y++)
 	{
-		for (int x = mX / TileSize - 1; x < mX / TileSize + 1; x++)
+		for (int x = mMovingX / TileSize - 1; x < mMovingX / TileSize + 1; x++)
 		{
 			if (tilelist[y][x]->GetType() == Type::Wall)
 			{
@@ -159,39 +162,41 @@ void Monster_BigZombie::Update()
 				D2D1_RECT_F tempRect;
 				if (tilelist[y][x]->GetType() == Type::Wall)
 				{
-					if (IntersectRect(tempRect, &tileRect, &mRect))
+					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
 					{
-						if (y == (int)mY / TileSize && x == (int)mX / TileSize - 1)
-							mX = tileRect.right + mSizeX / 2;
-						else if (y == (int)mY / TileSize && x == (int)mX / TileSize + 1)
-							mX = tileRect.left - mSizeX / 2;
-						else if (y == (int)mY / TileSize - 1 && x == (int)mX / TileSize)
-							mY = tileRect.bottom + mSizeY / 2;
-						else if (y == (int)mY / TileSize + 1 && x == (int)mX / TileSize)
-							mY = tileRect.top - mSizeY / 2;
+						float width = tempRect.right - tempRect.left;
+						float height = tempRect.bottom - tempRect.top;
+						if (y == (int)mMovingY / TileSize && x == (int)mMovingX / TileSize - 1)
+							mX += width / 2;
+						else if (y == (int)mMovingY / TileSize && x == (int)mMovingX / TileSize + 1)
+							mX -= width / 2;
+						else if (y == (int)mMovingY / TileSize - 1 && x == (int)mMovingX / TileSize)
+							mY += height / 2;
+						else if (y == (int)mMovingY / TileSize + 1 && x == (int)mMovingX / TileSize)
+							mY -= height / 2;
 
 
 					}
 				}
 				if (tilelist[y][x]->GetType() == Type::Cliff)
 				{
-					if (IntersectRect(tempRect, &tileRect, &mRect))
+					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
 					{
 
-						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == mRect.bottom)
+						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == mMovingRect.bottom)
 							mY -= TileSize;
-						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == mRect.top)
+						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == mMovingRect.top)
 							mY += TileSize;
-						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == mRect.left)
+						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == mMovingRect.left)
 							mX += TileSize;
-						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == mRect.right)
+						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == mMovingRect.right)
 							mX -= TileSize;
 					}
 
 				}
 				if (tilelist[y][x]->GetType() == Type::Floor)
 				{
-					if (IntersectRect(tempRect, &tileRect, &mRect))
+					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
 					{
 						mSpeed = BasicSpeed;
 
@@ -200,7 +205,7 @@ void Monster_BigZombie::Update()
 				}
 				if (tilelist[y][x]->GetType() == Type::Thorn)
 				{
-					if (IntersectRect(tempRect, &tileRect, &mRect))
+					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
 					{
 						mSpeed = BasicSpeed - 100.f;
 
@@ -211,14 +216,15 @@ void Monster_BigZombie::Update()
 			}
 		}
 	}
-	mMovingRect = RectMakeCenter(mX, mY + 50, TileSize, TileSize);
+
 }
 
 void Monster_BigZombie::Render()
 {
 	mImage->SetScale(4.f);
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
-	CameraManager::GetInstance()->GetMainCamera()->FrameRenderFromBottom(mImage, mX, mY+20, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
+	CameraManager::GetInstance()->GetMainCamera()->FrameRenderFromBottom(mImage, mX, mY + 20, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 	//string str = to_string(Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY())/ TileSize);
 	//wstring wstr;
 	//wstr.assign(str.begin(), str.end());
