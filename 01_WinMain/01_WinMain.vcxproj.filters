@@ -351,7 +351,6 @@
     <ClInclude Include="ParticleManager.h">
       <Filter>MainGame\Object\ParticleManager</Filter>
     </ClInclude>
-<<<<<<< Updated upstream
     <ClInclude Include="UserInterface.h">
       <Filter>MainGame\Object\UI</Filter>
     </ClInclude>
@@ -362,21 +361,6 @@
       <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Skill_DragonArc.h">
-=======
-    <ClInclude Include="Skill_WaterBall.h">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="Skill_MonsterSmallSlash.h">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="Skill_Spear.h">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="Skill_SpearWave.h">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="Skill_MonsterMiddleSlash.h">
->>>>>>> Stashed changes
       <Filter>MainGame\Object\Skill</Filter>
     </ClInclude>
   </ItemGroup>
@@ -594,7 +578,6 @@
     <ClCompile Include="ParticleManager.cpp">
       <Filter>MainGame\Object\ParticleManager</Filter>
     </ClCompile>
-<<<<<<< Updated upstream
     <ClCompile Include="UserInterface.cpp">
       <Filter>MainGame\Object\UI</Filter>
     </ClCompile>
@@ -605,21 +588,6 @@
       <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Skill_DragonArc.cpp">
-=======
-    <ClCompile Include="Skill_WaterBall.cpp">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="Skill_MonsterSmallSlash.cpp">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="Skill_Spear.cpp">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="Skill_SpearWave.cpp">
-      <Filter>MainGame\Object\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="Skill_MonsterMiddleSlash.cpp">
->>>>>>> Stashed changes
       <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
   </ItemGroup>
