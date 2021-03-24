@@ -47,6 +47,18 @@ void Monster_MuscleMan::Release()
 
 void Monster_MuscleMan::Update()
 {
+	if (Input::GetInstance()->GetKey(VK_DOWN)) {
+		mY += 10;
+	}
+	if (Input::GetInstance()->GetKey(VK_LEFT)) {
+		mX -= 10;
+	}
+	if (Input::GetInstance()->GetKey(VK_RIGHT)) {
+		mX += 10;
+	}
+	if (Input::GetInstance()->GetKey(VK_UP)) {
+		mY -= 10;
+	}
 	// ÀÌµ¿
 	if (mPathList.size() > 1)
 	{
@@ -144,6 +156,8 @@ void Monster_MuscleMan::Render()
 {
 	mImage->SetScale(2.f);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 }
 void Monster_MuscleMan::AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)
 {

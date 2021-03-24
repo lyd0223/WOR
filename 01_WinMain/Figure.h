@@ -40,7 +40,7 @@ inline void RenderRect(D2D1_RECT_F rc, D2D1::ColorF color = D2D1::ColorF::Black 
 //{
 //	Ellipse(hdc, x - radius, y - radius, x + radius, y + radius);
 //}
-//
+
 //inline void RenderLine(HDC hdc,int startX, int startY, int endX, int endY)
 //{
 //	MoveToEx(hdc, startX, startY, NULL);

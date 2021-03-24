@@ -2,10 +2,13 @@
 #include "SkillManager.h"
 #include "GameObject.h"
 #include "MonsterObject.h"
+
 #include "Effect_MagicCircle.h"
 #include "Effect_FireParticle.h"
 #include "Effect_HitSpark.h"
+
 #include "Skill_FireBall.h"
+#include "Skill_DragonArc.h"
 #include "Skill_WindSlash.h"
 #include "Skill_Flame.h"
 #include "Skill_IceSpear.h"
@@ -44,11 +47,11 @@ void SkillManager::Update()
 				Tile* tile = (Tile*)tileMap->GetTileList(x, y);
 				D2D1_RECT_F skillrc = skill->GetRect();
 				D2D1_RECT_F tilerc = tile->GetRect();
-				if (tile->GetType() == Type::Wall && IntersectRect(temp, &skillrc, &tilerc))
+				if (tile->GetType() == Type::Wall && IntersectRect(temp, &skillrc, &tilerc) && skill->GetSkillType() == SkillType::Throw)
 				{
 					if (skill->GetSkillElement() == SkillElement::Fire)
 					{
-						ParticleManager::GetInstance()->MakeFireParticle(skillX, skillY, 10);
+						ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 					}
 
@@ -90,7 +93,7 @@ void SkillManager::Update()
 
 					if (skill->GetSkillElement() == SkillElement::Fire)
 					{
-						ParticleManager::GetInstance()->MakeFireParticle(skillX, skillY, 10);
+						ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 					}
 
@@ -110,11 +113,56 @@ void SkillManager::Update()
 	// 몬스터 맵 충돌 처리
 	//for (int i = 0; i < monsterList.size(); i++)
 	//{
-	//	for (int j = 0; j < tileList.size(); j++)
+	//	MovingObject* monster = (MovingObject*) monsterList[i];
+	//	D2D1_RECT_F monsterRc = monster->GetMovingRect();
+	//	float monsterX = (monsterRc.left + (monsterRc.right - monsterRc.left) / 2) / TileSize;
+	//	float monsterY = (monsterRc.top + (monsterRc.bottom - monsterRc.top) / 2) / TileSize;
+	//	float sizeX = (monsterRc.right - monsterRc.left) / TileSize + 1;
+	//	float sizeY = (monsterRc.bottom - monsterRc.top) / TileSize + 1;
+	//	for (int y = monsterY - sizeY; y < monsterY + sizeY; y++)
 	//	{
-	//
+	//		for (int x = monsterX - sizeX; x < monsterX + sizeX; x++)
+	//		{
+	//			TileMap* tileMap = (TileMap*) tileList[0];
+	//			Tile* tile = tileMap->GetTileList(x, y);
+	//			D2D1_RECT_F tileRc = tile->GetRect();
+	//			D2D1_RECT_F temp;
+	//			if (IntersectRect(temp, &monsterRc, &tileRc) && tile->GetType() == Type::Wall)
+	//			{
+	//				float width = temp.right - temp.left;
+	//				float height = temp.bottom - temp.top;
+	//				if (width > height)
+	//				{
+	//					if (temp.top == monsterRc.top)
+	//					{
+	//						monster->SetY(monster->GetY() + height / 2);
+	//					}
+	//					if (temp.bottom == monsterRc.bottom)
+	//					{
+	//						monster->SetY(monster->GetY() - height / 2);
+	//					}
+	//				}
+	//				else
+	//				{
+	//					if (temp.left == monsterRc.left)
+	//					{
+	//						monster->SetX(monster->GetX() + width / 2);
+	//					}
+	//					if (temp.right == monsterRc.right)
+	//					{
+	//						monster->SetX(monster->GetX() - width / 2);
+	//					}
+	//				}
+	//			}
+	//		}
 	//	}
 	//}
+}
+
+void SkillManager::DragonArcSkill(const string & name, float x, float y, float angle, bool isUp)
+{
+	Skill_DragonArc* dragonArc = new Skill_DragonArc(name, x, y, angle, isUp);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, dragonArc);
 }
 
 void SkillManager::FlameSkill(const string& name, float x, float y, float angle)

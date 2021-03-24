@@ -354,6 +354,15 @@
     <ClInclude Include="UserInterface.h">
       <Filter>MainGame\Object\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Effect_WaterExplosion.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_WaterFormParticle.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill_DragonArc.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -571,6 +580,15 @@
     </ClCompile>
     <ClCompile Include="UserInterface.cpp">
       <Filter>MainGame\Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_WaterExplosion.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_WaterFormParticle.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_DragonArc.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

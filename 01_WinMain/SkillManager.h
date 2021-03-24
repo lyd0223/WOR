@@ -12,6 +12,7 @@ private:
 public:
 	void Update();
 
+	void DragonArcSkill(const string& name, float x, float y, float angle, bool isUp);
 	void FlameSkill(const string& name, float x, float y, float angle);
 	void FireBallSkill(const string& name, float x, float y, float angle, int delay);
 	void MeteorSkill(const string& name, float x, float y);

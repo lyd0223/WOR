@@ -4,6 +4,8 @@
 #include "Effect_IceBreakParticle.h"
 #include "Effect_HitSpark.h"
 #include "Effect_ShorkWave.h"
+#include "Effect_WaterFormParticle.h"
+#include "Effect_WaterExplosion.h"
 
 void ParticleManager::MakeShorkWaveParticle(float x, float y, float scale)
 {
@@ -43,6 +45,14 @@ void ParticleManager::MakeIceBreakParticle(float x, float y, float power)
 	}
 }
 
+void ParticleManager::MakeFireParticle(float x, float y, float angle)
+{
+	Effect_FireParticle* fireParticle;
+	fireParticle = new Effect_FireParticle("FireParticle", x, y, angle);
+	fireParticle->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, fireParticle);
+}
+
 void ParticleManager::MakeFireCircleParticle(float x, float y)
 {
 	Effect_FireParticle* fireParticle;
@@ -65,7 +75,7 @@ void ParticleManager::MakeFireCircleParticle(float x, float y)
 	}
 }
 
-void ParticleManager::MakeFireParticle(float x, float y, float power)
+void ParticleManager::MakeFireExlposionParticle(float x, float y, float power)
 {
 	MakeFireCircleParticle(x, y);
 
@@ -90,4 +100,30 @@ void ParticleManager::MakeFireParticle(float x, float y, float power)
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, fireParticle);
 		}
 	}
+}
+
+void ParticleManager::MakeWaterFormPartile(float x, float y, D2D1_RECT_F rc)
+{
+	Effect_WaterFormParticle* waterFormParticle;
+	float radius = rc.right - rc.left;
+	int waterCount = radius / 5;
+
+	for (int i = 0; i < waterCount; i++)
+	{
+		float randomX = 0;
+		float randomY = 0;
+
+		waterFormParticle = new Effect_WaterFormParticle("WaterFormParticle", randomX, randomY);
+		waterFormParticle->Init();
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, waterFormParticle);
+	}
+}
+
+void ParticleManager::MakeWaterExplosion(float x, float y)
+{
+	Effect_WaterExplosion* waterExplosion;
+
+	waterExplosion = new Effect_WaterExplosion("WaterExplosion", x, y);
+	waterExplosion->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, waterExplosion);
 }

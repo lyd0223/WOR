@@ -77,12 +77,20 @@ void Monster_BigZombie::Update()
 				mIsAct = true;
 			}
 			//±æ Ã£±â
-			if (mPathList.size() != 0)
+			if (mPathList.size() > 1)
 			{
 				float nextX = mPathList[1]->GetX();
 				float nextY = mPathList[1]->GetY();
 				float angle = Math::GetAngle(mX, mY, nextX, nextY);
-				float distance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY());
+
+				POINT point;
+				point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
+				point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
+
+				if (!PtInRect(&mPathList[0]->GetRect(), point))
+				{
+					mPathList.erase(mPathList.begin());
+				}
 
 				mX += cosf(angle) * mSpeed;
 				mY += -sinf(angle) * mSpeed;
@@ -202,13 +210,13 @@ void Monster_BigZombie::Update()
 			}
 		}
 	}
-
+	mMovingRect = RectMakeCenter(mX, mY + 50, TileSize, TileSize);
 }
 
 void Monster_BigZombie::Render()
 {
 	mImage->SetScale(4.f);
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRenderFromBottom(mImage, mX, mY+20, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 	//string str = to_string(Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY())/ TileSize);
 	//wstring wstr;
