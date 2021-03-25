@@ -127,6 +127,9 @@
     <Filter Include="MainGame\Object\UI">
       <UniqueIdentifier>{a4162ea1-74a2-4af3-ac93-ae700914db91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\RandomMapGeneration">
+      <UniqueIdentifier>{cb862db3-c771-4c4a-aa21-b01c435818b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -396,6 +399,9 @@
     <ClInclude Include="Effect_GlassShards.h">
       <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="RandomMapGeneration.h">
+      <Filter>MainGame\RandomMapGeneration</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -655,6 +661,9 @@
     </ClCompile>
     <ClCompile Include="Effect_GlassShards.cpp">
       <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomMapGeneration.cpp">
+      <Filter>MainGame\RandomMapGeneration</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
