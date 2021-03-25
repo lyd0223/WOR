@@ -5,6 +5,7 @@
 //#define TileCountY 100
 //#define TileSize 48
 
+class MouseTracker;
 class Scene_Tutorial : public Scene
 {
 	class Player* mPlayer;
@@ -23,7 +24,6 @@ class Scene_Tutorial : public Scene
 	vector<class MonsterObject*> mMonsterList;
 	//class Tile* mTileList[TileCountY][TileCountX];
 	class TileMap* mTileMap;
-	
 
 public:
 	void Init()override;

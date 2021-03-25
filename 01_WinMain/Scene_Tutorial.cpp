@@ -19,6 +19,8 @@
 #include "TileMap.h"
 #include "Gizmo.h"
 #include "UserInterface.h"
+#include "MouseTracker.h"
+
 #include <fstream>
 
 void Scene_Tutorial::Init()
@@ -51,6 +53,7 @@ void Scene_Tutorial::Init()
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mTileMap);
 	//
 
+	
 
 	mPlayer = new Player("Player",600,1600);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
@@ -114,6 +117,7 @@ void Scene_Tutorial::Init()
 	camera->ChangeMode(Camera::Mode::Follow);
 	camera->SetTarget(mPlayer);
 	CameraManager::GetInstance()->SetMainCamera(camera);
+
 }
 
 void Scene_Tutorial::Release()

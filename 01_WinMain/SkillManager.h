@@ -27,6 +27,7 @@ public:
 	void SpearSkill(const string& name, float x, float y, float angle);
 	void SpearWaveSkill(const string& name, float x, float y, float angle);
 	void MonsterMiddleSlashSkill(const string& name, float x, float y, float angle);
+
 	//map<string, vector<class GameObject*>> GetSkillList() { return mSkillList; }
 	//class vector<GameObject*> FindSkillList(const string key);
 };

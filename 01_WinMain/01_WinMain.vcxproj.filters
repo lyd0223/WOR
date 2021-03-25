@@ -378,6 +378,18 @@
     <ClInclude Include="Skill_WaterBall.h">
       <Filter>MainGame\Object\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="MouseTracker.h">
+      <Filter>MainGame\Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerNormalShadow.h">
+      <Filter>MainGame\Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerWideShadow.h">
+      <Filter>MainGame\Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHeightShadow.h">
+      <Filter>MainGame\Object\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -619,6 +631,18 @@
     </ClCompile>
     <ClCompile Include="Skill_WaterBall.cpp">
       <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseTracker.cpp">
+      <Filter>MainGame\Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerNormalShadow.cpp">
+      <Filter>MainGame\Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWideShadow.cpp">
+      <Filter>MainGame\Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHeightShadow.cpp">
+      <Filter>MainGame\Object\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -23,7 +23,7 @@
     <ProjectGuid>{ADD52605-596E-43E8-879D-E81A28A8BB13}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My01WinMain</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -164,7 +164,11 @@
     <ClInclude Include="Effect_FlameEffect.h" />
     <ClInclude Include="Monster_Golem.h" />
     <ClInclude Include="Effect_HitSpark.h" />
+    <ClInclude Include="MouseTracker.h" />
     <ClInclude Include="ParticleManager.h" />
+    <ClInclude Include="PlayerHeightShadow.h" />
+    <ClInclude Include="PlayerNormalShadow.h" />
+    <ClInclude Include="PlayerWideShadow.h" />
     <ClInclude Include="Scene_House.h" />
     <ClInclude Include="Scene_TitleScene.h" />
     <ClInclude Include="SkillObject.h" />
@@ -249,7 +253,11 @@
     <ClCompile Include="Effect_FlameEffect.cpp" />
     <ClCompile Include="Monster_Golem.cpp" />
     <ClCompile Include="Effect_HitSpark.cpp" />
+    <ClCompile Include="MouseTracker.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
+    <ClCompile Include="PlayerHeightShadow.cpp" />
+    <ClCompile Include="PlayerNormalShadow.cpp" />
+    <ClCompile Include="PlayerWideShadow.cpp" />
     <ClCompile Include="Scene_House.cpp" />
     <ClCompile Include="Scene_TitleScene.cpp" />
     <ClCompile Include="SkillObject.cpp" />

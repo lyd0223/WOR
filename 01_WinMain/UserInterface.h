@@ -26,6 +26,7 @@ class UserInterface : public GameObject
 	UIObject* mQButton;
 	UIObject* mEButton;
 	
+	
 	Image* mHPBarImage;
 	Image* mMPBarImage;
 	

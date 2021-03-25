@@ -20,6 +20,8 @@
 #include "Skill_Spear.h"
 #include "Skill_SpearWave.h"
 #include "Skill_MonsterMiddleSlash.h"
+
+#include "MouseTracker.h"
 #include "Tile.h"
 #include "TileMap.h"
 
@@ -285,6 +287,8 @@ void SkillManager::MonsterMiddleSlashSkill(const string& name, float x, float y,
 	monsterMiddleSlash->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, monsterMiddleSlash);
 }
+
+
 
 //vector<GameObject*> SkillManager::FindSkillList(const string key)
 //{

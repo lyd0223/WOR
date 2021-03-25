@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "UserInterface.h"
+
 #include "Image.h"
 
 void UserInterface::Init()
@@ -10,13 +11,13 @@ void UserInterface::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"HPBar", Resources(L"UI/HPBar.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"SkillBox", Resources(L"UI/SkillBox.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"SpecialSkillBox", Resources(L"UI/SpecialSkillBox.png"));
-	
+
 	ImageManager::GetInstance()->LoadFromFile(L"MouseLButton", Resources(L"UI/LButton.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"MouseRButton", Resources(L"UI/RButton.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"QButton", Resources(L"UI/Q.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"EButton", Resources(L"UI/E.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"SpaceButton", Resources(L"UI/Space.png"));
-
+	
 
 	mStatus = new UIObject(50, 50, 246, 60, ImageManager::GetInstance()->FindImage(L"Status"));
 	mHPBar = new UIObject(107, 60, 183, 24, ImageManager::GetInstance()->FindImage(L"HPBar"));
@@ -29,6 +30,7 @@ void UserInterface::Init()
 	mSpaceButton = new  UIObject(115, WINSIZEY - 100, 50, 50, ImageManager::GetInstance()->FindImage(L"SpaceButton"));
 	mMouseRButton = new  UIObject(170, WINSIZEY -100, 50, 50, ImageManager::GetInstance()->FindImage(L"MouseRButton"));
 	mQButton = new  UIObject(225, WINSIZEY - 100, 50, 50, ImageManager::GetInstance()->FindImage(L"QButton"));
+	
 	//mEButton = new  UIObject(320, WINSIZEY - 50, 50, 50, ImageManager::GetInstance()->FindImage(L"SpecialSkillBox"));
 }
 

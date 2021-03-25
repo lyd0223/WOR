@@ -44,6 +44,7 @@ class Player : public MovingObject
 {
 	PlayerState mPlayerState;
 	Image* mImage;
+	Image* mImage2;
 	float mMoveAngle;
 
 	//class Tile* TileList[TileCountY][TileCountY];
@@ -75,11 +76,19 @@ class Player : public MovingObject
 	class Animation* mDownThrowWatingAnimation;
 	class Animation* mLeftThrowWatingAnimation;
 	class Animation* mRightThrowWationgAnimation;
+
+	class PlayerNormalShadow* mPlayerNormalShadow;
+	class PlayerWideShadow* mPlayerWideShadow;
+	class PlayerHeightShadow* mPlayerHeightShadow;
+	class MouseTracker *mMouseTracker;
+	class Image* mShadow;
 	float lineX;
 	float lineY;
 
 	bool mIsAct;
 	class Animation* mCurrentAnimation;
+
+
 public:
 	Player(const string& name, float x, float y);
 
