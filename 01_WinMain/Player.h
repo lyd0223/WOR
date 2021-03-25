@@ -46,6 +46,7 @@ class Player : public MovingObject
 	Image* mImage;
 	Image* mImage2;
 	float mMoveAngle;
+	int mMoveCount;
 
 	//class Tile* TileList[TileCountY][TileCountY];
 
@@ -86,6 +87,7 @@ class Player : public MovingObject
 	float lineY;
 
 	bool mIsAct;
+	bool mIsDashEffect;
 	class Animation* mCurrentAnimation;
 
 

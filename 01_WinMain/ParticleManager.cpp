@@ -6,6 +6,15 @@
 #include "Effect_ShorkWave.h"
 #include "Effect_WaterFormParticle.h"
 #include "Effect_WaterExplosion.h"
+#include "Effect_DashEffect.h"
+
+void ParticleManager::MakeDashEffectParticle(float x, float y, float angle)
+{
+	Effect_DashEffect* dashEffect;
+	dashEffect = new Effect_DashEffect("DashEffect", x, y, angle);
+	dashEffect->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, dashEffect);
+}
 
 void ParticleManager::MakeShorkWaveParticle(float x, float y, float scale)
 {

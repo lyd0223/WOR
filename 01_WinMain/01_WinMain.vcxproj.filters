@@ -390,6 +390,9 @@
     <ClInclude Include="PlayerHeightShadow.h">
       <Filter>MainGame\Object\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Effect_DashEffect.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -643,6 +646,9 @@
     </ClCompile>
     <ClCompile Include="PlayerHeightShadow.cpp">
       <Filter>MainGame\Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_DashEffect.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

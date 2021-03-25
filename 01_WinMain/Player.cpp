@@ -689,9 +689,12 @@ void Player::Update()
 				AnimationChange(mDownDashAnimation);
 
 			}
+			mMoveCount = abs(mX) + abs(mY);
+			mIsDashEffect = false;
 		}
 		
 	}
+
 
 	if (mCurrentAnimation == mRightDashAnimation)
 	{
@@ -702,6 +705,12 @@ void Player::Update()
 		{
 			mX += cosf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
 			mY -= sinf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
+			int temp = abs(mX) + abs(mY);
+			if ( abs(mMoveCount - temp) > 100 && mIsDashEffect == false)
+			{
+				ParticleManager::GetInstance()->MakeDashEffectParticle(mX - 70, mY, mMoveAngle);
+				mIsDashEffect = true;
+			}
 		}
 	}
 	else if (mCurrentAnimation == mLeftDashAnimation)
@@ -713,6 +722,12 @@ void Player::Update()
 		{
 			mX += cosf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
 			mY -= sinf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
+			int temp = abs(mX) + abs(mY);
+			if (abs(mMoveCount - temp) > 100 && mIsDashEffect == false)
+			{
+				ParticleManager::GetInstance()->MakeDashEffectParticle(mX + 70, mY, mMoveAngle);
+				mIsDashEffect = true;
+			}
 		}
 	}
 	else if (mCurrentAnimation == mUpDashAnimation)
@@ -724,6 +739,12 @@ void Player::Update()
 		{
 			mX += cosf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
 			mY -= sinf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
+			int temp = abs(mX) + abs(mY);
+			if (abs(mMoveCount - temp) > 100 && mIsDashEffect == false)
+			{
+				ParticleManager::GetInstance()->MakeDashEffectParticle(mX , mY + 70, mMoveAngle);
+				mIsDashEffect = true;
+			}
 		}
 	}
 	else if (mCurrentAnimation == mDownDashAnimation)
@@ -735,6 +756,12 @@ void Player::Update()
 		{
 			mX += cosf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
 			mY -= sinf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
+			int temp = abs(mX) + abs(mY);
+			if (abs(mMoveCount - temp) > 100 && mIsDashEffect == false)
+			{
+				ParticleManager::GetInstance()->MakeDashEffectParticle(mX , mY - 70, mMoveAngle);
+				mIsDashEffect = true;
+			}
 		}
 	}
 	
