@@ -764,6 +764,23 @@ void Player::Update()
 			}
 		}
 	}
+
+	if (mCurrentAnimation == mRightDashAnimation && mRightDashAnimation->GetNowFrameX() == 5)
+	{
+		ParticleManager::GetInstance()->MakeDustParticle(mX, mMovingRect.bottom, mMoveAngle *PI, 2.f);
+	}
+	else if (mCurrentAnimation == mLeftDashAnimation && mLeftDashAnimation->GetNowFrameX() == 5)
+	{
+		ParticleManager::GetInstance()->MakeDustParticle(mX, mMovingRect.bottom, mMoveAngle * PI, 2.f);
+	}
+	else if (mCurrentAnimation == mUpDashAnimation && mUpDashAnimation->GetNowFrameX() == 5)
+	{
+		ParticleManager::GetInstance()->MakeDustParticle(mX, mMovingRect.bottom, mMoveAngle * PI, 2.f);
+	}
+	else if (mCurrentAnimation == mDownDashAnimation && mDownDashAnimation->GetNowFrameX() == 5)
+	{
+		ParticleManager::GetInstance()->MakeDustParticle(mX, mMovingRect.bottom, mMoveAngle * PI, 2.f);
+	}
 	
 	if (mCurrentAnimation == mRightDashAnimation&&mRightDashAnimation->GetIsPlay() == false)
 	{
@@ -774,6 +791,7 @@ void Player::Update()
 	{
 		mPlayerState = PlayerState::LeftIdle;
 		AnimationChange(mLeftIdleAnimation);
+		
 	}
 	else if (mCurrentAnimation == mUpDashAnimation && mUpDashAnimation->GetIsPlay() == false)
 	{

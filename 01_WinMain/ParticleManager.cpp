@@ -7,6 +7,23 @@
 #include "Effect_WaterFormParticle.h"
 #include "Effect_WaterExplosion.h"
 #include "Effect_DashEffect.h"
+#include "Effect_GlassShards.h"
+
+void ParticleManager::MakeDustParticle(float x, float y, float angle, float scale)
+{
+	Effect_GlassShards* glassShards;
+	float tempAngle = 0;
+	float tempScale = 0;
+	for (int i = 0; i < 10; i++)
+	{
+		int randomInt = Random::GetInstance()->RandomInt(3);
+		tempAngle += 0.1f;
+		tempScale += 0.3f;
+		glassShards = new Effect_GlassShards("GlassShards", x, y, angle + tempAngle, scale + tempScale, randomInt);
+		glassShards->Init();
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, glassShards);
+	}
+}
 
 void ParticleManager::MakeDashEffectParticle(float x, float y, float angle)
 {

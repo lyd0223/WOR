@@ -151,6 +151,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Effect_DashEffect.h" />
     <ClInclude Include="Effect_FireParticle.h" />
+    <ClInclude Include="Effect_GlassShards.h" />
     <ClInclude Include="Effect_IceBreakParticle.h" />
     <ClInclude Include="Effect_ShorkWave.h" />
     <ClInclude Include="Effect_WaterExplosion.h" />
@@ -241,6 +242,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Effect_DashEffect.cpp" />
     <ClCompile Include="Effect_FireParticle.cpp" />
+    <ClCompile Include="Effect_GlassShards.cpp" />
     <ClCompile Include="Effect_IceBreakParticle.cpp" />
     <ClCompile Include="Effect_ShorkWave.cpp" />
     <ClCompile Include="Effect_WaterExplosion.cpp" />
