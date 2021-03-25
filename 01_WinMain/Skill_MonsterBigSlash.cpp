@@ -29,7 +29,8 @@ void Skill_MonsterBigSlash::Init()
 	mSlashAnimation->SetFrameUpdateTime(0.1f);
 	mSlashAnimation->Play();
 
-
+	mSkillTarget = SkillTarget::Enemy;
+	mSkillType = SkillType::Melee;
 }
 
 void Skill_MonsterBigSlash::Release()

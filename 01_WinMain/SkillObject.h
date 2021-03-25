@@ -1,6 +1,14 @@
 #pragma once
 #include "GameObject.h"
 
+// 스킬 쏘는 대상 ( 플레이어, 적)
+enum class SkillTarget : int{
+	Player,
+	Enemy,
+
+	End
+};
+
 // 스킬 타입 ( 근접, 투사체, 설치)
 enum class SkillType : int {
 	Melee,	// 근접 스킬
@@ -26,9 +34,12 @@ class SkillObject : public GameObject
 {
 protected:
 	Image* mImage;
+	SkillTarget mSkillTarget;
 	SkillType mSkillType;
 	SkillElement mSkillElement;
 	float mAngle;
+	float mSkillDamege;
+	float mSkillPower;
 	int mSkillHitCount;
 
 	bool mIsCollision;
@@ -40,9 +51,15 @@ public:
 	void Update() override {};
 	void Render() override {};
 
+	SkillTarget GetSkillTarget() { return mSkillTarget; }
 	SkillType GetSkillType() { return mSkillType; }
 	SkillElement GetSkillElement() { return mSkillElement; }
 	void SetAngle(float angle) { mAngle = angle; }
+	float GetAngle() { return mAngle; }
+	void SetSkillDamege(float damege) { mSkillDamege = damege; }
+	float GetSkillDamege() { return mSkillDamege; }
+	void SetSkillPower(float skillPower) { mSkillPower = skillPower; }
+	float GetSkillPower() { return mSkillPower; }
 	int GetSkillHitCount() { return mSkillHitCount; }
 	
 	void SetIsCollision(bool isCollision) {	mIsCollision = isCollision; }

@@ -25,6 +25,7 @@ void Skill_WaterBall::Init()
 	mSizeY = mImage->GetHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mSpeed = 20.f;
+	mSkillTarget = SkillTarget::Enemy;
 	mSkillType = SkillType::Throw;
 
 	mWaterBallAnimation = new Animation;
@@ -33,6 +34,7 @@ void Skill_WaterBall::Init()
 	mWaterBallAnimation->SetFrameUpdateTime(0.1f);
 	mWaterBallAnimation->Play();
 
+	mSkillPower = 2.f;
 }
 
 void Skill_WaterBall::Release()

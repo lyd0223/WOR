@@ -19,7 +19,7 @@ class Skill_FireBall : public SkillObject
 	class Animation* mFireBallReadyAnimation;	// 0, 0, 3, 0
 	class Animation* mFireBallFireAnimation;	// 4, 0, 8, 0
 	class Animation* mCurrentAnimation;
-
+	
 	int mDelay;
 	float mFrameCount;
 	float mAngle;

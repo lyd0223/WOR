@@ -2,6 +2,7 @@
 #include "SkillManager.h"
 #include "GameObject.h"
 #include "MonsterObject.h"
+#include "Player.h"
 
 #include "Effect_MagicCircle.h"
 #include "Effect_FireParticle.h"
@@ -34,6 +35,7 @@ void SkillManager::Update()
 	vector<GameObject*> skillList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Skill);
 	vector<GameObject*> tileList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Tile);
 	vector<GameObject*> monsterList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+	Player* player = (Player*) ObjectManager::GetInstance()->FindObject("Player");
 
 	for (int i = 0; i < skillList.size(); i++) 
 	{
@@ -50,6 +52,8 @@ void SkillManager::Update()
 		{
 			for (int x = (skill->GetX() / TileSize) - index; x < (skill->GetX() / TileSize) + index; x++)
 			{
+				if (x < 0) continue;
+				if (y < 0) continue;
 				TileMap* tileMap = (TileMap*)tileList[0];
 				Tile* tile = (Tile*)tileMap->GetTileList(x, y);
 				D2D1_RECT_F skillrc = skill->GetRect();
@@ -60,13 +64,13 @@ void SkillManager::Update()
 						skill->GetName() == "DragonArc")
 					{
 						ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
-						//ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 					}
 
 					if (skill->GetName() == "IceSpear")
 					{
 						ParticleManager::GetInstance()->MakeIceBreakParticle(skillX, skillY, 10);
-						//ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 					}
 
 					if (skill->GetName() == "WaterBall")
@@ -81,45 +85,69 @@ void SkillManager::Update()
 			}
 		}
 
-		// 스킬 to 몬스터 충돌
+		// 스킬 to 몬스터 or 플레이어 충돌
 		for (int j = 0; j < monsterList.size(); j++)
 		{
 			MonsterObject* monster = (MonsterObject*)monsterList[j];
 			D2D1_RECT_F monsterrc = monsterList[j]->GetRect();
 
-			// 근접 스킬
-			if (skill->GetSkillType() == SkillType::Melee)
+			// 플레이어 to 적
+			if (skill->GetSkillTarget() == SkillTarget::Player)
 			{
-				bool isCollision = false;
-				if (IntersectRect(temp, &skillrc, &monsterrc) && 
-					(skill->GetIsCollision() == false && monster->GetIsCollision() == false))
+				// 근접 스킬
+				if (skill->GetSkillType() == SkillType::Melee)
 				{
-					monster->SetIsCollision(true);
-					ParticleManager::GetInstance()->MakeHitSparkParticle(temp.left, temp.top);
+					bool isCollision = false;
+					if (IntersectRect(temp, &skillrc, &monsterrc) && 
+						(skill->GetIsCollision() == false && monster->GetIsCollision() == false))
+					{
+						monster->SetIsCollision(true);
+						ParticleManager::GetInstance()->MakeHitSparkParticle(temp.left, temp.top);
+					}
+				}
+
+				// 던지는 스킬
+				if (skill->GetSkillType() == SkillType::Throw) 
+				{
+					if (IntersectRect(temp, &skillrc, &monsterrc))
+					{
+
+						if (skill->GetName() == "FireBall")
+						{
+							ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
+						
+						}
+
+						if (skill->GetName() == "IceSpear")
+						{
+							ParticleManager::GetInstance()->MakeIceBreakParticle(skillX, skillY, 10);
+							monster->SetSkillHitAngle(skill->GetAngle());
+							monster->SetSkillHitPower(skill->GetSkillPower());
+						}
+
+						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						skill->SetIsDestroy(true);
+						break;
+					}
+
 				}
 			}
 
-			// 던지는 스킬
-			if (skill->GetSkillType() == SkillType::Throw) 
+			// 적 to 플레이어
+			if (skill->GetSkillTarget() == SkillTarget::Enemy)
 			{
-				if (IntersectRect(temp, &skillrc, &monsterrc))
+				if (skill->GetSkillType() == SkillType::Melee)
 				{
 
-					if (skill->GetName() == "FireBall")
-					{
-						ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
-						
-					}
+				}
 
-					if (skill->GetName() == "IceSpear")
-					{
-						ParticleManager::GetInstance()->MakeIceBreakParticle(skillX, skillY, 10);
-						
-					}
-
+				if (skill->GetSkillType() == SkillType::Throw)
+				{
 					if (skill->GetName() == "WaterBall")
 					{
 						ParticleManager::GetInstance()->MakeWaterExplosion(skillX, skillY);
+						player->SetSkillHitAngle(skill->GetAngle());
+						player->SetSkillHitPower(skill->GetSkillPower());
 					}
 
 					ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);

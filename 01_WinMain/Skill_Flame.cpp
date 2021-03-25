@@ -25,6 +25,8 @@ void Skill_Flame::Init()
 	mFlameAnimation->InitFrameByStartEnd(0, 0, 31, 0, false);
 	mFlameAnimation->SetFrameUpdateTime(0.05f);
 	mFlameAnimation->Play();
+
+	
 }
 
 void Skill_Flame::Release()

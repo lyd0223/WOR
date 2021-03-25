@@ -22,6 +22,7 @@ void Skill_WindSlash::Init()
 	mSizeY = mImage->GetHeight() / 3 * 1.5;
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 
+	mSkillTarget = SkillTarget::Player;
 	mSkillElement = SkillElement::Wind;
 	mSkillType = SkillType::Melee;
 

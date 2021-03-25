@@ -320,6 +320,14 @@ void Monster_SpearMan::Update()
 			}
 		}
 	}
+
+	// ³Ë¹é
+	if (mSkillHitPower > 0)
+	{
+		mX += cosf(mSkillHitAngle) * mSkillHitPower;
+		mY += -sinf(mSkillHitAngle) * mSkillHitPower;
+		mSkillHitPower -= 0.2f;
+	}
 }
 
 void Monster_SpearMan::Render()

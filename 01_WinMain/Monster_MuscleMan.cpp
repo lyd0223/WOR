@@ -47,18 +47,18 @@ void Monster_MuscleMan::Release()
 
 void Monster_MuscleMan::Update()
 {
-	if (Input::GetInstance()->GetKey(VK_DOWN)) {
-		mY += 10;
-	}
-	if (Input::GetInstance()->GetKey(VK_LEFT)) {
-		mX -= 10;
-	}
-	if (Input::GetInstance()->GetKey(VK_RIGHT)) {
-		mX += 10;
-	}
-	if (Input::GetInstance()->GetKey(VK_UP)) {
-		mY -= 10;
-	}
+	//if (Input::GetInstance()->GetKey(VK_DOWN)) {
+	//	mY += 10;
+	//}
+	//if (Input::GetInstance()->GetKey(VK_LEFT)) {
+	//	mX -= 10;
+	//}
+	//if (Input::GetInstance()->GetKey(VK_RIGHT)) {
+	//	mX += 10;
+	//}
+	//if (Input::GetInstance()->GetKey(VK_UP)) {
+	//	mY -= 10;
+	//}
 	// ÀÌµ¿
 	//if (mPathList.size() > 1)
 	//{
@@ -149,7 +149,14 @@ void Monster_MuscleMan::Update()
 		}
 	}
 
-	mMovingRect = RectMakeCenter(mX, mY + 50, TileSize, TileSize);
+
+	// ³Ë¹é
+	if (mSkillHitPower > 0)
+	{
+		mX += cosf(mSkillHitAngle) * mSkillHitPower;
+		mY += -sinf(mSkillHitAngle) * mSkillHitPower;
+		mSkillHitPower -= 0.2f;
+	}
 }
 
 void Monster_MuscleMan::Render()

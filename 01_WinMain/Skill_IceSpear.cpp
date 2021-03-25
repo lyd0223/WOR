@@ -25,6 +25,7 @@ void Skill_IceSpear::Init()
 	mSizeY = mImage->GetHeight();
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 	mSpeed = 20.f;
+	mSkillTarget = SkillTarget::Player;
 	mSkillType = SkillType::Throw;
 	mSkillElement = SkillElement::Water;
 
@@ -34,7 +35,7 @@ void Skill_IceSpear::Init()
 	mIceSpearAnimation->SetFrameUpdateTime(0.1f);
 	mIceSpearAnimation->Play();
 
-
+	mSkillPower = 5.f;
 }
 
 void Skill_IceSpear::Release()

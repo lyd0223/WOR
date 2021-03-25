@@ -11,7 +11,7 @@ class Skill_IceSpear : public SkillObject
 	float mEndX;
 	float mEndY;
 	float mImageAngle;
-	float mAngle;
+
 	float mSpeed;
 	Animation* mIceSpearAnimation;
 public:

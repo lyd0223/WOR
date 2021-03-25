@@ -15,7 +15,7 @@ Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angl
 	mX = x;
 	mY = y;
 	mAngle = angle;
-
+	mSkillTarget = SkillTarget::Player;
 }
 
 Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angle, int delay)
@@ -25,6 +25,7 @@ Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angl
 	mY = y;
 	mAngle = angle;
 	mDelay = delay;
+	mSkillTarget = SkillTarget::Enemy;
 }
 
 void Skill_FireBall::Init()

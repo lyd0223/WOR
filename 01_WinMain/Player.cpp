@@ -924,7 +924,13 @@ void Player::Update()
 		}
 	}
 	
-		
+	// ³Ë¹é
+	if (mSkillHitPower > 0)
+	{
+		mX += cosf(mSkillHitAngle) * mSkillHitPower;
+		mY += -sinf(mSkillHitAngle) * mSkillHitPower;
+		mSkillHitPower -= 0.2f;
+	}
 	
 	//if (mTileList[(int)mPlayer->GetY() / TileSize][(int)mPlayer->GetX() / TileSize]->GetType() == Type::Cliff)
 	//{
