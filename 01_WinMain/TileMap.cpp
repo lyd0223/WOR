@@ -29,6 +29,26 @@ TileMap::TileMap(string sceneName)
 	
 	Load(sceneName);
 }
+TileMap::TileMap()
+{
+	mName = "TileMap";
+	for (int y = 0; y < TileCountY; y++)
+	{
+		vector<Tile*> tilelist;
+		mTileList.push_back(tilelist);
+		for (int x = 0; x < TileCountX; x++)
+		{
+			Tile* tile = new Tile
+			(
+				NULL,
+				TileSize * x, TileSize * y,
+				TileSize, TileSize,
+				0, 0
+			);
+			mTileList[y].push_back(tile);
+		}
+	}
+}
 void TileMap::Init()
 {
 	
@@ -57,6 +77,20 @@ void TileMap::Render()
 				//CameraManager::GetInstance()->GetMainCamera()->RenderGizmoRect({ tileRect.left + 1, tileRect.top + 1,tileRect.right - 1,tileRect.bottom - 1 }, D2D1::ColorF::Red);
 			}
 			
+		}
+	}
+}
+void TileMap::MiniMapRender()
+{
+	for (int y = 0; y < TileCountY; y++)
+	{
+		for (int x = 0; x < TileCountX; x++)
+		{
+			if (mTileList[y][x]->GetImage() != NULL)
+			{
+				D2D1_RECT_F rc = RectMake(mTileList[y][x]->GetX() / 10.f, mTileList[y][x]->GetY() / 10.f, mTileList[y][x]->GetSizeX() / 10.f, mTileList[y][x]->GetSizeY() / 10.f);
+				RenderFillRect(rc);
+			}
 		}
 	}
 }

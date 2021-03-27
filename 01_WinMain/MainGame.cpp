@@ -4,7 +4,9 @@
 #include "Image.h"
 #include"Scene_Tutorial.h"
 #include "Scene_MapTool.h"
-#include "Scene_Game.h"
+#include "Scene_House.h"
+#include "Scene_Field.h"
+#include "Scene_Boss.h"
 #include "Scene_TitleScene.h"
 
 /*
@@ -20,9 +22,10 @@ void MainGame::Init()
 {
 	SceneManager::GetInstance()->AddScene(L"MapTool", new Scene_MapTool);
 	SceneManager::GetInstance()->AddScene(L"Tutorial", new Scene_Tutorial);
+	SceneManager::GetInstance()->AddScene(L"Field", new Scene_Field);
+	SceneManager::GetInstance()->AddScene(L"Boss", new Scene_Boss);
 	SceneManager::GetInstance()->AddScene(L"Title", new Scene_TitleScene);
-	SceneManager::GetInstance()->LoadScene(L"Tutorial");
-	SkillCastingManager::GetInstance()->Init();
+	SceneManager::GetInstance()->LoadScene(L"Boss");
 }
 
 /*
@@ -57,6 +60,7 @@ void MainGame::Render(HDC hdc)
 	//이 안에서 그려라
 	{
 		SceneManager::GetInstance()->Render();
+
 	}
 	D2DRenderer::GetInstance()->EndRender();
 }

@@ -227,6 +227,15 @@ void Scene_MapTool::Init()
 
 	//Thorns
 
+	//Maps
+	mPallete_Map1 = new TilePallete();
+	mPallete_Map1->Image = ImageManager::GetInstance()->FindImage(L"FireBossMap");
+	mPallete_Map1->PositionX = palleteStartX - 20;
+	mPallete_Map1->PositionY = palleteStartY;
+	mPallete_Map1->Width = TileSize * 3 / 2;
+	mPallete_Map1->Height = TileSize * 3 / 2;
+	mPallete_Map1->Rect = RectMake(mPallete_Map1->PositionX, mPallete_Map1->PositionY, mPallete_Map1->Width, mPallete_Map1->Height);
+
 	//Structures
 	{
 		TilePallete* pallete = new TilePallete();
@@ -389,7 +398,16 @@ void Scene_MapTool::Init()
 		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
 		mPallete_Structure3.push_back(pallete);
 	}
-
+	{
+		TilePallete* pallete = new TilePallete();
+		pallete->Image = ImageManager::GetInstance()->FindImage(L"Penta");
+		pallete->PositionX = WINSIZEX - 350;
+		pallete->PositionY = 500;
+		pallete->Width = pallete->Image->GetWidth();
+		pallete->Height = pallete->Image->GetHeight();
+		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
+		mPallete_Structure3.push_back(pallete);
+	}
 	//튜토리얼 파레트
 	mPallete2 = new TilePallete();
 	mPallete2->Image = tileImage2;
@@ -627,6 +645,16 @@ void Scene_MapTool::Update()
 			{
 
 			}
+			if (mPalletePage == PalletePage::Maps)
+			{
+				if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
+				{
+					if (PtInRect(&mPallete_Map1->Rect, _mousePosition))
+					{
+						mCurrentPallete = mPallete_Map1;
+					}
+				}
+			}
 			if (mPalletePage == PalletePage::Structures)
 			{
 				if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
@@ -656,14 +684,7 @@ void Scene_MapTool::Update()
 				}
 
 			}
-			if (mPalletePage == PalletePage::Maps)
-			{
-				//튜토리얼파레트
-				if (PtInRect(&mPallete2->Rect, _mousePosition))
-				{
-					mCurrentPallete = mPallete2;
-				}
-			}
+			
 		}
 	}
 
@@ -805,17 +826,17 @@ void Scene_MapTool::Update()
 									}
 								}
 							}
-							//튜토리얼빠레트일때
-							else if (mCurrentPallete->Image->GetKey() == L"TutorialTile")
+							//파이어보스맵일때
+							else if (mCurrentPallete->Image->GetKey() == L"FireBossMap")
 							{
 
-								for (int y2 = 0; y2 < 43; y2++)
+								for (int y2 = y-6; y2 < y+6; y2++)
 								{
-									for (int x2 = 0; x2 < 74; x2++)
+									for (int x2 = x-8; x2 < x+8; x2++)
 									{
 										mTileList[y2][x2]->SetImage(mCurrentPallete->Image);
-										mTileList[y2][x2]->SetFrameIndexY(y2);
-										mTileList[y2][x2]->SetFrameIndexX(x2);
+										mTileList[y2][x2]->SetFrameIndexY(y2 - y + 6);
+										mTileList[y2][x2]->SetFrameIndexX(x2 - x + 8);
 									}
 								}
 							}
@@ -1009,7 +1030,6 @@ void Scene_MapTool::Update()
 								mCurrentPallete->Width,
 								mCurrentPallete->Height
 							);
-							mTileList[y][x]->SetType(Type::Wall);
 							mStructureList.push_back(st);
 							}
 							else if (mCurrentPallete->Image->GetKey() == L"Gate")
@@ -1307,6 +1327,46 @@ void Scene_MapTool::Render()
 			{
 
 			}
+			else if (mPalletePage == PalletePage::Maps)
+			{
+				if (mPalletePageX == 0)
+				{
+					mPallete_Map1->Image->SetScale(3.0f);
+					mPallete_Map1->Image->Render
+					(
+						(mPallete_Map1->Rect.right + mPallete_Map1->Rect.left) / 2,
+						(mPallete_Map1->Rect.top + mPallete_Map1->Rect.bottom) / 2
+					);
+					mPalleteImage->ScaleRender(
+						(mPallete_Map1->Rect.right + mPallete_Map1->Rect.left) / 2,
+						(mPallete_Map1->Rect.top + mPallete_Map1->Rect.bottom) / 2,
+						mPallete_Map1->Width,
+						mPallete_Map1->Height
+					);
+				}
+			/*for (int y = 0; y < PalleteSizeY; y++)
+			{
+				for (int x = 0; x < PalleteSizeX; x++)
+				{
+
+					mPallete[y][x]->Image->ScaleFrameRender
+					(
+						(mPallete[y][x]->Rect.right + mPallete[y][x]->Rect.left) / 2,
+						(mPallete[y][x]->Rect.top + mPallete[y][x]->Rect.bottom) / 2,
+						mPallete[y][x]->FrameX,
+						mPallete[y][x]->FrameY,
+						mPallete[y][x]->Width,
+						mPallete[y][x]->Height
+					);
+					Gizmo::GetInstance()->DrawRect(mPallete[y][x]->Rect, D2D1::ColorF::Red);
+				}
+			}*/
+			/*mPallete2->Image->SetScale(4.0f);
+			mPallete2->Image->Render(
+				(mPallete2->Rect.right + mPallete2->Rect.left) / 2,
+				(mPallete2->Rect.top + mPallete2->Rect.bottom) / 2);
+			Gizmo::GetInstance()->DrawRect(mPallete2->Rect, D2D1::ColorF::Red);*/
+			}
 			else if (mPalletePage == PalletePage::Structures)
 			{
 				if (mPalletePageX == 0)
@@ -1364,31 +1424,7 @@ void Scene_MapTool::Render()
 					}
 				}
 			}
-			else if (mPalletePage == PalletePage::Maps)
-			{
-				/*for (int y = 0; y < PalleteSizeY; y++)
-				{
-					for (int x = 0; x < PalleteSizeX; x++)
-					{
-
-						mPallete[y][x]->Image->ScaleFrameRender
-						(
-							(mPallete[y][x]->Rect.right + mPallete[y][x]->Rect.left) / 2,
-							(mPallete[y][x]->Rect.top + mPallete[y][x]->Rect.bottom) / 2,
-							mPallete[y][x]->FrameX,
-							mPallete[y][x]->FrameY,
-							mPallete[y][x]->Width,
-							mPallete[y][x]->Height
-						);
-						Gizmo::GetInstance()->DrawRect(mPallete[y][x]->Rect, D2D1::ColorF::Red);
-					}
-				}*/
-				/*mPallete2->Image->SetScale(4.0f);
-				mPallete2->Image->Render(
-					(mPallete2->Rect.right + mPallete2->Rect.left) / 2,
-					(mPallete2->Rect.top + mPallete2->Rect.bottom) / 2);
-				Gizmo::GetInstance()->DrawRect(mPallete2->Rect, D2D1::ColorF::Red);*/
-			}
+			
 		}
 	}
 
@@ -1410,7 +1446,8 @@ void Scene_MapTool::Render()
 			mCurrentPallete->Image->FrameRenderFromBottom(_mousePosition.x, _mousePosition.y, mCurrentPallete->FrameX, mCurrentPallete->FrameY);
 		}
 		else if (mCurrentPallete->Image->GetKey() == L"HouseWall1" || mCurrentPallete->Image->GetKey() == L"HouseWall2" || mCurrentPallete->Image->GetKey() == L"HouseWall3"
-			|| mCurrentPallete->Image->GetKey() == L"FireWall1" || mCurrentPallete->Image->GetKey() == L"FireWall2" || mCurrentPallete->Image->GetKey() == L"FireWall3")
+			|| mCurrentPallete->Image->GetKey() == L"FireWall1" || mCurrentPallete->Image->GetKey() == L"FireWall2" || mCurrentPallete->Image->GetKey() == L"FireWall3"
+			|| mCurrentPallete->Image->GetKey() == L"FireBossMap")
 		{
 			mCurrentPallete->Image->SetScale(6.0f);
 			mCurrentPallete->Image->Render(_mousePosition.x, _mousePosition.y);

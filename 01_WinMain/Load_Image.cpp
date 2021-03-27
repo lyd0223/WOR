@@ -49,6 +49,10 @@ void Load_Image::LoadSceneMapToolImage()
 
 	//Thorns
 
+	//Maps
+	ImageManager::GetInstance()->LoadFromFile(L"FireBossMap", Resources(L"Tile/Floor/Tile_Tutorial_FireTile.png"),16,12);
+
+
 	//Structs
 	ImageManager::GetInstance()->LoadFromFile(L"Tree1", Resources(L"Tile/Structure/Tree1.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"Tree2", Resources(L"Tile/Structure/Tree2.png"));
@@ -64,6 +68,7 @@ void Load_Image::LoadSceneMapToolImage()
 	ImageManager::GetInstance()->LoadFromFile(L"SmallTable", Resources(L"Tile/Structure/SmallTable.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"Table", Resources(L"Tile/Structure/Table.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"Gate", Resources(L"Tile/Structure/Gate.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"Penta", Resources(L"Tile/Structure/Penta.png"));
 
 	ImageManager::GetInstance()->LoadFromFile(L"Portal", Resources(L"Tile/Structure/Portal.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"PortalOn", Resources(L"Tile/Structure/PortalOn.png"));

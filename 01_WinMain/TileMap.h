@@ -12,11 +12,13 @@ class TileMap : public GameObject
 	vector<class Structure*> mStructureList;
 	
 public:
+	TileMap();
 	TileMap(string sceneName);
 	void Init()override;
 	void Update()override;
 	void Release()override;
 	void Render()override;
+	void MiniMapRender();
 	void Load(string sceneName);
 	inline vector<class Structure*> GetStructureList() { return mStructureList; };
 	inline vector<vector<class Tile*>> GetTileList() { return mTileList; };

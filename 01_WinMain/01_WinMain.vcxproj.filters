@@ -417,6 +417,12 @@
     <ClInclude Include="UserInterface.h">
       <Filter>MainGame\Object\UserInterface</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_Boss.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Field.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -691,6 +697,12 @@
     </ClCompile>
     <ClCompile Include="UserInterface.cpp">
       <Filter>MainGame\Object\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Boss.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Field.cpp">
+      <Filter>MainGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

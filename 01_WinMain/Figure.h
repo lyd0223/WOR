@@ -29,6 +29,15 @@ inline void RenderRect(D2D1_RECT_F rc, D2D1::ColorF color = D2D1::ColorF::Black 
 	D2DRenderer::GetInstance()->GetRenderTarget()->DrawRectangle(rc,brush,strokewidth);
 	brush->Release();
 }
+inline void RenderFillRect(D2D1_RECT_F rc, D2D1::ColorF color = D2D1::ColorF::Gray)
+{
+
+	D2DRenderer::GetInstance()->GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Identity());
+	ID2D1SolidColorBrush* brush;
+	D2DRenderer::GetInstance()->GetRenderTarget()->CreateSolidColorBrush(color, &brush);
+	D2DRenderer::GetInstance()->GetRenderTarget()->FillRectangle(rc, brush);
+	brush->Release();
+}
 
 //inline void RenderEllipse(D2D1_RECT_F rc)
 //{
