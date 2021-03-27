@@ -74,6 +74,11 @@ void Player::Init()
 	
 	mCurrentAnimation = mDownIdleAnimation;
 	mCurrentAnimation->Play();
+
+	mLB_ButtonSkill = "WindSlash";
+	mRB_ButtonSkill = "IceSpear";
+	mSpacebar_ButtonSkill = "Dash";
+	mQ_ButtonSkill = "FireBall";
 }
 
 void Player::Release()
@@ -504,26 +509,30 @@ void Player::Update()
 		{
 			AnimationChange(mRightThrowSkillandAttackAnimation);
 			mPlayerState = PlayerState::RightAttack;
-			SkillManager::GetInstance()->WindSlashSkill("WindSlash", lineX, lineY, mAngle);
+			SkillCastingManager::GetInstance()->CastingSkill(mLB_ButtonSkill, lineX, lineY, mAngle);
+			//SkillManager::GetInstance()->WindSlashSkill("WindSlash", lineX, lineY, mAngle);
 		}
 		else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
 		{
 			AnimationChange(mUpAttackAnimation);
 			mPlayerState = PlayerState::UpAttack;
-			SkillManager::GetInstance()->WindSlashSkill("WindSlash", lineX, lineY, mAngle);
+			SkillCastingManager::GetInstance()->CastingSkill(mLB_ButtonSkill, lineX, lineY, mAngle);
+			//illManager::GetInstance()->WindSlashSkill("WindSlash", lineX, lineY, mAngle);
 		}
 		else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
 		{
 
 			AnimationChange(mLeftThrowSkillandAttackAnimation);
-			mPlayerState = PlayerState::LeftAttack;
-			SkillManager::GetInstance()->WindSlashSkill("WindSlash", lineX, lineY, mAngle);
+			mPlayerState = PlayerState::LeftAttack; 
+			SkillCastingManager::GetInstance()->CastingSkill(mLB_ButtonSkill, lineX, lineY, mAngle);
+			//illManager::GetInstance()->WindSlashSkill("WindSlash", lineX, lineY, mAngle);
 		}
 		else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
 		{
 			AnimationChange(mDownAttackAnimation);
 			mPlayerState = PlayerState::DownAttack;
-			SkillManager::GetInstance()->WindSlashSkill("WindSlash", lineX, lineY, mAngle);
+			SkillCastingManager::GetInstance()->CastingSkill(mLB_ButtonSkill, lineX, lineY, mAngle);
+			//illManager::GetInstance()->WindSlashSkill("WindSlash", lineX, lineY, mAngle);
 		}
 	}
 	
@@ -563,25 +572,29 @@ void Player::Update()
 		{
 			if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
 			{
-				SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX -20, mY, mAngle);
+				SkillCastingManager::GetInstance()->CastingSkill(mRB_ButtonSkill, mX - 20, mY, mAngle);
+				//SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX -20, mY, mAngle);
 			}
 			else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
 			{
-				SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX, mY, mAngle);
+				SkillCastingManager::GetInstance()->CastingSkill(mRB_ButtonSkill, mX, mY, mAngle);
+				//SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX, mY, mAngle);
 			}
 			else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
 			{
-				SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX + 35, mY - 20, mAngle);
+				SkillCastingManager::GetInstance()->CastingSkill(mRB_ButtonSkill, mX + 35, mY - 20, mAngle);
+				//SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX + 35, mY - 20, mAngle);
 			}
 			else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
 			{
-				SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX + 20, mY - 20, mAngle);
+				SkillCastingManager::GetInstance()->CastingSkill(mRB_ButtonSkill, mX + 20, mY - 20, mAngle);
+				//SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX + 20, mY - 20, mAngle);
 			}
 			mIsAct = true;
 		}
 
 		//if (skill == nullptr)
-		SkillObject* skill = (SkillObject*)ObjectManager::GetInstance()->FindObject("SummonIceSpear");
+		SkillObject* skill = (SkillObject*)ObjectManager::GetInstance()->FindObject("IceSpear");
 		if (skill == nullptr)
 		{
 			return;

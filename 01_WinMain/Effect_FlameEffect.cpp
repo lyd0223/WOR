@@ -4,12 +4,13 @@
 #include "Animation.h"
 #include "Camera.h"
 
-Effect_FlameEffect::Effect_FlameEffect(const string & name, float x, float y, float angle)
+Effect_FlameEffect::Effect_FlameEffect(const string & name, float x, float y, float angle, float scale)
 	: GameObject(name)
 {
 	mX = x;
 	mY = y;
 	mAngle = angle;
+	mScale = scale;
 }
 
 void Effect_FlameEffect::Init()
@@ -43,6 +44,7 @@ void Effect_FlameEffect::Update()
 void Effect_FlameEffect::Render()
 {
 	if (mFlameEffectAnimation != nullptr) {
+		mImage->SetScale(mScale);
 		mImage->SetAngle(mAngle * (180 / PI));
 		CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mFlameEffectAnimation->GetNowFrameX(), mFlameEffectAnimation->GetNowFrameY());
 	}

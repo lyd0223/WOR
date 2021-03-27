@@ -62,8 +62,9 @@ class Monster_FireBoss : public MonsterObject
 
 	Effect_FireWing* mFireWing;
 	FireBossState mFireBossState;
-	//set<FireBossState> mFireBossStateList;
 	vector<FireBossState> mFireBossStateList;
+	
+	queue<function<void()>> mPatternList;
 
 	int mNum;
 	float mFrameCount;
@@ -97,5 +98,6 @@ public:
 	void BossStateChange();
 
 	void MakePatternFuncList();
+	void CallPattern();
 	FireBossState FireBossStateCheck(int index);
 };

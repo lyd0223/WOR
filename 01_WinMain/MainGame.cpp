@@ -22,6 +22,7 @@ void MainGame::Init()
 	SceneManager::GetInstance()->AddScene(L"Tutorial", new Scene_Tutorial);
 	SceneManager::GetInstance()->AddScene(L"Title", new Scene_TitleScene);
 	SceneManager::GetInstance()->LoadScene(L"Tutorial");
+	SkillCastingManager::GetInstance()->Init();
 }
 
 /*

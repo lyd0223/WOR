@@ -4,6 +4,7 @@ class ParticleManager
 	Singleton(ParticleManager)
 
 public:
+	
 	void MakeDustParticle(float x, float y, float angle, float scale);
 	void MakeDashEffectParticle(float x, float y, float angle);
 	void MakeShorkWaveParticle(float x, float y, float scale);

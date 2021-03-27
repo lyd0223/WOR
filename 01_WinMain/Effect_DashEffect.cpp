@@ -42,6 +42,6 @@ void Effect_DashEffect::Render()
 {
 	mImage->SetScale(2.f);
 	mImage->SetAlpha(0.5f);
-	mImage->SetAngle(mAngle * (180 / PI));
+	mImage->SetAngle(mAngle * -(180 / PI));
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mAnimation->GetNowFrameX(), mAnimation->GetNowFrameY());
 }

@@ -10,6 +10,9 @@ Skill_DragonArc::Skill_DragonArc(const string & name, float x, float y, float an
 	mY = y;
 	mAngle = angle;
 	mIsUp = isUp;
+
+	mSkillElement = SkillElement::Fire;
+	mSkillType = SkillType::Throw;
 }
 
 void Skill_DragonArc::Init()
@@ -28,8 +31,7 @@ void Skill_DragonArc::Init()
 	mUpAngle = mAngle + (PI / 3);
 	mDownAngle = mAngle - (PI / 3);
 
-	mSkillElement = SkillElement::Fire;
-	mSkillType = SkillType::Throw;
+	
 }
 
 void Skill_DragonArc::Release()

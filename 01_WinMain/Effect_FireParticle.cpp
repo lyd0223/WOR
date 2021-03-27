@@ -14,7 +14,7 @@ Effect_FireParticle::Effect_FireParticle(const string & name, float x, float y, 
 
 void Effect_FireParticle::Init()
 {
-	ImageManager::GetInstance()->LoadFromFile(L"FireParticle", Resources(L"Effect/FireParticle.png"), 6, 4);
+	ImageManager::GetInstance()->LoadFromFile(L"FireParticle", Resources(L"Effect/FireParticle2.png"), 6, 4);
 	mImage = ImageManager::GetInstance()->FindImage(L"FireParticle");
 
 	mSpeed = 3.f;

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include"Camera.h"
+#include "Camera.h"
 #include "Image.h"
 #include "Animation.h"
 #include "Skill_WindSlash.h"
@@ -11,6 +11,9 @@ Skill_WindSlash::Skill_WindSlash(const string& name, float x, float y, float ang
 	mX =   x;
 	mY =   y;
 	mAngle = angle;
+	mSkillTarget = SkillTarget::Player;
+	mSkillElement = SkillElement::Wind;
+	mSkillType = SkillType::Melee;
 }
 
 void Skill_WindSlash::Init()
@@ -22,9 +25,7 @@ void Skill_WindSlash::Init()
 	mSizeY = mImage->GetHeight() / 3 * 1.5;
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 
-	mSkillTarget = SkillTarget::Player;
-	mSkillElement = SkillElement::Wind;
-	mSkillType = SkillType::Melee;
+
 
 	mSlashAnimation = new Animation;
 	mSlashAnimation->InitFrameByStartEnd(0, 0, 4, 0, false);

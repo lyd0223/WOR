@@ -25,12 +25,15 @@ class UserInterface : public GameObject
 	UIObject* mSpaceButton;
 	UIObject* mQButton;
 	UIObject* mEButton;
-	
+	UIObject* mLB_ButtonSkillIcon;
+	UIObject* mSpace_ButtonSkillIcon;
+	UIObject* mRB_ButtonSkillIcon;
+	UIObject* mQ_ButtonSkillIcon;
 	
 	Image* mHPBarImage;
 	Image* mMPBarImage;
 	
-
+	map<string, Vector2> mSkillIndexList;
 public :
 	void Init()override;
 	void Update()override;

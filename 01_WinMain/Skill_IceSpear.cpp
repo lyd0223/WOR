@@ -14,6 +14,9 @@ Skill_IceSpear::Skill_IceSpear(const string& name, float x, float y, float angle
 	mX = x;
 	mY = y;
 	mAngle = angle;
+	mSkillTarget = SkillTarget::Player;
+	mSkillType = SkillType::Throw;
+	mSkillElement = SkillElement::Water;
 }
 
 void Skill_IceSpear::Init()
@@ -25,9 +28,7 @@ void Skill_IceSpear::Init()
 	mSizeY = mImage->GetHeight();
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 	mSpeed = 20.f;
-	mSkillTarget = SkillTarget::Player;
-	mSkillType = SkillType::Throw;
-	mSkillElement = SkillElement::Water;
+	
 
 	mIceSpearAnimation = new Animation;
 	mIceSpearAnimation->InitFrameByStartEnd(6, 0, 6, 0, false);

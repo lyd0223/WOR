@@ -97,6 +97,7 @@ void Monster_FireBoss::Release()
 void Monster_FireBoss::Update()
 {
 	mCurrentAnimation->Update();
+	mFrameCount += Time::GetInstance()->DeltaTime();
 
 	mAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
 
@@ -113,7 +114,7 @@ void Monster_FireBoss::Update()
 		mY -= 10;
 	}
 
-	if (Input::GetInstance()->GetKeyDown(VK_SPACE)) {
+	if (Input::GetInstance()->GetKeyDown('M')) {
 		//AttackReady();
 		//FireBallThrowPattern();
 		//StempPattern();
@@ -124,28 +125,47 @@ void Monster_FireBoss::Update()
 		//MakePatternFuncList();
 		//MeteorPattern();
 		SkillManager::GetInstance()->DragonArcSkill("DragonArc", mX, mY, mAngle, true);
+		
+		if (mPatternList.size() == 0)
+		{
+			MakePatternFuncList();
+		}
 	}
 
-	if (mFireBossState == FireBossState::Idle) {
-		BossStateChange();
+	if (mPatternList.size() != 0)
+	{
+		CallPattern();
 	}
 
-	if (mFireBossState == FireBossState::AttackReady) {
-		AttackReady();
-		mFireBossState = FireBossState::Idle;
+	if (mFireBossState == FireBossState::Idle)
+	{
+		if (mFrameCount > 0.1f)
+		{
+			mFrameCount = 0;
+			ParticleManager::GetInstance()->MakeFireParticle(mX + 10, mY - 30, 0);
+		}
 	}
 
-	if (mFireBossState == FireBossState::Throw) {
-		FireBallThrowPattern();
-	}
+	//if (mFireBossState == FireBossState::Idle) {
+	//	BossStateChange();
+	//}
 
-	if (mFireBossState == FireBossState::Kick) {
-		KickPattern();
-	}
+	//if (mFireBossState == FireBossState::AttackReady) {
+	//	AttackReady();
+	//	mFireBossState = FireBossState::Idle;
+	//}
 
-	if (mFireBossState == FireBossState::Dash) {
-		Move();
-	}
+	//if (mFireBossState == FireBossState::Throw) {
+	//	FireBallThrowPattern();
+	//}
+
+	//if (mFireBossState == FireBossState::Kick) {
+	//	KickPattern();
+	//}
+
+	//if (mFireBossState == FireBossState::Dash) {
+	//	Move();
+	//}
 
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
@@ -396,31 +416,19 @@ void Monster_FireBoss::BossStateChange()
 
 void Monster_FireBoss::MakePatternFuncList()
 {
-	mFireBossStateList.clear();
+	function<void()> func = [&] { MakeFireWing(); };
 
-	mFireBossStateList.push_back(FireBossState::AttackReady);
+	mPatternList.emplace(func);
+}
 
-	while (mFireBossStateList.size() < 3) {
-		FireBossState temp = FireBossStateCheck(Random::GetInstance()->RandomInt(2, 6));
-
-		for (int i = 0; i < mFireBossStateList.size(); i++) {
-			if (mFireBossStateList[i] != temp) mFireBossStateList.push_back(temp);
-		}
+void Monster_FireBoss::CallPattern()
+{
+	while (!mPatternList.empty())
+	{
+		auto func = mPatternList.front();
+		func;
+		mPatternList.pop();
 	}
-
-	mFireBossStateList.push_back(FireBossState::Refresh);
-
-	//mFireBossStateList.clear();
-
-	//mFireBossStateList.insert(FireBossState::AttackReady);
-
-	//while (mFireBossStateList.size() > 4) {
-	//	int randomInt = Random::GetInstance()->RandomInt(2, 6);
-	//
-	//	mFireBossStateList.insert(FireBossStateCheck(randomInt));
-	//}
-	//
-	//mFireBossStateList.insert(FireBossState::Refresh);
 }
 
 FireBossState Monster_FireBoss::FireBossStateCheck(int index)

@@ -91,6 +91,11 @@ class Player : public MovingObject
 	class Animation* mCurrentAnimation;
 
 
+	string mLB_ButtonSkill;
+	string mRB_ButtonSkill;
+	string mSpacebar_ButtonSkill;
+	string mQ_ButtonSkill;
+
 public:
 	Player(const string& name, float x, float y);
 

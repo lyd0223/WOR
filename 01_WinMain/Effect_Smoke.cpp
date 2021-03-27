@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "Effect_GlassShards.h"
+#include "Effect_Smoke.h"
 #include "Image.h"
 #include "Camera.h"
 #include "Animation.h"
 
-Effect_GlassShards::Effect_GlassShards(const string & name, float x, float y, float angle, float scale, float speed)
+Effect_Smoke::Effect_Smoke(const string & name, float x, float y, float angle, float scale, float speed)
 	: GameObject(name)
 {
 	mX = x;
@@ -14,41 +14,44 @@ Effect_GlassShards::Effect_GlassShards(const string & name, float x, float y, fl
 	mSpeed = speed;
 }
 
-void Effect_GlassShards::Init()
+void Effect_Smoke::Init()
 {
-	ImageManager::GetInstance()->LoadFromFile(L"GlassShards", Resources(L"Effect/GlassShardsLarge.png"), 4, 4);
+	ImageManager::GetInstance()->LoadFromFile(L"GlassShards", Resources(L"Effect/Smoke.png"), 8, 3);
 	mImage = ImageManager::GetInstance()->FindImage(L"GlassShards");
 
-	int randomY = Random::GetInstance()->RandomInt(4);
+	int randomY = Random::GetInstance()->RandomInt(3);
 
 	mAnimation = new Animation();
-	mAnimation->InitFrameByStartEnd(0, randomY, 3, randomY, false);
-	mAnimation->SetFrameUpdateTime(0.3f);
+	mAnimation->InitFrameByStartEnd(0, randomY, 7, randomY, false);
+	mAnimation->SetFrameUpdateTime(0.1f);
 	mAnimation->Play();
+
+	mAlpha = 0.2f;
 }
 
-void Effect_GlassShards::Release()
+void Effect_Smoke::Release()
 {
 	SafeDelete(mAnimation)
 }
 
-void Effect_GlassShards::Update()
+void Effect_Smoke::Update()
 {
 	mAnimation->Update();
 
-	if (mAnimation->GetNowFrameX() == 3)
+	if (mAnimation->GetNowFrameX() == 7)
 	{
 		mIsDestroy = true;
 	}
 
+	mAlpha -= 0.005f;
 	mX += cosf(mAngle) * mSpeed;
 	mY += -sinf(mAngle) * mSpeed;
 }
 
-void Effect_GlassShards::Render()
+void Effect_Smoke::Render()
 {
 	mImage->SetAngle(mAngle * (180 / PI));
 	mImage->SetScale(mScale);
-	mImage->SetAlpha(0.3f);
+	mImage->SetAlpha(mAlpha);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mAnimation->GetNowFrameX(), mAnimation->GetNowFrameY());
 }

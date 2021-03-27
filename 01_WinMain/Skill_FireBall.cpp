@@ -16,6 +16,8 @@ Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angl
 	mY = y;
 	mAngle = angle;
 	mSkillTarget = SkillTarget::Player;
+	mSkillElement = SkillElement::Fire;
+	mSkillType = SkillType::Throw;
 }
 
 Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angle, int delay)
@@ -26,6 +28,8 @@ Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angl
 	mAngle = angle;
 	mDelay = delay;
 	mSkillTarget = SkillTarget::Enemy;
+	mSkillElement = SkillElement::Fire;
+	mSkillType = SkillType::Throw;
 }
 
 void Skill_FireBall::Init()
@@ -38,8 +42,7 @@ void Skill_FireBall::Init()
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mSpeed = 10.f;
 
-	mSkillElement = SkillElement::Fire;
-	mSkillType = SkillType::Throw;
+
 
 	AnimationSet(&mFireBallReadyAnimation, false, false, 0, 0, 4, 0, 0.1f);
 	AnimationSet(&mFireBallFireAnimation, false, true, 4, 0, 8, 0, 0.1f);

@@ -9,8 +9,9 @@ class Effect_FlameEffect : public GameObject
 	Animation* mFlameEffectAnimation;
 
 	float mAngle;
+	float mScale;
 public:
-	Effect_FlameEffect(const string& name, float x, float y, float angle);
+	Effect_FlameEffect(const string& name, float x, float y, float angle, float scale);
 
 	void Init() override;
 	void Release() override;
