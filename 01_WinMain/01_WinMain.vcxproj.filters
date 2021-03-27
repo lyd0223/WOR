@@ -357,9 +357,6 @@
     <ClInclude Include="ParticleManager.h">
       <Filter>MainGame\Object\ParticleManager</Filter>
     </ClInclude>
-    <ClInclude Include="UserInterface.h">
-      <Filter>MainGame\Object\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Effect_WaterExplosion.h">
       <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
@@ -416,6 +413,9 @@
     </ClInclude>
     <ClInclude Include="UI_SpellBook.h">
       <Filter>MainGame\Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface.h">
+      <Filter>MainGame\Object\UserInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -632,9 +632,6 @@
     <ClCompile Include="ParticleManager.cpp">
       <Filter>MainGame\Object\ParticleManager</Filter>
     </ClCompile>
-    <ClCompile Include="UserInterface.cpp">
-      <Filter>MainGame\Object\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Effect_WaterExplosion.cpp">
       <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
@@ -691,6 +688,9 @@
     </ClCompile>
     <ClCompile Include="UI_SpellBook.cpp">
       <Filter>MainGame\Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface.cpp">
+      <Filter>MainGame\Object\UserInterface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

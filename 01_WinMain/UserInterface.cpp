@@ -37,7 +37,12 @@ void UserInterface::Init()
 	mMouseRButton = new  UIObject(170, WINSIZEY -100, 50, 50, ImageManager::GetInstance()->FindImage(L"MouseRButton"));
 	mQButton = new  UIObject(225, WINSIZEY - 100, 50, 50, ImageManager::GetInstance()->FindImage(L"QButton"));
 
-	Player* player = (Player*) ObjectManager::GetInstance()->FindObject("Player");
+	mLB_ButtonSkillIcon = new UIObject(60, WINSIZEY - 50, 42, 42, ImageManager::GetInstance()->FindImage(L"SkillIcon"));
+	mSpace_ButtonSkillIcon = new UIObject(115, WINSIZEY - 50, 42, 42, ImageManager::GetInstance()->FindImage(L"SkillIcon"));
+	mRB_ButtonSkillIcon = new UIObject(170, WINSIZEY - 50, 42, 42, ImageManager::GetInstance()->FindImage(L"SkillIcon"));
+	mQ_ButtonSkillIcon = new UIObject(225, WINSIZEY - 50, 42, 42, ImageManager::GetInstance()->FindImage(L"SkillIcon"));
+
+	mPlayer = (Player*) ObjectManager::GetInstance()->FindObject("Player");
 
 	//mEButton = new  UIObject(320, WINSIZEY - 50, 50, 50, ImageManager::GetInstance()->FindImage(L"SpecialSkillBox"));
 }
@@ -52,11 +57,15 @@ void UserInterface::Release()
 
 void UserInterface::Render()
 {
+	Vector2 LB = mSkillIndexList.find(mPlayer->GetLB_ButtonSkill())->second;
+	Vector2 RB = mSkillIndexList.find(mPlayer->GetRB_ButtonSkill())->second;
+	//Vector2 Space = mSkillIndexList.find(mPlayer->GetSpacebar_ButtonSkill())->second;
+	Vector2 Q = mSkillIndexList.find(mPlayer->GetQ_ButtonSkill())->second;
+
 	mStatus->Image->ScaleRenderFromLeft(mStatus->X, mStatus->Y, mStatus->SizeX  , mStatus->SizeY);
 	mHPBar->Image->ScaleRenderFromLeft(mHPBar->X, mHPBar->Y, mHPBar->SizeX * 0.8f, mHPBar->SizeY); //0.8f에 플레이어체력 %넣으세요
 	mMPBar->Image->ScaleRenderFromLeft(mMPBar->X, mMPBar->Y, mMPBar->SizeX * 0.8f, mMPBar->SizeY);
 
-	
 	mSkillBox1->Image->ScaleRender(mSkillBox1->X, mSkillBox1->Y, mSkillBox1->SizeX, mSkillBox1->SizeY);
 	mSkillBox2->Image->ScaleRender(mSkillBox2->X, mSkillBox2->Y, mSkillBox2->SizeX, mSkillBox2->SizeY);
 	mSkillBox3->Image->ScaleRender(mSkillBox3->X, mSkillBox3->Y, mSkillBox3->SizeX, mSkillBox3->SizeY);
@@ -66,5 +75,11 @@ void UserInterface::Render()
 	mSpaceButton->Image->ScaleRender(mSpaceButton->X, mSpaceButton->Y, mSpaceButton->SizeX, mSpaceButton->SizeY);
 	mMouseRButton->Image->ScaleRender(mMouseRButton->X, mMouseRButton->Y, mMouseRButton->SizeX, mMouseRButton->SizeY);
 	mQButton->Image->ScaleRender(mQButton->X, mQButton->Y, mQButton->SizeX, mQButton->SizeY);
+
+	mLB_ButtonSkillIcon->Image->ScaleFrameRender(mLB_ButtonSkillIcon->X, mLB_ButtonSkillIcon->Y, LB.X, LB.Y, mLB_ButtonSkillIcon->SizeX, mLB_ButtonSkillIcon->SizeY);
+	//mSpace_ButtonSkillIcon->Image->ScaleFrameRender(mSpace_ButtonSkillIcon->X, mSpace_ButtonSkillIcon->Y, .X, RB.Y, mSpace_ButtonSkillIcon->SizeX, mSpace_ButtonSkillIcon->SizeY);
+	mRB_ButtonSkillIcon->Image->ScaleFrameRender(mRB_ButtonSkillIcon->X, mRB_ButtonSkillIcon->Y, RB.X, RB.Y, mRB_ButtonSkillIcon->SizeX, mRB_ButtonSkillIcon->SizeY);
+	mQ_ButtonSkillIcon->Image->ScaleFrameRender(mQ_ButtonSkillIcon->X, mQ_ButtonSkillIcon->Y, Q.X, Q.Y, mQ_ButtonSkillIcon->SizeX, mQ_ButtonSkillIcon->SizeY);
+
 	//mSpecialSkillBox->Image->ScaleRender(mSpecialSkillBox->X, mSpecialSkillBox->Y, mSpecialSkillBox->SizeX, mSpecialSkillBox->SizeY);
 }

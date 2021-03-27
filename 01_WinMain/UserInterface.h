@@ -10,6 +10,7 @@ struct UIObject
 	float SizeY;
 	Image* Image;
 };
+class Player;
 class UserInterface : public GameObject
 {
 	UIObject* mHPBar;
@@ -33,6 +34,8 @@ class UserInterface : public GameObject
 	Image* mHPBarImage;
 	Image* mMPBarImage;
 	
+	Player* mPlayer;
+
 	map<string, Vector2> mSkillIndexList;
 public :
 	void Init()override;

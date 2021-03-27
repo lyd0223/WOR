@@ -90,7 +90,6 @@ class Player : public MovingObject
 	bool mIsDashEffect;
 	class Animation* mCurrentAnimation;
 
-
 	string mLB_ButtonSkill;
 	string mRB_ButtonSkill;
 	string mSpacebar_ButtonSkill;
@@ -108,6 +107,11 @@ public:
 	void AnimationChange(Animation* changeanimation);
 	float GetSpeed() { return mSpeed; }
 	float GetAngle() { return mAngle; }
+
+	string GetLB_ButtonSkill() { return mLB_ButtonSkill; }
+	string GetRB_ButtonSkill() { return mRB_ButtonSkill; }
+	string GetSpacebar_ButtonSkill() { return mSpacebar_ButtonSkill; }
+	string GetQ_ButtonSkill() { return mQ_ButtonSkill; }
 
 	//void SetTileList(Tile* tileList[TileCountY][TileCountX])
 	//{
