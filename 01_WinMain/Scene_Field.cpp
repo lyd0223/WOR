@@ -30,8 +30,9 @@ void Scene_Field::Init()
 	
 	//
 
-	/*mPlayer = new Player("Player", 55 * TileSize, 55 * TileSize);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);*/
+	mPlayer = new Player("Player", 0, 0);
+	RandomMapGeneration::GetInstance()->RandomPlayerPosition(mPlayer);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 
 
 	ObjectManager::GetInstance()->Init();
@@ -39,8 +40,8 @@ void Scene_Field::Init()
 	Camera* camera = new Camera();
 
 	camera->Init();
-	camera->ChangeMode(Camera::Mode::MapTool);
-	//camera->SetTarget(mPlayer);
+	camera->ChangeMode(Camera::Mode::Follow);
+	camera->SetTarget(mPlayer);
 	CameraManager::GetInstance()->SetMainCamera(camera);
 }
 

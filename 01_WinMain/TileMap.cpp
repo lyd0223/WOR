@@ -10,6 +10,7 @@
 TileMap::TileMap(string sceneName)
 {
 	mName = "TileMap";
+	mIsField = 0;
 	for (int y = 0; y < TileCountY; y++)
 	{
 		vector<Tile*> tilelist;
@@ -32,11 +33,12 @@ TileMap::TileMap(string sceneName)
 TileMap::TileMap()
 {
 	mName = "TileMap";
-	for (int y = 0; y < TileCountY; y++)
+	mIsField = 1;
+	for (int y = 0; y < TileCountY+50; y++)
 	{
 		vector<Tile*> tilelist;
 		mTileList.push_back(tilelist);
-		for (int x = 0; x < TileCountX; x++)
+		for (int x = 0; x < TileCountX+50; x++)
 		{
 			Tile* tile = new Tile
 			(
@@ -65,31 +67,69 @@ void TileMap::Release()
 void TileMap::Render()
 {
 	D2D1_RECT_F cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
-
-	for (int y = 0; y < TileCountY; y++)
+	if (mIsField)
 	{
-		for (int x = 0; x < TileCountX; x++)
+		for (int y = 0; y < TileCountY+50; y++)
 		{
-			D2D1_RECT_F tileRect = mTileList[y][x]->GetRect();
-			if (cameraRect.right > tileRect.left && cameraRect.left < tileRect.right && cameraRect.bottom > tileRect.top && cameraRect.top < tileRect.bottom)
+			for (int x = 0; x < TileCountX+50; x++)
 			{
-				mTileList[y][x]->Render();
-				//CameraManager::GetInstance()->GetMainCamera()->RenderGizmoRect({ tileRect.left + 1, tileRect.top + 1,tileRect.right - 1,tileRect.bottom - 1 }, D2D1::ColorF::Red);
+				D2D1_RECT_F tileRect = mTileList[y][x]->GetRect();
+				if (cameraRect.right > tileRect.left && cameraRect.left < tileRect.right && cameraRect.bottom > tileRect.top && cameraRect.top < tileRect.bottom)
+				{
+					mTileList[y][x]->Render();
+					//CameraManager::GetInstance()->GetMainCamera()->RenderGizmoRect({ tileRect.left + 1, tileRect.top + 1,tileRect.right - 1,tileRect.bottom - 1 }, D2D1::ColorF::Red);
+				}
+
 			}
-			
+		}
+	}
+	else
+	{
+		for (int y = 0; y < TileCountY; y++)
+		{
+			for (int x = 0; x < TileCountX; x++)
+			{
+				D2D1_RECT_F tileRect = mTileList[y][x]->GetRect();
+				if (cameraRect.right > tileRect.left && cameraRect.left < tileRect.right && cameraRect.bottom > tileRect.top && cameraRect.top < tileRect.bottom)
+				{
+					mTileList[y][x]->Render();
+					//CameraManager::GetInstance()->GetMainCamera()->RenderGizmoRect({ tileRect.left + 1, tileRect.top + 1,tileRect.right - 1,tileRect.bottom - 1 }, D2D1::ColorF::Red);
+				}
+
+			}
 		}
 	}
 }
 void TileMap::MiniMapRender()
 {
-	for (int y = 0; y < TileCountY; y++)
+	if (mIsField)
 	{
-		for (int x = 0; x < TileCountX; x++)
+		for (int y = 0; y < TileCountY+50; y++)
 		{
-			if (mTileList[y][x]->GetImage() != NULL)
+			for (int x = 0; x < TileCountX+50; x++)
 			{
-				D2D1_RECT_F rc = RectMake(mTileList[y][x]->GetX() / 10.f, mTileList[y][x]->GetY() / 10.f, mTileList[y][x]->GetSizeX() / 10.f, mTileList[y][x]->GetSizeY() / 10.f);
-				RenderFillRect(rc);
+				if (mTileList[y][x]->GetImage() != NULL)
+				{
+					D2D1_RECT_F rc = RectMake(mTileList[y][x]->GetX() / 20.f, mTileList[y][x]->GetY() / 20.f+200, mTileList[y][x]->GetSizeX() / 20.f, mTileList[y][x]->GetSizeY() / 20.f);
+					RenderFillRect(rc);
+				}
+			}
+		}
+		GameObject* player = ObjectManager::GetInstance()->FindObject("Player");
+		D2D1_RECT_F rc = RectMake(player->GetX() / 20.f, player->GetY() / 20.f+200, player->GetSizeX() / 20.f, player->GetSizeY() / 20.f);
+		RenderFillRect(rc,D2D1::ColorF::Red);
+	}
+	else
+	{
+		for (int y = 0; y < TileCountY; y++)
+		{
+			for (int x = 0; x < TileCountX; x++)
+			{
+				if (mTileList[y][x]->GetImage() != NULL)
+				{
+					D2D1_RECT_F rc = RectMake(mTileList[y][x]->GetX() / 10.f, mTileList[y][x]->GetY() / 10.f, mTileList[y][x]->GetSizeX() / 10.f, mTileList[y][x]->GetSizeY() / 10.f);
+					RenderFillRect(rc);
+				}
 			}
 		}
 	}

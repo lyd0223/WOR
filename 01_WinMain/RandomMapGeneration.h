@@ -1,11 +1,13 @@
 #pragma once
 struct Line
 {
-	float x1, y1, x2, y2;
+	int x1, y1, x2, y2;
 };
 struct Room
 {
 	int x, y, sizeX, sizeY;
+	int centerX = (x + sizeX + x) / 2;
+	int centerY = (y + sizeY + y) / 2;
 };
 class Node
 {
@@ -43,6 +45,9 @@ public:
 	void Init();
 	void CreateRandomMap(class TileMap* tilemap);
 	void Devide(Node* node);
-	void MakeRoad();
+	void MakeRoad(class TileMap* tilemap);
+	void RandomMonster();
+	void RandomPlayerPosition(class Player* player);
+
 };
 

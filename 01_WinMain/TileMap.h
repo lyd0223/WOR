@@ -7,7 +7,7 @@
 
 class TileMap : public GameObject
 {
-
+	bool mIsField;
 	vector<vector<class Tile*>> mTileList;
 	vector<class Structure*> mStructureList;
 	

@@ -2,6 +2,7 @@
 #include "RandomMapGeneration.h"
 #include "TileMap.h"
 #include "Tile.h"
+#include "Player.h"
 void RandomMapGeneration::Init()
 {
 	mRoot = new Node(0, 0, 150, 150);
@@ -14,7 +15,7 @@ void RandomMapGeneration::Init()
 void RandomMapGeneration::CreateRandomMap(TileMap* tilemap)
 {
 	Init();
-	//맵나누기 큐
+	//맵나누기 bfs
 	mCurrentNode = nullptr;
 	while (1)
 	{
@@ -30,12 +31,12 @@ void RandomMapGeneration::CreateRandomMap(TileMap* tilemap)
 			break;
 	}
 
-	//방 만들기 재귀
+	//방 만들기 dfs 재귀
 	mRoot->MakeRoom(tilemap);
 
-	//길 만들기 스택
-	/*s.push(mRoot);
-	MakeRoad();*/
+	//길 만들기 dfs 스택
+	s.push(mRoot);
+	MakeRoad(tilemap);
 }
 
 
@@ -54,20 +55,20 @@ void RandomMapGeneration::Devide(Node* node)
 {
 
 	bool direction = Random::GetInstance()->RandomInt(0, 1);
-	if (!direction && node->mSizeX < 30)
+	if (!direction && node->mSizeX < 50)
 	{
 		direction = 1;
 	}
-	else if (direction && node->mSizeY < 30)
+	else if (direction && node->mSizeY < 50)
 	{
 		direction = 0;
 	}
-	if (direction == 0 && node->mSizeX > 30)//세로로짜르기
+	if (direction == 0 && node->mSizeX > 50)//세로로짜르기
 	{
 		float x = 0;
-		while (x < 27 || node->mSizeX - x < 27)
+		while (x < 25 || node->mSizeX - x < 25)
 		{
-			if (x < 27 && node->mSizeY - x < 27)
+			if (x < 25 && node->mSizeY - x < 25)
 				return;
 			x = Random::GetInstance()->RandomInt(node->mSizeX * 0.3f, node->mSizeX * 0.7f);
 		}
@@ -80,12 +81,12 @@ void RandomMapGeneration::Devide(Node* node)
 		q.push(node->mLeftNode);
 		q.push(node->mRightNode);
 	}
-	else if (direction == 1 && node->mSizeY > 30)          // 가로로짜르기
+	else if (direction == 1 && node->mSizeY > 50)          // 가로로짜르기
 	{
 		float y = 0;
-		while (y < 27 || node->mSizeY - y < 27)
+		while (y < 25 || node->mSizeY - y < 25)
 		{
-			if (y < 27 && node->mSizeY - y < 27)
+			if (y < 25 && node->mSizeY - y < 25)
 				return;
 			y = Random::GetInstance()->RandomInt(node->mSizeY * 0.3f, node->mSizeY * 0.7f);
 		}
@@ -165,136 +166,489 @@ void Node::MakeRoom(TileMap* tilemap)
 	}
 	if (mLeftNode == nullptr)
 	{
-		int x =  Random::GetInstance()->RandomInt(5, 8);
-		int y =  Random::GetInstance()->RandomInt(5, 8);
+		int x1;
+		int y1;
+		if (mSizeX < 30)
+			x1 = 2;
+		else if (mSizeX >= 30 && mSizeX < 40)
+			x1 = Random::GetInstance()->RandomInt(3, 5);
+		else if (mSizeX >= 40 && mSizeX < 50)
+			x1 = Random::GetInstance()->RandomInt(10, 13);
+		else
+			x1 = Random::GetInstance()->RandomInt(15, 18);
+		if (mSizeY < 30)
+			y1 = 2;
+		else if (mSizeY >= 30 && mSizeY < 40)
+			y1 = Random::GetInstance()->RandomInt(3, 5);
+		else if (mSizeY >= 40 && mSizeY < 50)
+			y1 = Random::GetInstance()->RandomInt(10, 13);
+		else
+			y1 = Random::GetInstance()->RandomInt(15, 18);
+		int x2;
+		int y2;
+		if (mSizeX < 30)
+			x2 = 2;
+		else if (mSizeX >= 30 && mSizeX < 40)
+			x2 = Random::GetInstance()->RandomInt(3, 5);
+		else if (mSizeX >= 40 && mSizeX < 50)
+			x2 = Random::GetInstance()->RandomInt(10, 13);
+		else
+			x2 = Random::GetInstance()->RandomInt(15, 18);
+		if (mSizeY < 30)
+			y2 = 2;
+		else if (mSizeY >= 30 && mSizeY < 40)
+			y2 = Random::GetInstance()->RandomInt(3, 5);
+		else if (mSizeY >= 40 && mSizeY < 50)
+			y2 = Random::GetInstance()->RandomInt(10, 13);
+		else
+			y2 = Random::GetInstance()->RandomInt(15, 18);
 		mSelectRoom = {
-			mX + x,
-			mY + y,
-			mSizeX - Random::GetInstance()->RandomInt(8 , 12),
-			mSizeY - Random::GetInstance()->RandomInt(8 , 12) 
+			mX + x1,
+			mY + y1,
+			mSizeX - (x2 + x1),
+			mSizeY - (y2 + y1)
 		};
+		//타일깔기
 		for (int y = mSelectRoom.y; y < mSelectRoom.y + mSelectRoom.sizeY; y++)
 		{
 			for (int x = mSelectRoom.x; x < mSelectRoom.x + mSelectRoom.sizeX; x++)
 			{
 				tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireFloor"));
 				tilemap->GetTileList()[y][x]->SetFrameIndexX(Random::GetInstance()->RandomInt(6));
-				tilemap->GetTileList()[y][x]->SetFrameIndexX(Random::GetInstance()->RandomInt(1));
+				tilemap->GetTileList()[y][x]->SetFrameIndexY(Random::GetInstance()->RandomInt(1));
+				tilemap->GetTileList()[y][x]->SetType(Type::Floor);
 			}
 		}
+		//사방 벽 만들기.
+		{
+			int y = mSelectRoom.y;
+			for (int x = mSelectRoom.x; x < mSelectRoom.x + mSelectRoom.sizeX; x++)
+			{
+				tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+				tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
+				tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
+				tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+			}
+		}
+		{
+			int y = mSelectRoom.y + mSelectRoom.sizeY-1;
+			for (int x = mSelectRoom.x; x < mSelectRoom.x + mSelectRoom.sizeX; x++)
+			{
+				tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+				tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
+				tilemap->GetTileList()[y][x]->SetFrameIndexY(2);
+				tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+			}
+		}
+		{
+			int x = mSelectRoom.x;
+			for (int y = mSelectRoom.y; y < mSelectRoom.y + mSelectRoom.sizeY; y++)
+			{
+				tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+				tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
+				tilemap->GetTileList()[y][x]->SetFrameIndexY(1);
+				tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+			}
+		}
+		{
+			int x = mSelectRoom.x + mSelectRoom.sizeX - 1;
+			for (int y = mSelectRoom.y; y < mSelectRoom.y + mSelectRoom.sizeY; y++)
+			{
+				tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+				tilemap->GetTileList()[y][x]->SetFrameIndexX(2);
+				tilemap->GetTileList()[y][x]->SetFrameIndexY(1);
+				tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+			}
+		}
+		//꼭지점 벽
+		{
+			int x = mSelectRoom.x;
+			int y = mSelectRoom.y;
+			tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+			tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
+			tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
+			tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+		}
+		{
+			int x = mSelectRoom.x;
+			int y = mSelectRoom.y + mSelectRoom.sizeY -1;
+			tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+			tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
+			tilemap->GetTileList()[y][x]->SetFrameIndexY(2);
+			tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+		}
+		{
+			int x = mSelectRoom.x + mSelectRoom.sizeX -1;
+			int y = mSelectRoom.y;
+			tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+			tilemap->GetTileList()[y][x]->SetFrameIndexX(2);
+			tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
+			tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+		}
+		{
+			int x = mSelectRoom.x + mSelectRoom.sizeX-1;
+			int y = mSelectRoom.y + mSelectRoom.sizeY-1;
+			tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+			tilemap->GetTileList()[y][x]->SetFrameIndexX(2);
+			tilemap->GetTileList()[y][x]->SetFrameIndexY(2);
+			tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+		}
+		//윗벽
+		{
+			for (int y = mSelectRoom.y+1; y < mSelectRoom.y +4; y++)
+			{
+				for (int x = mSelectRoom.x+1; x < mSelectRoom.x + mSelectRoom.sizeX-1; x++)
+				{
+					if (((x - mSelectRoom.x) / 3) % 3 == 0)
+					{
+						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall1"));
+					}
+					else if (((x - mSelectRoom.x) / 3) % 3 == 1)
+					{
+						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall2"));
+					}
+					else if (((x - mSelectRoom.x) / 3) % 3 == 2)
+					{
+						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall3"));
+					}
+					
+					tilemap->GetTileList()[y][x]->SetFrameIndexX((x - mSelectRoom.x) % 3);
+					tilemap->GetTileList()[y][x]->SetFrameIndexY((y - mSelectRoom.y-1)%3);
+					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+				}
+			}
+		}
+		
+		
 		mRoomList.push_back(mSelectRoom);
 	}
 }
-//
-//void RandomMapGeneration::MakeRoad()
-//{
-//	while (!s.empty())
-//	{
-//		Node* nodetemp = s.top();
-//		s.pop();
-//		if (nodetemp->mLeftNode != nullptr)
-//		{
-//			if (!nodetemp->mIsVisit)
-//			{
-//				s.push(nodetemp);
-//				s.push(nodetemp->mRightNode);
-//				s.push(nodetemp->mLeftNode);
-//				nodetemp->mIsVisit = 1;
-//			}
-//			else
-//			{
-//
-//				//좌측방의 셀렉트룸설정.
-//				float x = (nodetemp->mRightNode->mRect.left + nodetemp->mRightNode->mRect.right) / 2;
-//				float y = (nodetemp->mRightNode->mRect.top + nodetemp->mRightNode->mRect.bottom) / 2;
-//				float distance = 100000;
-//
-//				for (int i = 0; i < nodetemp->mLeftNode->mRoomList.size(); i++)
-//				{
-//					float x2 = (nodetemp->mLeftNode->mRoomList[i].left + nodetemp->mLeftNode->mRoomList[i].right) / 2;
-//					float y2 = (nodetemp->mLeftNode->mRoomList[i].top + nodetemp->mLeftNode->mRoomList[i].bottom) / 2;
-//					float distance2 = Math::GetDistance(x, y, x2, y2);
-//					if (distance > distance2)
-//					{
-//						distance = distance2;
-//						nodetemp->mLeftNode->mSelectRoom = nodetemp->mLeftNode->mRoomList[i];
-//					}
-//				}
-//
-//
-//				//우측방의 셀렉트룸설정.
-//				x = (nodetemp->mLeftNode->mSelectRoom.left + nodetemp->mLeftNode->mSelectRoom.right) / 2;
-//				y = (nodetemp->mLeftNode->mSelectRoom.top + nodetemp->mLeftNode->mSelectRoom.bottom) / 2;
-//				distance = 100000;
-//
-//				for (int i = 0; i < nodetemp->mRightNode->mRoomList.size(); i++)
-//				{
-//					float x2 = (nodetemp->mRightNode->mRoomList[i].left + nodetemp->mRightNode->mRoomList[i].right) / 2;
-//					float y2 = (nodetemp->mRightNode->mRoomList[i].top + nodetemp->mRightNode->mRoomList[i].bottom) / 2;
-//					float distance2 = Math::GetDistance(x, y, x2, y2);
-//					if (distance > distance2)
-//					{
-//						distance = distance2;
-//						nodetemp->mRightNode->mSelectRoom = nodetemp->mRightNode->mRoomList[i];
-//					}
-//				}
-//
-//
-//				//가로로 잘랏을때
-//				if (nodetemp->mLeftNode->mX == nodetemp->mRightNode->mX)
-//				{
-//					float x1, y1, x2, y2;
-//					if (nodetemp->mLeftNode->mSelectRoom.right - nodetemp->mLeftNode->mSelectRoom.left >
-//						nodetemp->mRightNode->mSelectRoom.right - nodetemp->mRightNode->mSelectRoom.left)
-//					{
-//						x1 = (nodetemp->mRightNode->mSelectRoom.left + nodetemp->mRightNode->mSelectRoom.right) / 2;
-//						x2 = x1;
-//						y1 = nodetemp->mRightNode->mSelectRoom.top;
-//						y2 = nodetemp->mLeftNode->mSelectRoom.bottom;
-//					}
-//					else
-//					{
-//						x1 = (nodetemp->mLeftNode->mSelectRoom.left + nodetemp->mLeftNode->mSelectRoom.right) / 2;
-//						x2 = x1;
-//						y1 = nodetemp->mLeftNode->mSelectRoom.bottom;
-//						y2 = nodetemp->mRightNode->mSelectRoom.top;
-//
-//					}
-//
-//					Line road = { x1,y1,x2,y2 };
-//					mRoadList.push_back(road);
-//
-//				}
-//				//세로로 잘랏을때
-//				else if (nodetemp->mLeftNode->mY == nodetemp->mRightNode->mY)
-//				{
-//					float x1, y1, x2, y2;
-//					if (nodetemp->mLeftNode->mSelectRoom.bottom - nodetemp->mLeftNode->mSelectRoom.top >
-//						nodetemp->mRightNode->mSelectRoom.bottom - nodetemp->mRightNode->mSelectRoom.top)
-//					{
-//						x1 = nodetemp->mRightNode->mSelectRoom.left;
-//						x2 = nodetemp->mLeftNode->mSelectRoom.right;
-//						y1 = (nodetemp->mRightNode->mSelectRoom.top + nodetemp->mRightNode->mSelectRoom.bottom) / 2;
-//						y2 = y1;
-//					}
-//					else
-//					{
-//						x1 = nodetemp->mLeftNode->mSelectRoom.right;
-//						x2 = nodetemp->mRightNode->mSelectRoom.left;
-//						y1 = (nodetemp->mLeftNode->mSelectRoom.top + nodetemp->mLeftNode->mSelectRoom.bottom) / 2;
-//						y2 = y1;
-//					}
-//
-//					Line road = { x1,y1,x2,y2 };
-//					mRoadList.push_back(road);
-//				}
-//			}
-//		}
-//		else
-//		{
-//
-//
-//		}
-//	}
-//
-//}
+
+void RandomMapGeneration::MakeRoad(TileMap* tilemap)
+{
+	while (!s.empty())
+	{
+		Node* nodetemp = s.top();
+		s.pop();
+		if (nodetemp->mLeftNode != nullptr)
+		{
+			if (!nodetemp->mIsVisit)
+			{
+				s.push(nodetemp);
+				s.push(nodetemp->mRightNode);
+				s.push(nodetemp->mLeftNode);
+				nodetemp->mIsVisit = 1;
+			}
+			else
+			{
+
+				//좌측방의 셀렉트룸설정.
+				int x = (nodetemp->mRightNode->mX + nodetemp->mRightNode->mX + nodetemp->mRightNode->mSizeX) / 2;
+				int y = (nodetemp->mRightNode->mY + nodetemp->mRightNode->mY + nodetemp->mRightNode->mSizeY) / 2;
+				float distance = 100000;
+
+				for (int i = 0; i < nodetemp->mLeftNode->mRoomList.size(); i++)
+				{
+					int x2 = nodetemp->mLeftNode->mRoomList[i].centerX;
+					int y2 = nodetemp->mLeftNode->mRoomList[i].centerY;
+					float distance2 = Math::GetDistance(x, y, x2, y2);
+					if (distance > distance2)
+					{
+						distance = distance2;
+						nodetemp->mLeftNode->mSelectRoom = nodetemp->mLeftNode->mRoomList[i];
+					}
+				}
+
+
+				//우측방의 셀렉트룸설정.
+				x = nodetemp->mLeftNode->mSelectRoom.centerX;
+				y = nodetemp->mLeftNode->mSelectRoom.centerY;
+				distance = 100000;
+
+				for (int i = 0; i < nodetemp->mRightNode->mRoomList.size(); i++)
+				{
+					int x2 = nodetemp->mRightNode->mRoomList[i].centerX;
+					int y2 = nodetemp->mRightNode->mRoomList[i].centerY;
+					float distance2 = Math::GetDistance(x, y, x2, y2);
+					if (distance > distance2)
+					{
+						distance = distance2;
+						nodetemp->mRightNode->mSelectRoom = nodetemp->mRightNode->mRoomList[i];
+					}
+				}
+
+
+				//가로로 잘랏을때
+				//if (nodetemp->mLeftNode->mX == nodetemp->mRightNode->mX)
+				//{
+				//	int x1, y1, x2, y2;
+				//	if (nodetemp->mLeftNode->mSelectRoom.sizeX >nodetemp->mRightNode->mSelectRoom.sizeX)
+				//	{
+				//		x1 = nodetemp->mRightNode->mSelectRoom.centerX;
+				//		x2 = x1;
+				//		y1 = nodetemp->mRightNode->mSelectRoom.y;
+				//		y2 = nodetemp->mLeftNode->mSelectRoom.y+ nodetemp->mLeftNode->mSelectRoom.sizeY;
+				//	}
+				//	else
+				//	{
+				//		x1 = nodetemp->mLeftNode->mSelectRoom.centerX;
+				//		x2 = x1;
+				//		y1 = nodetemp->mLeftNode->mSelectRoom.y+ nodetemp->mLeftNode->mSelectRoom.sizeY;
+				//		y2 = nodetemp->mRightNode->mSelectRoom.y;
+
+				//	}
+
+				//	Line road = { min(x1,x2),min(y1,y2),max(x1,x2),max(y1,y2) };
+				//	mRoadList.push_back(road);
+
+				//}
+				////세로로 잘랏을때
+				//else if (nodetemp->mLeftNode->mY == nodetemp->mRightNode->mY)
+				//{
+				//	int x1, y1, x2, y2;
+				//	if (nodetemp->mLeftNode->mSelectRoom.sizeY > nodetemp->mRightNode->mSelectRoom.sizeY)
+				//	{
+				//		x1 = nodetemp->mRightNode->mSelectRoom.x;
+				//		x2 = nodetemp->mLeftNode->mSelectRoom.x + nodetemp->mLeftNode->mSelectRoom.sizeX;
+				//		y1 = nodetemp->mRightNode->mSelectRoom.centerY;
+				//		y2 = y1;
+				//	}
+				//	else
+				//	{
+				//		x1 = nodetemp->mLeftNode->mSelectRoom.x + nodetemp->mLeftNode->mSelectRoom.sizeX;
+				//		x2 = nodetemp->mRightNode->mSelectRoom.x;
+				//		y1 = nodetemp->mLeftNode->mSelectRoom.centerY;
+				//		y2 = y1;
+				//	}
+
+				//	Line road = { min(x1,x2),min(y1,y2),max(x1,x2),max(y1,y2) };
+				//	mRoadList.push_back(road);
+				//}
+
+				//가로
+				if (nodetemp->mLeftNode->mX == nodetemp->mRightNode->mX)
+				{
+					int x1, y1, x2, y2;
+					x1 = (nodetemp->mRightNode->mSelectRoom.centerX + nodetemp->mLeftNode->mSelectRoom.centerX) / 2;
+					x2 = x1;
+					y1 = nodetemp->mRightNode->mSelectRoom.y;
+					y2 = nodetemp->mLeftNode->mSelectRoom.y + nodetemp->mLeftNode->mSelectRoom.sizeY;
+					Line road = { min(x1,x2),min(y1,y2),max(x1,x2),max(y1,y2) };
+					mRoadList.push_back(road);
+
+				}
+				//세로로 잘랏을때
+				else if (nodetemp->mLeftNode->mY == nodetemp->mRightNode->mY)
+				{
+					int x1, y1, x2, y2;
+					x1 = nodetemp->mRightNode->mSelectRoom.x;
+					x2 = nodetemp->mLeftNode->mSelectRoom.x + nodetemp->mLeftNode->mSelectRoom.sizeX;
+					y1 = (nodetemp->mRightNode->mSelectRoom.centerY + nodetemp->mLeftNode->mSelectRoom.centerY)/2;
+					y2 = y1;
+					Line road = { min(x1,x2),min(y1,y2),max(x1,x2),max(y1,y2) };
+					mRoadList.push_back(road);
+				}
+			}
+		}
+		else
+		{
+			
+
+		}
+	}
+	if (s.empty())
+	{
+		
+		for (int i = 0; i < mRoadList.size(); i++)
+		{
+			//가로로 길낼때
+			if (mRoadList[i].y1 == mRoadList[i].y2)
+			{
+				for (int y = mRoadList[i].y1; y <= mRoadList[i].y1+2; y++)
+				{
+					for (int x = mRoadList[i].x1-1; x <= mRoadList[i].x2; x++)
+					{
+						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireFloor"));
+						tilemap->GetTileList()[y][x]->SetFrameIndexX(Random::GetInstance()->RandomInt(6));
+						tilemap->GetTileList()[y][x]->SetFrameIndexY(Random::GetInstance()->RandomInt(1));
+						tilemap->GetTileList()[y][x]->SetType(Type::Floor);
+
+					}
+				}
+
+				for (int y = mRoadList[i].y1-3 ; y < mRoadList[i].y1; y++)
+				{
+					for (int x = mRoadList[i].x1 - 1; x < mRoadList[i].x2 + 1; x++)
+					{
+						if (((x - mRoadList[i].x1) / 3) % 3 == 0)
+						{
+							tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall1"));
+						}
+						else if (((x - mRoadList[i].x1) / 3) % 3 == 1)
+						{
+							tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall2"));
+						}
+						else if (((x - mRoadList[i].x1) / 3) % 3 == 2)
+						{
+							tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall3"));
+						}
+
+						tilemap->GetTileList()[y][x]->SetFrameIndexX((x - mRoadList[i].x1+1) % 3);
+						tilemap->GetTileList()[y][x]->SetFrameIndexY((y - mRoadList[i].y1+3) % 3);
+						tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+					}
+				}
+				//상하벽
+				for (int x = mRoadList[i].x1; x < mRoadList[i].x2; x++)
+				{
+					int y = mRoadList[i].y1-4;
+					{
+						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+						tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
+						tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
+						tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+
+					}
+				}
+				for (int x = mRoadList[i].x1; x < mRoadList[i].x2; x++)
+				{
+					int y = mRoadList[i].y1 + 3;
+					{
+						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+						tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
+						tilemap->GetTileList()[y][x]->SetFrameIndexY(2);
+						tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+
+					}
+				}
+				//꼭지점 벽
+				{
+					int x = mRoadList[i].x1 - 1;
+					int y = mRoadList[i].y1-4;
+					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
+					tilemap->GetTileList()[y][x]->SetFrameIndexY(1);
+					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+				}
+				{
+					int x = mRoadList[i].x2;
+					int y = mRoadList[i].y1-4;
+					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
+					tilemap->GetTileList()[y][x]->SetFrameIndexY(1);
+					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+				}
+
+				{
+					int x = mRoadList[i].x2;
+					int y = mRoadList[i].y1+3;
+					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
+					tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
+					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+				}
+				{
+					int x = mRoadList[i].x1 -1;
+					int y = mRoadList[i].y1+3;
+					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
+					tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
+					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+				}
+
+			}
+			//세로로 길 낼때
+			else if (mRoadList[i].x1 == mRoadList[i].x2)
+			{
+				//타일
+				for (int y = mRoadList[i].y1-1; y <= mRoadList[i].y2+4; y++)
+				{
+					for (int x = mRoadList[i].x1 - 1; x <= mRoadList[i].x1+1; x++)
+					{
+						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireFloor"));
+						tilemap->GetTileList()[y][x]->SetFrameIndexX(Random::GetInstance()->RandomInt(6));
+						tilemap->GetTileList()[y][x]->SetFrameIndexY(Random::GetInstance()->RandomInt(1));
+						tilemap->GetTileList()[y][x]->SetType(Type::Floor);
+
+					}
+				}
+				//좌우 벽
+				for (int y = mRoadList[i].y1; y < mRoadList[i].y2+1; y++)
+				{
+					int x = mRoadList[i].x1 - 2;
+					{
+						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+						tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
+						tilemap->GetTileList()[y][x]->SetFrameIndexY(1);
+						tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+
+					}
+				}
+				for (int y = mRoadList[i].y1; y < mRoadList[i].y2+1; y++)
+				{
+					int x = mRoadList[i].x1 + 2;
+					{
+						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+						tilemap->GetTileList()[y][x]->SetFrameIndexX(2);
+						tilemap->GetTileList()[y][x]->SetFrameIndexY(1);
+						tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+
+					}
+				}
+				//꼭지점 벽
+				{
+					int x = mRoadList[i].x1 - 2;
+					int y = mRoadList[i].y1 - 1;
+					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
+					tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
+					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+				}
+				{
+					int x = mRoadList[i].x1 + 2;
+					int y = mRoadList[i].y1 - 1;
+					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
+					tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
+					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+				}
+
+				{
+					int x = mRoadList[i].x1 - 2;
+					int y = mRoadList[i].y2;
+					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
+					tilemap->GetTileList()[y][x]->SetFrameIndexY(1);
+					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+				}
+				{
+					int x = mRoadList[i].x1 + 2;
+					int y = mRoadList[i].y2;
+					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
+					tilemap->GetTileList()[y][x]->SetFrameIndexY(1);
+					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+				}
+				
+			}
+			
+		}
+		
+
+
+	}
+
+}
+
+void RandomMapGeneration::RandomMonster()
+{
+
+}
+
+void RandomMapGeneration::RandomPlayerPosition(Player* player)
+{
+	
+	int r = Random::GetInstance()->RandomInt(mRoot->mRoomList.size());
+	player->SetX(mRoot->mRoomList[r].centerX * TileSize);
+	player->SetY(mRoot->mRoomList[r].centerY * TileSize);
+}
