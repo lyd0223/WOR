@@ -137,3 +137,8 @@ void Time::Update()
 {
 	this->Tick(60.f);
 }
+
+void Time::Sleep(int sleeptime)
+{
+	
+}

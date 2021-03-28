@@ -11,7 +11,7 @@
 
 void Scene_Field::Init()
 {
-	Load_Image::GetInstance()->LoadSceneMapToolImage();
+	
 	ImageManager::GetInstance()->LoadFromFile(L"TutorialTile", Resources(L"Tile/TutorialMap.png"), 74, 43);
 	ImageManager::GetInstance()->LoadFromFile(L"TileSet", Resources(L"Tile/Tile.bmp"), 16, 16);
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"TutorialTile");
@@ -22,14 +22,11 @@ void Scene_Field::Init()
 	mMapIsOpen = 0;
 	
 	//타일맵추가
-	mTileMap = new TileMap();
-	RandomMapGeneration::GetInstance()->CreateRandomMap(mTileMap);
+	/*mTileMap = new TileMap();
+	RandomMapGeneration::GetInstance()->CreateRandomMap();*/
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mTileMap);
 	//
-	//스트럭쳐 받아오기
 	
-	//
-
 	mPlayer = new Player("Player", 0, 0);
 	RandomMapGeneration::GetInstance()->RandomPlayerPosition(mPlayer);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);

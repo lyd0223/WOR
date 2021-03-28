@@ -14,6 +14,8 @@ public:
 	void Release()override;
 	void Update()override;
 	void Render()override;
+
+	void SetTileMap(class TileMap* tilemap) { mTileMap = tilemap; }
 	//void Load();
 };
 

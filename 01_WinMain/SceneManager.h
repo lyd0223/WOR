@@ -23,6 +23,7 @@ public:
 	void AddScene(const wstring& sceneName,Scene* scene);
 	//로딩없이 로드하는 함수
 	void LoadScene(const wstring& sceneName);
+	Scene* FindScene(const wstring& sceneName);
 	void LoadScene(const wstring& targetSceneName, const wstring& loadingSceneName);
 private:
 	//스레드에 집어 넣을 함수 : 즉 실제로 스레드가 작업 처리 할 함수

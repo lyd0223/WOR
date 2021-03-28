@@ -79,6 +79,45 @@ void Player::Init()
 	mRB_ButtonSkill = "IceSpear";
 	mSpacebar_ButtonSkill = "Dash";
 	mQ_ButtonSkill = "FireBall";
+
+	//마우스트래커
+	if (mMouseTracker == nullptr)
+	{
+		mMouseTracker = new MouseTracker("MouseTracker", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 20, mAngle);
+		mMouseTracker->Init();
+	}
+	//
+	//그림자-------
+	if (mPlayerNormalShadow == nullptr)
+	{
+		if (mCurrentAnimation == mDownIdleAnimation || mCurrentAnimation == mRightIdleAnimation || mCurrentAnimation == mLeftIdleAnimation ||
+			mCurrentAnimation == mUpIdleAnimation || mCurrentAnimation == mUpHitAnimation || mCurrentAnimation == mDownHitAnimation || mCurrentAnimation == mRightHitAnimation ||
+			mCurrentAnimation == mLeftHitAnimation)
+		{
+			mPlayerNormalShadow = new PlayerNormalShadow("PlayerNormalShadow", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 30);
+			mPlayerNormalShadow->Init();
+		}
+	}
+	if (mPlayerHeightShadow == nullptr)
+	{
+		if (mCurrentAnimation == mUpThrowWatingAnimation || mCurrentAnimation == mDownThrowWatingAnimation || mCurrentAnimation == mDownAttackAnimation || mCurrentAnimation == mUpAttackAnimation ||
+			mCurrentAnimation == mUpThrowSkillAnimation || mCurrentAnimation == mDownThrowSkillAnimation)
+		{
+			mPlayerHeightShadow = new PlayerHeightShadow("PlayerHeightShadow", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 30);
+			mPlayerHeightShadow->Init();
+		}
+	}
+	if (mPlayerWideShadow == nullptr)
+	{
+		if (mCurrentAnimation == mUpDashAnimation || mCurrentAnimation == mDownDashAnimation || mCurrentAnimation == mLeftDashAnimation || mCurrentAnimation == mRightDashAnimation ||
+			mCurrentAnimation == mRightThrowSkillandAttackAnimation || mCurrentAnimation == mLeftThrowSkillandAttackAnimation || mCurrentAnimation == mRightRunAnimation ||
+			mCurrentAnimation == mLeftRunAnimation || mCurrentAnimation == mUpRunAnimation || mCurrentAnimation == mDownRunAnimation || mCurrentAnimation == mRightThrowWationgAnimation
+			|| mCurrentAnimation == mLeftThrowWatingAnimation)
+		{
+			mPlayerWideShadow = new PlayerWideShadow("PlayerWideShadow", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 30);
+			mPlayerWideShadow->Init();
+		}
+	}
 }
 
 void Player::Release()
@@ -118,25 +157,24 @@ void Player::Update()
 
 	D2D1_RECT_F rctemp = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	mAngle = Math::GetAngle(mX, mY, _mousePosition.x + rctemp.left, _mousePosition.y + rctemp.top);
-	//마우스트래커
-	if (mMouseTracker == nullptr)
-	{
-		mMouseTracker = new MouseTracker("MouseTracker", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 20, mAngle);
-		mMouseTracker->Init();
-	}
-	//
-	//그림자-------
-	if (mPlayerNormalShadow == nullptr)
-	{
-		if (mCurrentAnimation == mDownIdleAnimation || mCurrentAnimation == mRightIdleAnimation || mCurrentAnimation == mLeftIdleAnimation ||
-			mCurrentAnimation == mUpIdleAnimation || mCurrentAnimation == mUpHitAnimation || mCurrentAnimation == mDownHitAnimation || mCurrentAnimation == mRightHitAnimation ||
-			mCurrentAnimation == mLeftHitAnimation)
-		{
-			mPlayerNormalShadow = new PlayerNormalShadow("PlayerNormalShadow", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 30);
-			mPlayerNormalShadow->Init();
-		}
-
-	}
+	////마우스트래커
+	//if (mMouseTracker == nullptr)
+	//{
+	//	mMouseTracker = new MouseTracker("MouseTracker", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 20, mAngle);
+	//	mMouseTracker->Init();
+	//}
+	////
+	////그림자-------
+	//if (mPlayerNormalShadow == nullptr)
+	//{
+	//	if (mCurrentAnimation == mDownIdleAnimation || mCurrentAnimation == mRightIdleAnimation || mCurrentAnimation == mLeftIdleAnimation ||
+	//		mCurrentAnimation == mUpIdleAnimation || mCurrentAnimation == mUpHitAnimation || mCurrentAnimation == mDownHitAnimation || mCurrentAnimation == mRightHitAnimation ||
+	//		mCurrentAnimation == mLeftHitAnimation)
+	//	{
+	//		mPlayerNormalShadow = new PlayerNormalShadow("PlayerNormalShadow", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 30);
+	//		mPlayerNormalShadow->Init();
+	//	}
+	//}
 	if ((mPlayerState != PlayerState::DownIdle && mPlayerState != PlayerState::LeftIdle &&
 		mPlayerState != PlayerState::RightIdle && mPlayerState != PlayerState::UpIdle &&mPlayerState != PlayerState::DownHit
 		&& mPlayerState != PlayerState::UpHit && mPlayerState != PlayerState::RightHit && mPlayerState != PlayerState::LeftHit) )
@@ -145,7 +183,7 @@ void Player::Update()
 				SafeDelete(mPlayerNormalShadow)
 			}
 	}
-	if (mPlayerHeightShadow == nullptr)
+	/*if (mPlayerHeightShadow == nullptr)
 	{
 		if (mCurrentAnimation == mUpThrowWatingAnimation || mCurrentAnimation == mDownThrowWatingAnimation || mCurrentAnimation == mDownAttackAnimation || mCurrentAnimation == mUpAttackAnimation ||
 			mCurrentAnimation == mUpThrowSkillAnimation || mCurrentAnimation == mDownThrowSkillAnimation)
@@ -153,7 +191,7 @@ void Player::Update()
 			mPlayerHeightShadow = new PlayerHeightShadow("PlayerHeightShadow", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 30);
 			mPlayerHeightShadow->Init();
 		}
-	}
+	}*/
 	if ((mPlayerState != PlayerState::UpThrowWating && mPlayerState != PlayerState::DownThorwWating &&
 		mPlayerState != PlayerState::DownAttack && mPlayerState != PlayerState::UpAttack && mPlayerState != PlayerState::UpThrowSkill
 		&& mPlayerState != PlayerState::DownThorwWating ))
@@ -162,7 +200,7 @@ void Player::Update()
 			SafeDelete(mPlayerHeightShadow)
 		}
 	}
-	if (mPlayerWideShadow ==nullptr)
+	/*if (mPlayerWideShadow ==nullptr)
 	{
 		if (mCurrentAnimation == mUpDashAnimation || mCurrentAnimation == mDownDashAnimation || mCurrentAnimation == mLeftDashAnimation || mCurrentAnimation == mRightDashAnimation ||
 			mCurrentAnimation == mRightThrowSkillandAttackAnimation || mCurrentAnimation == mLeftThrowSkillandAttackAnimation || mCurrentAnimation == mRightRunAnimation||
@@ -172,7 +210,7 @@ void Player::Update()
 			mPlayerWideShadow = new PlayerWideShadow("PlayerWideShadow", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 30);
 			mPlayerWideShadow->Init();
 		}
-	}
+	}*/
 	if ((mPlayerState != PlayerState::UpDash && mPlayerState != PlayerState::DownDash &&
 		mPlayerState != PlayerState::LeftDash && mPlayerState != PlayerState::RightDash && mPlayerState != PlayerState::RightThrowSkillandAttack
 		&& mPlayerState != PlayerState::LeftThrowSkillandAttack && mPlayerState != PlayerState::RightRun && mPlayerState != PlayerState::LeftRun && mPlayerState != PlayerState::UpRun

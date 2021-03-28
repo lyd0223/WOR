@@ -8,6 +8,9 @@
 #include "Scene_Field.h"
 #include "Scene_Boss.h"
 #include "Scene_TitleScene.h"
+#include "Scene_Loading.h"
+#include "Load_Image.h"
+#include "RandomMapGeneration.h"
 
 /*
 Scene : 스테이지 단위를 씬이라고 함
@@ -20,12 +23,24 @@ Initialize : 초기화
 */
 void MainGame::Init()
 {
+	ImageManager::GetInstance()->LoadFromFile(L"Loading", Resources(L"UI/Loading.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"LoadingCharacter", Resources(L"UI/LoadingCharacter.png"));
+
+	Scene_Loading* loadingScene = new Scene_Loading();
+	loadingScene->AddLoadFunc([]() { Load_Image::GetInstance()->LoadSceneMapToolImage(); });
+	loadingScene->AddLoadFunc([]() { RandomMapGeneration::GetInstance()->CreateRandomMap1(); });
+	loadingScene->AddLoadFunc([]() { RandomMapGeneration::GetInstance()->CreateRandomMap2(); });
+	loadingScene->AddLoadFunc([]() {
+		Scene_Field* sf = (Scene_Field*)SceneManager::GetInstance()->FindScene(L"Field");
+		sf->SetTileMap( RandomMapGeneration::GetInstance()->GetTileMap());
+		});
+	SceneManager::GetInstance()->AddScene(L"FieldLoading", loadingScene);
 	SceneManager::GetInstance()->AddScene(L"MapTool", new Scene_MapTool);
 	SceneManager::GetInstance()->AddScene(L"Tutorial", new Scene_Tutorial);
 	SceneManager::GetInstance()->AddScene(L"Field", new Scene_Field);
 	SceneManager::GetInstance()->AddScene(L"Boss", new Scene_Boss);
 	SceneManager::GetInstance()->AddScene(L"Title", new Scene_TitleScene);
-	SceneManager::GetInstance()->LoadScene(L"Boss");
+	SceneManager::GetInstance()->LoadScene(L"FieldLoading");
 }
 
 /*

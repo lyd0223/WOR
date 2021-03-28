@@ -176,6 +176,7 @@
     <ClInclude Include="Scene_Boss.h" />
     <ClInclude Include="Scene_Field.h" />
     <ClInclude Include="Scene_House.h" />
+    <ClInclude Include="Scene_Loading.h" />
     <ClInclude Include="Scene_TitleScene.h" />
     <ClInclude Include="SkillCastingManager.h" />
     <ClInclude Include="SkillObject.h" />
@@ -274,6 +275,7 @@
     <ClCompile Include="Scene_Boss.cpp" />
     <ClCompile Include="Scene_Field.cpp" />
     <ClCompile Include="Scene_House.cpp" />
+    <ClCompile Include="Scene_Loading.cpp" />
     <ClCompile Include="Scene_TitleScene.cpp" />
     <ClCompile Include="SkillCastingManager.cpp" />
     <ClCompile Include="SkillObject.cpp" />

@@ -24,7 +24,7 @@ private:
 	void StartClock();
 public:
 	void Update();
-
+	void Sleep(int sleeptime);
 	inline void Start() { mIsStart = true; StartClock(); }
 	inline void Stop() { mIsStart = false; }
 	inline unsigned long GetmFrameRate() const { return mFrameRate; }
@@ -32,5 +32,6 @@ public:
 	inline float GetWorldTime()const { return this->mWorldTime; }
 	inline float GetTimeScale()const { return this->mTimeScale; }
 	inline void SetTimeScale(float scale) { this->mTimeScale = scale; }
+
 };
 

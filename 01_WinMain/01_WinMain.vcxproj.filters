@@ -198,9 +198,6 @@
     <ClInclude Include="SceneManager.h">
       <Filter>FrameWork\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="LoadingScene.h">
-      <Filter>FrameWork\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>FrameWork\Animation</Filter>
     </ClInclude>
@@ -423,6 +420,12 @@
     <ClInclude Include="Scene_Field.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="LoadingScene.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Loading.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -474,9 +477,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>FrameWork\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadingScene.cpp">
       <Filter>FrameWork\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
@@ -702,6 +702,12 @@
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Field.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingScene.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Loading.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>

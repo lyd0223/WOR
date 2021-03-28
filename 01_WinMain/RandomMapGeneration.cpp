@@ -9,10 +9,13 @@ void RandomMapGeneration::Init()
 
 	mCurrentNode = nullptr;
 
+	mTileMap = new TileMap();
+
+	s.push(mRoot);
 
 }
 
-void RandomMapGeneration::CreateRandomMap(TileMap* tilemap)
+void RandomMapGeneration::CreateRandomMap1()
 {
 	Init();
 	//맵나누기 bfs
@@ -31,12 +34,14 @@ void RandomMapGeneration::CreateRandomMap(TileMap* tilemap)
 			break;
 	}
 
+}
+void RandomMapGeneration::CreateRandomMap2()
+{
 	//방 만들기 dfs 재귀
-	mRoot->MakeRoom(tilemap);
+	mRoot->MakeRoom(mTileMap);
 
 	//길 만들기 dfs 스택
-	s.push(mRoot);
-	MakeRoad(tilemap);
+	MakeRoad();
 }
 
 
@@ -324,7 +329,7 @@ void Node::MakeRoom(TileMap* tilemap)
 	}
 }
 
-void RandomMapGeneration::MakeRoad(TileMap* tilemap)
+void RandomMapGeneration::MakeRoad()
 {
 	while (!s.empty())
 	{
@@ -377,54 +382,6 @@ void RandomMapGeneration::MakeRoad(TileMap* tilemap)
 					}
 				}
 
-
-				//가로로 잘랏을때
-				//if (nodetemp->mLeftNode->mX == nodetemp->mRightNode->mX)
-				//{
-				//	int x1, y1, x2, y2;
-				//	if (nodetemp->mLeftNode->mSelectRoom.sizeX >nodetemp->mRightNode->mSelectRoom.sizeX)
-				//	{
-				//		x1 = nodetemp->mRightNode->mSelectRoom.centerX;
-				//		x2 = x1;
-				//		y1 = nodetemp->mRightNode->mSelectRoom.y;
-				//		y2 = nodetemp->mLeftNode->mSelectRoom.y+ nodetemp->mLeftNode->mSelectRoom.sizeY;
-				//	}
-				//	else
-				//	{
-				//		x1 = nodetemp->mLeftNode->mSelectRoom.centerX;
-				//		x2 = x1;
-				//		y1 = nodetemp->mLeftNode->mSelectRoom.y+ nodetemp->mLeftNode->mSelectRoom.sizeY;
-				//		y2 = nodetemp->mRightNode->mSelectRoom.y;
-
-				//	}
-
-				//	Line road = { min(x1,x2),min(y1,y2),max(x1,x2),max(y1,y2) };
-				//	mRoadList.push_back(road);
-
-				//}
-				////세로로 잘랏을때
-				//else if (nodetemp->mLeftNode->mY == nodetemp->mRightNode->mY)
-				//{
-				//	int x1, y1, x2, y2;
-				//	if (nodetemp->mLeftNode->mSelectRoom.sizeY > nodetemp->mRightNode->mSelectRoom.sizeY)
-				//	{
-				//		x1 = nodetemp->mRightNode->mSelectRoom.x;
-				//		x2 = nodetemp->mLeftNode->mSelectRoom.x + nodetemp->mLeftNode->mSelectRoom.sizeX;
-				//		y1 = nodetemp->mRightNode->mSelectRoom.centerY;
-				//		y2 = y1;
-				//	}
-				//	else
-				//	{
-				//		x1 = nodetemp->mLeftNode->mSelectRoom.x + nodetemp->mLeftNode->mSelectRoom.sizeX;
-				//		x2 = nodetemp->mRightNode->mSelectRoom.x;
-				//		y1 = nodetemp->mLeftNode->mSelectRoom.centerY;
-				//		y2 = y1;
-				//	}
-
-				//	Line road = { min(x1,x2),min(y1,y2),max(x1,x2),max(y1,y2) };
-				//	mRoadList.push_back(road);
-				//}
-
 				//가로
 				if (nodetemp->mLeftNode->mX == nodetemp->mRightNode->mX)
 				{
@@ -468,10 +425,10 @@ void RandomMapGeneration::MakeRoad(TileMap* tilemap)
 				{
 					for (int x = mRoadList[i].x1-1; x <= mRoadList[i].x2; x++)
 					{
-						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireFloor"));
-						tilemap->GetTileList()[y][x]->SetFrameIndexX(Random::GetInstance()->RandomInt(6));
-						tilemap->GetTileList()[y][x]->SetFrameIndexY(Random::GetInstance()->RandomInt(1));
-						tilemap->GetTileList()[y][x]->SetType(Type::Floor);
+						mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireFloor"));
+						mTileMap->GetTileList()[y][x]->SetFrameIndexX(Random::GetInstance()->RandomInt(6));
+						mTileMap->GetTileList()[y][x]->SetFrameIndexY(Random::GetInstance()->RandomInt(1));
+						mTileMap->GetTileList()[y][x]->SetType(Type::Floor);
 
 					}
 				}
@@ -482,20 +439,20 @@ void RandomMapGeneration::MakeRoad(TileMap* tilemap)
 					{
 						if (((x - mRoadList[i].x1) / 3) % 3 == 0)
 						{
-							tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall1"));
+							mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall1"));
 						}
 						else if (((x - mRoadList[i].x1) / 3) % 3 == 1)
 						{
-							tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall2"));
+							mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall2"));
 						}
 						else if (((x - mRoadList[i].x1) / 3) % 3 == 2)
 						{
-							tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall3"));
+							mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall3"));
 						}
 
-						tilemap->GetTileList()[y][x]->SetFrameIndexX((x - mRoadList[i].x1+1) % 3);
-						tilemap->GetTileList()[y][x]->SetFrameIndexY((y - mRoadList[i].y1+3) % 3);
-						tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+						mTileMap->GetTileList()[y][x]->SetFrameIndexX((x - mRoadList[i].x1+1) % 3);
+						mTileMap->GetTileList()[y][x]->SetFrameIndexY((y - mRoadList[i].y1+3) % 3);
+						mTileMap->GetTileList()[y][x]->SetType(Type::Wall);
 					}
 				}
 				//상하벽
@@ -503,10 +460,10 @@ void RandomMapGeneration::MakeRoad(TileMap* tilemap)
 				{
 					int y = mRoadList[i].y1-4;
 					{
-						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
-						tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
-						tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
-						tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+						mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+						mTileMap->GetTileList()[y][x]->SetFrameIndexX(1);
+						mTileMap->GetTileList()[y][x]->SetFrameIndexY(0);
+						mTileMap->GetTileList()[y][x]->SetType(Type::Wall);
 
 					}
 				}
@@ -514,10 +471,10 @@ void RandomMapGeneration::MakeRoad(TileMap* tilemap)
 				{
 					int y = mRoadList[i].y1 + 3;
 					{
-						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
-						tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
-						tilemap->GetTileList()[y][x]->SetFrameIndexY(2);
-						tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+						mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+						mTileMap->GetTileList()[y][x]->SetFrameIndexX(1);
+						mTileMap->GetTileList()[y][x]->SetFrameIndexY(2);
+						mTileMap->GetTileList()[y][x]->SetType(Type::Wall);
 
 					}
 				}
@@ -525,35 +482,35 @@ void RandomMapGeneration::MakeRoad(TileMap* tilemap)
 				{
 					int x = mRoadList[i].x1 - 1;
 					int y = mRoadList[i].y1-4;
-					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
-					tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
-					tilemap->GetTileList()[y][x]->SetFrameIndexY(1);
-					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+					mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					mTileMap->GetTileList()[y][x]->SetFrameIndexX(0);
+					mTileMap->GetTileList()[y][x]->SetFrameIndexY(1);
+					mTileMap->GetTileList()[y][x]->SetType(Type::Wall);
 				}
 				{
 					int x = mRoadList[i].x2;
 					int y = mRoadList[i].y1-4;
-					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
-					tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
-					tilemap->GetTileList()[y][x]->SetFrameIndexY(1);
-					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+					mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					mTileMap->GetTileList()[y][x]->SetFrameIndexX(1);
+					mTileMap->GetTileList()[y][x]->SetFrameIndexY(1);
+					mTileMap->GetTileList()[y][x]->SetType(Type::Wall);
 				}
 
 				{
 					int x = mRoadList[i].x2;
 					int y = mRoadList[i].y1+3;
-					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
-					tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
-					tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
-					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+					mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					mTileMap->GetTileList()[y][x]->SetFrameIndexX(1);
+					mTileMap->GetTileList()[y][x]->SetFrameIndexY(0);
+					mTileMap->GetTileList()[y][x]->SetType(Type::Wall);
 				}
 				{
 					int x = mRoadList[i].x1 -1;
 					int y = mRoadList[i].y1+3;
-					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
-					tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
-					tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
-					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+					mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					mTileMap->GetTileList()[y][x]->SetFrameIndexX(0);
+					mTileMap->GetTileList()[y][x]->SetFrameIndexY(0);
+					mTileMap->GetTileList()[y][x]->SetType(Type::Wall);
 				}
 
 			}
@@ -565,10 +522,10 @@ void RandomMapGeneration::MakeRoad(TileMap* tilemap)
 				{
 					for (int x = mRoadList[i].x1 - 1; x <= mRoadList[i].x1+1; x++)
 					{
-						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireFloor"));
-						tilemap->GetTileList()[y][x]->SetFrameIndexX(Random::GetInstance()->RandomInt(6));
-						tilemap->GetTileList()[y][x]->SetFrameIndexY(Random::GetInstance()->RandomInt(1));
-						tilemap->GetTileList()[y][x]->SetType(Type::Floor);
+						mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireFloor"));
+						mTileMap->GetTileList()[y][x]->SetFrameIndexX(Random::GetInstance()->RandomInt(6));
+						mTileMap->GetTileList()[y][x]->SetFrameIndexY(Random::GetInstance()->RandomInt(1));
+						mTileMap->GetTileList()[y][x]->SetType(Type::Floor);
 
 					}
 				}
@@ -577,10 +534,10 @@ void RandomMapGeneration::MakeRoad(TileMap* tilemap)
 				{
 					int x = mRoadList[i].x1 - 2;
 					{
-						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
-						tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
-						tilemap->GetTileList()[y][x]->SetFrameIndexY(1);
-						tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+						mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+						mTileMap->GetTileList()[y][x]->SetFrameIndexX(0);
+						mTileMap->GetTileList()[y][x]->SetFrameIndexY(1);
+						mTileMap->GetTileList()[y][x]->SetType(Type::Wall);
 
 					}
 				}
@@ -588,10 +545,10 @@ void RandomMapGeneration::MakeRoad(TileMap* tilemap)
 				{
 					int x = mRoadList[i].x1 + 2;
 					{
-						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
-						tilemap->GetTileList()[y][x]->SetFrameIndexX(2);
-						tilemap->GetTileList()[y][x]->SetFrameIndexY(1);
-						tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+						mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
+						mTileMap->GetTileList()[y][x]->SetFrameIndexX(2);
+						mTileMap->GetTileList()[y][x]->SetFrameIndexY(1);
+						mTileMap->GetTileList()[y][x]->SetType(Type::Wall);
 
 					}
 				}
@@ -599,35 +556,35 @@ void RandomMapGeneration::MakeRoad(TileMap* tilemap)
 				{
 					int x = mRoadList[i].x1 - 2;
 					int y = mRoadList[i].y1 - 1;
-					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
-					tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
-					tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
-					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+					mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					mTileMap->GetTileList()[y][x]->SetFrameIndexX(1);
+					mTileMap->GetTileList()[y][x]->SetFrameIndexY(0);
+					mTileMap->GetTileList()[y][x]->SetType(Type::Wall);
 				}
 				{
 					int x = mRoadList[i].x1 + 2;
 					int y = mRoadList[i].y1 - 1;
-					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
-					tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
-					tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
-					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+					mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					mTileMap->GetTileList()[y][x]->SetFrameIndexX(0);
+					mTileMap->GetTileList()[y][x]->SetFrameIndexY(0);
+					mTileMap->GetTileList()[y][x]->SetType(Type::Wall);
 				}
 
 				{
 					int x = mRoadList[i].x1 - 2;
 					int y = mRoadList[i].y2;
-					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
-					tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
-					tilemap->GetTileList()[y][x]->SetFrameIndexY(1);
-					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+					mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					mTileMap->GetTileList()[y][x]->SetFrameIndexX(1);
+					mTileMap->GetTileList()[y][x]->SetFrameIndexY(1);
+					mTileMap->GetTileList()[y][x]->SetType(Type::Wall);
 				}
 				{
 					int x = mRoadList[i].x1 + 2;
 					int y = mRoadList[i].y2;
-					tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
-					tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
-					tilemap->GetTileList()[y][x]->SetFrameIndexY(1);
-					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
+					mTileMap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire4Walls"));
+					mTileMap->GetTileList()[y][x]->SetFrameIndexX(0);
+					mTileMap->GetTileList()[y][x]->SetFrameIndexY(1);
+					mTileMap->GetTileList()[y][x]->SetType(Type::Wall);
 				}
 				
 			}

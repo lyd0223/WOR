@@ -40,14 +40,18 @@ class RandomMapGeneration
 	Node* mRoot;
 	int mNodeNum;
 	vector<Line> mRoadList;
+	class TileMap* mTileMap;
 
 public:
 	void Init();
-	void CreateRandomMap(class TileMap* tilemap);
+	void CreateRandomMap1();
+	void CreateRandomMap2();
 	void Devide(Node* node);
-	void MakeRoad(class TileMap* tilemap);
+	void MakeRoad();
 	void RandomMonster();
 	void RandomPlayerPosition(class Player* player);
+	
+	class TileMap* GetTileMap() { return mTileMap; };
 
 };
 

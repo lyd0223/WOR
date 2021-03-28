@@ -60,6 +60,23 @@ void SceneManager::LoadScene(const wstring & sceneName)
 	mCurrentScene = targetScene;
 }
 
+Scene* SceneManager::FindScene(const wstring& sceneName)
+{
+	SceneIter iter = mSceneList.find(sceneName);
+	//못찾았으면 return (돌아가라)
+	if (iter == mSceneList.end())
+		return nullptr;
+
+	if (mCurrentScene == iter->second)
+		return nullptr;
+
+	Scene* targetScene = iter->second;
+
+
+	return targetScene;
+}
+
+
 //잘 개조해서 써봐. 잘 모르고 괜히 쓰면 면접때 털림
 void SceneManager::LoadScene(const wstring & targetSceneName, const wstring & loadingSceneName)
 {
