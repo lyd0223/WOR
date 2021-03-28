@@ -130,9 +130,6 @@
     <Filter Include="MainGame\RandomMapGeneration">
       <UniqueIdentifier>{cb862db3-c771-4c4a-aa21-b01c435818b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\SkillCastingManager">
-      <UniqueIdentifier>{534d414f-9f80-43c0-bf1b-b85792a49030}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -396,17 +393,11 @@
     <ClInclude Include="RandomMapGeneration.h">
       <Filter>MainGame\RandomMapGeneration</Filter>
     </ClInclude>
-    <ClInclude Include="SkillCastingManager.h">
-      <Filter>MainGame\SkillCastingManager</Filter>
-    </ClInclude>
     <ClInclude Include="Effect_EnemyCreate.h">
       <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Effect_Smoke.h">
       <Filter>MainGame\Object\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_SkillIcon.h">
-      <Filter>MainGame\Object\UI</Filter>
     </ClInclude>
     <ClInclude Include="UI_SpellBook.h">
       <Filter>MainGame\Object\UI</Filter>
@@ -425,6 +416,9 @@
     </ClInclude>
     <ClInclude Include="Scene_Loading.h">
       <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_SkillChangeInterface.h">
+      <Filter>MainGame\Object\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -680,17 +674,11 @@
     <ClCompile Include="RandomMapGeneration.cpp">
       <Filter>MainGame\RandomMapGeneration</Filter>
     </ClCompile>
-    <ClCompile Include="SkillCastingManager.cpp">
-      <Filter>MainGame\SkillCastingManager</Filter>
-    </ClCompile>
     <ClCompile Include="Effect_EnemyCreate.cpp">
       <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Effect_Smoke.cpp">
       <Filter>MainGame\Object\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_SkillIcon.cpp">
-      <Filter>MainGame\Object\UI</Filter>
     </ClCompile>
     <ClCompile Include="UI_SpellBook.cpp">
       <Filter>MainGame\Object\UI</Filter>
@@ -709,6 +697,9 @@
     </ClCompile>
     <ClCompile Include="Scene_Loading.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_SkillChangeInterface.cpp">
+      <Filter>MainGame\Object\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

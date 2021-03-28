@@ -108,6 +108,10 @@ public:
 	float GetSpeed() { return mSpeed; }
 	float GetAngle() { return mAngle; }
 
+	void SetLB_ButtonSkill(string skillName) { mLB_ButtonSkill = skillName; }
+	void SetRB_ButtonSkill(string skillName) { mRB_ButtonSkill = skillName; }
+	void SetSpacebar_ButtonSkill(string skillName) { mSpacebar_ButtonSkill = skillName; }
+	void SetQ_ButtonSkill(string skillName) { mQ_ButtonSkill = skillName; }
 	string GetLB_ButtonSkill() { return mLB_ButtonSkill; }
 	string GetRB_ButtonSkill() { return mRB_ButtonSkill; }
 	string GetSpacebar_ButtonSkill() { return mSpacebar_ButtonSkill; }

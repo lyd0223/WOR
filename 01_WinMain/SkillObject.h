@@ -1,6 +1,15 @@
 #pragma once
 #include "GameObject.h"
 
+enum class Skill : int {
+	Basic,
+	Dash,
+	Standard,
+	Signature,
+
+	End
+};
+
 // 스킬 쏘는 대상 ( 플레이어, 적)
 enum class SkillTarget : int{
 	Player,
@@ -34,8 +43,9 @@ class SkillObject : public GameObject
 {
 protected:
 	Image* mImage;
-	SkillTarget mSkillTarget;
+	Skill mSkill;
 	SkillType mSkillType;
+	SkillTarget mSkillTarget;
 	SkillElement mSkillElement;
 	float mAngle;
 	float mSkillDamege;

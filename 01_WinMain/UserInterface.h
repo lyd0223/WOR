@@ -10,6 +10,9 @@ struct UIObject
 	float SizeY;
 	Image* Image;
 };
+
+
+
 class Player;
 class UserInterface : public GameObject
 {
@@ -36,6 +39,8 @@ class UserInterface : public GameObject
 	
 	Player* mPlayer;
 
+	stack<GameObject*> mInterface;
+
 	map<string, Vector2> mSkillIndexList;
 public :
 	void Init()override;
@@ -43,4 +48,3 @@ public :
 	void Release()override;
 	void Render()override;
 };
-

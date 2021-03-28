@@ -24,7 +24,7 @@ void Skill_DragonArc::Init()
 	mSizeY = mImage->GetHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
-	mSpeed = 10.f;
+	mSpeed = 15.f;
 	mFrameCount = 0;
 
 	mMoveAngle = mAngle;

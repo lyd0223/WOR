@@ -11,9 +11,11 @@ Skill_WindSlash::Skill_WindSlash(const string& name, float x, float y, float ang
 	mX =   x;
 	mY =   y;
 	mAngle = angle;
+	mSkill = Skill::Basic;
+	mSkillType = SkillType::Melee;
 	mSkillTarget = SkillTarget::Player;
 	mSkillElement = SkillElement::Wind;
-	mSkillType = SkillType::Melee;
+	
 }
 
 void Skill_WindSlash::Init()

@@ -4,6 +4,7 @@
 #include "Tile.h"
 #include "Camera.h"
 #include "Player.h"
+#include "Monster_FireBoss.h"
 #include "TileMap.h"
 #include "Gizmo.h"
 #include "Load_Image.h"
@@ -39,6 +40,8 @@ void Scene_Boss::Init()
 	mPlayer = new Player("Player", 20 * TileSize, 30 * TileSize);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 
+	mFireBoss = new Monster_FireBoss("FireBoss", 20 * TileSize, 14 * TileSize);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mFireBoss);
 
 	ObjectManager::GetInstance()->Init();
 
@@ -66,6 +69,7 @@ void Scene_Boss::Update()
 
 void Scene_Boss::Render()
 {
+
 	ObjectManager::GetInstance()->Render();
 
 }

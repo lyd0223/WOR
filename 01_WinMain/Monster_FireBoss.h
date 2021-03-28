@@ -63,6 +63,8 @@ class Monster_FireBoss : public MonsterObject
 	Effect_FireWing* mFireWing;
 	FireBossState mFireBossState;
 	vector<FireBossState> mFireBossStateList;
+
+	D2D1_RECT_F mMapRect;
 	
 	queue<function<void()>> mPatternList;
 

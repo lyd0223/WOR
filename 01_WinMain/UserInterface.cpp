@@ -3,6 +3,7 @@
 
 #include "Image.h"
 #include "Player.h"
+#include "UI_SkillChangeInterface.h"
 
 void UserInterface::Init()
 {
@@ -24,6 +25,7 @@ void UserInterface::Init()
 	mSkillIndexList.insert(make_pair("DragonArc", Vector2(1, 0)));	// DragonArc
 	mSkillIndexList.insert(make_pair("WindSlash", Vector2(0, 1)));	// WindSlash
 	mSkillIndexList.insert(make_pair("IceSpear", Vector2(0, 2)));	// IceSpear
+	mSkillIndexList.insert(make_pair("WindDash", Vector2(1, 1)));	// WindDash
 
 	mStatus = new UIObject(50, 50, 246, 60, ImageManager::GetInstance()->FindImage(L"Status"));
 	mHPBar = new UIObject(107, 60, 183, 24, ImageManager::GetInstance()->FindImage(L"HPBar"));
@@ -49,6 +51,23 @@ void UserInterface::Init()
 
 void UserInterface::Update()
 {
+	if (Input::GetInstance()->GetKeyDown('F'))
+	{
+		UI_SkillChangeInterface* skillChangeInterface = new UI_SkillChangeInterface();
+		skillChangeInterface->Init();
+		mInterface.emplace(skillChangeInterface);
+	}
+
+	if (Input::GetInstance()->GetKeyDown(VK_ESCAPE))
+	{
+		SafeDelete(mInterface.top())
+		mInterface.pop();
+	}
+
+	if (!mInterface.empty())
+	{
+		mInterface.top()->Update();
+	}
 }
 
 void UserInterface::Release()
@@ -59,7 +78,7 @@ void UserInterface::Render()
 {
 	Vector2 LB = mSkillIndexList.find(mPlayer->GetLB_ButtonSkill())->second;
 	Vector2 RB = mSkillIndexList.find(mPlayer->GetRB_ButtonSkill())->second;
-	//Vector2 Space = mSkillIndexList.find(mPlayer->GetSpacebar_ButtonSkill())->second;
+	Vector2 Space = mSkillIndexList.find(mPlayer->GetSpacebar_ButtonSkill())->second;
 	Vector2 Q = mSkillIndexList.find(mPlayer->GetQ_ButtonSkill())->second;
 
 	mStatus->Image->ScaleRenderFromLeft(mStatus->X, mStatus->Y, mStatus->SizeX  , mStatus->SizeY);
@@ -77,9 +96,14 @@ void UserInterface::Render()
 	mQButton->Image->ScaleRender(mQButton->X, mQButton->Y, mQButton->SizeX, mQButton->SizeY);
 
 	mLB_ButtonSkillIcon->Image->ScaleFrameRender(mLB_ButtonSkillIcon->X, mLB_ButtonSkillIcon->Y, LB.X, LB.Y, mLB_ButtonSkillIcon->SizeX, mLB_ButtonSkillIcon->SizeY);
-	//mSpace_ButtonSkillIcon->Image->ScaleFrameRender(mSpace_ButtonSkillIcon->X, mSpace_ButtonSkillIcon->Y, .X, RB.Y, mSpace_ButtonSkillIcon->SizeX, mSpace_ButtonSkillIcon->SizeY);
+	mSpace_ButtonSkillIcon->Image->ScaleFrameRender(mSpace_ButtonSkillIcon->X, mSpace_ButtonSkillIcon->Y, Space.X, Space.Y, mSpace_ButtonSkillIcon->SizeX, mSpace_ButtonSkillIcon->SizeY);
 	mRB_ButtonSkillIcon->Image->ScaleFrameRender(mRB_ButtonSkillIcon->X, mRB_ButtonSkillIcon->Y, RB.X, RB.Y, mRB_ButtonSkillIcon->SizeX, mRB_ButtonSkillIcon->SizeY);
 	mQ_ButtonSkillIcon->Image->ScaleFrameRender(mQ_ButtonSkillIcon->X, mQ_ButtonSkillIcon->Y, Q.X, Q.Y, mQ_ButtonSkillIcon->SizeX, mQ_ButtonSkillIcon->SizeY);
 
 	//mSpecialSkillBox->Image->ScaleRender(mSpecialSkillBox->X, mSpecialSkillBox->Y, mSpecialSkillBox->SizeX, mSpecialSkillBox->SizeY);
+
+	if (!mInterface.empty())
+	{
+		mInterface.top()->Render();
+	}
 }

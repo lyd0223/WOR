@@ -5,11 +5,12 @@
 #include "Camera.h"
 
 Skill_Flame::Skill_Flame(const string & name, float x, float y, float angle)
-	: GameObject(name)
+	: SkillObject(name)
 {
 	mX = x;
 	mY = y;
 	mAngle = angle;
+	mAlpha = 1.f;
 }
 
 void Skill_Flame::Init()
@@ -17,16 +18,16 @@ void Skill_Flame::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"Flame", Resources(L"Skill/Flame.png"), 32, 1);
 	mImage = ImageManager::GetInstance()->FindImage(L"Flame");
 
-	mSizeX = mImage->GetWidth();
+	mSizeX = mImage->GetWidth() / 32;
 	mSizeY = mImage->GetHeight();
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 
 	mFlameAnimation = new Animation();
 	mFlameAnimation->InitFrameByStartEnd(0, 0, 31, 0, false);
-	mFlameAnimation->SetFrameUpdateTime(0.05f);
+	mFlameAnimation->SetFrameUpdateTime(0.02f);
 	mFlameAnimation->Play();
 
-	
+	mSkillType = SkillType::Melee;
 }
 
 void Skill_Flame::Release()
@@ -62,6 +63,7 @@ void Skill_Flame::Render()
 		ang = Random::GetInstance()->RandomInt(180);
 	}
 	
+	mImage->SetAlpha(mAlpha);
 	mImage->SetScale(0.5f);
 	mImage->SetAngle(mAngle * (180 / PI)- ang);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mFlameAnimation->GetNowFrameX(), mFlameAnimation->GetNowFrameY());

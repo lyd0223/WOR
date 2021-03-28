@@ -11,10 +11,10 @@ enum class ObjectLayer : int
 	Background = 0,
 	Tile,
 	Player,
+	Particle,
 	Enemy,
 	Structure,
 	Skill,
-	Particle,
 	UI,
 
 	End

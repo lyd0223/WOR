@@ -28,6 +28,62 @@
 
 #define TileSize 48
 
+SkillManager::SkillManager()
+{
+	for (int i = 0; i < (int)SkillElement::End; ++i)
+	{
+		vector<SkillObject*> emptyVector;
+		mSkillList.insert(make_pair((SkillElement)i, emptyVector));
+	}
+
+	AddSkillList(SkillElement::Wind, new Skill_WindSlash("WindSlash", 0, 0, 0));
+	AddSkillList(SkillElement::Fire, new Skill_FireBall("FireBall", 0, 0, 0));
+	AddSkillList(SkillElement::Fire, new Skill_DragonArc("DragonArc", 0, 0, 0, false));
+	AddSkillList(SkillElement::Water, new Skill_IceSpear("IceSpear", 0, 0, 0));
+}
+
+void SkillManager::AddSkillList(SkillElement element, SkillObject * skillObject)
+{
+	mSkillList[element].push_back(skillObject);
+}
+
+void SkillManager::SkillCasting(const string & name, float x, float y, float angle)
+{
+	SkillObject* skill = MakeSkillClass(name, x, y, angle);
+
+	skill->Init();
+
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, skill);
+}
+
+SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y, float angle)
+{
+	!mIsUp;
+
+	if (name == "IceSpear")
+	{
+		Skill_IceSpear* iceSpear = new Skill_IceSpear(name, x, y, angle);
+		return iceSpear;
+	}
+	if (name == "FireBall")
+	{
+		Skill_FireBall* fireBall = new Skill_FireBall(name, x, y, angle);
+		return fireBall;
+	}
+	if (name == "DragonArc")
+	{
+		Skill_DragonArc* dragonArc = new Skill_DragonArc(name, x, y, angle, mIsUp);
+		return dragonArc;
+	}
+	if (name == "WindSlash")
+	{
+		Skill_WindSlash* windSlash = new Skill_WindSlash(name, x, y, angle);
+		return windSlash;
+	}
+
+	return nullptr;
+}
+
 void SkillManager::Update()
 {
 	mFrameCount += Time::GetInstance()->DeltaTime();
@@ -97,6 +153,9 @@ void SkillManager::Update()
 				// 근접 스킬
 				if (skill->GetSkillType() == SkillType::Melee)
 				{
+					// 근접 스킬은 적에게 히트시 사라지지 않는다
+					// 고래서 스킬 하나당 적 한마리당 한번씩의 피해를 줘야댐
+					// 그래서 그걸 어떻게 하는게 좋을까
 					bool isCollision = false;
 					if (IntersectRect(temp, &skillrc, &monsterrc) && 
 						(skill->GetIsCollision() == false && monster->GetIsCollision() == false))
@@ -112,10 +171,12 @@ void SkillManager::Update()
 					if (IntersectRect(temp, &skillrc, &monsterrc))
 					{
 
-						if (skill->GetName() == "FireBall")
+						if (skill->GetName() == "FireBall" ||
+							skill->GetName() == "DragonArc")
 						{
 							ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
-						
+							monster->SetSkillHitAngle(skill->GetAngle());
+							monster->SetSkillHitPower(skill->GetSkillPower());
 						}
 
 						if (skill->GetName() == "IceSpear")
@@ -218,7 +279,7 @@ void SkillManager::FlameSkill(const string& name, float x, float y, float angle)
 {
 	Effect_MagicCircle* magicCircle = new Effect_MagicCircle(name, x, y, CastingSkill::Burn);
 	magicCircle->Init();
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, magicCircle);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, magicCircle);
 }
 
 void SkillManager::FireBallSkill(const string& name, float x, float y, float angle, int delay)
@@ -239,10 +300,10 @@ void SkillManager::MeteorSkill(const string& name, float x, float y)
 void SkillManager::KickFlame(const string & name, float x, float y, float angle, float endX, float endY)
 {
 	Skill_Flame* flame = new Skill_Flame(name, x, y, angle);
-	flame->Init();
 	flame->SetEndPositionX(endX);
 	flame->SetEndPositionY(endY);
 	flame->SetIsMove();
+	flame->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, flame);
 }
 

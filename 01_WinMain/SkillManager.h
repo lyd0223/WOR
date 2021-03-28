@@ -1,15 +1,23 @@
 #pragma once
+#include "SkillObject.h"
 
 class SkillManager
 {
 	Singleton(SkillManager)
 
 private:
-	//typedef map<SkillType, vector<class GameObject*>>::iterator SkillIter;
-	//map<SkillType, vector<class GameObject*>> mSkillList;
+	map<SkillElement, vector<SkillObject*>> mSkillList;
+
+	bool mIsUp;
 
 	float mFrameCount;
 public:
+	SkillManager();
+
+	void AddSkillList(SkillElement element, SkillObject* skillObject);
+	void SkillCasting(const string& name, float x, float y, float angle);
+	SkillObject* MakeSkillClass(const string& name, float x, float y, float angle);
+
 	void Update();
 
 	void DragonArcSkill(const string& name, float x, float y, float angle, bool isUp);
@@ -28,6 +36,6 @@ public:
 	void SpearWaveSkill(const string& name, float x, float y, float angle);
 	void MonsterMiddleSlashSkill(const string& name, float x, float y, float angle);
 
-	//map<string, vector<class GameObject*>> GetSkillList() { return mSkillList; }
-	//class vector<GameObject*> FindSkillList(const string key);
+	map<SkillElement, vector<SkillObject*>> GetSkillList() { return mSkillList; }
+	vector<SkillObject*> GetSkillElementList(SkillElement element) { return mSkillList.find(element)->second; }
 };

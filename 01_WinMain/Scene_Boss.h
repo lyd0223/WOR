@@ -5,6 +5,7 @@
 class Scene_Boss : public Scene
 {
 	class Player* mPlayer;
+	class Monster_FireBoss* mFireBoss;
 	class TileMap* mTileMap;
 	vector<class Structure*> mStructureList;
 	bool mMapIsOpen;

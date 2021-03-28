@@ -7,6 +7,8 @@
 #include "Effect_FireWing.h"
 #include "Skill_Flame.h"
 #include "Skill_FireBall.h"
+#include "TileMap.h"
+#include "Tile.h"
 
 Monster_FireBoss::Monster_FireBoss(const string& name, float x, float y)
 	:MonsterObject(name)
@@ -61,6 +63,7 @@ void Monster_FireBoss::Init()
 	mFireBossState = FireBossState::Idle;
 	mCurrentAnimation->Play();
 
+	mMapRect = RectMake(10 * TileSize, 8 * TileSize, 20 * TileSize, 16 * TileSize);
 
 	mPlayer = (Player*) ObjectManager::GetInstance()->FindObject("Player");
 	mAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
@@ -101,17 +104,36 @@ void Monster_FireBoss::Update()
 
 	mAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
 
-	if(Input::GetInstance()->GetKey(VK_DOWN)) {
-		mY += 10;
-	}
-	if (Input::GetInstance()->GetKey(VK_LEFT)) {
-		mX -= 10;
-	}
-	if (Input::GetInstance()->GetKey(VK_RIGHT)) {
-		mX += 10;
-	}
-	if (Input::GetInstance()->GetKey(VK_UP)) {
-		mY -= 10;
+	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
+	vector<vector<Tile*>> tilelist = tilemap->GetTileList();
+
+	D2D1_RECT_F temp;
+	for (int y = mY / TileSize - 1; y < mY / TileSize + 1; y++)
+	{
+		for (int x = mX / TileSize - 1; x < mX / TileSize + 1; x++)
+		{
+			if (tilelist[y][x]->GetType() == Type::Wall)
+			{
+				D2D1_RECT_F tileRect = tilelist[y][x]->GetRect();
+				D2D1_RECT_F tempRect;
+				if (tilelist[y][x]->GetType() == Type::Wall)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+						if (y == (int)mY / TileSize && x == (int)mX / TileSize - 1)
+							mX = tileRect.right + mSizeX / 2;
+						else if (y == (int)mY / TileSize && x == (int)mX / TileSize + 1)
+							mX = tileRect.left - mSizeX / 2;
+						else if (y == (int)mY / TileSize - 1 && x == (int)mX / TileSize)
+							mY = tileRect.bottom + mSizeY / 2;
+						else if (y == (int)mY / TileSize + 1 && x == (int)mX / TileSize)
+							mY = tileRect.top - mSizeY / 2;
+
+
+					}
+				}
+			}
+		}
 	}
 
 	if (Input::GetInstance()->GetKeyDown('M')) {
@@ -119,7 +141,7 @@ void Monster_FireBoss::Update()
 		//FireBallThrowPattern();
 		//StempPattern();
 		//KickPattern();
-		//Move();
+		Move();
 		//MakePattern();
 		//mFireBossState = FireBossState::Dash;
 		//MakePatternFuncList();
@@ -159,13 +181,13 @@ void Monster_FireBoss::Update()
 	//	FireBallThrowPattern();
 	//}
 
-	//if (mFireBossState == FireBossState::Kick) {
-	//	KickPattern();
-	//}
+	if (mFireBossState == FireBossState::Kick) {
+		KickPattern();
+	}
 
-	//if (mFireBossState == FireBossState::Dash) {
-	//	Move();
-	//}
+	if (mFireBossState == FireBossState::Dash) {
+		Move();
+	}
 
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
@@ -174,7 +196,7 @@ void Monster_FireBoss::Render()
 {
 	mImage->SetScale(3.f);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMapRect, D2D1::ColorF::Aqua);
 }
 
 void Monster_FireBoss::AnimationSet(Animation ** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)
@@ -240,8 +262,9 @@ void Monster_FireBoss::Move()
 		Skill_Flame* flame = new Skill_Flame("Flame", mX, mY, 0.f);
 		flame->SetEndPositionX(0);
 		flame->SetEndPositionY(0);
+		flame->SetAlpha(0.7f);
 		flame->Init();
-		ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, flame);
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, flame);
 	}
 }
 
@@ -256,7 +279,7 @@ void Monster_FireBoss::AttackReady()
 
 	Effect_FireWing* fireWing = new Effect_FireWing("FireWing", mX, mY - 80);
 	fireWing->Init();
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, fireWing);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, fireWing);
 
 	BossStateChange();
 }
@@ -337,12 +360,16 @@ void Monster_FireBoss::FireBallThrowPattern()
 
 void Monster_FireBoss::MeteorPattern()
 {
-	// 보스 맵이 있으면 보스맵 사이즈만큼 랜덤값 
+	float mapCenterX = mMapRect.left + (mMapRect.right - mMapRect.left) / 2;
+	float mapCenterY = mMapRect.top + (mMapRect.bottom - mMapRect.right) / 2;
+	float angle = Math::GetAngle(mX, mY, mapCenterX, mapCenterY);
+
+
 
 	mIsFuncEnd = false;
 	for (int i = 0; i < 25; i++) {
-		float randomX = 0;
-		float randomY = 0;
+		float randomX = Random::GetInstance()->RandomInt(mMapRect.left, mMapRect.right);
+		float randomY = Random::GetInstance()->RandomInt(mMapRect.top, mMapRect.bottom);
 		SkillManager::GetInstance()->MeteorSkill("Meteor", randomX, randomY);
 	}
 }
@@ -389,11 +416,11 @@ void Monster_FireBoss::KickPattern()
 
 void Monster_FireBoss::MakeFlame()
 {
-	for (int i = 0; i < 6; i++) {
-		float x = mX + (cosf(mKickAngle - PI / 2 + PI / 6 * i) * 100);
-		float y = mY - (sinf(mKickAngle - PI / 2 + PI / 6 * i) * 100);
-		float endY = mY - (sinf(mKickAngle - PI / 2 + PI / 6 * i) * 200);
-		float endX = mX + (cosf(mKickAngle - PI / 2 + PI / 6 * i) * 200);
+	for (int i = 0; i < 12; i++) {
+		float x = mX + (cosf(mKickAngle - PI / 2 + PI / 12 * i) * 100);
+		float y = mY - (sinf(mKickAngle - PI / 2 + PI / 12 * i) * 100);
+		float endY = mY - (sinf(mKickAngle - PI / 2 + PI / 12 * i) * 200);
+		float endX = mX + (cosf(mKickAngle - PI / 2 + PI / 12 * i) * 200);
 		SkillManager::GetInstance()->KickFlame("KickFlame" + i, x, y, mKickAngle, endX, endY);
 	}
 }
@@ -402,7 +429,7 @@ void Monster_FireBoss::MakeFireWing()
 {
 	mFireWing = new Effect_FireWing("FireWing", mX, mY);
 	mFireWing->Init();
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, mFireWing);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, mFireWing);
 }
 
 void Monster_FireBoss::BossStateChange()

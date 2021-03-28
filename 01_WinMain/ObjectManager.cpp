@@ -87,10 +87,11 @@ void ObjectManager::Render()
 			if (iter->second[i]->GetIsActive() == true)
 			{
 				if (iter->first == ObjectLayer::Player ||
+					iter->first == ObjectLayer::Particle ||
 					iter->first == ObjectLayer::Enemy ||
 					iter->first == ObjectLayer::Skill ||
-					iter->first == ObjectLayer::Structure ||
-					iter->first == ObjectLayer::Particle)
+					iter->first == ObjectLayer::Structure
+					)
 				{
 					renderingOrderVector.push_back(iter->second[i]);
 				}
