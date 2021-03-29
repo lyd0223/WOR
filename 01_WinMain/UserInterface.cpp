@@ -21,11 +21,14 @@ void UserInterface::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"EButton", Resources(L"UI/E.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"SpaceButton", Resources(L"UI/Space.png"));
 	
-	mSkillIndexList.insert(make_pair("FireBall", Vector2(0, 0)));	// FireBall
-	mSkillIndexList.insert(make_pair("DragonArc", Vector2(1, 0)));	// DragonArc
-	mSkillIndexList.insert(make_pair("WindSlash", Vector2(0, 1)));	// WindSlash
-	mSkillIndexList.insert(make_pair("IceSpear", Vector2(0, 2)));	// IceSpear
-	mSkillIndexList.insert(make_pair("WindDash", Vector2(1, 1)));	// WindDash
+	mSkillIndexList.insert(make_pair("FireBall", Vector2(0, 0)));		// FireBall
+	mSkillIndexList.insert(make_pair("DragonArc", Vector2(1, 0)));		// DragonArc
+	mSkillIndexList.insert(make_pair("Meteor", Vector2(2, 0)));			// Meteor
+	mSkillIndexList.insert(make_pair("WindSlash", Vector2(0, 1)));		// WindSlash
+	mSkillIndexList.insert(make_pair("WindDash", Vector2(1, 1)));		// WindDash
+	mSkillIndexList.insert(make_pair("IceSpear", Vector2(0, 2)));		// IceSpear
+	mSkillIndexList.insert(make_pair("WaterBall", Vector2(1, 2)));		// WaterBall
+	mSkillIndexList.insert(make_pair("ThunderBolt", Vector2(0, 3)));	// ThunderBolt
 
 	mStatus = new UIObject(50, 50, 246, 60, ImageManager::GetInstance()->FindImage(L"Status"));
 	mHPBar = new UIObject(107, 60, 183, 24, ImageManager::GetInstance()->FindImage(L"HPBar"));

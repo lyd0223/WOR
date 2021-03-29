@@ -4,7 +4,7 @@
 #include "Animation.h"
 
 Skill_Meteor::Skill_Meteor(const string & name, float x, float y)
-	:GameObject(name)
+	:SkillObject(name)
 {
 	mX = x - 200;
 	mY = 0;
@@ -12,6 +12,9 @@ Skill_Meteor::Skill_Meteor(const string & name, float x, float y)
 	mEndY = y;
 	mSpeed = 10.f;
 	mAngle = Math::GetAngle(mX, mY, mEndX, mEndY);
+	mSkillElement = SkillElement::Fire;
+	mSkillArcana = SkillArcana::Signature;
+
 }
 
 void Skill_Meteor::Init()

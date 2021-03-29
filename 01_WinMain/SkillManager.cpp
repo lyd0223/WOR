@@ -22,6 +22,8 @@
 #include "Skill_SpearWave.h"
 #include "Skill_MonsterMiddleSlash.h"
 #include "Skill_ThunderBolt.h"
+#include "Skill_Meteor.h"
+#include "Skill_WaterBall.h"
 
 #include "MouseTracker.h"
 #include "Tile.h"
@@ -37,10 +39,13 @@ SkillManager::SkillManager()
 		mSkillList.insert(make_pair((SkillElement)i, emptyVector));
 	}
 
-	AddSkillList(SkillElement::Wind, new Skill_WindSlash("WindSlash", 0, 0, 0));
 	AddSkillList(SkillElement::Fire, new Skill_FireBall("FireBall", 0, 0, 0));
 	AddSkillList(SkillElement::Fire, new Skill_DragonArc("DragonArc", 0, 0, 0, false));
+	AddSkillList(SkillElement::Fire, new Skill_Meteor("Meteor", 0, 0));
+	AddSkillList(SkillElement::Wind, new Skill_WindSlash("WindSlash", 0, 0, 0));
 	AddSkillList(SkillElement::Water, new Skill_IceSpear("IceSpear", 0, 0, 0));
+	AddSkillList(SkillElement::Water, new Skill_WaterBall("WaterBall", 0, 0, 0));
+	AddSkillList(SkillElement::Elect, new Skill_ThunderBolt("ThunderBolt", 0, 0, 0));
 }
 
 void SkillManager::AddSkillList(SkillElement element, SkillObject * skillObject)

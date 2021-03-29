@@ -15,11 +15,14 @@ void UI_SkillChangeInterface::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"SelectCard", Resources(L"UI/CardSelect.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"SkillIcon", Resources(L"UI/SkillIcon.png"), 4, 4);
 
-	mSkillIndexList.insert(make_pair("FireBall", Vector2(0, 0)));	// FireBall
-	mSkillIndexList.insert(make_pair("DragonArc", Vector2(1, 0)));	// DragonArc
-	mSkillIndexList.insert(make_pair("WindSlash", Vector2(0, 1)));	// WindSlash
-	mSkillIndexList.insert(make_pair("IceSpear", Vector2(0, 2)));	// IceSpear
-	mSkillIndexList.insert(make_pair("WindDash", Vector2(1, 1)));	// WindDash
+	mSkillIndexList.insert(make_pair("FireBall", Vector2(0, 0)));		// FireBall
+	mSkillIndexList.insert(make_pair("DragonArc", Vector2(1, 0)));		// DragonArc
+	mSkillIndexList.insert(make_pair("Meteor", Vector2(2, 0)));			// Meteor
+	mSkillIndexList.insert(make_pair("WindSlash", Vector2(0, 1)));		// WindSlash
+	mSkillIndexList.insert(make_pair("WindDash", Vector2(1, 1)));		// WindDash
+	mSkillIndexList.insert(make_pair("IceSpear", Vector2(0, 2)));		// IceSpear
+	mSkillIndexList.insert(make_pair("WaterBall", Vector2(1, 2)));		// WaterBall
+	mSkillIndexList.insert(make_pair("ThunderBolt", Vector2(0, 3)));	// ThunderBolt
 
 	mPlayer = (Player*) ObjectManager::GetInstance()->FindObject("Player");
 

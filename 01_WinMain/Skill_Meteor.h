@@ -1,9 +1,9 @@
 #pragma once
-#include "GameObject.h"
+#include "SkillObject.h"
 
 class Image;
 class Animation;
-class Skill_Meteor : public GameObject
+class Skill_Meteor : public SkillObject
 {
 	Image* mImage;
 	Animation* mMeteorAnimation;
@@ -13,7 +13,7 @@ class Skill_Meteor : public GameObject
 	float mAngle;
 	float mSpeed;
 public:
-	Skill_Meteor(const string& name) : GameObject(name) {};
+	Skill_Meteor(const string& name) : SkillObject(name) {};
 	Skill_Meteor(const string& name, float x, float y);
 
 	void Init() override;

@@ -15,7 +15,7 @@ Skill_ThunderBolt::Skill_ThunderBolt(const string& name, float x, float y, float
 	mSkillTarget = SkillTarget::Player;
 	mSkillType = SkillType::Throw;
 	mSkillElement = SkillElement::Elect;
-
+	mSkillArcana = SkillArcana::Standard;
 }
 
 void Skill_ThunderBolt::Init()

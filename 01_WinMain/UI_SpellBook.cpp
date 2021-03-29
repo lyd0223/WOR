@@ -27,6 +27,23 @@ void UI_SpellBook::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"SpellbookUIRightArrow", Resources(L"UI/RightArrow.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"SpellbookUIUpArrow", Resources(L"UI/UpArrow.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"SpellbookUIDownArrow", Resources(L"UI/DownArrow.png"));
+
+	ImageManager::GetInstance()->LoadFromFile(L"StandardCard", Resources(L"UI/StandardCard.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"SignatureCard", Resources(L"UI/SignatureCard.png"));
+
+	ImageManager::GetInstance()->LoadFromFile(L"SkillIcon", Resources(L"UI/SkillIcon.png"), 4, 4);
+
+	mSkillIcon = ImageManager::GetInstance()->FindImage(L"SkillIcon");
+
+	mSkillIndexList.insert(make_pair("FireBall", Vector2(0, 0)));		// FireBall
+	mSkillIndexList.insert(make_pair("DragonArc", Vector2(1, 0)));		// DragonArc
+	mSkillIndexList.insert(make_pair("Meteor", Vector2(2, 0)));			// Meteor
+	mSkillIndexList.insert(make_pair("WindSlash", Vector2(0, 1)));		// WindSlash
+	mSkillIndexList.insert(make_pair("WindDash", Vector2(1, 1)));		// WindDash
+	mSkillIndexList.insert(make_pair("IceSpear", Vector2(0, 2)));		// IceSpear
+	mSkillIndexList.insert(make_pair("WaterBall", Vector2(1, 2)));		// WaterBall
+	mSkillIndexList.insert(make_pair("ThunderBolt", Vector2(0, 3)));	// ThunderBolt
+
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 
 	mCurrentSkillArcana = (SkillArcana)mIndexY;
@@ -84,6 +101,12 @@ void UI_SpellBook::Init()
 		break;
 	}
 
+	mCardPositionX = 296;
+	mCardPositionY = 290;
+	rc = RectMakeCenter(mCardPositionX, mCardPositionY,
+		ImageManager::GetInstance()->FindImage(L"StandardCard")->GetWidth() * 2,
+		ImageManager::GetInstance()->FindImage(L"StandardCard")->GetHeight() * 2);
+
 	mCurrentSkillElement = mCurrentSkill->GetSkillElement();
 
 	MakeSpellbookUISkillElemental();
@@ -101,6 +124,41 @@ void UI_SpellBook::Init()
 	{
 		mSkillElementList.push_back(iter->first);
 	}
+	
+	map<SkillElement, vector<SkillObject*>>::iterator iter2 = mSkillList.begin();
+	for (; iter2 != mSkillList.end(); iter2++)
+	{
+		vector<UIObject*> emptyVector;
+		
+		mSkillCardList.insert(make_pair(iter2->first, emptyVector));
+	}
+
+	iter2 = mSkillList.begin();
+	for (; iter2 != mSkillList.end(); iter2++)
+	{
+		Image* image;
+
+		if ((SkillArcana)mIndexY == SkillArcana::Signature)
+		{
+			image = ImageManager::GetInstance()->FindImage(L"SignatureCard");
+		}
+		else
+		{
+			image = ImageManager::GetInstance()->FindImage(L"StandardCard");
+		}
+
+		for (int i = 0; i < iter2->second.size(); i++)
+		{
+			
+			mSkillCardList[iter2->first].push_back(new UIObject(
+				mCardPositionX + (i * (image->GetWidth() * 2 + 10)),
+				mCardPositionY,
+				image->GetWidth() * 2,
+				image->GetHeight() * 2,
+				image
+			));
+		}
+	}
 }
 
 void UI_SpellBook::Release()
@@ -112,11 +170,14 @@ void UI_SpellBook::Update()
 	if (mIsActive)
 	{
 		map<SkillElement, UIObject*>::iterator iter = mSpellbookUISkillElemantalList.find(mCurrentSkillElement);
+		map<SkillElement, vector<SkillObject*>>::iterator iter2 = mSkillList.find(mCurrentSkillElement);
+		//vector<SkillObject*>::iterator iter3 = mSkillList.find(mCurrentSkillElement)->second;
 		if (Input::GetInstance()->GetKeyDown(VK_UP) || Input::GetInstance()->GetKeyDown('W'))
 		{
 			mSpellbookUIUpArrow->Image->SetScale(1.5f);
 			if(iter->first != mSpellbookUISkillElemantalList.begin()->first)
 				iter--;
+			mCurrentSkill = iter2->second[0];
 			mCurrentSkillElement = iter->first;
 			mSpellbookUISkillElementalOn->X = iter->second->X;
 			mSpellbookUISkillElementalOn->Y = iter->second->Y;
@@ -124,18 +185,20 @@ void UI_SpellBook::Update()
 		else if (Input::GetInstance()->GetKeyDown(VK_DOWN) || Input::GetInstance()->GetKeyDown('S'))
 		{
 			mSpellbookUIDownArrow->Image->SetScale(1.5f);
-				iter++;
-				if (iter == mSpellbookUISkillElemantalList.end())
-				{
-					iter--;
-				}
+			iter++;
+			if (iter == mSpellbookUISkillElemantalList.end())
+			{
+				iter--;
+			}
 			mCurrentSkillElement = iter->first;
+			mCurrentSkill = iter2->second[0];
 			mSpellbookUISkillElementalOn->X = iter->second->X;
 			mSpellbookUISkillElementalOn->Y = iter->second->Y;
 		}
 		else if (Input::GetInstance()->GetKeyDown(VK_LEFT) || Input::GetInstance()->GetKeyDown('A'))
 		{
 			mSpellbookUILeftArrow->Image->SetScale(1.5f);
+			
 		}
 		else if (Input::GetInstance()->GetKeyDown(VK_RIGHT) || Input::GetInstance()->GetKeyDown('D'))
 		{
@@ -168,7 +231,27 @@ void UI_SpellBook::Render()
 		{
 			iter->second->Image->ScaleRender(iter->second->X, iter->second->Y, iter->second->SizeX, iter->second->SizeY);
 		}
-
+		
+		map<SkillElement, vector<UIObject*>>::iterator iter2 = mSkillCardList.begin();
+		
+		for (; iter2 != mSkillCardList.end(); iter2++)
+		{
+			if (mCurrentSkillElement != iter2->first) continue;
+			for (int i = 0; i < iter2->second.size(); i++)
+			{
+				iter2->second[i]->Image->ScaleRender(iter2->second[i]->X, iter2->second[i]->Y, iter2->second[i]->SizeX, iter2->second[i]->SizeY);
+				mSkillList[iter2->first];
+				Vector2 temp;
+				if (mCurrentSkillElement == iter2->first)
+				{
+					temp = mSkillIndexList.find(mSkillList.find(iter2->first)->second[i]->GetName())->second;
+					mSkillIcon->ScaleFrameRender(iter2->second[i]->X, iter2->second[i]->Y, temp.X, temp.Y,
+						mSkillIcon->GetWidth() / 4 * 2,
+						mSkillIcon->GetHeight() / 4 * 2);
+				}
+			}
+		}
+		
 		mSpellbookUISkillElementalOn->Image->ScaleFrameRender(mSpellbookUISkillElementalOn->X, mSpellbookUISkillElementalOn->Y, 0, (int)mCurrentSkillElement, mSpellbookUISkillElementalOn->SizeX, mSpellbookUISkillElementalOn->SizeY);
 	}
 }
@@ -178,12 +261,6 @@ void UI_SpellBook::GetSkillList()
 	map<SkillElement, vector<SkillObject*>> temp = SkillManager::GetInstance()->GetSkillList();
 	
 	map<SkillElement, vector<SkillObject*>>::iterator iter = temp.begin();
-
-	//for (int i = 0; i < (int)SkillElement::End; ++i)
-	//{
-	//	vector<SkillObject*> emptyVector;
-	//	mSkillList.insert(make_pair((SkillElement)i, emptyVector));
-	//}
 
 	for (; iter != temp.end(); iter++)
 	{

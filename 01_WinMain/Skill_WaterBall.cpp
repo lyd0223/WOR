@@ -14,6 +14,10 @@ Skill_WaterBall::Skill_WaterBall(const string& name, float x, float y, float ang
 	mX = x;
 	mY = y;
 	mAngle = angle;
+	mSkillElement = SkillElement::Water;
+	mSkillTarget = SkillTarget::Enemy;
+	mSkillType = SkillType::Throw;
+	mSkillArcana = SkillArcana::Standard;
 }
 
 void Skill_WaterBall::Init()
@@ -25,8 +29,6 @@ void Skill_WaterBall::Init()
 	mSizeY = mImage->GetHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mSpeed = 20.f;
-	mSkillTarget = SkillTarget::Enemy;
-	mSkillType = SkillType::Throw;
 
 	mWaterBallAnimation = new Animation;
 	mWaterBallAnimation->InitFrameByStartEnd(0, 0, 2, 0, false);

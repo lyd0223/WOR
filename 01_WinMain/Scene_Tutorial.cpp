@@ -142,8 +142,6 @@ void Scene_Tutorial::Init()
 	//mMonsterList.push_back((MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "Zombie"));
 	mMonsterList.push_back((MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "MuscleMan"));
 
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, new Monster_FireBoss("FireBoss", mPlayer->GetX() + 150, mPlayer->GetY() + 150));
-
 	ObjectManager::GetInstance()->Init();
 
 	Camera* camera = new Camera();
