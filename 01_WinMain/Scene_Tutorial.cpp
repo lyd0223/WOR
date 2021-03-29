@@ -19,6 +19,7 @@
 #include "TileMap.h"
 #include "Gizmo.h"
 #include "UserInterface.h"
+#include "Effect_EnemyCreate.h"
 #include "MouseTracker.h"
 
 #include <fstream>
@@ -118,6 +119,7 @@ void Scene_Tutorial::Init()
 	camera->SetTarget(mPlayer);
 	CameraManager::GetInstance()->SetMainCamera(camera);
 
+	MonsterCreat(200, 1400, MonsterName::BigZombie);
 }
 
 void Scene_Tutorial::Release()
@@ -147,6 +149,7 @@ void Scene_Tutorial::Update()
 		}
 	}
 
+
 }
 
 void Scene_Tutorial::Render()
@@ -155,4 +158,38 @@ void Scene_Tutorial::Render()
 	
 
 
+}
+
+void Scene_Tutorial::MonsterCreat(float x, float y, MonsterName name)
+{
+	//string str;
+	//switch (name)
+	//{
+	//case MonsterName::BigZombie:
+	//	str = "BigZombie";
+	//	break;
+	//case MonsterName::Golem:
+	//	str = "Golem";
+	//	break;
+	//case MonsterName::Mazition:
+	//	str = "Mazition";
+	//	break;
+	//case MonsterName::RapidZombie:
+	//	str = "RapidZombie";
+	//	break;
+	//case MonsterName::Slime:
+	//	str = "Slime";
+	//	break;
+	//case MonsterName::SwoardMan:
+	//	str = "SwoardMan";
+	//	break;
+	//case MonsterName::Zombie:
+	//	str = "Zombie";
+	//	break;
+	//}
+	//ObjectManager::GetInstance()->FindObject(str);
+	//Effect_EnemyCreate* enemycreat = new Effect_EnemyCreate("EnemyCreate",x,y, name);
+
+	
+	ParticleManager::GetInstance()->MakeEnemyCreate(x, y, name);
 }

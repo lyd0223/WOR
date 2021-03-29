@@ -10,6 +10,8 @@
 #include "PlayerNormalShadow.h"
 #include "PlayerHeightShadow.h"
 #include "PlayerWideShadow.h"
+#include "Skill_SummonIceSpear.h"
+#include "Skill_IceSpear.h"
 #include"TileMap.h"
 
 
@@ -31,6 +33,7 @@ void Player::Init()
 	mSizeX = mImage->GetWidth() / 10;
 	mSizeY = mImage->GetHeight() / 25;
 	mAngle = 0.f;
+	mHp = 500;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mMoveAngle = 0;
 	mMovingRect = RectMakeCenter(mX, mY+50, TileSize, TileSize);
@@ -57,7 +60,11 @@ void Player::Init()
 	AnimationReverseSet(&mLeftRunAnimation, false, true, 9, 4, 0, 4, 0.1f);
 	AnimationSet(&mDownAttackAnimation, false, false, 0, 5, 9, 5, AnimationTime);
 	AnimationSet(&mRightDashAnimation, false, false, 0, 7, 9, 7, AnimationTime);
+	AnimationSet(&mRightDiagonalUpDashAnimation, false, false, 0, 7, 9, 7, AnimationTime);
+	AnimationSet(&mRightDiagonalDownDashAnimation, false, false, 0, 7, 9, 7, AnimationTime);
 	AnimationSet(&mLeftDashAnimation, false, false, 0, 8, 9, 8, AnimationTime);
+	AnimationSet(&mLeftDiagonalUpDashAnimation, false, false, 0, 8, 9, 8, AnimationTime);
+	AnimationSet(&mLeftDiagonalDownDashAnimation, false, false, 0, 8, 9, 8, AnimationTime);
 	AnimationSet(&mDieAnimation, false, false, 0, 9, 9, 9, AnimationTime);
 	AnimationSet(&mUpAttackAnimation, false, false, 0, 11, 9, 11, AnimationTime);
 	AnimationSet(&mDownThrowSkillAnimation, false, false, 0, 6, 9, 6, AnimationTime);
@@ -97,6 +104,7 @@ void Player::Init()
 			mPlayerNormalShadow = new PlayerNormalShadow("PlayerNormalShadow", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 30);
 			mPlayerNormalShadow->Init();
 		}
+
 	}
 	if (mPlayerHeightShadow == nullptr)
 	{
@@ -157,70 +165,7 @@ void Player::Update()
 
 	D2D1_RECT_F rctemp = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	mAngle = Math::GetAngle(mX, mY, _mousePosition.x + rctemp.left, _mousePosition.y + rctemp.top);
-	////마우스트래커
-	//if (mMouseTracker == nullptr)
-	//{
-	//	mMouseTracker = new MouseTracker("MouseTracker", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 20, mAngle);
-	//	mMouseTracker->Init();
-	//}
-	////
-	////그림자-------
-	//if (mPlayerNormalShadow == nullptr)
-	//{
-	//	if (mCurrentAnimation == mDownIdleAnimation || mCurrentAnimation == mRightIdleAnimation || mCurrentAnimation == mLeftIdleAnimation ||
-	//		mCurrentAnimation == mUpIdleAnimation || mCurrentAnimation == mUpHitAnimation || mCurrentAnimation == mDownHitAnimation || mCurrentAnimation == mRightHitAnimation ||
-	//		mCurrentAnimation == mLeftHitAnimation)
-	//	{
-	//		mPlayerNormalShadow = new PlayerNormalShadow("PlayerNormalShadow", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 30);
-	//		mPlayerNormalShadow->Init();
-	//	}
-	//}
-	if ((mPlayerState != PlayerState::DownIdle && mPlayerState != PlayerState::LeftIdle &&
-		mPlayerState != PlayerState::RightIdle && mPlayerState != PlayerState::UpIdle &&mPlayerState != PlayerState::DownHit
-		&& mPlayerState != PlayerState::UpHit && mPlayerState != PlayerState::RightHit && mPlayerState != PlayerState::LeftHit) )
-	{
-			{
-				SafeDelete(mPlayerNormalShadow)
-			}
-	}
-	/*if (mPlayerHeightShadow == nullptr)
-	{
-		if (mCurrentAnimation == mUpThrowWatingAnimation || mCurrentAnimation == mDownThrowWatingAnimation || mCurrentAnimation == mDownAttackAnimation || mCurrentAnimation == mUpAttackAnimation ||
-			mCurrentAnimation == mUpThrowSkillAnimation || mCurrentAnimation == mDownThrowSkillAnimation)
-		{
-			mPlayerHeightShadow = new PlayerHeightShadow("PlayerHeightShadow", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 30);
-			mPlayerHeightShadow->Init();
-		}
-	}*/
-	if ((mPlayerState != PlayerState::UpThrowWating && mPlayerState != PlayerState::DownThorwWating &&
-		mPlayerState != PlayerState::DownAttack && mPlayerState != PlayerState::UpAttack && mPlayerState != PlayerState::UpThrowSkill
-		&& mPlayerState != PlayerState::DownThorwWating ))
-	{
-		{
-			SafeDelete(mPlayerHeightShadow)
-		}
-	}
-	/*if (mPlayerWideShadow ==nullptr)
-	{
-		if (mCurrentAnimation == mUpDashAnimation || mCurrentAnimation == mDownDashAnimation || mCurrentAnimation == mLeftDashAnimation || mCurrentAnimation == mRightDashAnimation ||
-			mCurrentAnimation == mRightThrowSkillandAttackAnimation || mCurrentAnimation == mLeftThrowSkillandAttackAnimation || mCurrentAnimation == mRightRunAnimation||
-			mCurrentAnimation == mLeftRunAnimation || mCurrentAnimation == mUpRunAnimation || mCurrentAnimation == mDownRunAnimation || mCurrentAnimation == mRightThrowWationgAnimation
-			|| mCurrentAnimation == mLeftThrowWatingAnimation)
-		{
-			mPlayerWideShadow = new PlayerWideShadow("PlayerWideShadow", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 30);
-			mPlayerWideShadow->Init();
-		}
-	}*/
-	if ((mPlayerState != PlayerState::UpDash && mPlayerState != PlayerState::DownDash &&
-		mPlayerState != PlayerState::LeftDash && mPlayerState != PlayerState::RightDash && mPlayerState != PlayerState::RightThrowSkillandAttack
-		&& mPlayerState != PlayerState::LeftThrowSkillandAttack && mPlayerState != PlayerState::RightRun && mPlayerState != PlayerState::LeftRun && mPlayerState != PlayerState::UpRun
-		&& mPlayerState != PlayerState::DownRun && mPlayerState != PlayerState::RightAttack && mPlayerState != PlayerState::LeftAttack && mPlayerState != PlayerState::LeftThrowWaitng
-		&& mPlayerState != PlayerState::RightThrowWating))
-	{
-		{
-			SafeDelete(mPlayerWideShadow)
-		}
-	}
+	
 	//-----
 	//겟키
 	if (Input::GetInstance()->GetKey('W') && !Input::GetInstance()->GetKey('D') && !Input::GetInstance()->GetKey('A') &&mCurrentAnimation != mUpDashAnimation)
@@ -498,6 +443,7 @@ void Player::Update()
 	}
 
 
+
 	// 겟키업
 	if (!Input::GetInstance()->GetKey('S') &&
 		!Input::GetInstance()->GetKey('A') &&
@@ -607,7 +553,11 @@ void Player::Update()
 		{
 			if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
 			{
+
 				SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX - 20, mY, mAngle);
+
+							
+
 				//SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX -20, mY, mAngle);
 			}
 			else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
@@ -671,40 +621,82 @@ void Player::Update()
 	}
 	if (Input::GetInstance()->GetKeyUp(VK_RBUTTON))
 	{
-
+		SkillObject* skill = (SkillObject*)ObjectManager::GetInstance()->FindObject("IceSpear");
+		if (skill->GetSkillType() == SkillType::Hold)
+		{
+			skill->SetSkillType(SkillType::Throw);
+		}
+		
 		if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
 		{
 			AnimationChange(mRightThrowSkillandAttackAnimation);
 			mPlayerState = PlayerState::RightAttack;
-			SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX - 20, mY, mAngle);
+			
+			//SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX - 20, mY, mAngle);
 		}
 		else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
 		{
 			AnimationChange(mUpThrowSkillAnimation);
 			mPlayerState = PlayerState::UpAttack;
-			SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX, mY, mAngle);
+			//SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX, mY, mAngle);
 		}
 		else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
 		{
 			AnimationChange(mLeftThrowSkillandAttackAnimation);
 			mPlayerState = PlayerState::LeftAttack;
-			SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX + 35, mY - 20, mAngle);
+			//SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX + 35, mY - 20, mAngle);
 		}
 		else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
 		{
 			AnimationChange(mDownThrowSkillAnimation);
 			mPlayerState = PlayerState::DownAttack;
-			SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX + 20, mY - 20, mAngle);
+			//SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX + 20, mY - 20, mAngle);
 		}
 		
 		mIsAct = false;
 	}
 	//대쉬
-	if (mCurrentAnimation != mLeftDashAnimation && mCurrentAnimation != mRightDashAnimation && mCurrentAnimation != mDownDashAnimation && mCurrentAnimation != mUpDashAnimation ||
+	if (mCurrentAnimation != mLeftDashAnimation && mCurrentAnimation != mRightDashAnimation && mCurrentAnimation != mDownDashAnimation && mCurrentAnimation != mUpDashAnimation &&
+		mCurrentAnimation != mRightDiagonalDownDashAnimation && mCurrentAnimation != mRightDiagonalUpDashAnimation && mCurrentAnimation != mLeftDiagonalDownDashAnimation && mCurrentAnimation != mLeftDiagonalUpDashAnimation ||
 		mRightDashAnimation->GetNowFrameX() == 9 || mLeftDashAnimation->GetNowFrameX() == 9 || mUpDashAnimation->GetNowFrameX() == 9 || mDownDashAnimation->GetNowFrameX() == 9)
 	{
+		if (Input::GetInstance()->GetKey('W') && Input::GetInstance()->GetKey('D') && Input::GetInstance()->GetKeyDown(VK_SPACE))
+		{
+			SoundPlayer::GetInstance()->LoadFromFile(L"PlayerDashSound", Resources(L"Sound/PlayerDash.wav"), false);
+			SoundPlayer::GetInstance()->Play(L"PlayerDashSound", 1.f);
+			mPlayerState = PlayerState::RightDiagonalUpDash;
+			AnimationChange(mRightDiagonalUpDashAnimation);
+			
+		}
+		else if (Input::GetInstance()->GetKey('W') && Input::GetInstance()->GetKey('A') && Input::GetInstance()->GetKeyDown(VK_SPACE))
+		{
+			SoundPlayer::GetInstance()->LoadFromFile(L"PlayerDashSound", Resources(L"Sound/PlayerDash.wav"), false);
+			SoundPlayer::GetInstance()->Play(L"PlayerDashSound", 1.f);
+			mPlayerState = PlayerState::LeftDiagonalUpDash;
+			AnimationChange(mLeftDiagonalUpDashAnimation);
+		
+		}
+		else if (Input::GetInstance()->GetKey('S') && Input::GetInstance()->GetKey('A') && Input::GetInstance()->GetKeyDown(VK_SPACE))
+		{
+			SoundPlayer::GetInstance()->LoadFromFile(L"PlayerDashSound", Resources(L"Sound/PlayerDash.wav"), false);
+			SoundPlayer::GetInstance()->Play(L"PlayerDashSound", 1.f);
+			mPlayerState = PlayerState::LeftDiagonalDownDash;
+			AnimationChange(mLeftDiagonalDownDashAnimation);
+	
+		}
+		else if (Input::GetInstance()->GetKey('S') && Input::GetInstance()->GetKey('D') && Input::GetInstance()->GetKeyDown(VK_SPACE))
+		{
+			SoundPlayer::GetInstance()->LoadFromFile(L"PlayerDashSound", Resources(L"Sound/PlayerDash.wav"), false);
+			SoundPlayer::GetInstance()->Play(L"PlayerDashSound", 1.f);
+			mPlayerState = PlayerState::RightDiagonalDownDash;
+			AnimationChange(mRightDiagonalDownDashAnimation);
+			
+		}
+		
 		if (Input::GetInstance()->GetKeyDown(VK_SPACE))
 		{
+			SoundPlayer::GetInstance()->LoadFromFile(L"PlayerDashSound", Resources(L"Sound/PlayerDash.wav"), false);
+			SoundPlayer::GetInstance()->Play(L"PlayerDashSound", 1.f);
 			//if (mCurrentAnimation == mRightRunAnimation || mCurrentAnimation == mRightIdleAnimation || mCurrentAnimation == mRightDashAnimation)
 			if (mPlayerState == PlayerState::RightRun || mPlayerState == PlayerState::RightIdle || mPlayerState == PlayerState::RightDash)
 			{
@@ -741,11 +733,13 @@ void Player::Update()
 			mIsDashEffect = false;
 		}
 		
+		
 	}
 
 
 	if (mCurrentAnimation == mRightDashAnimation)
 	{
+		
 		mMoveAngle = 0;
 		mX += cosf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
 		mY -= sinf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
@@ -761,9 +755,82 @@ void Player::Update()
 			}
 		}
 	}
+	else if (mCurrentAnimation == mRightDiagonalUpDashAnimation)
+	{
+		
+		mMoveAngle = PI/4;
+		mX += cosf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
+		mY -= sinf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
+		if (mCurrentAnimation->GetNowFrameX() <= 6)
+		{
+			mX += cosf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
+			mY -= sinf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
+			int temp = abs(mX) + abs(mY);
+			if (abs(mMoveCount - temp) > 100 && mIsDashEffect == false)
+			{
+				ParticleManager::GetInstance()->MakeDashEffectParticle(mX - 70, mY, mMoveAngle);
+				mIsDashEffect = true;
+			}
+		}
+	}
+	else if (mCurrentAnimation == mRightDiagonalDownDashAnimation)
+	{
+		
+		mMoveAngle = PI + PI / 4 + PI / 2;
+		mX += cosf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
+		mY -= sinf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
+		if (mCurrentAnimation->GetNowFrameX() <= 6)
+		{
+			mX += cosf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
+			mY -= sinf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
+			int temp = abs(mX) + abs(mY);
+			if (abs(mMoveCount - temp) > 100 && mIsDashEffect == false)
+			{
+				ParticleManager::GetInstance()->MakeDashEffectParticle(mX - 70, mY, mMoveAngle);
+				mIsDashEffect = true;
+			}
+		}
+	}
 	else if (mCurrentAnimation == mLeftDashAnimation)
 	{
+		
 		mMoveAngle = PI;
+		mX += cosf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
+		mY -= sinf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
+		if (mCurrentAnimation->GetNowFrameX() <= 6)
+		{
+			mX += cosf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
+			mY -= sinf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
+			int temp = abs(mX) + abs(mY);
+			if (abs(mMoveCount - temp) > 100 && mIsDashEffect == false)
+			{
+				ParticleManager::GetInstance()->MakeDashEffectParticle(mX + 70, mY, mMoveAngle);
+				mIsDashEffect = true;
+			}
+		}
+	}
+	else if (mCurrentAnimation == mLeftDiagonalUpDashAnimation)
+	{
+		
+		mMoveAngle = PI / 4 + PI / 2;
+		mX += cosf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
+		mY -= sinf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
+		if (mCurrentAnimation->GetNowFrameX() <= 6)
+		{
+			mX += cosf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
+			mY -= sinf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
+			int temp = abs(mX) + abs(mY);
+			if (abs(mMoveCount - temp) > 100 && mIsDashEffect == false)
+			{
+				ParticleManager::GetInstance()->MakeDashEffectParticle(mX + 70, mY, mMoveAngle);
+				mIsDashEffect = true;
+			}
+		}
+	}
+	else if (mCurrentAnimation == mLeftDiagonalDownDashAnimation)
+	{
+		
+		mMoveAngle = PI + PI / 4;
 		mX += cosf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
 		mY -= sinf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
 		if (mCurrentAnimation->GetNowFrameX() <= 6)
@@ -780,6 +847,7 @@ void Player::Update()
 	}
 	else if (mCurrentAnimation == mUpDashAnimation)
 	{
+	
 		mMoveAngle = PI/2 ;
 		mX += cosf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
 		mY -= sinf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
@@ -797,6 +865,7 @@ void Player::Update()
 	}
 	else if (mCurrentAnimation == mDownDashAnimation)
 	{
+	
 		mMoveAngle = PI/2 + PI;
 		mX += cosf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
 		mY -= sinf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
@@ -829,10 +898,36 @@ void Player::Update()
 	{
 		ParticleManager::GetInstance()->MakeDustParticle(mX, mMovingRect.bottom, mMoveAngle * PI, 2.f);
 	}
+	else if (mCurrentAnimation == mRightDiagonalDownDashAnimation && mRightDiagonalDownDashAnimation->GetNowFrameX() == 5)
+	{
+		ParticleManager::GetInstance()->MakeDustParticle(mX, mMovingRect.bottom, mMoveAngle * PI, 2.f);
+	}
+	else if (mCurrentAnimation == mRightDiagonalUpDashAnimation && mRightDiagonalUpDashAnimation->GetNowFrameX() == 5)
+	{
+		ParticleManager::GetInstance()->MakeDustParticle(mX, mMovingRect.bottom, mMoveAngle * PI, 2.f);
+	}
+	else if (mCurrentAnimation == mLeftDiagonalDownDashAnimation && mLeftDiagonalDownDashAnimation->GetNowFrameX() == 5)
+	{
+		ParticleManager::GetInstance()->MakeDustParticle(mX, mMovingRect.bottom, mMoveAngle * PI, 2.f);
+	}
+	else if (mCurrentAnimation == mLeftDiagonalUpDashAnimation && mLeftDiagonalUpDashAnimation->GetNowFrameX() == 5)
+	{
+		ParticleManager::GetInstance()->MakeDustParticle(mX, mMovingRect.bottom, mMoveAngle * PI, 2.f);
+	}
 	
 	if (mCurrentAnimation == mRightDashAnimation&&mRightDashAnimation->GetIsPlay() == false)
 	{
  		mPlayerState = PlayerState::RightIdle;
+		AnimationChange(mRightIdleAnimation);
+	}
+	else if (mCurrentAnimation == mRightDiagonalDownDashAnimation && mRightDiagonalDownDashAnimation->GetIsPlay() == false)
+	{
+		mPlayerState = PlayerState::RightIdle;
+		AnimationChange(mRightIdleAnimation);
+	}
+	else if (mCurrentAnimation == mRightDiagonalUpDashAnimation && mRightDiagonalUpDashAnimation->GetIsPlay() == false)
+	{
+		mPlayerState = PlayerState::RightIdle;
 		AnimationChange(mRightIdleAnimation);
 	}
 	else if (mCurrentAnimation == mLeftDashAnimation && mLeftDashAnimation->GetIsPlay() == false)
@@ -840,6 +935,18 @@ void Player::Update()
 		mPlayerState = PlayerState::LeftIdle;
 		AnimationChange(mLeftIdleAnimation);
 		
+	}
+	else if (mCurrentAnimation == mLeftDiagonalDownDashAnimation && mLeftDiagonalDownDashAnimation->GetIsPlay() == false)
+	{
+		mPlayerState = PlayerState::LeftIdle;
+		AnimationChange(mLeftIdleAnimation);
+
+	}
+	else if (mCurrentAnimation == mLeftDiagonalUpDashAnimation && mLeftDiagonalUpDashAnimation->GetIsPlay() == false)
+	{
+		mPlayerState = PlayerState::LeftIdle;
+		AnimationChange(mLeftIdleAnimation);
+
 	}
 	else if (mCurrentAnimation == mUpDashAnimation && mUpDashAnimation->GetIsPlay() == false)
 	{
@@ -891,9 +998,13 @@ void Player::Update()
 	//		}
 	//	}
 	//}
+	if (Input::GetInstance()->GetKeyDown('Q'))
+	{
+		SkillManager::GetInstance()->ThunderBolt("ThunderBolt", lineX, lineY, mAngle);
+	}
 	//근접공격 라인--
 	lineX = mX + 50 * cosf(mAngle);
-	lineY = mY - 50 * sinf(mAngle);
+	lineY = mY + 50 * -sinf(mAngle);
 	//-------
 	if(mPlayerNormalShadow != nullptr) mPlayerNormalShadow->Update();
 	if (mPlayerHeightShadow != nullptr) mPlayerHeightShadow->Update();
@@ -937,15 +1048,24 @@ void Player::Update()
 				{
 					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
 					{
-						
-						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == mMovingRect.bottom)
+						float width = tempRect.right - tempRect.left;
+						float height = tempRect.bottom - tempRect.top;
+						if (y == (int)mMovingY / TileSize && x == (int)mMovingX / TileSize - 1)
+							mX += width / 2;
+						else if (y == (int)mMovingY / TileSize && x == (int)mMovingX / TileSize + 1)
+							mX -= width / 2;
+						else if (y == (int)mMovingY / TileSize - 1 && x == (int)mMovingX / TileSize)
+							mY += height / 2;
+						else if (y == (int)mMovingY / TileSize + 1 && x == (int)mMovingX / TileSize)
+							mY -= height / 2;
+						/*if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == mMovingRect.bottom)
 							mY -= TileSize;
 						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == mMovingRect.top)
 							mY += TileSize;
 						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == mMovingRect.left)
 							mX += TileSize;
 						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == mMovingRect.right)
-							mX -= TileSize;
+							mX -= TileSize;*/
 					}
 
 				}

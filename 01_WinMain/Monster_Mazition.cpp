@@ -29,7 +29,8 @@ void Monster_Mazition::Init()
 	mIsAct = false;
 
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-
+	mMonsterType = MonsterType::Normal;
+	mMonsterName = MonsterName::Mazition;
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
 	AnimationSet(&mLeftIdleAnimation, false, false, 4, 2, 4, 2, AnimationTime);
 	AnimationSet(&mRightWalkAnimation, false, false, 1, 0, 3, 0, AnimationTime);

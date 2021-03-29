@@ -58,7 +58,7 @@ void Monster_FireBoss::Init()
 	AnimationSet(&mRefreshAnimation2, false, false, 0, 9, 6, 9, 0.2f);
 	AnimationSet(&mLeftStempAnimation, false, false, 10, 9, 11, 9, 0.7f);
 	AnimationSet(&mRightStempAnimation, false, false, 10, 8, 11, 8, 0.7f);
-
+	mMonsterType = MonsterType::Boss;
 	mCurrentAnimation = mLeftIdleAnimation;
 	mFireBossState = FireBossState::Idle;
 	mCurrentAnimation->Play();

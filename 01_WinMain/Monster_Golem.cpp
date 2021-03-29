@@ -32,7 +32,8 @@ void Monster_Golem::Init()
 	mMonsterToPlayerDistance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize;
 	mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-
+	mMonsterType = MonsterType::MiddleBoss;
+	mMonsterName = MonsterName::Golem;
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
 	AnimationSet(&mRightWalkAnimation, false, false, 0, 1, 5, 1, AnimationTime);
 	AnimationReverseSet(&mLeftWalkAnimation, false, false, 5, 2, 0, 2, AnimationTime);

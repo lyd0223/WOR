@@ -23,9 +23,9 @@ void Skill_WindSlash::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"WindSlash", Resources(L"Skill/WindSlash.png"), 5, 3);
 	mImage = ImageManager::GetInstance()->FindImage(L"WindSlash");
 
-	mSizeX = mImage->GetWidth() / 5 * 1.5;
+	mSizeX = mImage->GetWidth() / 5 * 1.5 - 30;
 	mSizeY = mImage->GetHeight() / 3 * 1.5;
-	mRect = RectMake(mX, mY, mSizeX, mSizeY);
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
 
 
@@ -50,7 +50,7 @@ void Skill_WindSlash::Update()
 	//mAngle = Math::GetAngle(mX, mY, _mousePosition.x + rctemp.left, _mousePosition.y + rctemp.top);
 	mX += cosf(mAngle) * mSpeed;
 	mY += -sinf(mAngle) * mSpeed;
-	mRect = RectMake(mX, mY, mSizeX, mSizeY);
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mSlashAnimation->Update();
 }
 
@@ -58,5 +58,6 @@ void Skill_WindSlash::Render()
 {
 	mImage->SetScale(1.5f);
 	mImage->SetAngle(mAngle * -(180/PI));
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mSlashAnimation->GetNowFrameX(), mSlashAnimation->GetNowFrameY());
 }

@@ -27,7 +27,8 @@ void Monster_SwoardMan::Init()
 	mSizeX = mImage->GetWidth() / 8*1.5f;
 	mSizeY = mImage->GetHeight() / 7*1.5f;
 	mRect = RectMakeCenter(mX, mY+50, mSizeX, mSizeY);
-
+	mMonsterType = MonsterType::Normal;
+	mMonsterName = MonsterName::SwoardMan;
 
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
 	AnimationSet(&mRightWalkAnimation, true, false, 0, 1, 4, 1, AnimationTime);

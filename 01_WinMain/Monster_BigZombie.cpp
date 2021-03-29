@@ -13,6 +13,7 @@ Monster_BigZombie::Monster_BigZombie(const string& name, float x, float y)
 	mName = name;
 	mX = x;
 	mY = y;
+	//mIsActive = false;
 }
 
 void Monster_BigZombie::Init()
@@ -34,9 +35,12 @@ void Monster_BigZombie::Init()
 	AnimationSet(&mLeftAttackAnimation, false, false, 0, 2, 4, 2, AnimationTime);
 	AnimationSet(&mSpecialAttackAnimation, false, false, 0, 3, 5, 3, AnimationTime);
 	AnimationSet(&mDieAnimation, false, false, 0, 4, 5, 4, AnimationTime);
-
+	mMonsterType = MonsterType::MiddleBoss;
+	mMonsterName = MonsterName::BigZombie;
 	mCurrentAnimation = mRightIdleAnimation;
 	mCurrentAnimation->Play();
+
+
 }
 
 void Monster_BigZombie::Release()
@@ -51,6 +55,11 @@ void Monster_BigZombie::Release()
 
 void Monster_BigZombie::Update()
 {
+	if (mIsActive == false)
+	{
+		return;
+	}
+
 	mMonsterToPlayerDistance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize;
 	mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
 	if (mHp > 0)
@@ -228,6 +237,10 @@ void Monster_BigZombie::Update()
 
 void Monster_BigZombie::Render()
 {
+	if (mIsActive == false)
+	{
+		return;
+	}
 	mImage->SetScale(4.f);
 	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);

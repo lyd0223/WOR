@@ -27,7 +27,8 @@ void Monster_Slime::Init()
 	mSizeX = TileSize / 2;
 	mSizeY = TileSize/2;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-
+	mMonsterType = MonsterType::Normal;
+	mMonsterName = MonsterName::Slime;
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
 	AnimationSet(&mLeftIdleAnimation, false, false, 9, 3, 9, 3, AnimationTime);
 	AnimationSet(&mRightWalkAnimation, false, false, 1, 0, 7, 0, AnimationTime);

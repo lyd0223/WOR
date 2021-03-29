@@ -19,12 +19,14 @@ void Monster_Zombie::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"Zombie", Resources(L"Monster/Zombie.png"), 10, 4);
 	mImage = ImageManager::GetInstance()->FindImage(L"Zombie");
+	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 	mMonsterActState = MonsterActState::RightIdle;
 	mSpeed = 3.f;
 	mSizeX = TileSize;
 	mSizeY = TileSize;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-
+	mMonsterType = MonsterType::Normal;
+	mMonsterName = MonsterName::Zombie;
 
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
 	AnimationSet(&mLeftIdleAnimation, false, false, 5, 0, 5, 0, AnimationTime);
@@ -55,16 +57,141 @@ void Monster_Zombie::Release()
 void Monster_Zombie::Update()
 {
 
-	if (mPathList.size() != 0)
+	mMonsterToPlayerDistance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize;
+	mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
+	if (mCurrentAnimation->GetIsPlay() == false)
 	{
-		float nextX = mPathList[1]->GetX();
-		float nextY = mPathList[1]->GetY();
-		float angle = Math::GetAngle(mX, mY, nextX, nextY);
+		if (mHp > 0)
+		{
 
-		mX += cosf(angle) * mSpeed;
-		mY += -sinf(angle) * mSpeed;
+			//아이들
+			if (mMonsterToPlayerDistance >= 5.5f)
+			{
+				AnimationChange(mRightIdleAnimation);
+				mMonsterActState = MonsterActState::RightIdle;
+				mMonsterState = MonsterState::Idle;
+				//mPathList.clear();
+				mIsAct = false;
+
+			}
+			//추격
+			if (mMonsterToPlayerDistance < 5.5f && mMonsterToPlayerDistance >= 1.5f)
+			{
+
+				if (mRightWalkAnimation->GetIsPlay() == false)mIsAct = false;
+				if (mLeftWalkAnimation->GetIsPlay() == false)mIsAct = false;
+				if (mMonsterToPlayerAngle <PI / 2 || mMonsterToPlayerAngle > PI / 2 + PI)
+				{
+
+					if (mIsAct == false)
+					{
+						AnimationChange(mRightWalkAnimation);
+						mMonsterActState = MonsterActState::RightWalk;
+						mMonsterState = MonsterState::Chase;
+						mIsAct = true;
+					}
+				}
+				if (mMonsterToPlayerAngle > PI / 2 && mMonsterToPlayerAngle < PI / 2 + PI)
+				{
+					if (mIsAct == false)
+					{
+						AnimationChange(mLeftWalkAnimation);
+						mMonsterActState == MonsterActState::LeftWalk;
+						mMonsterState = MonsterState::Chase;
+						mIsAct = true;
+					}
+				}
+				//길 찾기
+				if (mPathList.size() != 0)
+				{
+					float nextX = mPathList[1]->GetX();
+					float nextY = mPathList[1]->GetY();
+					float angle = Math::GetAngle(mX, mY, nextX, nextY);
+					float distance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY());
+
+					mX += cosf(angle) * mSpeed;
+					mY += -sinf(angle) * mSpeed;
+				}
+			}
+
+
+			if (mMonsterToPlayerDistance < 1.5f)
+			{
+
+				//오른쪽 공격
+
+				if (mMonsterToPlayerAngle <= PI / 2 || mMonsterToPlayerAngle >= PI + PI / 2)
+				{
+					if (mIsAct == true)
+					{
+						if (mCurrentAnimation != mRightAttackAnimation)
+						{
+							AnimationChange(mRightAttackAnimation);
+						}
+						if (mCurrentAnimation->GetNowFrameX() == 3 && mCurrentAnimation->GetNowFrameY() == 0)
+						{
+							SkillManager::GetInstance()->MonsterSmallSlashSkill("MonsterSmallSlash", lineX, lineY, mMonsterToPlayerAngle);
+						}
+						int frame = mCurrentAnimation->GetNowFrameX();
+						mMonsterActState = MonsterActState::RightAttack;
+						mMonsterState = MonsterState::Attack;
+						mIsAct = false;
+						if (mRightAttackAnimation->GetNowFrameX() == 3)
+						{
+							AnimationChange(mRightIdleAnimation);
+						}
+					}
+
+					mIsAct = true;
+				}
+
+
+				//왼쪽공격
+				else if (mMonsterToPlayerAngle > PI / 2 && mMonsterToPlayerAngle < PI + PI / 2)
+				{
+					if (mIsAct == true)
+					{
+						if (mCurrentAnimation != mLeftAttackAnimation)
+						{
+							AnimationChange(mLeftAttackAnimation);
+						}
+						if (mCurrentAnimation->GetNowFrameX() == 4 && mCurrentAnimation->GetNowFrameY() == 0)
+						{
+							SkillManager::GetInstance()->MonsterSmallSlashSkill("MonsterSmallSlash", lineX, lineY, mMonsterToPlayerAngle);
+						}
+						int frame = mCurrentAnimation->GetNowFrameX();
+						mMonsterActState = MonsterActState::LeftAttack;
+						mMonsterState = MonsterState::Attack;
+						mIsAct = false;
+						if (mLeftAttackAnimation->GetNowFrameX() == 4)
+						{
+							AnimationChange(mRightIdleAnimation);
+						}
+					}
+
+					mIsAct = true;
+				}
+			}
+		}
+
+
+
+		if (mHp <= 0)
+		{
+			if (mIsAct == false)
+
+			{
+				AnimationChange(mDieAnimation);
+				mMonsterActState = MonsterActState::Die;
+				mMonsterState = MonsterState::Die;
+				mIsAct = true;
+			}
+		}
 	}
-
+	//공격 라인--
+	lineX = mX + 50 * cosf(mMonsterToPlayerAngle);
+	lineY = mY + 50 * -sinf(mMonsterToPlayerAngle);
+	//---
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");

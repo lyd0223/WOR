@@ -26,7 +26,8 @@ void Monster_RapidZombie::Init()
 	mSizeX = mImage->GetWidth()/6 ;
 	mSizeY = mImage->GetHeight()/5 + 30 ;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-
+	mMonsterType = MonsterType::Normal;
+	mMonsterName = MonsterName::RapidZombie;
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
 	AnimationSet(&mLeftIdleAnimation, false, false, 1, 0, 1, 0, AnimationTime);
 	AnimationSet(&mRightAttackAnimation, false, false, 2, 0, 3, 0, 0.5f);

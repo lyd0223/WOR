@@ -20,6 +20,11 @@ protected:
 	Animation* mDieAnimation;
 	Animation* mCurrentAnimation;
 	MonsterActState mMonsterActState;
+	MonsterState mMonsterState;
+	Player* mPlayer;
+	bool mIsAct;
+	float lineX;
+	float lineY;
 
 
 public:

@@ -20,7 +20,11 @@ enum class PlayerState :int
 	DownAttack,
 	UpAttack,
 	LeftDash,
+	LeftDiagonalUpDash,
+	LeftDiagonalDownDash,
 	RightDash,
+	RightDiagonalUpDash,
+	RightDiagonalDownDash,
 	DownDash,
 	UpDash,
 	Die,
@@ -47,6 +51,7 @@ class Player : public MovingObject
 	Image* mImage2;
 	float mMoveAngle;
 	int mMoveCount;
+	float mMp;
 
 	//class Tile* TileList[TileCountY][TileCountY];
 
@@ -65,7 +70,11 @@ class Player : public MovingObject
 	class Animation* mDownAttackAnimation;
 	class Animation* mUpAttackAnimation;
 	class Animation* mLeftDashAnimation;
+	class Animation* mLeftDiagonalUpDashAnimation;
+	class Animation* mLeftDiagonalDownDashAnimation;
 	class Animation* mRightDashAnimation;
+	class Animation* mRightDiagonalUpDashAnimation;
+	class Animation* mRightDiagonalDownDashAnimation;
 	class Animation* mDownDashAnimation;
 	class Animation* mUpDashAnimation;
 	class Animation* mDieAnimation;
@@ -108,10 +117,14 @@ public:
 	float GetSpeed() { return mSpeed; }
 	float GetAngle() { return mAngle; }
 
+
 	void SetLB_ButtonSkill(string skillName) { mLB_ButtonSkill = skillName; }
 	void SetRB_ButtonSkill(string skillName) { mRB_ButtonSkill = skillName; }
 	void SetSpacebar_ButtonSkill(string skillName) { mSpacebar_ButtonSkill = skillName; }
 	void SetQ_ButtonSkill(string skillName) { mQ_ButtonSkill = skillName; }
+
+	float GetMp() { return mMp; }
+
 	string GetLB_ButtonSkill() { return mLB_ButtonSkill; }
 	string GetRB_ButtonSkill() { return mRB_ButtonSkill; }
 	string GetSpacebar_ButtonSkill() { return mSpacebar_ButtonSkill; }

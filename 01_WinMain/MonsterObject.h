@@ -3,6 +3,23 @@
 
 class Image;
 class Player;
+enum class MonsterType
+{
+	Normal,
+	MiddleBoss,
+	Boss
+};
+
+enum class MonsterName
+{
+	BigZombie,
+	Golem,
+	Mazition,
+	RapidZombie,
+	Slime,
+	SwoardMan,
+	Zombie
+};
 class MonsterObject :public MovingObject
 {
 protected:
@@ -15,6 +32,8 @@ protected:
 	float mAtkFrameCount;
 	float mMonsterToPlayerDistance;
 	float mMonsterToPlayerAngle;
+	MonsterType mMonsterType;
+	MonsterName mMonsterName;
 	int mHitCount;
 	
 	bool mIsCollision;

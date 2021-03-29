@@ -420,6 +420,9 @@
     <ClInclude Include="UI_SkillChangeInterface.h">
       <Filter>MainGame\Object\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Skill_ThunderBolt.h">
+      <Filter>MainGame\Object\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -700,6 +703,9 @@
     </ClCompile>
     <ClCompile Include="UI_SkillChangeInterface.cpp">
       <Filter>MainGame\Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill_ThunderBolt.cpp">
+      <Filter>MainGame\Object\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

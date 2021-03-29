@@ -8,6 +8,8 @@
 #include "Effect_WaterExplosion.h"
 #include "Effect_DashEffect.h"
 #include "Effect_Smoke.h"
+#include "Effect_EnemyCreate.h"
+
 
 void ParticleManager::MakeDustParticle(float x, float y, float angle, float scale)
 {
@@ -152,4 +154,12 @@ void ParticleManager::MakeWaterExplosion(float x, float y)
 	waterExplosion = new Effect_WaterExplosion("WaterExplosion", x, y);
 	waterExplosion->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, waterExplosion);
+}
+void ParticleManager::MakeEnemyCreate(float x, float y, MonsterName name)
+{
+	Effect_EnemyCreate* enemyCreate;
+	enemyCreate = new Effect_EnemyCreate("EnemyCreate", x, y, name);
+	enemyCreate->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, enemyCreate);
+
 }

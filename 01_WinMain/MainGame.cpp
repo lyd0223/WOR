@@ -40,7 +40,7 @@ void MainGame::Init()
 	SceneManager::GetInstance()->AddScene(L"Field", new Scene_Field);
 	SceneManager::GetInstance()->AddScene(L"Boss", new Scene_Boss);
 	SceneManager::GetInstance()->AddScene(L"Title", new Scene_TitleScene);
-	SceneManager::GetInstance()->LoadScene(L"FieldLoading");
+	SceneManager::GetInstance()->LoadScene(L"Tutorial");
 }
 
 /*

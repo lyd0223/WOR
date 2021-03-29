@@ -21,6 +21,7 @@
 #include "Skill_Spear.h"
 #include "Skill_SpearWave.h"
 #include "Skill_MonsterMiddleSlash.h"
+#include "Skill_ThunderBolt.h"
 
 #include "MouseTracker.h"
 #include "Tile.h"
@@ -309,6 +310,8 @@ void SkillManager::KickFlame(const string & name, float x, float y, float angle,
 
 void SkillManager::WindSlashSkill(const string& name, float x, float y, float angle)
 {
+	SoundPlayer::GetInstance()->LoadFromFile(L"WindSlashSound", Resources(L"Sound/WindSlash.wav"), false);
+	SoundPlayer::GetInstance()->Play(L"WindSlashSound", 1.f);
 	Skill_WindSlash* windSlash = new Skill_WindSlash(name, x, y, angle);
 	windSlash->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, windSlash);
@@ -316,6 +319,9 @@ void SkillManager::WindSlashSkill(const string& name, float x, float y, float an
 
 void SkillManager::IceSpearSkill(const string& name, float x, float y, float angle)
 {
+	SoundPlayer::GetInstance()->LoadFromFile(L"IceSpearSound", Resources(L"Sound/IceSpear.wav"), false);
+	SoundPlayer::GetInstance()->Play(L"IceSpearSound", 1.f);
+
 	Skill_IceSpear* iceSpear = new Skill_IceSpear(name, x, y, angle);
 	iceSpear->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, iceSpear);
@@ -323,6 +329,8 @@ void SkillManager::IceSpearSkill(const string& name, float x, float y, float ang
 
 void SkillManager::SummonIceSpearSkill(const string& name, float x, float y, float angle)
 {
+	SoundPlayer::GetInstance()->LoadFromFile(L"SummonIceSpearSound", Resources(L"Sound/SummonIceSpear.wav"), false);
+	SoundPlayer::GetInstance()->Play(L"SummonIceSpearSound", 1.f);
 	Skill_SummonIceSpear* summonIceSpear = new Skill_SummonIceSpear(name, x, y, angle);
 	summonIceSpear->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, summonIceSpear);
@@ -337,6 +345,8 @@ void SkillManager::IceSwordSkill(const string& name, float x, float y, float ang
 
 void SkillManager::MonsterBigSlashSkill(const string& name, float x, float y, float angle)
 {
+	SoundPlayer::GetInstance()->LoadFromFile(L"GolemAttackSound", Resources(L"Sound/GolemAttack.wav"), false);
+	SoundPlayer::GetInstance()->Play(L"GolemAttackSound", 1.f);
 	Skill_MonsterBigSlash* monsterBigSlash = new Skill_MonsterBigSlash(name, x, y, angle);
 	monsterBigSlash->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, monsterBigSlash);
@@ -344,6 +354,8 @@ void SkillManager::MonsterBigSlashSkill(const string& name, float x, float y, fl
 
 void SkillManager::WaterBallSkill(const string& name, float x, float y, float angle)
 {
+	SoundPlayer::GetInstance()->LoadFromFile(L"WaterBallSound", Resources(L"Sound/WaterBall.wav"), false);
+	SoundPlayer::GetInstance()->Play(L"WaterBall", 1.f);
 	Skill_WaterBall* waterBall = new Skill_WaterBall(name, x, y, angle);
 	waterBall->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, waterBall);
@@ -351,6 +363,8 @@ void SkillManager::WaterBallSkill(const string& name, float x, float y, float an
 
 void SkillManager::MonsterSmallSlashSkill(const string& name, float x, float y, float angle)
 {
+	SoundPlayer::GetInstance()->LoadFromFile(L"ZombieAttackSound", Resources(L"Sound/ZombieAttack.wav"), false);
+	SoundPlayer::GetInstance()->Play(L"ZombieAttackSound", 1.f);
 	Skill_MonsterSmallSlash* monsterSmallSlash = new Skill_MonsterSmallSlash(name, x, y, angle);
 	monsterSmallSlash->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, monsterSmallSlash);
@@ -372,9 +386,20 @@ void SkillManager::SpearWaveSkill(const string& name, float x, float y, float an
 
 void SkillManager::MonsterMiddleSlashSkill(const string& name, float x, float y, float angle)
 {
+	SoundPlayer::GetInstance()->LoadFromFile(L"SwoardManSound", Resources(L"Sound/SwoardMan.wav"), false);
+	SoundPlayer::GetInstance()->Play(L"SwoardManSound", 1.f);
 	Skill_MonsterMiddleSlash* monsterMiddleSlash = new Skill_MonsterMiddleSlash(name, x, y, angle);
 	monsterMiddleSlash->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, monsterMiddleSlash);
+}
+
+void SkillManager::ThunderBolt(const string& name, float x, float y, float angle)
+{
+	SoundPlayer::GetInstance()->LoadFromFile(L"ThunderBoltSound", Resources(L"Sound/ThunderBolt.wav"), false);
+	SoundPlayer::GetInstance()->Play(L"ThunderBoltSound", 1.f);
+	Skill_ThunderBolt* thunderBolt = new Skill_ThunderBolt(name, x, y, angle);
+	thunderBolt->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, thunderBolt);
 }
 
 

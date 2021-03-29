@@ -22,6 +22,7 @@ enum class SkillTarget : int{
 enum class SkillType : int {
 	Melee,	// 근접 스킬
 	Throw,	// 투사체
+	Hold,	// 홀딩
 	Install,	// 설치형
 
 	End
@@ -61,6 +62,7 @@ public:
 	void Update() override {};
 	void Render() override {};
 
+	void SetSkillType(SkillType type) { mSkillType = type; }
 	SkillTarget GetSkillTarget() { return mSkillTarget; }
 	SkillType GetSkillType() { return mSkillType; }
 	SkillElement GetSkillElement() { return mSkillElement; }

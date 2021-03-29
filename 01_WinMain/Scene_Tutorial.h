@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "MonsterObject.h"
 //
 //#define TileCountX 100
 //#define TileCountY 100
@@ -30,6 +31,7 @@ public:
 	void Release()override;
 	void Update()override;
 	void Render()override;
+	void MonsterCreat(float x, float y, MonsterName name);
 	//void Load();
 };
 
