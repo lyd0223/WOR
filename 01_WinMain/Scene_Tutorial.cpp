@@ -64,11 +64,20 @@ void Scene_Tutorial::Init()
 	}
 	//
 
-	
+	//방추가 , 우측상단부터 1,2,3,4번
+	mRoomList.push_back({ 41,4,31,11 });
+	mRoomList.push_back({ 27,4,11,10 });
+	mRoomList.push_back({ 25,24,19,14 });
+	mRoomList.push_back({ 1,24,19,14 });
 
-	mPlayer = new Player("Player",600,1600);
+	mPlayer = new Player("Player",87*TileSize + TileSize/2, 10 * TileSize + TileSize / 2);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
-	
+
+	//몬스터추가하기
+	ParticleManager::GetInstance()->MakeEnemyCreate(33 * TileSize, 10 * TileSize, MonsterName::Zombie, mRoomList[1]);
+	//
+
+
 	mGolem = new Monster_Golem("Golem", 200, 2000);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mGolem);
 
@@ -129,7 +138,6 @@ void Scene_Tutorial::Init()
 	camera->SetTarget(mPlayer);
 	CameraManager::GetInstance()->SetMainCamera(camera);
 
-	MonsterCreat(200, 1400, MonsterName::BigZombie);
 }
 
 void Scene_Tutorial::Release()
@@ -168,38 +176,4 @@ void Scene_Tutorial::Render()
 	
 
 
-}
-
-void Scene_Tutorial::MonsterCreat(float x, float y, MonsterName name)
-{
-	//string str;
-	//switch (name)
-	//{
-	//case MonsterName::BigZombie:
-	//	str = "BigZombie";
-	//	break;
-	//case MonsterName::Golem:
-	//	str = "Golem";
-	//	break;
-	//case MonsterName::Mazition:
-	//	str = "Mazition";
-	//	break;
-	//case MonsterName::RapidZombie:
-	//	str = "RapidZombie";
-	//	break;
-	//case MonsterName::Slime:
-	//	str = "Slime";
-	//	break;
-	//case MonsterName::SwoardMan:
-	//	str = "SwoardMan";
-	//	break;
-	//case MonsterName::Zombie:
-	//	str = "Zombie";
-	//	break;
-	//}
-	//ObjectManager::GetInstance()->FindObject(str);
-	//Effect_EnemyCreate* enemycreat = new Effect_EnemyCreate("EnemyCreate",x,y, name);
-
-	
-	ParticleManager::GetInstance()->MakeEnemyCreate(x, y, name);
 }

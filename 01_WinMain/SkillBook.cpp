@@ -24,11 +24,11 @@ void SkillBook::Init()
 	mIdleAnimation->SetIsLoop(false);
 	mIdleAnimation->SetFrameUpdateTime(0.3f);
 	mOpenAnimation = new Animation();
-	mOpenAnimation->InitFrameByStartEnd(0, 1, 13, 1, false);
+	mOpenAnimation->InitFrameByStartEnd(9, 1, 13, 1, false);
 	mOpenAnimation->SetIsLoop(false);
 	mOpenAnimation->SetFrameUpdateTime(0.3f);
 	mCloseAnimation = new Animation();
-	mCloseAnimation->InitFrameByBackStartEnd(13, 1, 0, 1, false);
+	mCloseAnimation->InitFrameByBackStartEnd(13, 1, 9, 1, false);
 	mCloseAnimation->SetIsLoop(false);
 	mCloseAnimation->SetFrameUpdateTime(0.3f);
 	mCurrentAnimation = mIdleAnimation;
@@ -43,14 +43,19 @@ void SkillBook::Update()
 	mCurrentAnimation->Update();
 	if (!mBookIsOpen)
 	{
-		if ((int)(Time::GetInstance()->GetWorldTime()) % 100 == 0)
-			mCurrentAnimation->Play();
+		
 		D2D1_RECT_F rctemp;
 		D2D1_RECT_F playerRect = ObjectManager::GetInstance()->FindObject("Player")->GetRect();
+
+
 		if (IntersectRect(rctemp, &playerRect, &mRect))
 		{
+			if(mCurrentAnimation == mCloseAnimation && 
+				mCurrentAnimation->GetCurrentFrameIndex() == mCurrentAnimation->GetMaxIndex()-1)
+				mCurrentAnimation->Stop();
 			mCurrentAnimation = mOpenAnimation;
 			mCurrentAnimation->Play();
+			
 			if (Input::GetInstance()->GetKeyDown('F'))
 			{
 				//여기에 추가
@@ -61,6 +66,9 @@ void SkillBook::Update()
 		}
 		else
 		{
+			if (mCurrentAnimation == mOpenAnimation
+				&& mCurrentAnimation->GetCurrentFrameIndex() == mCurrentAnimation->GetMaxIndex()-1)
+				mCurrentAnimation->Stop();
 			mCurrentAnimation = mCloseAnimation;
 			mCurrentAnimation->Play();
 		}

@@ -7,6 +7,8 @@ Animation::Animation()
 
 void Animation::Update()
 {
+	mMaxIndex = mFrameList.size();
+
 	if (mIsPlay == false)
 		return;
 

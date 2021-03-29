@@ -117,7 +117,14 @@ void TileMap::MiniMapRender()
 		}
 		GameObject* player = ObjectManager::GetInstance()->FindObject("Player");
 		D2D1_RECT_F rc = RectMake(player->GetX() / 20.f, player->GetY() / 20.f+200, player->GetSizeX() / 20.f, player->GetSizeY() / 20.f);
-		RenderFillRect(rc,D2D1::ColorF::Red);
+		RenderFillRect(rc,D2D1::ColorF::Blue);
+		vector<GameObject*> monsterlist = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
+		
+		for (int i = 0; i < monsterlist.size(); i++)
+		{
+			D2D1_RECT_F rc = RectMake(monsterlist[i]->GetX() / 20.f, monsterlist[i]->GetY() / 20.f + 200, monsterlist[i]->GetSizeX() / 20.f, monsterlist[i]->GetSizeY() / 20.f);
+			RenderFillRect(rc, D2D1::ColorF::Red);
+		}
 	}
 	else
 	{

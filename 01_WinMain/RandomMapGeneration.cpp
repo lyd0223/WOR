@@ -555,15 +555,38 @@ void RandomMapGeneration::MakeRoad()
 
 }
 
-void RandomMapGeneration::RandomMonster()
+void RandomMapGeneration::RandomMonsterCreate()
 {
+	
+	for (int i = 0; i < 8; i++)
+	{
+		mEnemyRoomNum.push_back(Random::GetInstance()->RandomInt(mRoot->mRoomList.size()*i /8+1, mRoot->mRoomList.size()* (i+1)/8-1));
+	}
+		
+	for (int i = 0; i < mEnemyRoomNum.size(); i++)
+	{
+		float x, y;
+		x = mRoot->mRoomList[mEnemyRoomNum[i]].centerX - 5;
+		y = mRoot->mRoomList[mEnemyRoomNum[i]].centerY - 5;
+		ParticleManager::GetInstance()->MakeEnemyCreate(x * TileSize, y * TileSize, MonsterName::Zombie, mRoot->mRoomList[mEnemyRoomNum[i]]);
+		x = mRoot->mRoomList[mEnemyRoomNum[i]].centerX + 5;
+		y = mRoot->mRoomList[mEnemyRoomNum[i]].centerY - 5;
+		ParticleManager::GetInstance()->MakeEnemyCreate(x * TileSize, y * TileSize, MonsterName::Zombie, mRoot->mRoomList[mEnemyRoomNum[i]]);
+		x = mRoot->mRoomList[mEnemyRoomNum[i]].centerX - 5;
+		y = mRoot->mRoomList[mEnemyRoomNum[i]].centerY + 5;
+		ParticleManager::GetInstance()->MakeEnemyCreate(x * TileSize, y * TileSize, MonsterName::Zombie, mRoot->mRoomList[mEnemyRoomNum[i]]);
+		x = mRoot->mRoomList[mEnemyRoomNum[i]].centerX + 5;
+		y = mRoot->mRoomList[mEnemyRoomNum[i]].centerY + 5;
+		ParticleManager::GetInstance()->MakeEnemyCreate(x * TileSize, y * TileSize, MonsterName::Zombie, mRoot->mRoomList[mEnemyRoomNum[i]]);
+	}
 
+	
 }
 
 void RandomMapGeneration::RandomPlayerPosition(Player* player)
 {
 	
-	int r = Random::GetInstance()->RandomInt(mRoot->mRoomList.size());
-	player->SetX(mRoot->mRoomList[r].centerX * TileSize);
-	player->SetY(mRoot->mRoomList[r].centerY * TileSize);
+	mPlayerSpawnRoomNum = Random::GetInstance()->RandomInt(mRoot->mRoomList.size());
+	player->SetX(mRoot->mRoomList[mPlayerSpawnRoomNum].centerX * TileSize);
+	player->SetY(mRoot->mRoomList[mPlayerSpawnRoomNum].centerY * TileSize);
 }

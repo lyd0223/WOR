@@ -11,10 +11,12 @@
 //프레임 돌릴 때
 class Animation
 {
+	
 	bool mIsPlay;	//플레이중이냐
 	bool mIsLoop;	//루프냐
 
 	int mCurrentFrameIndex;	//현재 프레임 인덱스 
+	int mMaxIndex;
 
 	float mCurrentFrameTime;	//현재 프레임 감는 시간
 	float mFrameUpdateTime;		//프레임 갱신(증가) 해야하는 시간
@@ -48,6 +50,7 @@ public:
 	inline pair<int, int> GetNowFrame()const { return mFrameList[mCurrentFrameIndex]; }
 	inline int GetNowFrameX()const { return mFrameList[mCurrentFrameIndex].first; }
 	inline int GetNowFrameY()const { return mFrameList[mCurrentFrameIndex].second; }
+	inline int GetMaxIndex()const { return mMaxIndex; }
 
 };
 

@@ -21,9 +21,6 @@ void Scene_Field::Init()
 
 	mMapIsOpen = 0;
 	
-	//Å¸ÀÏ¸ÊÃß°¡
-	/*mTileMap = new TileMap();
-	RandomMapGeneration::GetInstance()->CreateRandomMap();*/
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mTileMap);
 	//
 	
@@ -31,6 +28,7 @@ void Scene_Field::Init()
 	RandomMapGeneration::GetInstance()->RandomPlayerPosition(mPlayer);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 
+	RandomMapGeneration::GetInstance()->RandomMonsterCreate();
 
 	ObjectManager::GetInstance()->Init();
 

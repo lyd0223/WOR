@@ -11,6 +11,7 @@
 #include "Effect_EnemyCreate.h"
 
 
+
 void ParticleManager::MakeDustParticle(float x, float y, float angle, float scale)
 {
 	Effect_Smoke* glassShards;
@@ -155,11 +156,12 @@ void ParticleManager::MakeWaterExplosion(float x, float y)
 	waterExplosion->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, waterExplosion);
 }
-void ParticleManager::MakeEnemyCreate(float x, float y, MonsterName name)
+void ParticleManager::MakeEnemyCreate(float x, float y, MonsterName name, Room room)
 {
 	Effect_EnemyCreate* enemyCreate;
 	enemyCreate = new Effect_EnemyCreate("EnemyCreate", x, y, name);
 	enemyCreate->Init();
+	enemyCreate->SetRoom(room);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, enemyCreate);
 
 }

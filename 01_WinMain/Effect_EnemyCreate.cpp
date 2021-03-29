@@ -42,10 +42,14 @@ void Effect_EnemyCreate::Release()
 
 void Effect_EnemyCreate::Update()
 {
-
-	mEnemyCreateAnimation->Update();
-	
-	if (mEnemyCreateAnimation->GetNowFrameY() == 26 &&RespawnOn == true)
+	D2D1_RECT_F playerRect = ObjectManager::GetInstance()->FindObject("Player")->GetRect();
+	D2D1_RECT_F roomRect = RectMake(mRoom.x * TileSize, mRoom.y * TileSize, mRoom.sizeX * TileSize, mRoom.sizeY * TileSize);
+	D2D1_RECT_F rctemp;
+	if (IntersectRect(rctemp, &playerRect, &roomRect))
+	{
+		mEnemyCreateAnimation->Update();
+	}
+	if (mEnemyCreateAnimation->GetNowFrameY() == 26 && RespawnOn == true)
 	{
 		//ObjectManager::GetInstance()->FindObject(mName)->SetIsActive(true);
 		if (mMonsterName == MonsterName::BigZombie)
@@ -97,7 +101,6 @@ void Effect_EnemyCreate::Update()
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, zombie);
 			RespawnOn = false;
 		}
-
 	}
 	if (mEnemyCreateAnimation->GetNowFrameY() == 29)
 	{

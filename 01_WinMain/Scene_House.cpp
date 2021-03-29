@@ -37,11 +37,11 @@ void Scene_House::Init()
 	}
 	//
 
-	mPlayer = new Player("Player", 55*TileSize, 55*TileSize);
+	mPlayer = new Player("Player", 55*TileSize+TileSize/2, 58*TileSize +TileSize/2);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 	
-	SkillBook* skillbook = new SkillBook(75 * TileSize, 55 * TileSize);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Structure, skillbook);
+	SkillBook* skillbook = new SkillBook(77 * TileSize - TileSize/2, 51 * TileSize);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, skillbook);
 
 	ObjectManager::GetInstance()->Init();
 

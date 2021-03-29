@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "MonsterObject.h"
+#include "RandomMapGeneration.h"
 //
 //#define TileCountX 100
 //#define TileCountY 100
@@ -21,6 +22,7 @@ class Scene_Tutorial : public Scene
 	class Monster_SwoardMan* mSwoardMan;
 	class Monster_Ward* mWard;
 	class Monster_Zombie* mZombie;
+	vector<Room> mRoomList;
 	//class MonsterObject* mMonsterList[11];
 	vector<class MonsterObject*> mMonsterList;
 	//class Tile* mTileList[TileCountY][TileCountX];
@@ -32,7 +34,6 @@ public:
 	void Release()override;
 	void Update()override;
 	void Render()override;
-	void MonsterCreat(float x, float y, MonsterName name);
 	//void Load();
 };
 

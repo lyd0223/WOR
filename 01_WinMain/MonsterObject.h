@@ -1,6 +1,6 @@
 #pragma once
 #include"MovingObject.h"
-
+#include "RandomMapGeneration.h"
 class Image;
 class Player;
 enum class MonsterType
@@ -32,6 +32,8 @@ protected:
 	float mAtkFrameCount;
 	float mMonsterToPlayerDistance;
 	float mMonsterToPlayerAngle;
+	
+	Room mRoom;
 	MonsterType mMonsterType;
 	MonsterName mMonsterName;
 	int mHitCount;
@@ -43,6 +45,7 @@ public:
 	void SetPathList(vector<class Tile*> pathList) { mPathList = pathList; }
 	vector<class Tile*> GetPathList() { return mPathList; }
 	
+	void SetRoom(Room room) { mRoom = room; };
 	void SetRange(float range) { mRange = range; }
 	float GetRange() { return mRange; }
 	void SetAtkSpeed(float atkSpeed) { mAtkSpeed = atkSpeed; }
