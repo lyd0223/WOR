@@ -9,8 +9,8 @@ Structure::Structure(const string& name,Image *image ,float x, float y, float si
 	mName = name;
 	mX = x;
 	mY = y;
-	mSizeX = sizex*2;
-	mSizeY = sizey*2;
+	mSizeX = sizex*1.5f;
+	mSizeY = sizey*1.5f;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 
@@ -42,13 +42,13 @@ void Structure::Release()
 void Structure::Render()
 {
 	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
-	mImage->SetScale(2.0f);
+	mImage->SetScale(1.5f);
 	CameraManager::GetInstance()->GetMainCamera()->Render(mImage, mX, mY);
 	
 	
 	if (mPortalOn)
 	{
-		mPortalImage->SetScale(2.0f);
+		mPortalImage->SetScale(1.5f);
 		CameraManager::GetInstance()->GetMainCamera()->Render(mPortalImage, mX, mY);
 
 	}

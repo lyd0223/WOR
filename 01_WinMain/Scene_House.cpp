@@ -29,7 +29,7 @@ void Scene_House::Init()
 	mStructureList = mTileMap->GetStructureList();
 	for (int i = 0; i < mStructureList.size(); i++)
 	{
-		if(mStructureList[i]->GetName() == "Portal")
+		if(mStructureList[i]->GetName() == "Portal" || mStructureList[i]->GetName() == "Penta")
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mStructureList[i]);
 		else
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Structure, mStructureList[i]);

@@ -35,6 +35,7 @@ void Scene_Loading::Update()
 	{
 		mStr2 = "Load Image...\nLoad Sound...";
 	}
+
 	if (mLoadIndex == 2)
 	{
 		mStr2 = "Create Random Map...";
