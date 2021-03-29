@@ -130,6 +130,9 @@
     <Filter Include="MainGame\RandomMapGeneration">
       <UniqueIdentifier>{cb862db3-c771-4c4a-aa21-b01c435818b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\NPC">
+      <UniqueIdentifier>{e4c395f7-9118-45f5-b927-f513bd7ccdd7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -423,6 +426,9 @@
     <ClInclude Include="Skill_ThunderBolt.h">
       <Filter>MainGame\Object\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="SkillBook.h">
+      <Filter>MainGame\Object\NPC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -706,6 +712,9 @@
     </ClCompile>
     <ClCompile Include="Skill_ThunderBolt.cpp">
       <Filter>MainGame\Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillBook.cpp">
+      <Filter>MainGame\Object\NPC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
