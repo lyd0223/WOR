@@ -26,6 +26,7 @@ Effect_EnemyCreate::Effect_EnemyCreate(const string & name, float x, float y, Mo
 	mEnemyCreateAnimation->SetIsLoop(false);
 	mEnemyCreateAnimation->SetFrameUpdateTime(0.13f);
 	mEnemyCreateAnimation->Play();
+	RespawnOn = true;
 }
 
 void Effect_EnemyCreate::Init()
@@ -44,7 +45,7 @@ void Effect_EnemyCreate::Update()
 
 	mEnemyCreateAnimation->Update();
 	
-	if (mEnemyCreateAnimation->GetNowFrameY() == 26)
+	if (mEnemyCreateAnimation->GetNowFrameY() == 26 &&RespawnOn == true)
 	{
 		//ObjectManager::GetInstance()->FindObject(mName)->SetIsActive(true);
 		if (mMonsterName == MonsterName::BigZombie)
@@ -52,42 +53,49 @@ void Effect_EnemyCreate::Update()
 			Monster_BigZombie* bigzombie = new Monster_BigZombie("BigZombie", mX, mY);
 			bigzombie->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, bigzombie);
+			RespawnOn = false;
 		}
 		else if (mMonsterName == MonsterName::Golem)
 		{
 			Monster_Golem* golem = new Monster_Golem("Golem", mX, mY);
 			golem->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, golem);
+			RespawnOn = false;
 		}
 		else if (mMonsterName == MonsterName::Mazition)
 		{
 			Monster_Mazition* mazition = new Monster_Mazition("Mazition", mX, mY);
 			mazition->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mazition);
+			RespawnOn = false;
 		}
 		else if (mMonsterName == MonsterName::RapidZombie)
 		{
 			Monster_RapidZombie* rapidZombie = new Monster_RapidZombie("RapidZombie", mX, mY);
 			rapidZombie->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, rapidZombie);
+			RespawnOn = false;
 		}
 		else if (mMonsterName == MonsterName::Slime)
 		{
 			Monster_Slime* slime = new Monster_Slime("Slime", mX, mY);
 			slime->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, slime);
+			RespawnOn = false;
 		}
 		else if (mMonsterName == MonsterName::SwoardMan)
 		{
 			Monster_SwoardMan* swoardMan = new Monster_SwoardMan("SwoardMan", mX, mY);
 			swoardMan->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, swoardMan);
+			RespawnOn = false;
 		}
 		else if (mMonsterName == MonsterName::Zombie)
 		{
 			Monster_Zombie* zombie = new Monster_Zombie("Zombie", mX, mY);
 			zombie->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, zombie);
+			RespawnOn = false;
 		}
 
 	}

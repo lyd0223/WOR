@@ -12,6 +12,7 @@ class Effect_EnemyCreate : public GameObject
 
 	int mAnimationIndex;
 	float mScale;
+	bool RespawnOn;
 
 public:
 	Effect_EnemyCreate(const string& name, float x, float y, MonsterName monsterName);
