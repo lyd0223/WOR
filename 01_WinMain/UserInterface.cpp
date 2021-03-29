@@ -107,6 +107,13 @@ void UserInterface::Render()
 			DWRITE_TEXT_ALIGNMENT_CENTER);
 	}
 	mQ_ButtonSkillIcon->Image->ScaleFrameRender(mQ_ButtonSkillIcon->X, mQ_ButtonSkillIcon->Y, Q.X, Q.Y, mQ_ButtonSkillIcon->SizeX, mQ_ButtonSkillIcon->SizeY);
+	if (mPlayer->GetQ_ButtonSkillCool() > 0)
+	{
+		wstring str = to_wstring((int)mPlayer->GetQ_ButtonSkillCool());
+		D2DRenderer::GetInstance()->RenderTextField(mQ_ButtonSkillIcon->X, mQ_ButtonSkillIcon->Y,
+			str, 15.f, mQ_ButtonSkillIcon->SizeX, mQ_ButtonSkillIcon->SizeY, D2D1::ColorF::Black,
+			DWRITE_TEXT_ALIGNMENT_CENTER);
+	}
 
 	//mSpecialSkillBox->Image->ScaleRender(mSpecialSkillBox->X, mSpecialSkillBox->Y, mSpecialSkillBox->SizeX, mSpecialSkillBox->SizeY);
 

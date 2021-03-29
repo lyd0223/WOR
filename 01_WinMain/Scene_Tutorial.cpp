@@ -74,7 +74,22 @@ void Scene_Tutorial::Init()
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 
 	//몬스터추가하기
-	ParticleManager::GetInstance()->MakeEnemyCreate(33 * TileSize, 10 * TileSize, MonsterName::Zombie, mRoomList[1]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 11 * TileSize, MonsterName::RapidZombie, mRoomList[1]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 9 * TileSize, MonsterName::Zombie, mRoomList[1]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(35 * TileSize, 9 * TileSize, MonsterName::Zombie, mRoomList[1]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(35 * TileSize, 11 * TileSize, MonsterName::Zombie, mRoomList[1]);
+
+	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 31 * TileSize, MonsterName::SwoardMan, mRoomList[2]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 29* TileSize, MonsterName::SwoardMan, mRoomList[2]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(35 * TileSize, 29* TileSize, MonsterName::SwoardMan, mRoomList[2]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(35 * TileSize, 31 * TileSize, MonsterName::SwoardMan, mRoomList[2]);
+
+	ParticleManager::GetInstance()->MakeEnemyCreate(12 * TileSize, 29 * TileSize, MonsterName::BigZombie, mRoomList[3]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(15 * TileSize, 31 * TileSize, MonsterName::BigZombie, mRoomList[3]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(10 * TileSize, 29 * TileSize, MonsterName::Slime, mRoomList[3]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(10 * TileSize, 31 * TileSize, MonsterName::Slime, mRoomList[3]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(10 * TileSize, 20 * TileSize, MonsterName::Slime, mRoomList[3]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(10 * TileSize, 32 * TileSize, MonsterName::Slime, mRoomList[3]);
 	//
 
 

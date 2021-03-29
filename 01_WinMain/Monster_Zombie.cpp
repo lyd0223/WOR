@@ -22,12 +22,12 @@ void Monster_Zombie::Init()
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 	mMonsterActState = MonsterActState::RightIdle;
 	mSpeed = 3.f;
-	mSizeX = TileSize;
-	mSizeY = TileSize;
+	mSizeX = mImage->GetWidth()/10;
+	mSizeY = mImage->GetHeight() / 4+ 30;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mMonsterType = MonsterType::Normal;
 	mMonsterName = MonsterName::Zombie;
-
+	mHp = 1;
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
 	AnimationSet(&mLeftIdleAnimation, false, false, 5, 0, 5, 0, AnimationTime);
 	AnimationSet(&mRightAttackAnimation, false, true, 1, 0, 2, 0, AnimationTime);
@@ -196,6 +196,7 @@ void Monster_Zombie::Update()
 		//---
 		mCurrentAnimation->Update();
 		mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+		mMovingRect = RectMakeCenter(mX, mY + 35, TileSize, TileSize);
 		TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
 		vector<vector<Tile*>> tilelist = tilemap->GetTileList();
 		for (int y = mY / TileSize - 1; y < mY / TileSize + 1; y++)
@@ -273,12 +274,13 @@ void Monster_Zombie::Update()
 
 void Monster_Zombie::Render()
 {
-	mImage->SetScale(2.f);
+	mImage->SetScale(3.f);
 
 	D2D1_RECT_F cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	if (cameraRect.right > mRect.left && cameraRect.left < mRect.right && cameraRect.bottom > mRect.top && cameraRect.top < mRect.bottom)
 	{
 		CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+		CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
 		CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 	}
 

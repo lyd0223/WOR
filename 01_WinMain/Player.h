@@ -132,6 +132,7 @@ public:
 	void SetQ_ButtonSkill(string skillName) { mQ_ButtonSkill = skillName; }
 
 	float GetRB_ButtonSkillCool() { return mRB_ButtonSkillCool; }
+	float GetQ_ButtonSkillCool() { return mQ_ButtonSkillCool; }
 
 	float GetMp() { return mMp; }
 

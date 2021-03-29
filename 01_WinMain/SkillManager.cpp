@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "SkillManager.h"
 #include "GameObject.h"
 #include "MonsterObject.h"
@@ -63,6 +63,8 @@ SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y
 
 	if (name == "IceSpear")
 	{
+		SoundPlayer::GetInstance()->LoadFromFile(L"IceSpearSound", Resources(L"Sound/IceSpear.wav"), false);
+		SoundPlayer::GetInstance()->Play(L"IceSpearSound", 1.f);
 		Skill_IceSpear* iceSpear = new Skill_IceSpear(name, x, y, angle);
 		return iceSpear;
 	}
@@ -78,6 +80,8 @@ SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y
 	}
 	if (name == "WindSlash")
 	{
+		SoundPlayer::GetInstance()->LoadFromFile(L"WindSlashSound", Resources(L"Sound/WindSlash.wav"), false);
+		SoundPlayer::GetInstance()->Play(L"WindSlashSound", 1.f);
 		Skill_WindSlash* windSlash = new Skill_WindSlash(name, x, y, angle);
 		return windSlash;
 	}
@@ -108,7 +112,7 @@ void SkillManager::Update()
 		int skillX = skill->GetX();
 		int skillY = skill->GetY();
 
-		// ½ºÅ³ to º® Ãæµ¹ ÇßÀ»¶§
+		// ï¿½ï¿½Å³ to ï¿½ï¿½ ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		for (int y = (skill->GetY() / TileSize) - index; y < (skill->GetY() / TileSize) + index; y++)
 		{
 			for (int x = (skill->GetX() / TileSize) - index; x < (skill->GetX() / TileSize) + index; x++)
@@ -146,21 +150,21 @@ void SkillManager::Update()
 			}
 		}
 
-		// ½ºÅ³ to ¸ó½ºÅÍ or ÇÃ·¹ÀÌ¾î Ãæµ¹
+		// ï¿½ï¿½Å³ to ï¿½ï¿½ï¿½ï¿½ or ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½æµ¹
 		for (int j = 0; j < monsterList.size(); j++)
 		{
 			MonsterObject* monster = (MonsterObject*)monsterList[j];
 			D2D1_RECT_F monsterrc = monsterList[j]->GetRect();
 
-			// ÇÃ·¹ÀÌ¾î to Àû
+			// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ to ï¿½ï¿½
 			if (skill->GetSkillTarget() == SkillTarget::Player)
 			{
-				// ±ÙÁ¢ ½ºÅ³
+				// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³
 				if (skill->GetSkillType() == SkillType::Melee)
 				{
-					// ±ÙÁ¢ ½ºÅ³Àº Àû¿¡°Ô È÷Æ®½Ã »ç¶óÁöÁö ¾Ê´Â´Ù
-					// °í·¡¼­ ½ºÅ³ ÇÏ³ª´ç Àû ÇÑ¸¶¸®´ç ÇÑ¹ø¾¿ÀÇ ÇÇÇØ¸¦ Áà¾ß´ï
-					// ±×·¡¼­ ±×°É ¾î¶»°Ô ÇÏ´Â°Ô ÁÁÀ»±î
+					// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´ï¿½
+					// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ñ¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¸ï¿½ ï¿½ï¿½ß´ï¿½
+					// ï¿½×·ï¿½ï¿½ï¿½ ï¿½×°ï¿½ ï¿½î¶»ï¿½ï¿½ ï¿½Ï´Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					bool isCollision = false;
 					if (IntersectRect(temp, &skillrc, &monsterrc) && 
 						(skill->GetIsCollision() == false && monster->GetIsCollision() == false))
@@ -170,7 +174,7 @@ void SkillManager::Update()
 					}
 				}
 
-				// ´øÁö´Â ½ºÅ³
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³
 				if (skill->GetSkillType() == SkillType::Throw) 
 				{
 					if (IntersectRect(temp, &skillrc, &monsterrc))
@@ -199,7 +203,7 @@ void SkillManager::Update()
 				}
 			}
 
-			// Àû to ÇÃ·¹ÀÌ¾î
+			// ï¿½ï¿½ to ï¿½Ã·ï¿½ï¿½Ì¾ï¿½
 			if (skill->GetSkillTarget() == SkillTarget::Enemy)
 			{
 				if (skill->GetSkillType() == SkillType::Melee)
@@ -224,7 +228,7 @@ void SkillManager::Update()
 		}
 	}
 
-	// ¸ó½ºÅÍ ¸Ê Ãæµ¹ Ã³¸®
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½æµ¹ Ã³ï¿½ï¿½
 	//for (int i = 0; i < monsterList.size(); i++)
 	//{
 	//	MovingObject* monster = (MovingObject*) monsterList[i];
@@ -314,8 +318,7 @@ void SkillManager::KickFlame(const string & name, float x, float y, float angle,
 
 void SkillManager::WindSlashSkill(const string& name, float x, float y, float angle)
 {
-	SoundPlayer::GetInstance()->LoadFromFile(L"WindSlashSound", Resources(L"Sound/WindSlash.wav"), false);
-	SoundPlayer::GetInstance()->Play(L"WindSlashSound", 1.f);
+	
 	Skill_WindSlash* windSlash = new Skill_WindSlash(name, x, y, angle);
 	windSlash->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, windSlash);
@@ -323,8 +326,7 @@ void SkillManager::WindSlashSkill(const string& name, float x, float y, float an
 
 void SkillManager::IceSpearSkill(const string& name, float x, float y, float angle)
 {
-	SoundPlayer::GetInstance()->LoadFromFile(L"IceSpearSound", Resources(L"Sound/IceSpear.wav"), false);
-	SoundPlayer::GetInstance()->Play(L"IceSpearSound", 1.f);
+	
 
 	Skill_IceSpear* iceSpear = new Skill_IceSpear(name, x, y, angle);
 	iceSpear->Init();
@@ -359,7 +361,7 @@ void SkillManager::MonsterBigSlashSkill(const string& name, float x, float y, fl
 void SkillManager::WaterBallSkill(const string& name, float x, float y, float angle)
 {
 	SoundPlayer::GetInstance()->LoadFromFile(L"WaterBallSound", Resources(L"Sound/WaterBall.wav"), false);
-	SoundPlayer::GetInstance()->Play(L"WaterBall", 1.f);
+	SoundPlayer::GetInstance()->Play(L"WaterBallSound", 1.f);
 	Skill_WaterBall* waterBall = new Skill_WaterBall(name, x, y, angle);
 	waterBall->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, waterBall);
@@ -390,8 +392,8 @@ void SkillManager::SpearWaveSkill(const string& name, float x, float y, float an
 
 void SkillManager::MonsterMiddleSlashSkill(const string& name, float x, float y, float angle)
 {
-	SoundPlayer::GetInstance()->LoadFromFile(L"SwoardManSound", Resources(L"Sound/SwoardMan.wav"), false);
-	SoundPlayer::GetInstance()->Play(L"SwoardManSound", 1.f);
+	SoundPlayer::GetInstance()->LoadFromFile(L"SwoardManAttackSound", Resources(L"Sound/SwoardManAttack.wav"), false);
+	SoundPlayer::GetInstance()->Play(L"SwoardManAttackSound", 1.f);
 	Skill_MonsterMiddleSlash* monsterMiddleSlash = new Skill_MonsterMiddleSlash(name, x, y, angle);
 	monsterMiddleSlash->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, monsterMiddleSlash);

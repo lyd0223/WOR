@@ -1,4 +1,4 @@
-
+ï»¿
 #include"pch.h"
 #include"Image.h"
 #include"Animation.h"
@@ -87,14 +87,14 @@ void Player::Init()
 	mSpacebar_ButtonSkill = "WindDash";
 	mQ_ButtonSkill = "FireBall";
 
-	//¸¶¿ì½ºÆ®·¡Ä¿
+	//ï¿½ï¿½ï¿½ì½ºÆ®ï¿½ï¿½Ä¿
 	if (mMouseTracker == nullptr)
 	{
 		mMouseTracker = new MouseTracker("MouseTracker", mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 20, mAngle);
 		mMouseTracker->Init();
 	}
 	//
-	//±×¸²ÀÚ-------
+	//ï¿½×¸ï¿½ï¿½ï¿½-------
 	if (mPlayerNormalShadow == nullptr)
 	{
 		if (mCurrentAnimation == mDownIdleAnimation || mCurrentAnimation == mRightIdleAnimation || mCurrentAnimation == mLeftIdleAnimation ||
@@ -106,6 +106,7 @@ void Player::Init()
 		}
 
 	}
+	
 	if (mPlayerHeightShadow == nullptr)
 	{
 		if (mCurrentAnimation == mUpThrowWatingAnimation || mCurrentAnimation == mDownThrowWatingAnimation || mCurrentAnimation == mDownAttackAnimation || mCurrentAnimation == mUpAttackAnimation ||
@@ -115,6 +116,7 @@ void Player::Init()
 			mPlayerHeightShadow->Init();
 		}
 	}
+	
 	if (mPlayerWideShadow == nullptr)
 	{
 		if (mCurrentAnimation == mUpDashAnimation || mCurrentAnimation == mDownDashAnimation || mCurrentAnimation == mLeftDashAnimation || mCurrentAnimation == mRightDashAnimation ||
@@ -126,8 +128,33 @@ void Player::Init()
 			mPlayerWideShadow->Init();
 		}
 	}
-	SkillObject* rbskill = (SkillObject*)SkillManager::GetInstance()->FindSkill(mRB_ButtonSkill);
-	mRB_ButtonSkillCool = rbskill->GetSkillCool();
+	if ((mPlayerState != PlayerState::DownIdle && mPlayerState != PlayerState::LeftIdle &&
+		mPlayerState != PlayerState::RightIdle && mPlayerState != PlayerState::UpIdle && mPlayerState != PlayerState::DownHit
+		&& mPlayerState != PlayerState::UpHit && mPlayerState != PlayerState::RightHit && mPlayerState != PlayerState::LeftHit))
+	{
+		{
+			SafeDelete(mPlayerNormalShadow)
+		}
+	}
+	if ((mPlayerState != PlayerState::UpThrowWating && mPlayerState != PlayerState::DownThorwWating &&
+		mPlayerState != PlayerState::DownAttack && mPlayerState != PlayerState::UpAttack && mPlayerState != PlayerState::UpThrowSkill
+		&& mPlayerState != PlayerState::DownThorwWating))
+	{
+		{
+			SafeDelete(mPlayerHeightShadow)
+		}
+	}
+	if ((mPlayerState != PlayerState::UpDash && mPlayerState != PlayerState::DownDash &&
+		mPlayerState != PlayerState::LeftDash && mPlayerState != PlayerState::RightDash && mPlayerState != PlayerState::RightThrowSkillandAttack
+		&& mPlayerState != PlayerState::LeftThrowSkillandAttack && mPlayerState != PlayerState::RightRun && mPlayerState != PlayerState::LeftRun && mPlayerState != PlayerState::UpRun
+		&& mPlayerState != PlayerState::DownRun && mPlayerState != PlayerState::RightAttack && mPlayerState != PlayerState::LeftAttack && mPlayerState != PlayerState::LeftThrowWaitng
+		&& mPlayerState != PlayerState::RightThrowWating))
+	{
+		{
+			SafeDelete(mPlayerWideShadow)
+		}
+	}
+	
 }
 
 void Player::Release()
@@ -166,11 +193,11 @@ void Player::Update()
 	//---------------------------------
 
 	mRB_ButtonSkillCool -= Time::GetInstance()->DeltaTime();
-
+	mQ_ButtonSkillCool -= Time::GetInstance()->DeltaTime();
 	D2D1_RECT_F rctemp = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	mAngle = Math::GetAngle(mX, mY, _mousePosition.x + rctemp.left, _mousePosition.y + rctemp.top);
 	//-----
-	//°ÙÅ°
+	//ï¿½ï¿½Å°
 	if (Input::GetInstance()->GetKey('W') && !Input::GetInstance()->GetKey('D') && !Input::GetInstance()->GetKey('A') &&mCurrentAnimation != mUpDashAnimation)
 	{
 		if (mPlayerState == PlayerState::UpRun || mPlayerState == PlayerState::UpIdle || mPlayerState == PlayerState::RightRun || mPlayerState == PlayerState::LeftRun)
@@ -447,7 +474,7 @@ void Player::Update()
 
 
 
-	// °ÙÅ°¾÷
+	// ï¿½ï¿½Å°ï¿½ï¿½
 	if (!Input::GetInstance()->GetKey('S') &&
 		!Input::GetInstance()->GetKey('A') &&
 		!Input::GetInstance()->GetKey('D'))
@@ -488,7 +515,7 @@ void Player::Update()
 			mPlayerState = PlayerState::LeftIdle;
 		}
 	}
-	//°ø°Ý
+	//ï¿½ï¿½ï¿½ï¿½
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 	{
 		
@@ -520,7 +547,7 @@ void Player::Update()
 		}
 	}
 	
-	// ¿ìÅ¬¸¯ ½ºÅ³
+	// ï¿½ï¿½Å¬ï¿½ï¿½ ï¿½ï¿½Å³
 	if (Input::GetInstance()->GetKeyDown(VK_RBUTTON) && mRB_ButtonSkillCool < 0)
 	{
 		
@@ -659,39 +686,97 @@ void Player::Update()
 		
 		mIsAct = false;
 	}
-	//´ë½¬
+	// QìŠ¤í‚¬
+	
+		if (Input::GetInstance()->GetKeyDown('Q') && mQ_ButtonSkillCool < 0)
+		{
+
+			if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
+			{
+				AnimationChange(mRightThrowSkillandAttackAnimation);
+				mPlayerState = PlayerState::RightThrowWating;
+				SkillManager::GetInstance()->SkillCasting(mQ_ButtonSkill, lineX, lineY, mAngle);
+			}
+			else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
+			{
+				AnimationChange(mUpThrowSkillAnimation);
+				mPlayerState = PlayerState::UpThrowWating;
+				SkillManager::GetInstance()->SkillCasting(mQ_ButtonSkill, lineX, lineY, mAngle);
+			}
+			else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
+			{
+				AnimationChange(mLeftThrowSkillandAttackAnimation);
+				mPlayerState = PlayerState::LeftThrowWaitng;
+				SkillManager::GetInstance()->SkillCasting(mQ_ButtonSkill, lineX, lineY, mAngle);
+			}
+			else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
+			{
+				AnimationChange(mDownThrowSkillAnimation);
+				mPlayerState = PlayerState::DownThorwWating;
+				SkillManager::GetInstance()->SkillCasting(mQ_ButtonSkill, lineX, lineY, mAngle);
+			}
+		}
+		if (Input::GetInstance()->GetKeyUp('Q') && mQ_ButtonSkillCool < 0)
+		{
+			mQ_ButtonSkillCool = SkillManager::GetInstance()->FindSkill(mQ_ButtonSkill)->GetSkillCool();
+
+			if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
+			{
+				AnimationChange(mRightIdleAnimation);
+				mPlayerState = PlayerState::RightIdle;
+
+				//SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX - 20, mY, mAngle);
+			}
+			else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
+			{
+				AnimationChange(mUpIdleAnimation);
+				mPlayerState = PlayerState::UpIdle;
+				//SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX, mY, mAngle);
+			}
+			else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
+			{
+				AnimationChange(mLeftIdleAnimation);
+				mPlayerState = PlayerState::LeftIdle;
+				//SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX + 35, mY - 20, mAngle);
+			}
+			else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
+			{
+				AnimationChange(mDownIdleAnimation);
+				mPlayerState = PlayerState::DownIdle;
+				//SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX + 20, mY - 20, mAngle);
+			}
+
+			mIsAct = false;
+		}
+	
+	//ï¿½ë½¬
 	if (mCurrentAnimation != mLeftDashAnimation && mCurrentAnimation != mRightDashAnimation && mCurrentAnimation != mDownDashAnimation && mCurrentAnimation != mUpDashAnimation &&
 		mCurrentAnimation != mRightDiagonalDownDashAnimation && mCurrentAnimation != mRightDiagonalUpDashAnimation && mCurrentAnimation != mLeftDiagonalDownDashAnimation && mCurrentAnimation != mLeftDiagonalUpDashAnimation ||
 		mRightDashAnimation->GetNowFrameX() == 9 || mLeftDashAnimation->GetNowFrameX() == 9 || mUpDashAnimation->GetNowFrameX() == 9 || mDownDashAnimation->GetNowFrameX() == 9)
 	{
 		if (Input::GetInstance()->GetKey('W') && Input::GetInstance()->GetKey('D') && Input::GetInstance()->GetKeyDown(VK_SPACE))
 		{
-			SoundPlayer::GetInstance()->LoadFromFile(L"PlayerDashSound", Resources(L"Sound/PlayerDash.wav"), false);
-			SoundPlayer::GetInstance()->Play(L"PlayerDashSound", 1.f);
+			
 			mPlayerState = PlayerState::RightDiagonalUpDash;
 			AnimationChange(mRightDiagonalUpDashAnimation);
 			
 		}
 		else if (Input::GetInstance()->GetKey('W') && Input::GetInstance()->GetKey('A') && Input::GetInstance()->GetKeyDown(VK_SPACE))
 		{
-			SoundPlayer::GetInstance()->LoadFromFile(L"PlayerDashSound", Resources(L"Sound/PlayerDash.wav"), false);
-			SoundPlayer::GetInstance()->Play(L"PlayerDashSound", 1.f);
 			mPlayerState = PlayerState::LeftDiagonalUpDash;
 			AnimationChange(mLeftDiagonalUpDashAnimation);
 		
 		}
 		else if (Input::GetInstance()->GetKey('S') && Input::GetInstance()->GetKey('A') && Input::GetInstance()->GetKeyDown(VK_SPACE))
 		{
-			SoundPlayer::GetInstance()->LoadFromFile(L"PlayerDashSound", Resources(L"Sound/PlayerDash.wav"), false);
-			SoundPlayer::GetInstance()->Play(L"PlayerDashSound", 1.f);
+			
 			mPlayerState = PlayerState::LeftDiagonalDownDash;
 			AnimationChange(mLeftDiagonalDownDashAnimation);
 	
 		}
 		else if (Input::GetInstance()->GetKey('S') && Input::GetInstance()->GetKey('D') && Input::GetInstance()->GetKeyDown(VK_SPACE))
 		{
-			SoundPlayer::GetInstance()->LoadFromFile(L"PlayerDashSound", Resources(L"Sound/PlayerDash.wav"), false);
-			SoundPlayer::GetInstance()->Play(L"PlayerDashSound", 1.f);
+			
 			mPlayerState = PlayerState::RightDiagonalDownDash;
 			AnimationChange(mRightDiagonalDownDashAnimation);
 			
@@ -995,34 +1080,31 @@ void Player::Update()
 	//					if ((rc.bottom - rc.top) > (rc.right - rc.left) && rc.right == mRect.right)
 	//						mX -= rc.right - rc.left;
 	//
-	//				}
-	//			}
-	//
-	//
-	//		}
-	//	}
-	//}
-	if (Input::GetInstance()->GetKeyDown('Q'))
-	{
-		SkillManager::GetInstance()->ThunderBolt("ThunderBolt", lineX, lineY, mAngle);
-	}
-	//±ÙÁ¢°ø°Ý ¶óÀÎ--
+//				}
+//			}
+//
+//
+//		}
+//	}
+//}
+	
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½--
 	lineX = mX + 50 * cosf(mAngle);
 	lineY = mY + 50 * -sinf(mAngle);
 	//-------
-	if(mPlayerNormalShadow != nullptr) mPlayerNormalShadow->Update();
+	if (mPlayerNormalShadow != nullptr) mPlayerNormalShadow->Update();
 	if (mPlayerHeightShadow != nullptr) mPlayerHeightShadow->Update();
 	if (mPlayerWideShadow != nullptr) mPlayerWideShadow->Update();
 	mMouseTracker->Update();
 	mCurrentAnimation->Update();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mMovingRect = RectMakeCenter(mX, mY + 25, TileSize, TileSize);
-	float mMovingX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left)/ 2);
-	float mMovingY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top)/ 2);
+	float mMovingX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
+	float mMovingY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
 
 	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
-	vector<vector<Tile*>> tilelist =  tilemap->GetTileList();
-	for (int y = mMovingY/TileSize -1; y < mMovingY / TileSize + 1; y++)
+	vector<vector<Tile*>> tilelist = tilemap->GetTileList();
+	for (int y = mMovingY / TileSize - 1; y < mMovingY / TileSize + 1; y++)
 	{
 		for (int x = mMovingX / TileSize - 1; x < mMovingX / TileSize + 1; x++)
 		{
@@ -1045,44 +1127,156 @@ void Player::Update()
 						else if (y == (int)mMovingY / TileSize + 1 && x == (int)mMovingX / TileSize)
 							mY -= height / 2;
 
-						
+
 					}
 				}
+			}
+		}
+	}
+	//if (mCurrentAnimation == mRightDashAnimation || mCurrentAnimation == mRightDiagonalDownDashAnimation || mCurrentAnimation == mRightDiagonalUpDashAnimation || mCurrentAnimation == mUpDashAnimation ||
+	//	mCurrentAnimation == mDownDashAnimation || mCurrentAnimation == mLeftDashAnimation || mCurrentAnimation == mLeftDiagonalDownDashAnimation || mCurrentAnimation == mLeftDiagonalUpDashAnimation)
+	if (mPlayerState == PlayerState::DownDash || mPlayerState == PlayerState::UpDash || mPlayerState == PlayerState::RightDash || mPlayerState == PlayerState::RightDiagonalDownDash || mPlayerState == PlayerState::RightDiagonalUpDash ||
+		mPlayerState == PlayerState::LeftDash || mPlayerState == PlayerState::LeftDiagonalDownDash || mPlayerState == PlayerState::LeftDiagonalUpDash || mPlayerState == PlayerState::LeftDiagonalDownDash ||
+		mPlayerState == PlayerState::RightIdle || mPlayerState == PlayerState::LeftIdle || mPlayerState == PlayerState::UpIdle || mPlayerState == PlayerState::DownIdle)
+	{
+
+		for (int y = mMovingY / TileSize - 1; y < mMovingY / TileSize + 1; y++)
+		{
+			for (int x = mMovingX / TileSize - 1; x < mMovingX / TileSize + 1; x++)
+			{
 				if (tilelist[y][x]->GetType() == Type::Cliff)
 				{
-					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
+					D2D1_RECT_F tileRect = tilelist[y][x]->GetRect();
+					D2D1_RECT_F tempRect;
+					if (tilelist[y][x]->GetType() == Type::Cliff)
 					{
-						float width = tempRect.right - tempRect.left;
-						float height = tempRect.bottom - tempRect.top;
-						if (y == (int)mMovingY / TileSize && x == (int)mMovingX / TileSize - 1)
-							mX += width / 2;
-						else if (y == (int)mMovingY / TileSize && x == (int)mMovingX / TileSize + 1)
-							mX -= width / 2;
-						else if (y == (int)mMovingY / TileSize - 1 && x == (int)mMovingX / TileSize)
-							mY += height / 2;
-						else if (y == (int)mMovingY / TileSize + 1 && x == (int)mMovingX / TileSize)
-							mY -= height / 2;
-						/*if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == mMovingRect.bottom)
-							mY -= TileSize;
-						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == mMovingRect.top)
-							mY += TileSize;
-						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == mMovingRect.left)
-							mX += TileSize;
-						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == mMovingRect.right)
-							mX -= TileSize;*/
+						if (IntersectRect(tempRect, &tileRect, &mMovingRect))
+						{
+							if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == mMovingRect.bottom)
+								mY -= 0;
+							if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == mMovingRect.top)
+								mY += 0;
+							if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == mMovingRect.left)
+								mX += 0;
+							if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == mMovingRect.right)
+								mX -= 0;
+
+
+						}
+					}
+				}
+
+			}
+		}
+	}
+	//else if (mPlayerState == PlayerState::RightIdle || mPlayerState == PlayerState::LeftIdle || mPlayerState == PlayerState::UpIdle || mPlayerState == PlayerState::DownIdle)
+	//{
+	//	for (int y = mMovingY / TileSize - 1; y < mMovingY / TileSize + 1; y++)
+	//	{
+	//		for (int x = mMovingX / TileSize - 1; x < mMovingX / TileSize + 1; x++)
+	//		{
+	//			if (tilelist[y][x]->GetType() == Type::Cliff)
+	//			{
+	//				D2D1_RECT_F tileRect = tilelist[y][x]->GetRect();
+	//				D2D1_RECT_F tempRect;
+	//				if (tilelist[y][x]->GetType() == Type::Cliff)
+	//				{
+	//					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
+	//					{
+	//						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.bottom == mMovingRect.bottom)
+	//							mY -= TileSize;
+	//						if ((tempRect.bottom - tempRect.top) < (tempRect.right - tempRect.left) && tempRect.top == mMovingRect.top)
+	//							mY += TileSize;
+	//						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.left == mMovingRect.left)
+	//							mX += TileSize;
+	//						if ((tempRect.bottom - tempRect.top) > (tempRect.right - tempRect.left) && tempRect.right == mMovingRect.right)
+	//							mX -= TileSize;
+	//
+	//
+	//					}
+	//				}
+	//			}
+	//
+	//		}
+	//	}
+	//}
+	else
+	{
+
+		for (int y = mMovingY / TileSize - 1; y < mMovingY / TileSize + 1; y++)
+		{
+			for (int x = mMovingX / TileSize - 1; x < mMovingX / TileSize + 1; x++)
+			{
+				if (tilelist[y][x]->GetType() == Type::Cliff)
+				{
+					D2D1_RECT_F tileRect = tilelist[y][x]->GetRect();
+					D2D1_RECT_F tempRect;
+					//if (mCurrentAnimation == mRightDashAnimation || mCurrentAnimation == mRightDiagonalDownDashAnimation || mCurrentAnimation == mRightDiagonalUpDashAnimation || mCurrentAnimation == mUpDashAnimation ||
+					//	mCurrentAnimation == mDownDashAnimation || mCurrentAnimation == mLeftDashAnimation || mCurrentAnimation == mLeftDiagonalDownDashAnimation || mCurrentAnimation == mLeftDiagonalUpDashAnimation)
+					{
+						if (tilelist[y][x]->GetType() == Type::Cliff)
+						{
+							if (IntersectRect(tempRect, &tileRect, &mMovingRect))
+							{
+								if (IntersectRect(tempRect, &tileRect, &mMovingRect))
+								{
+									float width = tempRect.right - tempRect.left;
+									float height = tempRect.bottom - tempRect.top;
+									if (y == (int)mMovingY / TileSize && x == (int)mMovingX / TileSize - 1)
+										mX += width / 2;
+									else if (y == (int)mMovingY / TileSize && x == (int)mMovingX / TileSize + 1)
+										mX -= width / 2;
+									else if (y == (int)mMovingY / TileSize - 1 && x == (int)mMovingX / TileSize)
+										mY += height / 2;
+									else if (y == (int)mMovingY / TileSize + 1 && x == (int)mMovingX / TileSize)
+										mY -= height / 2;
+
+
+								}
+								//mHp -= 25;
+
+							}
+						}
 					}
 
 				}
+			}
+
+		}
+
+	}
+	//	}
+	for (int y = mMovingY / TileSize - 1; y < mMovingY / TileSize + 1; y++)
+	{
+		for (int x = mMovingX / TileSize - 1; x < mMovingX / TileSize + 1; x++)
+		{
+			if (tilelist[y][x]->GetType() == Type::Floor)
+			{
+				D2D1_RECT_F tileRect = tilelist[y][x]->GetRect();
+				D2D1_RECT_F tempRect;
 				if (tilelist[y][x]->GetType() == Type::Floor)
 				{
-					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
-					{
-						mSpeed = BasicSpeed;
-						
-					}
+					
+					mSpeed = BasicSpeed;
+
+					
 
 				}
-				if (tilelist[y][x]->GetType() == Type::Thorn)
+			}
+		}
+	}
+	
+	
+	
+	for (int y = mMovingY / TileSize - 1; y < mMovingY / TileSize + 1; y++)
+	{
+		for (int x = mMovingX / TileSize - 1; x < mMovingX / TileSize + 1; x++)
+		{
+			if (tilelist[y][x]->GetType() == Type::Thorn)
+			{
+				D2D1_RECT_F tileRect = tilelist[y][x]->GetRect();
+				D2D1_RECT_F tempRect;
+				if(tilelist[y][x]->GetType() == Type::Thorn)
 				{
 					if (IntersectRect(tempRect, &tileRect, &mMovingRect))
 					{
@@ -1091,12 +1285,17 @@ void Player::Update()
 					}
 
 				}
-
 			}
 		}
 	}
+				
+				
+
+			
+		
 	
-	// ³Ë¹é
+	
+	// ï¿½Ë¹ï¿½
 	if (mSkillHitPower > 0)
 	{
 		mX += cosf(mSkillHitAngle) * mSkillHitPower;
