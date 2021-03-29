@@ -97,7 +97,15 @@ void UserInterface::Render()
 
 	mLB_ButtonSkillIcon->Image->ScaleFrameRender(mLB_ButtonSkillIcon->X, mLB_ButtonSkillIcon->Y, LB.X, LB.Y, mLB_ButtonSkillIcon->SizeX, mLB_ButtonSkillIcon->SizeY);
 	mSpace_ButtonSkillIcon->Image->ScaleFrameRender(mSpace_ButtonSkillIcon->X, mSpace_ButtonSkillIcon->Y, Space.X, Space.Y, mSpace_ButtonSkillIcon->SizeX, mSpace_ButtonSkillIcon->SizeY);
+	
 	mRB_ButtonSkillIcon->Image->ScaleFrameRender(mRB_ButtonSkillIcon->X, mRB_ButtonSkillIcon->Y, RB.X, RB.Y, mRB_ButtonSkillIcon->SizeX, mRB_ButtonSkillIcon->SizeY);
+	if (mPlayer->GetRB_ButtonSkillCool() > 0)
+	{
+		wstring str = to_wstring((int)mPlayer->GetRB_ButtonSkillCool());
+		D2DRenderer::GetInstance()->RenderTextField(mRB_ButtonSkillIcon->X, mRB_ButtonSkillIcon->Y,
+			str, 15.f, mRB_ButtonSkillIcon->SizeX, mRB_ButtonSkillIcon->SizeY, D2D1::ColorF::Black,
+			DWRITE_TEXT_ALIGNMENT_CENTER);
+	}
 	mQ_ButtonSkillIcon->Image->ScaleFrameRender(mQ_ButtonSkillIcon->X, mQ_ButtonSkillIcon->Y, Q.X, Q.Y, mQ_ButtonSkillIcon->SizeX, mQ_ButtonSkillIcon->SizeY);
 
 	//mSpecialSkillBox->Image->ScaleRender(mSpecialSkillBox->X, mSpecialSkillBox->Y, mSpecialSkillBox->SizeX, mSpecialSkillBox->SizeY);

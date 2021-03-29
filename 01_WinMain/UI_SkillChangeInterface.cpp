@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "UI_SkillChangeInterface.h"
+#include "UI_SpellBook.h"
 #include "Image.h"
 #include "Player.h"
 
@@ -53,20 +54,11 @@ void UI_SkillChangeInterface::Update()
 {
 	if (mIsActive)
 	{
-		if (Input::GetInstance()->GetKeyDown(VK_SPACE))
+		if (Input::GetInstance()->GetKeyDown(VK_SPACE) && mIndex != 1)
 		{
-			switch (mIndex)
-			{
-			case 0:
-				
-				break;
-			case 1:
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-			}
+			UI_SpellBook* spellBook = new UI_SpellBook("SpellBook", mIndex);
+			spellBook->Init();
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, spellBook);
 		}
 
 		if (Input::GetInstance()->GetKeyDown(VK_LEFT))
@@ -105,8 +97,8 @@ void UI_SkillChangeInterface::Render()
 	if (mIsActive)
 	{
 		Vector2 Basic = mSkillIndexList.find(mPlayer->GetLB_ButtonSkill())->second;
-		Vector2 Dash = mSkillIndexList.find(mPlayer->GetRB_ButtonSkill())->second;
-		Vector2 Standard = mSkillIndexList.find(mPlayer->GetSpacebar_ButtonSkill())->second;
+		Vector2 Dash = mSkillIndexList.find(mPlayer->GetSpacebar_ButtonSkill())->second;
+		Vector2 Standard = mSkillIndexList.find(mPlayer->GetRB_ButtonSkill())->second;
 		Vector2 Signature = mSkillIndexList.find(mPlayer->GetQ_ButtonSkill())->second;
 
 		mSkillChangeInterface->Image->Render(mSkillChangeInterface->X, mSkillChangeInterface->Y);

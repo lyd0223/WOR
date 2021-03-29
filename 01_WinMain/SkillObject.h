@@ -1,11 +1,11 @@
 #pragma once
 #include "GameObject.h"
 
-enum class Skill : int {
-	Basic,
-	Dash,
-	Standard,
-	Signature,
+enum class SkillArcana : int {
+	Basic = 0,
+	Dash = 1,
+	Standard = 2,
+	Signature = 3,
 
 	End
 };
@@ -31,10 +31,10 @@ enum class SkillType : int {
 // 스킬 속성 ( 불, 물, 전기, 땅, 카오스)
 enum class SkillElement : int {
 	Fire,
-	Water,
-	Elect,
-	Earth,
 	Wind,
+	Earth,
+	Elect,
+	Water,
 
 	End
 };
@@ -44,13 +44,14 @@ class SkillObject : public GameObject
 {
 protected:
 	Image* mImage;
-	Skill mSkill;
+	SkillArcana mSkillArcana;
 	SkillType mSkillType;
 	SkillTarget mSkillTarget;
 	SkillElement mSkillElement;
 	float mAngle;
 	float mSkillDamege;
 	float mSkillPower;
+	float mSkillCool;
 	int mSkillHitCount;
 
 	bool mIsCollision;
@@ -63,6 +64,7 @@ public:
 	void Render() override {};
 
 	void SetSkillType(SkillType type) { mSkillType = type; }
+	SkillArcana GetSkillArcana() { return mSkillArcana; }
 	SkillTarget GetSkillTarget() { return mSkillTarget; }
 	SkillType GetSkillType() { return mSkillType; }
 	SkillElement GetSkillElement() { return mSkillElement; }
@@ -73,6 +75,7 @@ public:
 	void SetSkillPower(float skillPower) { mSkillPower = skillPower; }
 	float GetSkillPower() { return mSkillPower; }
 	int GetSkillHitCount() { return mSkillHitCount; }
+	float GetSkillCool() { return mSkillCool; }
 	
 	void SetIsCollision(bool isCollision) {	mIsCollision = isCollision; }
 	bool GetIsCollision() { return mIsCollision; }

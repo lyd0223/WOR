@@ -14,9 +14,11 @@ Skill_IceSpear::Skill_IceSpear(const string& name, float x, float y, float angle
 	mX = x;
 	mY = y;
 	mAngle = angle;
+	mSkillArcana = SkillArcana::Standard;
 	mSkillTarget = SkillTarget::Player;
 	mSkillType = SkillType::Hold;
 	mSkillElement = SkillElement::Water;
+	mSkillCool = 10.f;
 }
 
 void Skill_IceSpear::Init()

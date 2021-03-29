@@ -95,6 +95,14 @@ class Player : public MovingObject
 	float lineX;
 	float lineY;
 
+	float mLB_ButtonSkillCool;
+	float mRB_ButtonSkillCool;
+	float mQ_ButtonSkillCool;
+
+
+	float mFrameCount;
+
+
 	bool mIsAct;
 	bool mIsDashEffect;
 	class Animation* mCurrentAnimation;
@@ -122,6 +130,8 @@ public:
 	void SetRB_ButtonSkill(string skillName) { mRB_ButtonSkill = skillName; }
 	void SetSpacebar_ButtonSkill(string skillName) { mSpacebar_ButtonSkill = skillName; }
 	void SetQ_ButtonSkill(string skillName) { mQ_ButtonSkill = skillName; }
+
+	float GetRB_ButtonSkillCool() { return mRB_ButtonSkillCool; }
 
 	float GetMp() { return mMp; }
 

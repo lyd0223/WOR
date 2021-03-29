@@ -11,6 +11,7 @@ Skill_DragonArc::Skill_DragonArc(const string & name, float x, float y, float an
 	mAngle = angle;
 	mIsUp = isUp;
 
+	mSkillArcana = SkillArcana::Standard;
 	mSkillElement = SkillElement::Fire;
 	mSkillType = SkillType::Throw;
 }

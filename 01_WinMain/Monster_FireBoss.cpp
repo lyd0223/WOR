@@ -196,7 +196,7 @@ void Monster_FireBoss::Render()
 {
 	mImage->SetScale(3.f);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMapRect, D2D1::ColorF::Aqua);
+	//CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMapRect, D2D1::ColorF::Aqua);
 }
 
 void Monster_FireBoss::AnimationSet(Animation ** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)

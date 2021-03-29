@@ -15,6 +15,7 @@ Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angl
 	mX = x;
 	mY = y;
 	mAngle = angle;
+	mSkillArcana = SkillArcana::Signature;
 	mSkillTarget = SkillTarget::Player;
 	mSkillElement = SkillElement::Fire;
 	mSkillType = SkillType::Throw;

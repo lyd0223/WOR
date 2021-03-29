@@ -126,6 +126,8 @@ void Player::Init()
 			mPlayerWideShadow->Init();
 		}
 	}
+	SkillObject* rbskill = (SkillObject*)SkillManager::GetInstance()->FindSkill(mRB_ButtonSkill);
+	mRB_ButtonSkillCool = rbskill->GetSkillCool();
 }
 
 void Player::Release()
@@ -163,9 +165,10 @@ void Player::Update()
 	//int indexX = mX / TileSize;
 	//---------------------------------
 
+	mRB_ButtonSkillCool -= Time::GetInstance()->DeltaTime();
+
 	D2D1_RECT_F rctemp = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	mAngle = Math::GetAngle(mX, mY, _mousePosition.x + rctemp.left, _mousePosition.y + rctemp.top);
-	
 	//-----
 	//겟키
 	if (Input::GetInstance()->GetKey('W') && !Input::GetInstance()->GetKey('D') && !Input::GetInstance()->GetKey('A') &&mCurrentAnimation != mUpDashAnimation)
@@ -518,9 +521,9 @@ void Player::Update()
 	}
 	
 	// 우클릭 스킬
-	if (Input::GetInstance()->GetKeyDown(VK_RBUTTON))
+	if (Input::GetInstance()->GetKeyDown(VK_RBUTTON) && mRB_ButtonSkillCool < 0)
 	{
-	
+		
 		if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
 		{
 			AnimationChange(mRightThrowWationgAnimation);
@@ -546,7 +549,7 @@ void Player::Update()
 			
 		}
 	}
-	if (Input::GetInstance()->GetKey(VK_RBUTTON))
+	if (Input::GetInstance()->GetKey(VK_RBUTTON) && mRB_ButtonSkillCool < 0)
 	{
 		//SkillObject* skill = nullptr;
 		if (mIsAct == false)
@@ -619,8 +622,9 @@ void Player::Update()
 
 		}
 	}
-	if (Input::GetInstance()->GetKeyUp(VK_RBUTTON))
+	if (Input::GetInstance()->GetKeyUp(VK_RBUTTON) && mRB_ButtonSkillCool < 0)
 	{
+		mRB_ButtonSkillCool = SkillManager::GetInstance()->FindSkill(mRB_ButtonSkill)->GetSkillCool();
 		SkillObject* skill = (SkillObject*)ObjectManager::GetInstance()->FindObject("IceSpear");
 		if (skill->GetSkillType() == SkillType::Hold)
 		{

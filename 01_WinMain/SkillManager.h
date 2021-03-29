@@ -39,4 +39,5 @@ public:
 
 	map<SkillElement, vector<SkillObject*>> GetSkillList() { return mSkillList; }
 	vector<SkillObject*> GetSkillElementList(SkillElement element) { return mSkillList.find(element)->second; }
+	SkillObject* FindSkill(string name);
 };

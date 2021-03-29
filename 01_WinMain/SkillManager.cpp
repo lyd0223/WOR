@@ -81,7 +81,11 @@ SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y
 		Skill_WindSlash* windSlash = new Skill_WindSlash(name, x, y, angle);
 		return windSlash;
 	}
-
+	if (name == "ThunderBolt")
+	{
+		Skill_ThunderBolt* thunderBolt = new Skill_ThunderBolt(name, x, y, angle);
+		return thunderBolt;
+	}
 	return nullptr;
 }
 
@@ -397,11 +401,35 @@ void SkillManager::ThunderBolt(const string& name, float x, float y, float angle
 {
 	SoundPlayer::GetInstance()->LoadFromFile(L"ThunderBoltSound", Resources(L"Sound/ThunderBolt.wav"), false);
 	SoundPlayer::GetInstance()->Play(L"ThunderBoltSound", 1.f);
-	Skill_ThunderBolt* thunderBolt = new Skill_ThunderBolt(name, x, y, angle);
-	thunderBolt->Init();
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, thunderBolt);
+	for (int i = 0; i < 6; i++)
+	{
+		float skillX = x + cosf(angle) * 100;
+		float skillY = y + -sinf(angle) * 100;
+		Skill_ThunderBolt* thunderBolt = new Skill_ThunderBolt(name, skillX, skillY, angle);
+		thunderBolt->Init();
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, thunderBolt);
+	}
 }
 
+SkillObject * SkillManager::FindSkill(string name)
+{
+	SkillObject* skill = nullptr;
+
+	map<SkillElement, vector<SkillObject*>>::iterator iter = mSkillList.begin();
+
+	for (; iter != mSkillList.end(); iter++)
+	{
+		for (int i = 0; i < iter->second.size(); i++)
+		{
+			if (iter->second[i]->GetName() == name)
+			{
+				return iter->second[i];
+			}
+		}
+	}
+
+	return skill;
+}
 
 
 //vector<GameObject*> SkillManager::FindSkillList(const string key)
