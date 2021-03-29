@@ -178,6 +178,7 @@
     <ClInclude Include="Scene_House.h" />
     <ClInclude Include="Scene_Loading.h" />
     <ClInclude Include="Scene_TitleScene.h" />
+    <ClInclude Include="SkillBook.h" />
     <ClInclude Include="SkillObject.h" />
     <ClInclude Include="Skill_DragonArc.h" />
     <ClInclude Include="Skill_IceSpear.h" />
@@ -277,6 +278,7 @@
     <ClCompile Include="Scene_House.cpp" />
     <ClCompile Include="Scene_Loading.cpp" />
     <ClCompile Include="Scene_TitleScene.cpp" />
+    <ClCompile Include="SkillBook.cpp" />
     <ClCompile Include="SkillObject.cpp" />
     <ClCompile Include="Skill_DragonArc.cpp" />
     <ClCompile Include="Skill_IceSpear.cpp" />
