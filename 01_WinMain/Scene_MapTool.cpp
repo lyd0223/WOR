@@ -402,7 +402,7 @@ void Scene_MapTool::Init()
 		TilePallete* pallete = new TilePallete();
 		pallete->Image = ImageManager::GetInstance()->FindImage(L"Penta");
 		pallete->PositionX = WINSIZEX - 350;
-		pallete->PositionY = 500;
+		pallete->PositionY = 370;
 		pallete->Width = pallete->Image->GetWidth();
 		pallete->Height = pallete->Image->GetHeight();
 		pallete->Rect = RectMake(pallete->PositionX, pallete->PositionY, pallete->Width, pallete->Height);
@@ -771,6 +771,12 @@ void Scene_MapTool::Update()
 									mTileList[y1][x1]->SetFrameIndexY(Random::GetInstance()->RandomInt(2));
 									mTileList[y1][x1]->SetFrameIndexX(Random::GetInstance()->RandomInt(8));
 								}
+								else if (mCurrentPallete->GetImage()->GetKey() == L"Fire8Walls")
+								{
+									mTileList[y1][x1]->SetImage(mCurrentPallete->Image);
+									mTileList[y1][x1]->SetFrameIndexY(1);
+									mTileList[y1][x1]->SetFrameIndexX(1);
+								}
 							}
 						}
 					}
@@ -847,8 +853,8 @@ void Scene_MapTool::Update()
 								(
 									"Tree1",
 									ImageManager::GetInstance()->FindImage(L"Tree1"),
-									mTileList[y - 1][x]->GetX() + TileSize / 2,
-									mTileList[y - 1][x]->GetY() + TileSize / 2,
+									mTileList[y-1][x]->GetX() + TileSize / 2,
+									mTileList[y-1][x]->GetY() + TileSize / 2,
 									mCurrentPallete->Width,
 									mCurrentPallete->Height
 								);
@@ -862,8 +868,8 @@ void Scene_MapTool::Update()
 								(
 									"Tree2",
 									ImageManager::GetInstance()->FindImage(L"Tree2"),
-									mTileList[y - 1][x]->GetX() + TileSize / 2,
-									mTileList[y - 1][x]->GetY() + TileSize / 2,
+									mTileList[y-1][x]->GetX() + TileSize / 2,
+									mTileList[y-1][x]->GetY() + TileSize / 2,
 									mCurrentPallete->Width,
 									mCurrentPallete->Height
 								);
@@ -876,8 +882,8 @@ void Scene_MapTool::Update()
 								(
 									"Flag",
 									ImageManager::GetInstance()->FindImage(L"Flag"),
-									mTileList[y - 1][x]->GetX() + TileSize / 2,
-									mTileList[y - 1][x]->GetY() + TileSize / 2,
+									mTileList[y][x]->GetX() + TileSize / 2,
+									mTileList[y][x]->GetY() + TileSize / 2,
 									mCurrentPallete->Width,
 									mCurrentPallete->Height
 								);
@@ -890,8 +896,8 @@ void Scene_MapTool::Update()
 								(
 									"BookShelf",
 									ImageManager::GetInstance()->FindImage(L"BookShelf"),
-									mTileList[y - 1][x]->GetX() + TileSize / 2,
-									mTileList[y - 1][x]->GetY() + TileSize / 2,
+									mTileList[y][x]->GetX() + TileSize / 2,
+									mTileList[y][x]->GetY() + TileSize / 2,
 									mCurrentPallete->Width,
 									mCurrentPallete->Height
 								);
@@ -904,8 +910,8 @@ void Scene_MapTool::Update()
 								(
 									"Bed",
 									ImageManager::GetInstance()->FindImage(L"Bed"),
-									mTileList[y - 1][x]->GetX() + TileSize / 2,
-									mTileList[y - 1][x]->GetY() + TileSize / 2,
+									mTileList[y][x]->GetX() + TileSize / 2,
+									mTileList[y][x]->GetY() + TileSize / 2,
 									mCurrentPallete->Width,
 									mCurrentPallete->Height
 								);
@@ -918,8 +924,8 @@ void Scene_MapTool::Update()
 							(
 								"Chair",
 								ImageManager::GetInstance()->FindImage(L"Chair"),
-								mTileList[y - 1][x]->GetX() + TileSize / 2,
-								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mTileList[y][x]->GetX() + TileSize / 2,
+								mTileList[y][x]->GetY() + TileSize / 2,
 								mCurrentPallete->Width,
 								mCurrentPallete->Height
 							);
@@ -932,8 +938,8 @@ void Scene_MapTool::Update()
 							(
 								"Book1",
 								ImageManager::GetInstance()->FindImage(L"Book1"),
-								mTileList[y - 1][x]->GetX() + TileSize / 2,
-								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mTileList[y-1][x]->GetX() + TileSize / 2,
+								mTileList[y-1][x]->GetY() + TileSize / 2,
 								mCurrentPallete->Width,
 								mCurrentPallete->Height
 							);
@@ -945,8 +951,8 @@ void Scene_MapTool::Update()
 							(
 								"Book2",
 								ImageManager::GetInstance()->FindImage(L"Book2"),
-								mTileList[y - 1][x]->GetX() + TileSize / 2,
-								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mTileList[y-1][x]->GetX() + TileSize / 2,
+								mTileList[y-1][x]->GetY() + TileSize / 2,
 								mCurrentPallete->Width,
 								mCurrentPallete->Height
 							);
@@ -958,8 +964,8 @@ void Scene_MapTool::Update()
 							(
 								"Book3",
 								ImageManager::GetInstance()->FindImage(L"Book3"),
-								mTileList[y - 1][x]->GetX() + TileSize / 2,
-								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mTileList[y-1][x]->GetX() + TileSize / 2,
+								mTileList[y-1][x]->GetY() + TileSize / 2,
 								mCurrentPallete->Width,
 								mCurrentPallete->Height
 							);
@@ -971,8 +977,8 @@ void Scene_MapTool::Update()
 							(
 								"Book4",
 								ImageManager::GetInstance()->FindImage(L"Book4"),
-								mTileList[y - 1][x]->GetX() + TileSize / 2,
-								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mTileList[y-1][x]->GetX() + TileSize / 2,
+								mTileList[y-1][x]->GetY() + TileSize / 2,
 								mCurrentPallete->Width,
 								mCurrentPallete->Height
 							);
@@ -984,8 +990,8 @@ void Scene_MapTool::Update()
 							(
 								"Book5",
 								ImageManager::GetInstance()->FindImage(L"Book5"),
-								mTileList[y - 1][x]->GetX() + TileSize / 2,
-								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mTileList[y-1][x]->GetX() + TileSize / 2,
+								mTileList[y-1][x]->GetY() + TileSize / 2,
 								mCurrentPallete->Width,
 								mCurrentPallete->Height
 							);
@@ -997,8 +1003,8 @@ void Scene_MapTool::Update()
 							(
 								"Table",
 								ImageManager::GetInstance()->FindImage(L"Table"),
-								mTileList[y - 1][x]->GetX() + TileSize / 2,
-								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mTileList[y][x]->GetX() + TileSize / 2,
+								mTileList[y][x]->GetY() + TileSize / 2,
 								mCurrentPallete->Width,
 								mCurrentPallete->Height
 							);
@@ -1011,8 +1017,8 @@ void Scene_MapTool::Update()
 							(
 								"SmallTable",
 								ImageManager::GetInstance()->FindImage(L"SmallTable"),
-								mTileList[y - 1][x]->GetX() + TileSize / 2,
-								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mTileList[y][x]->GetX() + TileSize / 2,
+								mTileList[y][x]->GetY() + TileSize / 2,
 								mCurrentPallete->Width,
 								mCurrentPallete->Height
 							);
@@ -1025,8 +1031,8 @@ void Scene_MapTool::Update()
 							(
 								"Portal",
 								ImageManager::GetInstance()->FindImage(L"Portal"),
-								mTileList[y - 1][x]->GetX() + TileSize / 2,
-								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mTileList[y][x]->GetX() + TileSize / 2,
+								mTileList[y][x]->GetY() + TileSize / 2,
 								mCurrentPallete->Width,
 								mCurrentPallete->Height
 							);
@@ -1038,15 +1044,39 @@ void Scene_MapTool::Update()
 							(
 								"Gate",
 								ImageManager::GetInstance()->FindImage(L"Gate"),
-								mTileList[y - 1][x]->GetX() + TileSize / 2,
-								mTileList[y - 1][x]->GetY() + TileSize / 2,
+								mTileList[y][x]->GetX() + TileSize / 2,
+								mTileList[y][x]->GetY() + TileSize / 2,
 								mCurrentPallete->Width,
 								mCurrentPallete->Height
 							);
 							mStructureList.push_back(st);
 							}
-
-
+							else if (mCurrentPallete->Image->GetKey() == L"Penta")
+							{
+							Structure* st = new Structure
+							(
+								"Penta",
+								ImageManager::GetInstance()->FindImage(L"Penta"),
+								mTileList[y][x]->GetX() + TileSize / 2,
+								mTileList[y][x]->GetY() + TileSize / 2,
+								mCurrentPallete->Width,
+								mCurrentPallete->Height
+							);
+							mStructureList.push_back(st);
+							}
+							else if (mCurrentPallete->Image->GetKey() == L"ScareCrow")
+							{
+							Structure* st = new Structure
+							(
+								"ScareCrow",
+								ImageManager::GetInstance()->FindImage(L"ScareCrow"),
+								mTileList[y][x]->GetX() + TileSize / 2,
+								mTileList[y][x]->GetY() + TileSize / 2,
+								mCurrentPallete->Width,
+								mCurrentPallete->Height
+							);
+							mStructureList.push_back(st);
+							}
 
 							//³ª¸ÓÁö.
 							else if (mTileList[y][x]->GetImage() != mCurrentPallete->GetImage() ||
@@ -1440,7 +1470,7 @@ void Scene_MapTool::Render()
 	if (!mBookIsOpen || (mBookIsOpen && _mousePosition.x < WINSIZEX - 400))
 	{
 		mCurrentPallete->Image->SetAlpha(0.5f);
-		mCurrentPallete->Image->SetScale(2.0f);
+		mCurrentPallete->Image->SetScale(1.5f);
 		if (mCurrentPallete->Image->GetKey() == L"Tree1"|| mCurrentPallete->Image->GetKey() == L"Tree2")
 		{
 			mCurrentPallete->Image->FrameRenderFromBottom(_mousePosition.x, _mousePosition.y, mCurrentPallete->FrameX, mCurrentPallete->FrameY);
@@ -1449,7 +1479,7 @@ void Scene_MapTool::Render()
 			|| mCurrentPallete->Image->GetKey() == L"FireWall1" || mCurrentPallete->Image->GetKey() == L"FireWall2" || mCurrentPallete->Image->GetKey() == L"FireWall3"
 			|| mCurrentPallete->Image->GetKey() == L"FireBossMap")
 		{
-			mCurrentPallete->Image->SetScale(6.0f);
+			mCurrentPallete->Image->SetScale(4.5f);
 			mCurrentPallete->Image->Render(_mousePosition.x, _mousePosition.y);
 		}
 		else

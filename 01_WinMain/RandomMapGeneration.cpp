@@ -105,48 +105,6 @@ void RandomMapGeneration::Devide(Node* node)
 		q.push(node->mRightNode);
 
 	}
-	//if (!direction && node->mSizeX < 50)
-	//{
-	//	direction = 1;
-	//}
-	//else if (direction && node->mSizeY < 50)
-	//{
-	//	direction = 0;
-	//}
-	//if (direction == 0 && node->mSizeX > 50)//세로로짜르기
-	//{
-	//	float x = Random::GetInstance()->RandomInt(node->mSizeX * 0.3f, node->mSizeX * 0.7f);
-	//	
-	//	Node* leftnode = new Node(node->mX, node->mY, x, node->mSizeY);
-	//	Node* rightnode = new Node(node->mX + x, node->mY, node->mSizeX - x, node->mSizeY);
-	//	leftnode->mParentNode = node;
-	//	rightnode->mParentNode = node;
-	//	node->mLeftNode = leftnode;
-	//	node->mRightNode = rightnode;
-	//	/*node->mLeftNode->mLineNum = node->mLineNum + 1;
-	//	node->mRightNode->mLineNum = node->mLineNum + 1;*/
-	//	q.push(node->mLeftNode);
-	//	q.push(node->mRightNode);
-	//}
-	//else if (direction == 1 && node->mSizeY > 50)          // 가로로짜르기
-	//{
-	//	float y = Random::GetInstance()->RandomInt(node->mSizeY * 0.3f, node->mSizeY * 0.7f);
-	//	
-	//	Node* leftnode = new Node(node->mX, node->mY, node->mSizeX, y);
-	//	Node* rightnode = new Node(node->mX, node->mY + y, node->mSizeX, node->mSizeY - y);
-	//	leftnode->mParentNode = node;
-	//	rightnode->mParentNode = node;
-	//	node->mLeftNode = leftnode;
-	//	node->mRightNode = rightnode;
-	//	/*node->mLeftNode->mLineNum = node->mLineNum + 1;
-	//	node->mRightNode->mLineNum = node->mLineNum + 1;*/
-	//	q.push(node->mLeftNode);
-	//	q.push(node->mRightNode);
-
-	//}
-	
-
-
 }
 
 void Node::MakeRoom(TileMap* tilemap)
