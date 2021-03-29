@@ -8,6 +8,7 @@
 #include "Scene_Field.h"
 #include "Scene_Boss.h"
 #include "Scene_TitleScene.h"
+#include "Scene_House.h"
 #include "Scene_Loading.h"
 #include "Load_Image.h"
 #include "RandomMapGeneration.h"
@@ -26,6 +27,7 @@ void MainGame::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"Loading", Resources(L"UI/Loading.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"LoadingCharacter", Resources(L"UI/LoadingCharacter.png"));
 
+	//로딩씬 함수채워넣기
 	Scene_Loading* loadingScene = new Scene_Loading();
 	loadingScene->AddLoadFunc([]() { Load_Image::GetInstance()->LoadSceneMapToolImage(); });
 	loadingScene->AddLoadFunc([]() { RandomMapGeneration::GetInstance()->CreateRandomMap1(); });
@@ -35,7 +37,9 @@ void MainGame::Init()
 		sf->SetTileMap( RandomMapGeneration::GetInstance()->GetTileMap());
 		});
 	SceneManager::GetInstance()->AddScene(L"FieldLoading", loadingScene);
+
 	SceneManager::GetInstance()->AddScene(L"MapTool", new Scene_MapTool);
+	SceneManager::GetInstance()->AddScene(L"House", new Scene_House);
 	SceneManager::GetInstance()->AddScene(L"Tutorial", new Scene_Tutorial);
 	SceneManager::GetInstance()->AddScene(L"Field", new Scene_Field);
 	SceneManager::GetInstance()->AddScene(L"Boss", new Scene_Boss);

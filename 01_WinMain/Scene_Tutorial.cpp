@@ -21,13 +21,13 @@
 #include "UserInterface.h"
 #include "Effect_EnemyCreate.h"
 #include "MouseTracker.h"
-
-#include <fstream>
+#include "Load_Image.h"
+#include "Structure.h"
 
 void Scene_Tutorial::Init()
 {
-	ImageManager::GetInstance()->LoadFromFile(L"TutorialTile", Resources(L"Tile/TutorialMap.png"), 74, 43);
-	ImageManager::GetInstance()->LoadFromFile(L"TileSet", Resources(L"Tile/Tile.bmp"), 16, 16);
+	Load_Image::GetInstance()->LoadSceneMapToolImage();
+
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"TutorialTile");
 
 	/*for (int y = 0; y < TileCountY; y++)
@@ -52,6 +52,16 @@ void Scene_Tutorial::Init()
 
 	mTileMap = new TileMap("Tutorial");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mTileMap);
+	//
+	//스트럭쳐 받아오기
+	mStructureList = mTileMap->GetStructureList();
+	for (int i = 0; i < mStructureList.size(); i++)
+	{
+		if (mStructureList[i]->GetName() == "Portal" || mStructureList[i]->GetName() == "Penta")
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mStructureList[i]);
+		else
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::Structure, mStructureList[i]);
+	}
 	//
 
 	

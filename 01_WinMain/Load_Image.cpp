@@ -51,7 +51,8 @@ void Load_Image::LoadSceneMapToolImage()
 
 	//Maps
 	ImageManager::GetInstance()->LoadFromFile(L"FireBossMap", Resources(L"Tile/Floor/Tile_Tutorial_FireTile.png"),16,12);
-
+	ImageManager::GetInstance()->LoadFromFile(L"TutorialTile", Resources(L"Tile/TutorialMap.png"), 74, 43);
+	ImageManager::GetInstance()->LoadFromFile(L"TileSet", Resources(L"Tile/Tile.bmp"), 16, 16);
 
 	//Structs
 	ImageManager::GetInstance()->LoadFromFile(L"Tree1", Resources(L"Tile/Structure/Tree1.png"));

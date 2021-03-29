@@ -25,6 +25,7 @@ class Scene_Tutorial : public Scene
 	vector<class MonsterObject*> mMonsterList;
 	//class Tile* mTileList[TileCountY][TileCountX];
 	class TileMap* mTileMap;
+	vector<class Structure*> mStructureList;
 
 public:
 	void Init()override;

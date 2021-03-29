@@ -9,11 +9,12 @@
 #include "Load_Image.h"
 #include "Structure.h"
 #include "UserInterface.h"
-#include <fstream>
+#include "SkillBook.h"
 
 void Scene_House::Init()
 {
 	Load_Image::GetInstance()->LoadSceneMapToolImage();
+	ImageManager::GetInstance()->LoadFromFile(L"SkillBook", Resources(L"Tile/Structure/SkillBook.png"), 14, 2);
 	ImageManager::GetInstance()->LoadFromFile(L"TutorialTile", Resources(L"Tile/TutorialMap.png"), 74, 43);
 	ImageManager::GetInstance()->LoadFromFile(L"TileSet", Resources(L"Tile/Tile.bmp"), 16, 16);
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"TutorialTile");
@@ -39,7 +40,9 @@ void Scene_House::Init()
 	mPlayer = new Player("Player", 55*TileSize, 55*TileSize);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 	
-	
+	SkillBook* skillbook = new SkillBook(75 * TileSize, 55 * TileSize);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Structure, skillbook);
+
 	ObjectManager::GetInstance()->Init();
 
 	Camera* camera = new Camera();
