@@ -65,11 +65,14 @@ void SceneManager::DeleteScene(const wstring& sceneName)
 	SceneIter iter = mSceneList.begin();
 	for (; iter != mSceneList.end(); ++iter)
 	{
+		if (iter == mSceneList.end())
+		{
+			break;
+		}
 		//iter->second->Release();
 		if (iter->first == sceneName)
 		{
 			SafeDelete(iter->second);
-			iter->second->Release();
 			mSceneList.erase(sceneName);
 		}
 	}

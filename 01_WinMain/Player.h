@@ -51,8 +51,9 @@ class Player : public MovingObject
 	Image* mImage2;
 	float mMoveAngle;
 	int mMoveCount;
+	bool mIsFalling;
 	float mMp;
-
+	float mYtemp;
 	//class Tile* TileList[TileCountY][TileCountY];
 
 	class Animation* mRightIdleAnimation;
