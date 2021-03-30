@@ -70,9 +70,37 @@ void Monster_SwoardMan::Update()
 		if (mHp > 0)
 		{
 
-			
+			if(mMonsterActState == MonsterActState::LeftHit && mCurrentAnimation == mLeftHitAnimation)
+			{
+				AnimationChange(mLeftIdleAnimation);
+				mMonsterActState = MonsterActState::LeftIdle;
+				mIsHit = false;
+			}
+			if (mMonsterActState == MonsterActState::RightHit && mCurrentAnimation == mRightHitAnimation)
+			{
+				AnimationChange(mRightIdleAnimation);
+				mMonsterActState = MonsterActState::RightIdle;
+				mIsHit = false;
+			}
+
+			if (mIsHit)
+			{
+				if (mMonsterToPlayerAngle > PI / 2 && mMonsterToPlayerAngle < PI / 2 + PI)
+				{
+
+					SoundPlayer::GetInstance()->Play(L"EnemyHitSound", 1.f);
+					AnimationChange(mLeftHitAnimation);
+					mMonsterActState = MonsterActState::LeftHit;
+				}
+				if (mMonsterToPlayerAngle <PI / 2 || mMonsterToPlayerAngle > PI / 2 + PI)
+				{
+					SoundPlayer::GetInstance()->Play(L"EnemyHitSound", 1.f);
+					AnimationChange(mRightHitAnimation);
+					mMonsterActState = MonsterActState::RightHit;
+				}
+			}
 				//아이들
-				if (mMonsterToPlayerDistance >= 5.5f)
+				if (mMonsterToPlayerDistance >= 20.f)
 				{
 					AnimationChange(mRightIdleAnimation);
 					mMonsterActState = MonsterActState::RightIdle;
@@ -82,11 +110,12 @@ void Monster_SwoardMan::Update()
 
 				}
 				//추격
-				if (mMonsterToPlayerDistance < 5.5f && mMonsterToPlayerDistance >= 3.1f)
+				if (mMonsterToPlayerDistance < 20.f && mMonsterToPlayerDistance >= 3.1f)
 				{
 
 					if (mRightWalkAnimation->GetIsPlay() == false)mIsAct = false;
 					if (mLeftWalkAnimation->GetIsPlay() == false)mIsAct = false;
+
 					if (mCurrentAnimation->GetIsPlay() == false)
 					{
 						if (mMonsterToPlayerAngle <PI / 2 || mMonsterToPlayerAngle > PI / 2 + PI)
@@ -110,44 +139,45 @@ void Monster_SwoardMan::Update()
 								mIsAct = true;
 							}
 						}
+
 					}
-					
-					// 이동
-					float centerX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
-					float centerY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
-					mPathList = PathFinder::GetInstance()->FindPath(
-						(TileMap*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Tile, "TileMap"),
-						centerX / TileSize, centerY / TileSize,
-						mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
-					//if (mCurrentAnimation != mRightAttackAnimation || mCurrentAnimation != mLeftAttackAnimation && mCurrentAnimation != mUpAttackAnimation || mCurrentAnimation != mDownAttackAnimation ||
-					//	mCurrentAnimation != mRightIdleAnimation || mCurrentAnimation != mLeftIdleAnimation)
-					if (mCurrentAnimation == mRightWalkAnimation || mCurrentAnimation == mLeftWalkAnimation) 
+					if (mCurrentAnimation == mRightWalkAnimation || mCurrentAnimation == mLeftWalkAnimation)
 					{
-
-						if (mPathList.size() > 1)
+						//길찾기
+						if (mCurrentAnimation == mRightWalkAnimation || mCurrentAnimation == mLeftWalkAnimation)
 						{
-							float nextX = mPathList[1]->GetX() + (TileSize / 2);
-							float nextY = mPathList[1]->GetY() + (TileSize / 2);
-							float angle = Math::GetAngle(centerX, centerY, nextX, nextY);
+							float centerX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
+							float centerY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
+							mPathList = PathFinder::GetInstance()->FindPath(
+								(TileMap*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Tile, "TileMap"),
+								centerX / TileSize, centerY / TileSize,
+								mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
 
-							POINT point;
-							point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
-							point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
-
-							D2D1_RECT_F rctemp = mPathList[0]->GetRect();
-							if (!PtInRect(&rctemp, point))
+							if (mPathList.size() > 1)
 							{
-								mPathList.erase(mPathList.begin());
-							}
 
-							mX += cosf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
-							mY += -sinf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
+								float nextX = mPathList[1]->GetX() + (TileSize / 2);
+								float nextY = mPathList[1]->GetY() + (TileSize / 2);
+								float angle = Math::GetAngle(centerX, centerY, nextX, nextY);
+
+								POINT point;
+								point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
+								point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
+
+								D2D1_RECT_F rctemp = mPathList[0]->GetRect();
+								if (!PtInRect(&rctemp, point))
+								{
+									mPathList.erase(mPathList.begin());
+								}
+
+								mX += cosf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
+								mY += -sinf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
+							}
 						}
 					}
 				}
 
-				if (mCurrentAnimation->GetIsPlay() == false)
-				{
+				
 				if (mMonsterToPlayerDistance < 3.1f)
 				{
 
@@ -155,26 +185,28 @@ void Monster_SwoardMan::Update()
 
 					if (mMonsterToPlayerAngle < (PI / 4) || mMonsterToPlayerAngle >(PI2 - (PI / 4)))
 					{
-						if (mIsAct == true)
+						if (mCurrentAnimation->GetIsPlay() == false)
 						{
-							if (mCurrentAnimation != mRightAttackAnimation)
+							if (mIsAct == true)
 							{
-								AnimationChange(mRightAttackAnimation);
-							}
-							if (mCurrentAnimation->GetNowFrameX() == 5 && mCurrentAnimation->GetNowFrameY() == 3)
-							{
-								SkillManager::GetInstance()->MonsterMiddleSlashSkill("MonsterSmallSlash", lineX, lineY, mMonsterToPlayerAngle);
-							}
-							int frame = mCurrentAnimation->GetNowFrameX();
-							mMonsterActState = MonsterActState::RightAttack;
-							mMonsterState = MonsterState::Attack;
-							mIsAct = false;
-							if (mRightAttackAnimation->GetNowFrameX() == 5)
-							{
-								AnimationChange(mRightIdleAnimation);
+								if (mCurrentAnimation != mRightAttackAnimation)
+								{
+									AnimationChange(mRightAttackAnimation);
+								}
+								if (mCurrentAnimation->GetNowFrameX() == 5 && mCurrentAnimation->GetNowFrameY() == 3)
+								{
+									SkillManager::GetInstance()->MonsterMiddleSlashSkill("MonsterSmallSlash", lineX, lineY, mMonsterToPlayerAngle);
+								}
+								int frame = mCurrentAnimation->GetNowFrameX();
+								mMonsterActState = MonsterActState::RightAttack;
+								mMonsterState = MonsterState::Attack;
+								mIsAct = false;
+								if (mRightAttackAnimation->GetNowFrameX() == 5)
+								{
+									AnimationChange(mRightIdleAnimation);
+								}
 							}
 						}
-
 						mIsAct = true;
 
 					}
@@ -182,90 +214,95 @@ void Monster_SwoardMan::Update()
 					//왼쪽공격
 					else if (mMonsterToPlayerAngle > ((PI / 2) + (PI / 4)) && mMonsterToPlayerAngle < (PI + (PI / 4)))
 					{
-						if (mIsAct == true)
+						if (mCurrentAnimation->GetIsPlay() == false)
 						{
-							if (mCurrentAnimation != mLeftAttackAnimation)
+							if (mIsAct == true)
 							{
-								AnimationChange(mLeftAttackAnimation);
-							}
-							if (mCurrentAnimation->GetNowFrameX() == 3 && mCurrentAnimation->GetNowFrameY() == 3)
-							{
-								SkillManager::GetInstance()->MonsterMiddleSlashSkill("MonsterSmallSlash", lineX, lineY, mMonsterToPlayerAngle);
-							}
-							int frame = mCurrentAnimation->GetNowFrameX();
-							mMonsterActState = MonsterActState::LeftAttack;
-							mMonsterState = MonsterState::Attack;
-							mIsAct = false;
-							if (mLeftAttackAnimation->GetNowFrameX() == 3)
-							{
-								AnimationChange(mRightIdleAnimation);
+								if (mCurrentAnimation != mLeftAttackAnimation)
+								{
+									AnimationChange(mLeftAttackAnimation);
+								}
+								if (mCurrentAnimation->GetNowFrameX() == 3 && mCurrentAnimation->GetNowFrameY() == 3)
+								{
+									SkillManager::GetInstance()->MonsterMiddleSlashSkill("MonsterSmallSlash", lineX, lineY, mMonsterToPlayerAngle);
+								}
+								int frame = mCurrentAnimation->GetNowFrameX();
+								mMonsterActState = MonsterActState::LeftAttack;
+								mMonsterState = MonsterState::Attack;
+								mIsAct = false;
+								if (mLeftAttackAnimation->GetNowFrameX() == 3)
+								{
+									AnimationChange(mRightIdleAnimation);
+								}
 							}
 						}
-
 						mIsAct = true;
 					}
 					//위
 					else if (mMonsterToPlayerAngle > PI / 4 && mMonsterToPlayerAngle < ((PI / 2) + (PI / 4)))
 					{
-						if (mIsAct == true)
+						if (mCurrentAnimation->GetIsPlay() == false)
 						{
-							if (mCurrentAnimation != mUpAttackAnimation)
+							if (mIsAct == true)
 							{
-								AnimationChange(mUpAttackAnimation);
-							}
-							if (mCurrentAnimation->GetNowFrameX() == 1 && mCurrentAnimation->GetNowFrameY() == 3)
-							{
-								SkillManager::GetInstance()->MonsterMiddleSlashSkill("MonsterSmallSlash", lineX, lineY, mMonsterToPlayerAngle);
-							}
-							int frame = mCurrentAnimation->GetNowFrameX();
-							mMonsterActState = MonsterActState::UpAttack;
-							mMonsterState = MonsterState::Attack;
-							mIsAct = false;
-							if (mUpAttackAnimation->GetNowFrameX() == 1)
-							{
-								AnimationChange(mRightIdleAnimation);
+								if (mCurrentAnimation != mUpAttackAnimation)
+								{
+									AnimationChange(mUpAttackAnimation);
+								}
+								if (mCurrentAnimation->GetNowFrameX() == 1 && mCurrentAnimation->GetNowFrameY() == 3)
+								{
+									SkillManager::GetInstance()->MonsterMiddleSlashSkill("MonsterSmallSlash", lineX, lineY, mMonsterToPlayerAngle);
+								}
+								int frame = mCurrentAnimation->GetNowFrameX();
+								mMonsterActState = MonsterActState::UpAttack;
+								mMonsterState = MonsterState::Attack;
+								mIsAct = false;
+								if (mUpAttackAnimation->GetNowFrameX() == 1)
+								{
+									AnimationChange(mRightIdleAnimation);
+								}
 							}
 						}
-
 						mIsAct = true;
 					}
 					//아래
 					else if (mMonsterToPlayerAngle > (PI + (PI / 4)) && mMonsterToPlayerAngle < (PI2 - (PI / 4)))
 					{
-						if (mIsAct == true)
+						if (mCurrentAnimation->GetIsPlay() == false)
 						{
-							if (mCurrentAnimation != mDownAttackAnimation)
+							if (mIsAct == true)
 							{
-								AnimationChange(mDownAttackAnimation);
-							}
-							if (mCurrentAnimation->GetNowFrameX() == 1 && mCurrentAnimation->GetNowFrameY() == 3)
-							{
-								SkillManager::GetInstance()->MonsterMiddleSlashSkill("MonsterSmallSlash", lineX, lineY, mMonsterToPlayerAngle);
-							}
-							int frame = mCurrentAnimation->GetNowFrameX();
-							mMonsterActState = MonsterActState::UpAttack;
-							mMonsterState = MonsterState::Attack;
-							mIsAct = false;
-							if (mDownAttackAnimation->GetNowFrameX() == 1)
-							{
-								AnimationChange(mRightIdleAnimation);
+								if (mCurrentAnimation != mDownAttackAnimation)
+								{
+									AnimationChange(mDownAttackAnimation);
+								}
+								if (mCurrentAnimation->GetNowFrameX() == 1 && mCurrentAnimation->GetNowFrameY() == 3)
+								{
+									SkillManager::GetInstance()->MonsterMiddleSlashSkill("MonsterSmallSlash", lineX, lineY, mMonsterToPlayerAngle);
+								}
+								int frame = mCurrentAnimation->GetNowFrameX();
+								mMonsterActState = MonsterActState::UpAttack;
+								mMonsterState = MonsterState::Attack;
+								mIsAct = false;
+								if (mDownAttackAnimation->GetNowFrameX() == 1)
+								{
+									AnimationChange(mRightIdleAnimation);
+								}
 							}
 						}
-
 						mIsAct = true;
 					}
+
 				}
-			}
 
 			if (mHp <= 0)
 			{
-				if (mIsAct == false)
-
+				if (mCurrentAnimation != mDieAnimation)
 				{
 					AnimationChange(mDieAnimation);
 					mMonsterActState = MonsterActState::Die;
 					mMonsterState = MonsterState::Die;
-					mIsAct = true;
+
 				}
 			}
 		}
@@ -356,6 +393,7 @@ void Monster_SwoardMan::Update()
 			mY += -sinf(mSkillHitAngle) * mSkillHitPower;
 			mSkillHitPower -= 0.2f;
 		}
+		if (mDieAnimation->GetNowFrameX() == 7) mIsDestroy = true;
 	}
 }
 

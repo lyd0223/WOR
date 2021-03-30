@@ -142,32 +142,39 @@ void Monster_Mazition::Update()
 								mIsAct = true;
 							}
 						}
-						// 이동
+						
 					}
-					float centerX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
-					float centerY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
-					mPathList = PathFinder::GetInstance()->FindPath(
-						(TileMap*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Tile, "TileMap"),
-						centerX / TileSize, centerY / TileSize,
-						mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
-					if (mPathList.size() > 1)
+						
+					//길찾기
+					if (mCurrentAnimation == mRightWalkAnimation || mCurrentAnimation == mLeftWalkAnimation)
 					{
-						float nextX = mPathList[1]->GetX() + (TileSize / 2);
-						float nextY = mPathList[1]->GetY() + (TileSize / 2);
-						float angle = Math::GetAngle(centerX, centerY, nextX, nextY);
+						float centerX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
+						float centerY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
+						mPathList = PathFinder::GetInstance()->FindPath(
+							(TileMap*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Tile, "TileMap"),
+							centerX / TileSize, centerY / TileSize,
+							mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
 
-						POINT point;
-						point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
-						point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
-
-						D2D1_RECT_F rctemp = mPathList[0]->GetRect();
-						if (!PtInRect(&rctemp, point))
+						if (mPathList.size() > 1)
 						{
-							mPathList.erase(mPathList.begin());
-						}
 
-						mX += cosf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
-						mY += -sinf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
+							float nextX = mPathList[1]->GetX() + (TileSize / 2);
+							float nextY = mPathList[1]->GetY() + (TileSize / 2);
+							float angle = Math::GetAngle(centerX, centerY, nextX, nextY);
+
+							POINT point;
+							point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
+							point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
+
+							D2D1_RECT_F rctemp = mPathList[0]->GetRect();
+							if (!PtInRect(&rctemp, point))
+							{
+								mPathList.erase(mPathList.begin());
+							}
+
+							mX += cosf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
+							mY += -sinf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
+						}
 					}
 				}
 			
@@ -232,20 +239,19 @@ void Monster_Mazition::Update()
 
 				}
 			}
-			if (mHp <= 0)
-			{
-				if (mIsAct == false)
-
-				{
-					AnimationChange(mDieAnimation);
-					mMonsterActState = MonsterActState::Die;
-					mMonsterState = MonsterState::Die;
-					mIsAct = true;
-				}
-			}
+			
 
 		}
+		if (mHp <= 0)
+		{
+			if (mCurrentAnimation != mDieAnimation)
+			{
+				AnimationChange(mDieAnimation);
+				mMonsterActState = MonsterActState::Die;
+				mMonsterState = MonsterState::Die;
 
+			}
+		}
 		//공격 라인--
 		lineX = mX + 100 * cosf(mMonsterToPlayerAngle);
 		lineY = mY + 100 * -sinf(mMonsterToPlayerAngle);
@@ -330,6 +336,8 @@ void Monster_Mazition::Update()
 			mSkillHitPower -= 0.2f;
 		}
 	}
+	if (mDieAnimation->GetNowFrameX() == 5)mIsDestroy = true;
+	return;
 }
 
 void Monster_Mazition::Render()

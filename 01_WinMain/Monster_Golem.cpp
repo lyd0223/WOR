@@ -110,16 +110,20 @@ void Monster_Golem::Update()
 							}
 						}
 					}
-					// 이동
-
+				}
+				//길찾기
+				if (mCurrentAnimation == mRightWalkAnimation || mCurrentAnimation == mLeftWalkAnimation)
+				{
 					float centerX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
 					float centerY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
 					mPathList = PathFinder::GetInstance()->FindPath(
 						(TileMap*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Tile, "TileMap"),
 						centerX / TileSize, centerY / TileSize,
 						mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
+
 					if (mPathList.size() > 1)
 					{
+
 						float nextX = mPathList[1]->GetX() + (TileSize / 2);
 						float nextY = mPathList[1]->GetY() + (TileSize / 2);
 						float angle = Math::GetAngle(centerX, centerY, nextX, nextY);
@@ -138,7 +142,6 @@ void Monster_Golem::Update()
 						mY += -sinf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
 					}
 				}
-
 				if (mCurrentAnimation->GetIsPlay() == false)
 				{
 				if (mMonsterToPlayerDistance < 3.1f)
@@ -250,18 +253,17 @@ void Monster_Golem::Update()
 				}
 			}
 
+		}
 			if (mHp <= 0)
 			{
-				if (mIsAct == false)
-
+				if (mCurrentAnimation != mDieAnimation)
 				{
 					AnimationChange(mDieAnimation);
 					mMonsterActState = MonsterActState::Die;
 					mMonsterState = MonsterState::Die;
-					mIsAct = true;
+
 				}
 			}
-		}
 
 
 
@@ -349,6 +351,7 @@ void Monster_Golem::Update()
 			mY += -sinf(mSkillHitAngle) * mSkillHitPower;
 			mSkillHitPower -= 0.2f;
 		}
+		if (mDieAnimation->GetNowFrameX() == 5) mIsDestroy = true;
 	}
 }
 

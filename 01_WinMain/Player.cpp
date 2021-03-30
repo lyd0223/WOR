@@ -1311,7 +1311,7 @@ void Player::Update()
 				mCurrentAnimation = mDownHitAnimation;
 				mCurrentAnimation->Play();
 				mPlayerState = PlayerState::DownHit;
-
+				SoundPlayer::GetInstance()->Play(L"FallSound", 1.f);
 				mIsFalling = 1;
 				mYtemp = mY;
 			}

@@ -47,4 +47,5 @@ SoundSet::SoundSet()
 	SoundPlayer::GetInstance()->LoadFromFile(L"Teleport", Resources(L"Sound/Teleport.wav"), false);
 	SoundPlayer::GetInstance()->LoadFromFile(L"RoomUnLock", Resources(L"Sound/RoomUnLock.wav"), false);
 	SoundPlayer::GetInstance()->LoadFromFile(L"RoomLock", Resources(L"Sound/RoomLock.wav"), false);
+	SoundPlayer::GetInstance()->LoadFromFile(L"FallSound", Resources(L"Sound/Fall.wav"), false);
 }

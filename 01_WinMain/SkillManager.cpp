@@ -212,7 +212,7 @@ void SkillManager::Update()
 							monster->SetHP(temp);
 							return;
 						}
-						ParticleManager::GetInstance()->MakeHitSparkParticle(temp.left, temp.top);
+						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 						monster->SetSkillHitAngle(skill->GetAngle());
 						monster->SetSkillHitPower(skill->GetSkillPower());
 					if (skill->GetName() == "WindSlash")
