@@ -5,12 +5,12 @@ enum class FireBossState : int {
 	Idle			= 0,
 	AttackReady		= 1,
 	Dash			= 2,
-	Stemp			= 3,
-	Throw			= 4,
-	Kick			= 5,
-	Meteor			= 6,
-	DragonArc		= 7,
-	SpecialAttack	= 8,
+	Throw			= 3,
+	Stemp			= 4,
+	Meteor			= 5,
+	DragonArc		= 6,
+	SpecialAttack	= 7,
+	Kick			= 8,
 	Refresh			= 9,
 	Stun			= 10,
 
@@ -62,19 +62,23 @@ class Monster_FireBoss : public MonsterObject
 
 	Effect_FireWing* mFireWing;
 	FireBossState mFireBossState;
-	vector<FireBossState> mFireBossStateList;
 
 	D2D1_RECT_F mMapRect;
 	
-	queue<function<void()>> mPatternList;
+	queue<FireBossState> mPatternList;
 
 	int mNum;
+	int mHitCount;
+
 	float mFrameCount;
 	float mMoveDistance;
 	float mAngle;
 	float mKickAngle;
 	
-	bool mIsFuncEnd;
+	bool mIsWing;
+	bool mIsFireBall;
+	bool mIsRefreshChange;
+	bool mIsHitCountChange;
 public:
 	Monster_FireBoss(const string& name, float x, float y);
 
@@ -82,6 +86,9 @@ public:
 	void Release() override;
 	void Update() override;
 	void Render() override;
+
+	float GetHitCount() { return mHitCount; }
+	void SetHitCount(float hitCount) { mHitCount = hitCount; }
 
 	void AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime);
 	void AnimationChange(Animation* changeanimation);
@@ -95,11 +102,9 @@ public:
 	void DragonArcWavePattern();
 	void KickPattern();
 	void MakeFlame();
-	void MakeFireWing();
+	void MakeFireWing(float x, float y);
+	void Refresh();
+	void Stun();
 
-	void BossStateChange();
-
-	void MakePatternFuncList();
-	void CallPattern();
-	FireBossState FireBossStateCheck(int index);
+	void MakePatternList();
 };

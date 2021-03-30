@@ -5,7 +5,6 @@
 #include "Monster_FireBoss.h"
 #include "Animation.h"
 #include "Camera.h"
-#include "Effect_FlameEffect.h"
 #include "Effect_HitSpark.h"
 
 Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angle)
@@ -19,6 +18,7 @@ Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angl
 	mSkillTarget = SkillTarget::Player;
 	mSkillElement = SkillElement::Fire;
 	mSkillType = SkillType::Throw;
+	mSkillDamege = 5;
 	mSkillPower = 10.f;
 }
 
@@ -29,6 +29,7 @@ Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angl
 	mY = y;
 	mAngle = angle;
 	mDelay = delay;
+	mSkillDamege = 5;
 	mSkillTarget = SkillTarget::Enemy;
 	mSkillElement = SkillElement::Fire;
 	mSkillType = SkillType::Throw;
@@ -43,14 +44,15 @@ void Skill_FireBall::Init()
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mSpeed = 10.f;
 
-
-
 	AnimationSet(&mFireBallReadyAnimation, false, false, 0, 0, 4, 0, 0.1f);
 	AnimationSet(&mFireBallFireAnimation, false, true, 4, 0, 8, 0, 0.1f);
 
 	mState = FireBallState::Ready;
 	mCurrentAnimation = mFireBallReadyAnimation;
 	mCurrentAnimation->Play();
+
+	mStartX = mX;
+	mStartY = mY;
 }
 
 void Skill_FireBall::Release()
@@ -68,6 +70,10 @@ void Skill_FireBall::Update()
 		mFrameCount = 0;
 	}
 
+	float distance = Math::GetDistance(mStartX, mStartY, mX, mY);
+
+	if (distance > 700) mIsDestroy = true;
+
 	mCurrentAnimation->Update();
 
 	if (mState == FireBallState::Ready && mCurrentAnimation->GetNowFrameX() == 4) {
@@ -82,20 +88,9 @@ void Skill_FireBall::Update()
 	}
 
 	if (mState == FireBallState::Fire) {
-		//HitSpark* hitSpark = new HitSpark("HitSpark", mX, mY, mAngle);
-		//hitSpark->Init();
-		//ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, hitSpark);
 		mX += cosf(mAngle) * mSpeed;
 		mY += -sinf(mAngle) * mSpeed;
 		mRect = RectMake(mX, mY, mSizeX, mSizeY);
-	}
-
-	if (mFlameEffect != nullptr) {
-		mFlameEffect->Update();
-		if (mFlameEffect->GetIsDestroy()) {
-			mFlameEffect->Release();
-			SafeDelete(mFlameEffect)
-		}
 	}
 }
 
@@ -103,7 +98,6 @@ void Skill_FireBall::Render()
 {
 	mImage->SetAngle(mAngle * -(180 / PI));
 	mImage->SetScale(2.f);
-	if (mFlameEffect != nullptr) mFlameEffect->Render();
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 }

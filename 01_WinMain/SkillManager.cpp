@@ -133,7 +133,7 @@ void SkillManager::Update()
 		int skillX = skill->GetX();
 		int skillY = skill->GetY();
 
-		// ��ų to �� �浹 ������
+		// 스킬 to 벽
 		for (int y = (skill->GetY() / TileSize) - index; y < (skill->GetY() / TileSize) + index; y++)
 		{
 			for (int x = (skill->GetX() / TileSize) - index; x < (skill->GetX() / TileSize) + index; x++)
@@ -148,6 +148,10 @@ void SkillManager::Update()
 				{
 					if (skill->GetName() == "FireBall")
 					{
+						if (skill->GetSkillTarget() == SkillTarget::Enemy)
+						{
+							return;
+						}
 						ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 						SoundPlayer::GetInstance()->Play(L"FireBallExplode", 1.f);
@@ -179,36 +183,40 @@ void SkillManager::Update()
 			}
 		}
 
-		// ��ų to ���� or �÷��̾� �浹
+		// 스킬 충돌 적 or 플레이어
 		for (int j = 0; j < monsterList.size(); j++)
 		{
 			MonsterObject* monster = (MonsterObject*)monsterList[j];
 			D2D1_RECT_F monsterrc = monsterList[j]->GetRect();
 
-			// �÷��̾� to ��
+			// 플레이어 -> 적
 			if (skill->GetSkillTarget() == SkillTarget::Player)
 			{
-				// ���� ��ų
+				// 근접
 				if (skill->GetSkillType() == SkillType::Melee)
 				{
-
 					bool isCollision = false;
-					if (IntersectRect(temp, &skillrc, &monsterrc) /*&& 
-						(skill->GetIsCollision() == false && monster->GetIsCollision() == false)*/)
+					if (IntersectRect(temp, &skillrc, &monsterrc))
 					{
-						//monster->SetIsCollision(true);
+						if (monster->GetName() == "FireBoss")
+						{
+							float temp = monster->GetHitCount();
+							temp += skill->GetSkillDamege();
+							monster->SetHitCount(temp);
+							return;
+						}
 						ParticleManager::GetInstance()->MakeHitSparkParticle(temp.left, temp.top);
+						monster->SetSkillHitAngle(skill->GetAngle());
+						monster->SetSkillHitPower(skill->GetSkillPower());
 					}
-					//monster->SetIsHit(true);
 				}
 
-				// ������ ��ų
+				// 투척
 				if (skill->GetSkillType() == SkillType::Throw) 
 				{
 					
 					if (IntersectRect(temp, &skillrc, &monsterrc))
 					{
-
 						if (skill->GetName() == "FireBall")
 						{
 							ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
@@ -243,27 +251,47 @@ void SkillManager::Update()
 
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 						skill->SetIsDestroy(true);
-						monster->SetIsHit(true);
+
+						if (monster->GetName() == "FireBoss")
+						{
+							int temp = monster->GetHP();
+							temp -= skill->GetSkillDamege();
+							monster->SetHP(temp);
+							return;
+						}
+
 						break;
 					}
 				}
 			}
 
-			// �� to �÷��̾�
+			// 적 -> 플레이어 충돌
 			if (skill->GetSkillTarget() == SkillTarget::Enemy)
 			{
 				D2D1_RECT_F temp;
 				D2D1_RECT_F playerRc = player->GetRect();
+
+
 				if (IntersectRect(temp, &skillrc, &playerRc))
 				{
-
+					// 근접
 					if (skill->GetSkillType() == SkillType::Melee)
 					{
 
 					}
 
+					// 투척
 					if (skill->GetSkillType() == SkillType::Throw)
 					{
+
+						if (skill->GetName() == "FireBall")
+						{
+							ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
+							SoundPlayer::GetInstance()->Play(L"FireBallExplode", 1.f);
+							player->SetSkillHitAngle(skill->GetAngle());
+							player->SetSkillHitPower(skill->GetSkillPower());
+						}
+
 						if (skill->GetName() == "WaterBall")
 						{
 							ParticleManager::GetInstance()->MakeWaterExplosion(skillX, skillY);
@@ -276,59 +304,10 @@ void SkillManager::Update()
 						skill->SetIsDestroy(true);
 						break;
 					}
-
 				}
 			}
 		}
 	}
-
-	// ���� �� �浹 ó��
-	//for (int i = 0; i < monsterList.size(); i++)
-	//{
-	//	MovingObject* monster = (MovingObject*) monsterList[i];
-	//	D2D1_RECT_F monsterRc = monster->GetMovingRect();
-	//	float monsterX = (monsterRc.left + (monsterRc.right - monsterRc.left) / 2) / TileSize;
-	//	float monsterY = (monsterRc.top + (monsterRc.bottom - monsterRc.top) / 2) / TileSize;
-	//	float sizeX = (monsterRc.right - monsterRc.left) / TileSize + 1;
-	//	float sizeY = (monsterRc.bottom - monsterRc.top) / TileSize + 1;
-	//	for (int y = monsterY - sizeY; y < monsterY + sizeY; y++)
-	//	{
-	//		for (int x = monsterX - sizeX; x < monsterX + sizeX; x++)
-	//		{
-	//			TileMap* tileMap = (TileMap*) tileList[0];
-	//			Tile* tile = tileMap->GetTileList(x, y);
-	//			D2D1_RECT_F tileRc = tile->GetRect();
-	//			D2D1_RECT_F temp;
-	//			if (IntersectRect(temp, &monsterRc, &tileRc) && tile->GetType() == Type::Wall)
-	//			{
-	//				float width = temp.right - temp.left;
-	//				float height = temp.bottom - temp.top;
-	//				if (width > height)
-	//				{
-	//					if (temp.top == monsterRc.top)
-	//					{
-	//						monster->SetY(monster->GetY() + height / 2);
-	//					}
-	//					if (temp.bottom == monsterRc.bottom)
-	//					{
-	//						monster->SetY(monster->GetY() - height / 2);
-	//					}
-	//				}
-	//				else
-	//				{
-	//					if (temp.left == monsterRc.left)
-	//					{
-	//						monster->SetX(monster->GetX() + width / 2);
-	//					}
-	//					if (temp.right == monsterRc.right)
-	//					{
-	//						monster->SetX(monster->GetX() - width / 2);
-	//					}
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
 }
 
 void SkillManager::DragonArcSkill(const string & name, float x, float y, float angle, bool isUp)

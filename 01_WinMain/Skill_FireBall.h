@@ -24,6 +24,9 @@ class Skill_FireBall : public SkillObject
 	float mFrameCount;
 	float mAngle;
 	float mSpeed;
+	
+	float mStartX;
+	float mStartY;
 public:
 	Skill_FireBall(const string& name) : SkillObject(name) {};
 	Skill_FireBall(const string& name, float x, float y, float angle);

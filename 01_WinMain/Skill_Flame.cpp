@@ -27,7 +27,7 @@ void Skill_Flame::Init()
 	mFlameAnimation->SetFrameUpdateTime(0.02f);
 	mFlameAnimation->Play();
 
-	mSkillType = SkillType::Melee;
+	mSkillType = SkillType::Hold;
 }
 
 void Skill_Flame::Release()

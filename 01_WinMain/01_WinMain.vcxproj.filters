@@ -273,9 +273,6 @@
     <ClInclude Include="Effect_FireWing.h">
       <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="Effect_FlameEffect.h">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="Effect_HitSpark.h">
       <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
@@ -570,9 +567,6 @@
       <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Effect_FireWing.cpp">
-      <Filter>MainGame\Object\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect_FlameEffect.cpp">
       <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Effect_HitSpark.cpp">

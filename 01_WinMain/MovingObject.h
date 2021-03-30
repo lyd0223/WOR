@@ -56,6 +56,7 @@ public:
 	float GetSkillHitAngle() { return mSkillHitAngle; }
 	void SetMovingRect(D2D1_RECT_F rc) { mMovingRect = rc; }
 	float GetHP() { return mHp; }
+	void SetHP(int HP) { mHp = HP; }
 	D2D1_RECT_F GetMovingRect() { return mMovingRect; }
 	
 };
