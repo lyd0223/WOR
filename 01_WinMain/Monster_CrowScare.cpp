@@ -35,21 +35,51 @@ void Monster_CrowScare::Release()
 void Monster_CrowScare::Update()
 {
 	D2D1_RECT_F cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
-	if (cameraRect.right > mRect.left && cameraRect.left < mRect.right && cameraRect.bottom > mRect.top && cameraRect.top < mRect.bottom)
-	{
-		
-
-		mRect = RectMakeCenter(mX, mY-20, mSizeX, mSizeY);
+	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
+	vector<vector<Tile*>> tilelist = tilemap->GetTileList();
 	
+	mRect = RectMakeCenter(mX, mY - 20, mSizeX, mSizeY);
 
-		// ³Ë¹é
-		if (mSkillHitPower > 0)
+	for (int y = mY / TileSize - 1; y < mY / TileSize + 1; y++)
+	{
+		for (int x = mX / TileSize - 1; x < mX / TileSize + 1; x++)
 		{
-			mX += cosf(mSkillHitAngle) * mSkillHitPower;
-			mY += -sinf(mSkillHitAngle) * mSkillHitPower;
-			mSkillHitPower -= 0.2f;
+			if (tilelist[y][x]->GetType() == Type::Wall)
+			{
+				D2D1_RECT_F tileRect = tilelist[y][x]->GetRect();
+				D2D1_RECT_F tempRect;
+				if (tilelist[y][x]->GetType() == Type::Wall)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+						float width = tempRect.right - tempRect.left;
+						float height = tempRect.bottom - tempRect.top;
+						if (y == (int)mY / TileSize && x == (int)mX / TileSize - 1)
+							mX += width / 2;
+						else if (y == (int)mY / TileSize && x == (int)mX / TileSize + 1)
+							mX -= width / 2;
+						else if (y == (int)mY / TileSize - 1 && x == (int)mX / TileSize)
+							mY += height / 2;
+						else if (y == (int)mY / TileSize + 1 && x == (int)mX / TileSize)
+							mY -= height / 2;
+
+
+					}
+				}
+				
+
+			}
 		}
 	}
+	// ³Ë¹é
+	if (mSkillHitPower > 0)
+	{
+		mX += cosf(mSkillHitAngle) * mSkillHitPower;
+		mY += -sinf(mSkillHitAngle) * mSkillHitPower;
+		mSkillHitPower -= 0.2f;
+		
+	}
+	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 
 void Monster_CrowScare::Render()
