@@ -17,5 +17,5 @@ public:
 	void MakeFireExlposionParticle(float x, float y, float power);
 	void MakeWaterFormPartile(float x, float y, D2D1_RECT_F rc);
 	void MakeWaterExplosion(float x, float y);
-	void MakeEnemyCreate(float x, float y, MonsterName name,Room room);
+	void MakeEnemyCreate(float x, float y, MonsterName name,Room *room);
 };

@@ -23,7 +23,7 @@ class Scene_Tutorial : public Scene
 	class Monster_SwoardMan* mSwoardMan;
 	class Monster_Ward* mWard;
 	class Monster_Zombie* mZombie;
-	vector<Room> mRoomList;
+	vector<Room*> mRoomList;
 	//class MonsterObject* mMonsterList[11];
 	vector<class GameObject*> mMonsterList;
 	//class Tile* mTileList[TileCountY][TileCountX];

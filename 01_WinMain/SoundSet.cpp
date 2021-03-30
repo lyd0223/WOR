@@ -45,4 +45,6 @@ SoundSet::SoundSet()
 	SoundPlayer::GetInstance()->LoadFromFile(L"SwoardManAttackSound", Resources(L"Sound/SwoardManAttack.wav"), false);
 	SoundPlayer::GetInstance()->LoadFromFile(L"ThunderBoltSound", Resources(L"Sound/ThunderBolt.wav"), false);
 	SoundPlayer::GetInstance()->LoadFromFile(L"Teleport", Resources(L"Sound/Teleport.wav"), false);
+	SoundPlayer::GetInstance()->LoadFromFile(L"RoomUnLock", Resources(L"Sound/RoomUnLock.wav"), false);
+	SoundPlayer::GetInstance()->LoadFromFile(L"RoomLock", Resources(L"Sound/RoomLock.wav"), false);
 }

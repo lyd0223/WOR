@@ -143,6 +143,19 @@ void ObjectManager::InterfaceClear()
 		mInterface.pop();
 }
 
+void ObjectManager::DeleteObjects(ObjectLayer layer)
+{
+	ObjectIter iter = mObjectList.begin();
+	for (; iter != mObjectList.end(); ++iter)
+	{
+		if (iter->first == layer)
+		{
+			mObjectList[iter->first].erase(iter->second.begin(),iter->second.end());
+		}
+	}
+	
+}
+
 //�ش� �̸��� ������Ʈ ã�ƿ���
 GameObject * ObjectManager::FindObject(const string & name)
 {

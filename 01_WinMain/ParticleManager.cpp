@@ -156,7 +156,7 @@ void ParticleManager::MakeWaterExplosion(float x, float y)
 	waterExplosion->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, waterExplosion);
 }
-void ParticleManager::MakeEnemyCreate(float x, float y, MonsterName name, Room room)
+void ParticleManager::MakeEnemyCreate(float x, float y, MonsterName name, Room* room)
 {
 	Effect_EnemyCreate* enemyCreate;
 	enemyCreate = new Effect_EnemyCreate("EnemyCreate", x, y, name);

@@ -41,6 +41,7 @@ public:
 	void AddInterface(class GameObject* object);
 	void PopInterface();
 	void InterfaceClear();
+	void DeleteObjects(ObjectLayer layer);
 
 	class GameObject* FindObject(const string& name);
 	class GameObject* FindObject(ObjectLayer layer, const string& name);
@@ -48,4 +49,5 @@ public:
 	vector<class GameObject*> FindObjects(ObjectLayer layer, const string& name);
 	vector<class GameObject*> GetObjectList(ObjectLayer layer);
 	stack<class GameObject*> GetInterfaceList() { return mInterface; }
+
 };

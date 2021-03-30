@@ -74,6 +74,8 @@ void Load_Image::LoadSceneMapToolImage()
 	ImageManager::GetInstance()->LoadFromFile(L"Table", Resources(L"Tile/Structure/Table.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"Gate", Resources(L"Tile/Structure/Gate.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"Penta", Resources(L"Tile/Structure/Penta.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"HorizonalPrison", Resources(L"Tile/Structure/HorizonalPrison.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"VerticalPrison", Resources(L"Tile/Structure/VerticalPrison.png"));
 
 	ImageManager::GetInstance()->LoadFromFile(L"Portal", Resources(L"Tile/Structure/Portal.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"PortalOn", Resources(L"Tile/Structure/PortalOn.png"));

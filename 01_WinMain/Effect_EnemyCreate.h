@@ -15,7 +15,7 @@ class Effect_EnemyCreate : public GameObject
 	int mAnimationIndex;
 	float mScale;
 	bool RespawnOn;
-	Room mRoom;
+	Room* mRoom;
 
 public:
 	Effect_EnemyCreate(const string& name, float x, float y, MonsterName monsterName);
@@ -29,5 +29,5 @@ public:
 	int GetAnimationIndex() { return mAnimationIndex; }
 
 
-	void SetRoom(Room room) { mRoom = room; };
+	void SetRoom(Room* room) { mRoom = room; };
 };

@@ -66,13 +66,12 @@ void Scene_Tutorial::Init()
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Structure, mStructureList[i]);
 	}
 	mPortal = (Structure*)ObjectManager::GetInstance()->FindObject("Portal");
-	//
-
-	//���߰� , ������ܺ��� 1,2,3,4��
-	mRoomList.push_back({ 41,4,31,11 });
-	mRoomList.push_back({ 27,4,11,10 });
-	mRoomList.push_back({ 25,24,19,14 });
-	mRoomList.push_back({ 1,24,19,14 });
+	
+	//방추가
+	mRoomList.push_back(new Room (41,4,31,11));
+	mRoomList.push_back(new Room( 27,4,11,10 ));
+	mRoomList.push_back(new Room( 25,24,19,14 ));
+	mRoomList.push_back(new Room( 1,24,19,14 ));
 
 	mPlayer = new Player("Player",87*TileSize + TileSize/2, 10 * TileSize + TileSize / 2);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);

@@ -39,9 +39,11 @@ void RandomMapGeneration::CreateRandomMap2()
 {
 	//방 만들기 dfs 재귀
 	mRoot->MakeRoom(mTileMap);
+	mRoomList = mRoot->mRoomList;
 
 	//길 만들기 dfs 스택
 	MakeRoad();
+	
 }
 
 
@@ -165,16 +167,12 @@ void Node::MakeRoom(TileMap* tilemap)
 			y2 = Random::GetInstance()->RandomInt(10, 13);
 		else
 			y2 = Random::GetInstance()->RandomInt(15, 18);
-		mSelectRoom = {
-			mX + x1,
-			mY + y1,
-			mSizeX - (x2 + x1),
-			mSizeY - (y2 + y1)
-		};
+		mSelectRoom = new Room(mX + x1, mY + y1, mSizeX - (x2 + x1), mSizeY - (y2 + y1));
+		
 		//타일깔기
-		for (int y = mSelectRoom.y; y < mSelectRoom.y + mSelectRoom.sizeY; y++)
+		for (int y = mSelectRoom->y; y < mSelectRoom->y + mSelectRoom->sizeY; y++)
 		{
-			for (int x = mSelectRoom.x; x < mSelectRoom.x + mSelectRoom.sizeX; x++)
+			for (int x = mSelectRoom->x; x < mSelectRoom->x + mSelectRoom->sizeX; x++)
 			{
 				tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireFloor"));
 				tilemap->GetTileList()[y][x]->SetFrameIndexX(Random::GetInstance()->RandomInt(6));
@@ -184,8 +182,8 @@ void Node::MakeRoom(TileMap* tilemap)
 		}
 		//사방 벽 만들기.
 		{
-			int y = mSelectRoom.y;
-			for (int x = mSelectRoom.x; x < mSelectRoom.x + mSelectRoom.sizeX; x++)
+			int y = mSelectRoom->y;
+			for (int x = mSelectRoom->x; x < mSelectRoom->x + mSelectRoom->sizeX; x++)
 			{
 				tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
 				tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
@@ -194,8 +192,8 @@ void Node::MakeRoom(TileMap* tilemap)
 			}
 		}
 		{
-			int y = mSelectRoom.y + mSelectRoom.sizeY-1;
-			for (int x = mSelectRoom.x; x < mSelectRoom.x + mSelectRoom.sizeX; x++)
+			int y = mSelectRoom->y + mSelectRoom->sizeY-1;
+			for (int x = mSelectRoom->x; x < mSelectRoom->x + mSelectRoom->sizeX; x++)
 			{
 				tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
 				tilemap->GetTileList()[y][x]->SetFrameIndexX(1);
@@ -204,8 +202,8 @@ void Node::MakeRoom(TileMap* tilemap)
 			}
 		}
 		{
-			int x = mSelectRoom.x;
-			for (int y = mSelectRoom.y; y < mSelectRoom.y + mSelectRoom.sizeY; y++)
+			int x = mSelectRoom->x;
+			for (int y = mSelectRoom->y; y < mSelectRoom->y + mSelectRoom->sizeY; y++)
 			{
 				tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
 				tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
@@ -214,8 +212,8 @@ void Node::MakeRoom(TileMap* tilemap)
 			}
 		}
 		{
-			int x = mSelectRoom.x + mSelectRoom.sizeX - 1;
-			for (int y = mSelectRoom.y; y < mSelectRoom.y + mSelectRoom.sizeY; y++)
+			int x = mSelectRoom->x + mSelectRoom->sizeX - 1;
+			for (int y = mSelectRoom->y; y < mSelectRoom->y + mSelectRoom->sizeY; y++)
 			{
 				tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
 				tilemap->GetTileList()[y][x]->SetFrameIndexX(2);
@@ -225,32 +223,32 @@ void Node::MakeRoom(TileMap* tilemap)
 		}
 		//꼭지점 벽
 		{
-			int x = mSelectRoom.x;
-			int y = mSelectRoom.y;
+			int x = mSelectRoom->x;
+			int y = mSelectRoom->y;
 			tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
 			tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
 			tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
 			tilemap->GetTileList()[y][x]->SetType(Type::Wall);
 		}
 		{
-			int x = mSelectRoom.x;
-			int y = mSelectRoom.y + mSelectRoom.sizeY -1;
+			int x = mSelectRoom->x;
+			int y = mSelectRoom->y + mSelectRoom->sizeY -1;
 			tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
 			tilemap->GetTileList()[y][x]->SetFrameIndexX(0);
 			tilemap->GetTileList()[y][x]->SetFrameIndexY(2);
 			tilemap->GetTileList()[y][x]->SetType(Type::Wall);
 		}
 		{
-			int x = mSelectRoom.x + mSelectRoom.sizeX -1;
-			int y = mSelectRoom.y;
+			int x = mSelectRoom->x + mSelectRoom->sizeX -1;
+			int y = mSelectRoom->y;
 			tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
 			tilemap->GetTileList()[y][x]->SetFrameIndexX(2);
 			tilemap->GetTileList()[y][x]->SetFrameIndexY(0);
 			tilemap->GetTileList()[y][x]->SetType(Type::Wall);
 		}
 		{
-			int x = mSelectRoom.x + mSelectRoom.sizeX-1;
-			int y = mSelectRoom.y + mSelectRoom.sizeY-1;
+			int x = mSelectRoom->x + mSelectRoom->sizeX-1;
+			int y = mSelectRoom->y + mSelectRoom->sizeY-1;
 			tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"Fire8Walls"));
 			tilemap->GetTileList()[y][x]->SetFrameIndexX(2);
 			tilemap->GetTileList()[y][x]->SetFrameIndexY(2);
@@ -258,25 +256,25 @@ void Node::MakeRoom(TileMap* tilemap)
 		}
 		//윗벽
 		{
-			for (int y = mSelectRoom.y+1; y < mSelectRoom.y +4; y++)
+			for (int y = mSelectRoom->y+1; y < mSelectRoom->y +4; y++)
 			{
-				for (int x = mSelectRoom.x+1; x < mSelectRoom.x + mSelectRoom.sizeX-1; x++)
+				for (int x = mSelectRoom->x+1; x < mSelectRoom->x + mSelectRoom->sizeX-1; x++)
 				{
-					if (((x - mSelectRoom.x) / 3) % 3 == 0)
+					if (((x - mSelectRoom->x) / 3) % 3 == 0)
 					{
 						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall1"));
 					}
-					else if (((x - mSelectRoom.x) / 3) % 3 == 1)
+					else if (((x - mSelectRoom->x) / 3) % 3 == 1)
 					{
 						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall2"));
 					}
-					else if (((x - mSelectRoom.x) / 3) % 3 == 2)
+					else if (((x - mSelectRoom->x) / 3) % 3 == 2)
 					{
 						tilemap->GetTileList()[y][x]->SetImage(ImageManager::GetInstance()->FindImage(L"FireWall3"));
 					}
 					
-					tilemap->GetTileList()[y][x]->SetFrameIndexX((x - mSelectRoom.x) % 3);
-					tilemap->GetTileList()[y][x]->SetFrameIndexY((y - mSelectRoom.y-1)%3);
+					tilemap->GetTileList()[y][x]->SetFrameIndexX((x - mSelectRoom->x) % 3);
+					tilemap->GetTileList()[y][x]->SetFrameIndexY((y - mSelectRoom->y-1)%3);
 					tilemap->GetTileList()[y][x]->SetType(Type::Wall);
 				}
 			}
@@ -312,8 +310,8 @@ void RandomMapGeneration::MakeRoad()
 
 				for (int i = 0; i < nodetemp->mLeftNode->mRoomList.size(); i++)
 				{
-					int x2 = nodetemp->mLeftNode->mRoomList[i].centerX;
-					int y2 = nodetemp->mLeftNode->mRoomList[i].centerY;
+					int x2 = nodetemp->mLeftNode->mRoomList[i]->centerX;
+					int y2 = nodetemp->mLeftNode->mRoomList[i]->centerY;
 					float distance2 = Math::GetDistance(x, y, x2, y2);
 					if (distance > distance2)
 					{
@@ -324,14 +322,14 @@ void RandomMapGeneration::MakeRoad()
 
 
 				//우측방의 셀렉트룸설정.
-				x = nodetemp->mLeftNode->mSelectRoom.centerX;
-				y = nodetemp->mLeftNode->mSelectRoom.centerY;
+				x = nodetemp->mLeftNode->mSelectRoom->centerX;
+				y = nodetemp->mLeftNode->mSelectRoom->centerY;
 				distance = 100000;
 
 				for (int i = 0; i < nodetemp->mRightNode->mRoomList.size(); i++)
 				{
-					int x2 = nodetemp->mRightNode->mRoomList[i].centerX;
-					int y2 = nodetemp->mRightNode->mRoomList[i].centerY;
+					int x2 = nodetemp->mRightNode->mRoomList[i]->centerX;
+					int y2 = nodetemp->mRightNode->mRoomList[i]->centerY;
 					float distance2 = Math::GetDistance(x, y, x2, y2);
 					if (distance > distance2)
 					{
@@ -344,24 +342,28 @@ void RandomMapGeneration::MakeRoad()
 				if (nodetemp->mLeftNode->mX == nodetemp->mRightNode->mX)
 				{
 					int x1, y1, x2, y2;
-					x1 = (nodetemp->mRightNode->mSelectRoom.centerX + nodetemp->mLeftNode->mSelectRoom.centerX) / 2;
+					x1 = (nodetemp->mRightNode->mSelectRoom->centerX + nodetemp->mLeftNode->mSelectRoom->centerX) / 2;
 					x2 = x1;
-					y1 = nodetemp->mRightNode->mSelectRoom.y;
-					y2 = nodetemp->mLeftNode->mSelectRoom.y + nodetemp->mLeftNode->mSelectRoom.sizeY;
+					y1 = nodetemp->mRightNode->mSelectRoom->y;
+					y2 = nodetemp->mLeftNode->mSelectRoom->y + nodetemp->mLeftNode->mSelectRoom->sizeY;
 					Line road = { min(x1,x2),min(y1,y2),max(x1,x2),max(y1,y2) };
 					mRoadList.push_back(road);
+					nodetemp->mRightNode->mSelectRoom->roadList.push_back(road);
+					nodetemp->mLeftNode->mSelectRoom->roadList.push_back(road);
 
 				}
 				//세로로 잘랏을때
 				else if (nodetemp->mLeftNode->mY == nodetemp->mRightNode->mY)
 				{
 					int x1, y1, x2, y2;
-					x1 = nodetemp->mRightNode->mSelectRoom.x;
-					x2 = nodetemp->mLeftNode->mSelectRoom.x + nodetemp->mLeftNode->mSelectRoom.sizeX;
-					y1 = (nodetemp->mRightNode->mSelectRoom.centerY + nodetemp->mLeftNode->mSelectRoom.centerY)/2;
+					x1 = nodetemp->mRightNode->mSelectRoom->x;
+					x2 = nodetemp->mLeftNode->mSelectRoom->x + nodetemp->mLeftNode->mSelectRoom->sizeX;
+					y1 = (nodetemp->mRightNode->mSelectRoom->centerY + nodetemp->mLeftNode->mSelectRoom->centerY)/2;
 					y2 = y1;
 					Line road = { min(x1,x2),min(y1,y2),max(x1,x2),max(y1,y2) };
 					mRoadList.push_back(road);
+					nodetemp->mRightNode->mSelectRoom->roadList.push_back(road);
+					nodetemp->mLeftNode->mSelectRoom->roadList.push_back(road);
 				}
 			}
 		}
@@ -558,25 +560,30 @@ void RandomMapGeneration::MakeRoad()
 void RandomMapGeneration::RandomMonsterCreate()
 {
 	
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 5; i++)
 	{
-		mEnemyRoomNum.push_back(Random::GetInstance()->RandomInt(mRoot->mRoomList.size()*i /8+1, mRoot->mRoomList.size()* (i+1)/8-1));
+		int roomnum = Random::GetInstance()->RandomInt(mRoot->mRoomList.size() * i / 5 + 1, mRoot->mRoomList.size() * (i + 1) / 5 - 1);
+		while (roomnum == mPlayerSpawnRoomNum || roomnum == mPortalRoomNum)
+		{
+			roomnum = Random::GetInstance()->RandomInt(mRoot->mRoomList.size() * i / 5 + 1, mRoot->mRoomList.size() * (i + 1) / 5 - 1);
+		}
+		mEnemyRoomNum.push_back(roomnum);
 	}
 		
 	for (int i = 0; i < mEnemyRoomNum.size(); i++)
 	{
 		float x, y;
-		x = mRoot->mRoomList[mEnemyRoomNum[i]].centerX - 5;
-		y = mRoot->mRoomList[mEnemyRoomNum[i]].centerY - 5;
+		x = mRoot->mRoomList[mEnemyRoomNum[i]]->centerX - 5;
+		y = mRoot->mRoomList[mEnemyRoomNum[i]]->centerY - 5;
 		ParticleManager::GetInstance()->MakeEnemyCreate(x * TileSize, y * TileSize, MonsterName::Zombie, mRoot->mRoomList[mEnemyRoomNum[i]]);
-		x = mRoot->mRoomList[mEnemyRoomNum[i]].centerX + 5;
-		y = mRoot->mRoomList[mEnemyRoomNum[i]].centerY - 5;
+		x = mRoot->mRoomList[mEnemyRoomNum[i]]->centerX + 5;
+		y = mRoot->mRoomList[mEnemyRoomNum[i]]->centerY - 5;
 		ParticleManager::GetInstance()->MakeEnemyCreate(x * TileSize, y * TileSize, MonsterName::Zombie, mRoot->mRoomList[mEnemyRoomNum[i]]);
-		x = mRoot->mRoomList[mEnemyRoomNum[i]].centerX - 5;
-		y = mRoot->mRoomList[mEnemyRoomNum[i]].centerY + 5;
+		x = mRoot->mRoomList[mEnemyRoomNum[i]]->centerX - 5;
+		y = mRoot->mRoomList[mEnemyRoomNum[i]]->centerY + 5;
 		ParticleManager::GetInstance()->MakeEnemyCreate(x * TileSize, y * TileSize, MonsterName::Zombie, mRoot->mRoomList[mEnemyRoomNum[i]]);
-		x = mRoot->mRoomList[mEnemyRoomNum[i]].centerX + 5;
-		y = mRoot->mRoomList[mEnemyRoomNum[i]].centerY + 5;
+		x = mRoot->mRoomList[mEnemyRoomNum[i]]->centerX + 5;
+		y = mRoot->mRoomList[mEnemyRoomNum[i]]->centerY + 5;
 		ParticleManager::GetInstance()->MakeEnemyCreate(x * TileSize, y * TileSize, MonsterName::Zombie, mRoot->mRoomList[mEnemyRoomNum[i]]);
 	}
 
@@ -585,8 +592,8 @@ void RandomMapGeneration::RandomMonsterCreate()
 
 void RandomMapGeneration::RandomPlayerPosition(Player* player)
 {
-	
-	mPlayerSpawnRoomNum = Random::GetInstance()->RandomInt(mRoot->mRoomList.size());
-	player->SetX(mRoot->mRoomList[mPlayerSpawnRoomNum].centerX * TileSize);
-	player->SetY(mRoot->mRoomList[mPlayerSpawnRoomNum].centerY * TileSize);
+	mPlayerSpawnRoomNum = Random::GetInstance()->RandomInt(mRoot->mRoomList.size()/2);
+	player->SetX(mRoot->mRoomList[mPlayerSpawnRoomNum]->centerX * TileSize);
+	player->SetY(mRoot->mRoomList[mPlayerSpawnRoomNum]->centerY * TileSize);
+	mPortalRoomNum = Random::GetInstance()->RandomInt(mRoot->mRoomList.size() / 2, mRoot->mRoomList.size());
 }

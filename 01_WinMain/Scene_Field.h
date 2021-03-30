@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-
+#include "RandomMapGeneration.h"
 
 class Scene_Field : public Scene
 {
@@ -8,6 +8,7 @@ class Scene_Field : public Scene
 	class TileMap* mTileMap;
 	vector<class Structure*> mStructureList;
 	bool mMapIsOpen;
+	vector<Room*> mRoomList;
 
 public:
 	void Init()override;
