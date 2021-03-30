@@ -86,6 +86,10 @@ class Player : public MovingObject
 	class Animation* mDownThrowWatingAnimation;
 	class Animation* mLeftThrowWatingAnimation;
 	class Animation* mRightThrowWationgAnimation;
+	class Animation* mUpAttackAnimation2;
+	class Animation* mDownAttackAnimation2;
+	class Animation* mLeftThrowSkillandAttackAnimation2;
+	class Animation* mRightThrowSkillandAttackAnimation2;
 
 	class PlayerNormalShadow* mPlayerNormalShadow;
 	class PlayerWideShadow* mPlayerWideShadow;
@@ -94,6 +98,7 @@ class Player : public MovingObject
 	class Image* mShadow;
 	float lineX;
 	float lineY;
+	float mAttackMotion;
 
 	float mLB_ButtonSkillCool;
 	float mRB_ButtonSkillCool;

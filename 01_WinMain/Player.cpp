@@ -25,8 +25,8 @@ Player::Player(const string& name, float x, float y)
 
 void Player::Init()
 {
-
-	ImageManager::GetInstance()->LoadFromFile(L"Player", Resources(L"Player/WizardPlayer.png"), 10, 25);
+	SoundPlayer::GetInstance()->LoadFromFile(L"EnemyHitSound", Resources(L"Sound/EnemyHit.wav"), false);
+	ImageManager::GetInstance()->LoadFromFile(L"Player", Resources(L"Player/WizardPlayer.png"), 10, 29);
 	mImage = ImageManager::GetInstance()->FindImage(L"Player");
 	mPlayerState = PlayerState::DownIdle;
 	mSpeed = BasicSpeed;
@@ -58,7 +58,7 @@ void Player::Init()
 	AnimationSet(&mUpRunAnimation, false, true, 0, 2, 9, 2, 0.1f);
 	AnimationSet(&mRightRunAnimation, false, true, 0, 3, 9, 3, 0.1f);
 	AnimationReverseSet(&mLeftRunAnimation, false, true, 9, 4, 0, 4, 0.1f);
-	AnimationSet(&mDownAttackAnimation, false, false, 0, 5, 9, 5, AnimationTime);
+	AnimationSet(&mDownAttackAnimation, false, false, 0, 5, 9, 5, 0.05);
 	AnimationSet(&mRightDashAnimation, false, false, 0, 7, 9, 7, AnimationTime);
 	AnimationSet(&mRightDiagonalUpDashAnimation, false, false, 0, 7, 9, 7, AnimationTime);
 	AnimationSet(&mRightDiagonalDownDashAnimation, false, false, 0, 7, 9, 7, AnimationTime);
@@ -66,19 +66,23 @@ void Player::Init()
 	AnimationSet(&mLeftDiagonalUpDashAnimation, false, false, 0, 8, 9, 8, AnimationTime);
 	AnimationSet(&mLeftDiagonalDownDashAnimation, false, false, 0, 8, 9, 8, AnimationTime);
 	AnimationSet(&mDieAnimation, false, false, 0, 9, 9, 9, AnimationTime);
-	AnimationSet(&mUpAttackAnimation, false, false, 0, 11, 9, 11, AnimationTime);
+	AnimationSet(&mUpAttackAnimation, false, false, 0, 11, 9, 11, 0.05);
 	AnimationSet(&mDownThrowSkillAnimation, false, false, 0, 6, 9, 6, AnimationTime);
 	AnimationSet(&mUpThrowSkillAnimation, false, false, 0, 14, 9, 14, AnimationTime);
-	AnimationReverseSet(&mLeftThrowSkillandAttackAnimation, false, false, 7, 13, 0, 13, AnimationTime);
-	AnimationSet(&mRightThrowSkillandAttackAnimation, false, false, 0, 12, 7, 12, AnimationTime);
+	AnimationReverseSet(&mLeftThrowSkillandAttackAnimation, false, false, 7, 13, 0, 13, 0.05);
+	AnimationSet(&mRightThrowSkillandAttackAnimation, false, false, 0, 12, 7, 12, 0.05);
 	AnimationSet(&mUpDashAnimation, false, false, 0, 18, 9, 18, AnimationTime);
 	AnimationSet(&mDownDashAnimation, false, false, 0, 19, 9, 19, AnimationTime);
 	AnimationSet(&mUpThrowWatingAnimation, false, false, 1, 14, 1, 14, AnimationTime);
 	AnimationSet(&mDownThrowWatingAnimation, false, false, 0, 6, 0, 6, AnimationTime);
 	AnimationSet(&mRightThrowWationgAnimation, false, false, 1, 12, 1, 12, AnimationTime);
 	AnimationSet(&mLeftThrowWatingAnimation, false, false, 6, 12, 6, 12, AnimationTime);
+	AnimationReverseSet(&mUpAttackAnimation2, false, false, 9, 28, 0, 28, 0.05);
+	AnimationSet(&mDownAttackAnimation2, false, false, 0, 25, 9, 25, 0.05);
+	AnimationSet(&mLeftThrowSkillandAttackAnimation2, false, false, 0, 26, 7, 26, 0.05);
+	AnimationReverseSet(&mRightThrowSkillandAttackAnimation2, false, false, 7, 27, 0, 27, 0.05);
 
-	
+	mAttackMotion = 1;
 	mCurrentAnimation = mDownIdleAnimation;
 	mCurrentAnimation->Play();
 
@@ -519,29 +523,72 @@ void Player::Update()
 	if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 	{
 		
+		
 		if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
 		{
-			AnimationChange(mRightThrowSkillandAttackAnimation);
+			if (mAttackMotion == 1)
+			{
+				
+					AnimationChange(mRightThrowSkillandAttackAnimation);
+					mAttackMotion++;
+				
+			}
+			else if (mAttackMotion == 2)
+			{
+				
+					AnimationChange(mRightThrowSkillandAttackAnimation2);
+					mAttackMotion = 1;
+				
+			}
 			mPlayerState = PlayerState::RightAttack;
 			SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
 		}
 		else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
 		{
-			AnimationChange(mUpAttackAnimation);
+			if (mAttackMotion == 1)
+			{
+				AnimationChange(mUpAttackAnimation);
+				mAttackMotion++;
+			}
+			else if (mAttackMotion == 2)
+			{
+				AnimationChange(mUpAttackAnimation2);
+				mAttackMotion = 1;
+			}
+			
 			mPlayerState = PlayerState::UpAttack;
 			SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
 
 		}
 		else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
 		{
-
-			AnimationChange(mLeftThrowSkillandAttackAnimation);
+			if (mAttackMotion == 1)
+			{
+				AnimationChange(mLeftThrowSkillandAttackAnimation);
+				mAttackMotion++;
+			}
+			else if (mAttackMotion == 2)
+			{
+				AnimationChange(mLeftThrowSkillandAttackAnimation2);
+				mAttackMotion = 1;
+			}
+			
 			mPlayerState = PlayerState::LeftAttack; 
 			SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
 		}
 		else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
 		{
-			AnimationChange(mDownAttackAnimation);
+			if (mAttackMotion == 1)
+			{
+				AnimationChange(mDownAttackAnimation);
+				mAttackMotion++;
+			}
+			else if (mAttackMotion == 2)
+			{
+				AnimationChange(mDownAttackAnimation2);
+				mAttackMotion = 1;
+			}
+			
 			mPlayerState = PlayerState::DownAttack;
 			SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
 		}
@@ -834,8 +881,8 @@ void Player::Update()
 		mY -= sinf(mMoveAngle) * 0 * Time::GetInstance()->DeltaTime();
 		if (mCurrentAnimation->GetNowFrameX() <= 6)
 		{
-			mX += cosf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
-			mY -= sinf(mMoveAngle) * 900 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
+			mX += cosf(mMoveAngle) * 1000 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
+			mY -= sinf(mMoveAngle) * 1000 / (mCurrentAnimation->GetNowFrameX() + 1) * Time::GetInstance()->DeltaTime();
 			int temp = abs(mX) + abs(mY);
 			if ( abs(mMoveCount - temp) > 100 && mIsDashEffect == false)
 			{
