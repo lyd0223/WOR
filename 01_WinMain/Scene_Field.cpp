@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Camera.h"
 #include "RandomMapGeneration.h"
+#include "Effect_Teleport.h"
 
 void Scene_Field::Init()
 {
@@ -37,6 +38,7 @@ void Scene_Field::Init()
 	RandomMapGeneration::GetInstance()->RandomMonsterCreate();
 	mRoomList = RandomMapGeneration::GetInstance()->GetRoomList();
 	
+	mPortal = (Structure*)ObjectManager::GetInstance()->FindObject("Portal");
 	ObjectManager::GetInstance()->Init();
 
 	Camera* camera = new Camera();
@@ -44,6 +46,8 @@ void Scene_Field::Init()
 	camera->ChangeMode(Camera::Mode::Follow);
 	camera->SetTarget(mPlayer);
 	CameraManager::GetInstance()->SetMainCamera(camera);
+
+	Effect_Teleport* teleport = new Effect_Teleport(mPlayer->GetX(), mPlayer->GetY() + 50, false);
 }
 
 void Scene_Field::Release()
@@ -64,7 +68,17 @@ void Scene_Field::Update()
 		else
 			mMapIsOpen = 1;
 	}
-	
+	if (mPortal->GetPortalOn())
+	{
+
+		if (Input::GetInstance()->GetKeyDown('F'))
+		{
+			ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy).clear();
+			Effect_Teleport* teleport = new Effect_Teleport(mPortal->GetX(), mPortal->GetY(), true, L"Field", L"Boss");
+			SoundPlayer::GetInstance()->Stop(L"Field");
+			return;
+		}
+	}
 	for (int i = 0; i < mRoomList.size(); i++)
 	{
 		if (mRoomList[i]->PlayerInRoom())

@@ -103,11 +103,4 @@ void Scene_House::Update()
 void Scene_House::Render()
 {
 	ObjectManager::GetInstance()->Render();
-
-	if (mPortal->GetPortalOn())
-	{
-		Image* image = ImageManager::GetInstance()->FindImage(L"F");
-		image->SetScale(2.0f);
-		CameraManager::GetInstance()->GetMainCamera()->Render(image, mPlayer->GetX(), mPlayer->GetY() - 90);
-	}
 }

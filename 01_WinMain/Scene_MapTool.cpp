@@ -54,7 +54,7 @@ void Scene_MapTool::Init()
 	mLoadButton = new Button("Load", 1040, 150, 60, 50);
 	mRedoButton = new Button("Redo", 1130, 150, 60, 50);
 	mUndoButton = new Button("Undo", 1220, 150, 60, 50);
-	mTitlebutton = new Button("TitleButton", 1220, 180, 60, 50);
+	mTitlebutton = new Button("TitleButton", 1220, 200, 60, 50);
 	mPalleteMainButton = new Button("Back", 950, 200, 50, 50);
 	mPalleteLeftButton = new Button("Left", 920, 380, 50, 50);
 	mPalleteRihgtButton = new Button("Right", 1250, 380, 50, 50);
@@ -492,6 +492,7 @@ void Scene_MapTool::Update()
 			mLoadButton->BookOpen();
 			mRedoButton->BookOpen();
 			mUndoButton->BookOpen();
+			mTitlebutton->BookOpen();
 
 		}
 	}
@@ -513,6 +514,7 @@ void Scene_MapTool::Update()
 			mLoadButton->BookClose();
 			mRedoButton->BookClose();
 			mUndoButton->BookClose();
+			mTitlebutton->BookClose();
 		}
 	}
 	

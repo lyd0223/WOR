@@ -11,6 +11,7 @@
 #include "Structure.h"
 #include "UserInterface.h"
 #include <fstream>
+#include "Effect_Teleport.h"
 
 void Scene_Boss::Init()
 {
@@ -31,14 +32,14 @@ void Scene_Boss::Init()
 	mStructureList = mTileMap->GetStructureList();
 	for (int i = 0; i < mStructureList.size(); i++)
 	{
-		if (mStructureList[i]->GetName() == "Portal")
+		if (mStructureList[i]->GetName() == "Penta")
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mStructureList[i]);
 		else
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Structure, mStructureList[i]);
 	}
 	//
 
-	mPlayer = new Player("Player", 20 * TileSize, 30 * TileSize);
+	mPlayer = new Player("Player", 19 * TileSize, 36 * TileSize);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 
 	mFireBoss = new Monster_FireBoss("FireBoss", 20 * TileSize, 14 * TileSize);
@@ -52,6 +53,8 @@ void Scene_Boss::Init()
 	camera->ChangeMode(Camera::Mode::Follow);
 	camera->SetTarget(mPlayer);
 	CameraManager::GetInstance()->SetMainCamera(camera);
+
+	Effect_Teleport* teleport = new Effect_Teleport(mPlayer->GetX(), mPlayer->GetY() + 50, false);
 }
 
 void Scene_Boss::Release()

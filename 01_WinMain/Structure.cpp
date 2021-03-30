@@ -51,5 +51,9 @@ void Structure::Render()
 		mPortalImage->SetScale(1.5f);
 		CameraManager::GetInstance()->GetMainCamera()->Render(mPortalImage, mX, mY);
 
+		Image* image = ImageManager::GetInstance()->FindImage(L"F");
+		image->SetScale(2.0f);
+		CameraManager::GetInstance()->GetMainCamera()->Render(image, ObjectManager::GetInstance()->FindObject("Player")->GetX(), ObjectManager::GetInstance()->FindObject("Player")->GetY() - 90);
 	}
+	
 }

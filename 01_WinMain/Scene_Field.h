@@ -9,6 +9,7 @@ class Scene_Field : public Scene
 	vector<class Structure*> mStructureList;
 	bool mMapIsOpen;
 	vector<Room*> mRoomList;
+	class Structure* mPortal;
 
 public:
 	void Init()override;

@@ -9998,5 +9998,5 @@ Fire8Walls,0,1,1
 Fire8Walls,0,1,1
 Fire8Walls,0,1,1
 Fire8Walls,0,1,1
-Portal,36,19
+Penta,36,19
 /

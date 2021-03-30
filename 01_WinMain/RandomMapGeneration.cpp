@@ -3,6 +3,7 @@
 #include "TileMap.h"
 #include "Tile.h"
 #include "Player.h"
+#include "Structure.h"
 void RandomMapGeneration::Init()
 {
 	mRoot = new Node(0, 0, 150, 150);
@@ -596,4 +597,11 @@ void RandomMapGeneration::RandomPlayerPosition(Player* player)
 	player->SetX(mRoot->mRoomList[mPlayerSpawnRoomNum]->centerX * TileSize);
 	player->SetY(mRoot->mRoomList[mPlayerSpawnRoomNum]->centerY * TileSize);
 	mPortalRoomNum = Random::GetInstance()->RandomInt(mRoot->mRoomList.size() / 2, mRoot->mRoomList.size());
+	Structure* structure = new Structure(
+		"Portal",
+		ImageManager::GetInstance()->FindImage(L"Portal"),
+		mRoot->mRoomList[mPlayerSpawnRoomNum]->centerX*TileSize,
+		mRoot->mRoomList[mPlayerSpawnRoomNum]->centerY*TileSize,
+		100,100);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, structure);
 }
