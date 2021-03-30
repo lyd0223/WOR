@@ -65,14 +65,16 @@ void UI_SkillChangeInterface::Update()
 			ObjectManager::GetInstance()->AddInterface(spellBook);
 		}
 
-		if (Input::GetInstance()->GetKeyDown(VK_LEFT))
+		if (Input::GetInstance()->GetKeyDown(VK_LEFT) ||
+			Input::GetInstance()->GetKeyDown('A'))
 		{
 			mIndex--;
 			if (mIndex < 0) mIndex = 3;
 			SoundPlayer::GetInstance()->Play(L"MenuMove", 1.f);
 		}
 
-		if (Input::GetInstance()->GetKeyDown(VK_RIGHT))
+		if (Input::GetInstance()->GetKeyDown(VK_RIGHT) ||
+			Input::GetInstance()->GetKeyDown('D'))
 		{
 			mIndex++;
 			if (mIndex > 3) mIndex = 0;

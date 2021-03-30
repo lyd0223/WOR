@@ -31,6 +31,9 @@ class UserInterface : public GameObject
 	UIObject* mSpace_ButtonSkillIcon;
 	UIObject* mRB_ButtonSkillIcon;
 	UIObject* mQ_ButtonSkillIcon;
+
+	UIObject* mBossHP;
+	UIObject* mBossHPBar;
 	
 	Image* mHPBarImage;
 	Image* mMPBarImage;

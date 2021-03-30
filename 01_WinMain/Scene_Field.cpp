@@ -11,7 +11,7 @@
 
 void Scene_Field::Init()
 {
-	
+	SoundPlayer::GetInstance()->Play(L"Fire", 0.5f);
 	ImageManager::GetInstance()->LoadFromFile(L"TutorialTile", Resources(L"Tile/TutorialMap.png"), 74, 43);
 	ImageManager::GetInstance()->LoadFromFile(L"TileSet", Resources(L"Tile/Tile.bmp"), 16, 16);
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"TutorialTile");

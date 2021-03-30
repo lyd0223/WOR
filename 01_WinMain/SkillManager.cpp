@@ -158,6 +158,7 @@ void SkillManager::Update()
 					if (skill->GetName() == "WaterBall")
 					{
 						ParticleManager::GetInstance()->MakeWaterExplosion(skillX, skillY);
+						SoundPlayer::GetInstance()->Play(L"WaterExplode", 1.f);
 					}
 
 					ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
@@ -199,10 +200,19 @@ void SkillManager::Update()
 					if (IntersectRect(temp, &skillrc, &monsterrc))
 					{
 
-						if (skill->GetName() == "FireBall" ||
-							skill->GetName() == "DragonArc")
+						if (skill->GetName() == "FireBall")
 						{
 							ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
+							SoundPlayer::GetInstance()->Play(L"FireBallExplode", 1.f);
+							monster->SetSkillHitAngle(skill->GetAngle());
+							monster->SetSkillHitPower(skill->GetSkillPower());
+						}
+						
+						if (skill->GetName() == "DragonArc")
+						{
+							ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
+							ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+							SoundPlayer::GetInstance()->Play(L"FireArcEnd", 1.f);
 							monster->SetSkillHitAngle(skill->GetAngle());
 							monster->SetSkillHitPower(skill->GetSkillPower());
 						}
@@ -235,6 +245,7 @@ void SkillManager::Update()
 					if (skill->GetName() == "WaterBall")
 					{
 						ParticleManager::GetInstance()->MakeWaterExplosion(skillX, skillY);
+						SoundPlayer::GetInstance()->Play(L"WaterExplode", 1.f);
 						player->SetSkillHitAngle(skill->GetAngle());
 						player->SetSkillHitPower(skill->GetSkillPower());
 					}

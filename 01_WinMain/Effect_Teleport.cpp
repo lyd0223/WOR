@@ -25,7 +25,7 @@ Effect_Teleport::Effect_Teleport(float x, float y, bool isSceneChange, wstring n
 	mChangeSceneName = changeSceneName;
 	mNowSceneName = nowSceneName;
 	
-	
+	SoundPlayer::GetInstance()->Play(L"Teleport", 1.f);
 }
 
 void Effect_Teleport::Init()
@@ -46,6 +46,7 @@ void Effect_Teleport::Update()
 		mIsDestroy = true;
 		if (mIsSceneChange)
 		{
+			
 			SceneManager::GetInstance()->LoadScene(mChangeSceneName);
 			SceneManager::GetInstance()->DeleteScene(mNowSceneName);
 			if(mNowSceneName == L"House")

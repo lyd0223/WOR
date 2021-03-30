@@ -21,6 +21,8 @@ void UserInterface::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"QButton", Resources(L"UI/Q.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"EButton", Resources(L"UI/E.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"SpaceButton", Resources(L"UI/Space.png"));
+
+	ImageManager::GetInstance()->LoadFromFile(L"BossHP", Resources(L"UI/BossHP.png"));
 	
 	mSkillIndexList.insert(make_pair("FireBall", Vector2(0, 0)));		// FireBall
 	mSkillIndexList.insert(make_pair("DragonArc", Vector2(1, 0)));		// DragonArc
@@ -47,6 +49,9 @@ void UserInterface::Init()
 	mSpace_ButtonSkillIcon = new UIObject(115, WINSIZEY - 50, 42, 42, ImageManager::GetInstance()->FindImage(L"SkillIcon"));
 	mRB_ButtonSkillIcon = new UIObject(170, WINSIZEY - 50, 42, 42, ImageManager::GetInstance()->FindImage(L"SkillIcon"));
 	mQ_ButtonSkillIcon = new UIObject(225, WINSIZEY - 50, 42, 42, ImageManager::GetInstance()->FindImage(L"SkillIcon"));
+
+	mBossHP = new UIObject(WINSIZEX / 2, 200, 200, 50, ImageManager::GetInstance()->FindImage(L"BossHP"));
+	mBossHPBar = new UIObject(WINSIZEX / 2, 200, 180, 45, ImageManager::GetInstance()->FindImage(L"HPBard"));
 
 	mPlayer = (Player*) ObjectManager::GetInstance()->FindObject("Player");
 

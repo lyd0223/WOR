@@ -14,6 +14,7 @@
 
 void Scene_Boss::Init()
 {
+	SoundPlayer::GetInstance()->Play(L"Boss", 0.5f);
 	Load_Image::GetInstance()->LoadSceneMapToolImage();
 	ImageManager::GetInstance()->LoadFromFile(L"TutorialTile", Resources(L"Tile/TutorialMap.png"), 74, 43);
 	ImageManager::GetInstance()->LoadFromFile(L"TileSet", Resources(L"Tile/Tile.bmp"), 16, 16);

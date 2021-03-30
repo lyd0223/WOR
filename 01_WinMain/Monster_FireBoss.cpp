@@ -161,7 +161,7 @@ void Monster_FireBoss::Update()
 
 	if (mFireBossState == FireBossState::Idle)
 	{
-		if (mFrameCount > 0.1f)
+		if (mFrameCount > 0.2f)
 		{
 			mFrameCount = 0;
 			ParticleManager::GetInstance()->MakeFireParticle(mX + 10, mY - 30, 0);

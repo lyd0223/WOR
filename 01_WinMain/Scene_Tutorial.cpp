@@ -27,7 +27,7 @@
 
 void Scene_Tutorial::Init()
 {
-	SoundPlayer::GetInstance()->Play(L"Tutorial", 1.f);
+	SoundPlayer::GetInstance()->Play(L"Tutorial", 0.5f);
 
 	Load_Image::GetInstance()->LoadSceneMapToolImage();
 

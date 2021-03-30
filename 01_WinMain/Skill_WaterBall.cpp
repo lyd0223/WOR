@@ -38,6 +38,8 @@ void Skill_WaterBall::Init()
 	mWaterBallAnimation->Play();
 
 	mSkillPower = 2.f;
+
+	SoundPlayer::GetInstance()->Play(L"WaterBall", 1.f);
 }
 
 void Skill_WaterBall::Release()

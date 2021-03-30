@@ -20,6 +20,8 @@ void Effect_FireWing::Init()
 	mFireWingAnimation->InitFrameByStartEnd(0, 0, 7, 0, false);
 	mFireWingAnimation->SetFrameUpdateTime(0.05f);
 	mFireWingAnimation->Play();
+
+	SoundPlayer::GetInstance()->Play(L"FireChargeup", 1.f);
 }
 
 void Effect_FireWing::Release()

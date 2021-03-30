@@ -5,7 +5,7 @@
 void Scene_TitleScene::Init()
 {
 	if (!mBackImageList.empty()) return;
-	SoundPlayer::GetInstance()->Play(L"TitleScreen", 1.f);
+	SoundPlayer::GetInstance()->Play(L"TitleScreen", 0.5f);
 
 	ImageManager::GetInstance()->LoadFromFile(L"BackGround0", Resources(L"Title/BackGround0.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"BackGround1", Resources(L"Title/BackGround1.png"));

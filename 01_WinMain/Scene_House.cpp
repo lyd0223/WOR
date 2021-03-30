@@ -13,7 +13,7 @@
 #include "Effect_Teleport.h"
 void Scene_House::Init()
 {
-	SoundPlayer::GetInstance()->Play(L"PlayerRoom", 1.f);
+	SoundPlayer::GetInstance()->Play(L"PlayerRoom", 0.5f);
 	Load_Image::GetInstance()->LoadSceneMapToolImage();
 	ImageManager::GetInstance()->LoadFromFile(L"SkillBook", Resources(L"Tile/Structure/SkillBook.png"), 14, 2);
 	ImageManager::GetInstance()->LoadFromFile(L"TutorialTile", Resources(L"Tile/TutorialMap.png"), 74, 43);
