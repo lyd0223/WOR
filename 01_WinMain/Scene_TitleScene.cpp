@@ -4,6 +4,7 @@
 
 void Scene_TitleScene::Init()
 {
+	if (!mBackImageList.empty()) return;
 	ImageManager::GetInstance()->LoadFromFile(L"BackGround0", Resources(L"Title/BackGround0.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"BackGround1", Resources(L"Title/BackGround1.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"BackGround2", Resources(L"Title/BackGround2.png"));
@@ -209,7 +210,7 @@ void Scene_TitleScene::Render()
 		mBackImageList[mBackGroundCount]->Render(WINSIZEX / 2, WINSIZEY / 2);
 		for (int i = 0; i < mButtonList.size(); i++) 
 		{
-			RenderRect(mButtonList[i].Rect);
+			//RenderRect(mButtonList[i].Rect);
 			D2DRenderer::GetInstance()->RenderTextField(mButtonList[i].Rect.left, mButtonList[i].Rect.top,
 				mButtonList[i].Name, mButtonList[i].FontSize, mButtonList[i].Rect.right - mButtonList[i].Rect.left,
 				mButtonList[i].Rect.bottom - mButtonList[i].Rect.top, mButtonList[i].Brush,

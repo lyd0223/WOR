@@ -43,6 +43,12 @@ void ObjectManager::Release()
 
 void ObjectManager::Update()
 {
+	if (!mInterface.empty())
+	{
+		mInterface.top()->Update();
+		return;
+	}
+
 	ObjectIter iter = mObjectList.begin();
 	for (; iter != mObjectList.end(); ++iter)
 	{
@@ -105,6 +111,10 @@ void ObjectManager::Render()
 			}
 		}
 	}
+	if (!mInterface.empty())
+	{
+		mInterface.top()->Render();
+	}
 }
 
 void ObjectManager::AddObject(ObjectLayer layer, GameObject * object)
@@ -114,6 +124,23 @@ void ObjectManager::AddObject(ObjectLayer layer, GameObject * object)
 	//�׷��� �ᱹ find���°Ŷ� ����ѵ�, �ٸ����̶�� �Ѵٸ� �ش� Ű���� �����Ͱ� 
 	//������ ���� �����ع���. �����ؾ���
 	mObjectList[layer].push_back(object);
+}
+
+void ObjectManager::AddInterface(GameObject * object)
+{
+	mInterface.emplace(object);
+}
+
+void ObjectManager::PopInterface()
+{
+	if (mInterface.empty()) return;
+		mInterface.pop();
+}
+
+void ObjectManager::InterfaceClear()
+{
+	while (!mInterface.empty())
+		mInterface.pop();
 }
 
 //�ش� �̸��� ������Ʈ ã�ƿ���

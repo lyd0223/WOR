@@ -179,8 +179,8 @@ void UI_SpellBook::Update()
 			mIndex = 0;
 			if(iter->first != mSpellbookUISkillElemantalList.begin()->first)
 				iter--;
-			mCurrentSkill = iter2->second[mIndex];
 			mCurrentSkillElement = iter->first;
+			mCurrentSkill = mSkillList.find(iter->first)->second[0];
 			mSpellbookUISkillElementalOn->X = iter->second->X;
 			mSpellbookUISkillElementalOn->Y = iter->second->Y;
 		}
@@ -194,7 +194,7 @@ void UI_SpellBook::Update()
 				iter--;
 			}
 			mCurrentSkillElement = iter->first;
-			mCurrentSkill = iter2->second[mIndex];
+			mCurrentSkill = mSkillList.find(iter->first)->second[0];
 			mSpellbookUISkillElementalOn->X = iter->second->X;
 			mSpellbookUISkillElementalOn->Y = iter->second->Y;
 		}
@@ -202,22 +202,62 @@ void UI_SpellBook::Update()
 		{
 			mSpellbookUILeftArrow->Image->SetScale(1.5f);
 			mIndex--;
+
+			vector<UIObject*> uiVec = mSkillCardList.find(mCurrentSkillElement)->second;
+			for (int i = 0; i < uiVec.size(); i++)
+			{
+				uiVec[i]->X = mCardPositionX + (i * (uiVec[i]->Image->GetWidth() * 2 + 10));
+			}
+
 			if (mIndex < 0)
+			{
 				mIndex++;
+			}
 			mCurrentSkill = iter2->second[mIndex];
 		}
 		else if (Input::GetInstance()->GetKeyDown(VK_RIGHT) || Input::GetInstance()->GetKeyDown('D'))
 		{
 			mSpellbookUIRightArrow->Image->SetScale(1.5f);
 			mIndex++;
+
+			vector<UIObject*> uiVec = mSkillCardList.find(mCurrentSkillElement)->second;
+			reverse(uiVec.begin(), uiVec.end());
+
+			for (int i = 0; i < uiVec.size(); i++)
+			{
+				uiVec[i]->X = mCardPositionX - (i * (uiVec[i]->Image->GetWidth() * 2 + 10));
+			}
+
 			if (mIndex >= maxIndex)
 				mIndex--;
 			mCurrentSkill = iter2->second[mIndex];
 		}
+		
+		mCurrentSkill;
+
+		if (Input::GetInstance()->GetKeyDown(VK_SPACE))
+		{
+			switch (mCurrentSkillArcana)
+			{
+			case SkillArcana::Basic:
+				mPlayer->SetLB_ButtonSkill(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetName());
+				break;
+			case SkillArcana::Dash:
+				mPlayer->SetSpacebar_ButtonSkill(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetName());
+				break;
+			case SkillArcana::Standard:
+				mPlayer->SetRB_ButtonSkill(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetName());
+				break;
+			case SkillArcana::Signature:
+				mPlayer->SetQ_ButtonSkill(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetName());
+				break;
+			}
+			ObjectManager::GetInstance()->PopInterface();
+		}
 
 		if (Input::GetInstance()->GetKeyDown(VK_ESCAPE))
 		{
-			mIsDestroy = true;
+			ObjectManager::GetInstance()->PopInterface();
 		}
 	}
 }
@@ -235,6 +275,7 @@ void UI_SpellBook::Render()
 		mSpellbookUIUpArrow->Image->ScaleRender(mSpellbookUIUpArrow->X, mSpellbookUIUpArrow->Y, mSpellbookUIUpArrow->SizeX, mSpellbookUIUpArrow->SizeY);
 		mSpellbookUIDownArrow->Image->ScaleRender(mSpellbookUIDownArrow->X, mSpellbookUIDownArrow->Y, mSpellbookUIDownArrow->SizeX, mSpellbookUIDownArrow->SizeY);
 
+		// 스펠북 오른쪽 속성종류 출력
 		map<SkillElement, UIObject*>::iterator iter = mSpellbookUISkillElemantalList.begin();
 
 		for (; iter != mSpellbookUISkillElemantalList.end(); iter++)
@@ -242,6 +283,7 @@ void UI_SpellBook::Render()
 			iter->second->Image->ScaleRender(iter->second->X, iter->second->Y, iter->second->SizeX, iter->second->SizeY);
 		}
 		
+		// 스킬카드 출력
 		map<SkillElement, vector<UIObject*>>::iterator iter2 = mSkillCardList.begin();
 		
 		for (; iter2 != mSkillCardList.end(); iter2++)
@@ -261,7 +303,14 @@ void UI_SpellBook::Render()
 				}
 			}
 		}
-		
+		string temp = mCurrentSkill->GetName();
+		wstring str;
+		str.assign(temp.begin(), temp.end());
+		//D2D1_RECT_F rc = RectMakeCenter(mSpellbookUI->X, mSpellbookUI->Y + 35, 200, 30);
+		//RenderRect(rc);
+		D2DRenderer::GetInstance()->RenderText(mSpellbookUI->X - 40, mSpellbookUI->Y + 20, str, 20.f);
+		//D2DRenderer::GetInstance()->RenderTextField(mSpellbookUI->X, mSpellbookUI->Y, str, 20.f, 200, 30);
+		//D2DRenderer::GetInstance()->DrawTextToRect(rc, str, D2D1::ColorF::Gray, 20);
 		mSpellbookUISkillElementalOn->Image->ScaleFrameRender(mSpellbookUISkillElementalOn->X, mSpellbookUISkillElementalOn->Y, 0, (int)mCurrentSkillElement, mSpellbookUISkillElementalOn->SizeX, mSpellbookUISkillElementalOn->SizeY);
 	}
 }

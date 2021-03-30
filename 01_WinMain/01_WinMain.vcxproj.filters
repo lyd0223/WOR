@@ -432,6 +432,9 @@
     <ClInclude Include="Effect_Teleport.h">
       <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="UI_ESC.h">
+      <Filter>MainGame\Object\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -721,6 +724,9 @@
     </ClCompile>
     <ClCompile Include="Effect_Teleport.cpp">
       <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_ESC.cpp">
+      <Filter>MainGame\Object\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

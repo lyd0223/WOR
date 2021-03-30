@@ -4,6 +4,7 @@
 #include "Image.h"
 #include "Player.h"
 #include "UI_SkillChangeInterface.h"
+#include "UI_ESC.h"
 
 void UserInterface::Init()
 {
@@ -54,22 +55,15 @@ void UserInterface::Init()
 
 void UserInterface::Update()
 {
-	if (Input::GetInstance()->GetKeyDown('0'))
-	{
-		UI_SkillChangeInterface* skillChangeInterface = new UI_SkillChangeInterface();
-		skillChangeInterface->Init();
-		mInterface.emplace(skillChangeInterface);
-	}
-
 	if (Input::GetInstance()->GetKeyDown(VK_ESCAPE))
 	{
-		SafeDelete(mInterface.top())
-		mInterface.pop();
-	}
+		if (!ObjectManager::GetInstance()->GetInterfaceList().empty())
+			ObjectManager::GetInstance()->PopInterface();
 
-	if (!mInterface.empty())
-	{
-		mInterface.top()->Update();
+		UI_ESC* esc = new UI_ESC("ESC");
+		esc->Init();
+		ObjectManager::GetInstance()->AddInterface(esc);
+
 	}
 }
 
@@ -119,9 +113,4 @@ void UserInterface::Render()
 	}
 
 	//mSpecialSkillBox->Image->ScaleRender(mSpecialSkillBox->X, mSpecialSkillBox->Y, mSpecialSkillBox->SizeX, mSpecialSkillBox->SizeY);
-
-	if (!mInterface.empty())
-	{
-		mInterface.top()->Render();
-	}
 }

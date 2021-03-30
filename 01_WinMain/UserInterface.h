@@ -11,8 +11,6 @@ struct UIObject
 	Image* Image;
 };
 
-
-
 class Player;
 class UserInterface : public GameObject
 {
@@ -38,8 +36,6 @@ class UserInterface : public GameObject
 	Image* mMPBarImage;
 	
 	Player* mPlayer;
-
-	stack<GameObject*> mInterface;
 
 	map<string, Vector2> mSkillIndexList;
 public :

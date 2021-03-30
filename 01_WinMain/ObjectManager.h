@@ -26,6 +26,7 @@ class ObjectManager
 private:
 	typedef map<ObjectLayer, vector<class GameObject*>>::iterator ObjectIter;
 	map<ObjectLayer, vector<class GameObject*>> mObjectList;
+	stack<class GameObject*>  mInterface;
 	//map<class Scene, map<ObjectLayer, vector<class GameObject*>>> mObjectListOfScene;
 
 public:
@@ -37,11 +38,14 @@ public:
 	void Render();
 
 	void AddObject(ObjectLayer layer, class GameObject* object);
+	void AddInterface(class GameObject* object);
+	void PopInterface();
+	void InterfaceClear();
+
 	class GameObject* FindObject(const string& name);
 	class GameObject* FindObject(ObjectLayer layer, const string& name);
 	vector<class GameObject*> FindObjects(const string& name);
 	vector<class GameObject*> FindObjects(ObjectLayer layer, const string& name);
 	vector<class GameObject*> GetObjectList(ObjectLayer layer);
-
+	stack<class GameObject*> GetInterfaceList() { return mInterface; }
 };
-

@@ -61,7 +61,8 @@ void UI_SkillChangeInterface::Update()
 		{
 			UI_SpellBook* spellBook = new UI_SpellBook("SpellBook", mIndex);
 			spellBook->Init();
-			ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, spellBook);
+			//ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, spellBook);
+			ObjectManager::GetInstance()->AddInterface(spellBook);
 		}
 
 		if (Input::GetInstance()->GetKeyDown(VK_LEFT))
@@ -87,6 +88,11 @@ void UI_SkillChangeInterface::Update()
 			{
 				mCardPostion[i].Y = mBasicSkillIcon->Y;
 			}
+		}
+
+		if (Input::GetInstance()->GetKeyDown(VK_ESCAPE))
+		{
+			ObjectManager::GetInstance()->PopInterface();
 		}
 
 		mCardSelect->X = mCardPostion[mIndex].X;

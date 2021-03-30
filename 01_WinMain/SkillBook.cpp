@@ -4,6 +4,8 @@
 #include "Time.h"
 #include "Camera.h"
 #include "Image.h"
+#include "UI_SkillChangeInterface.h"
+
 SkillBook::SkillBook(float x, float y)
 {
 	mImage = ImageManager::GetInstance()->FindImage(L"SkillBook");
@@ -58,10 +60,9 @@ void SkillBook::Update()
 			
 			if (Input::GetInstance()->GetKeyDown('F'))
 			{
-				//여기에 추가
-
-
-				//
+				UI_SkillChangeInterface* skillChangeInterface = new UI_SkillChangeInterface();
+				skillChangeInterface->Init();
+				ObjectManager::GetInstance()->AddInterface(skillChangeInterface);
 			}
 		}
 		else
