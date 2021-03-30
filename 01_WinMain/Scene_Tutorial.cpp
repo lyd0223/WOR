@@ -23,6 +23,7 @@
 #include "MouseTracker.h"
 #include "Load_Image.h"
 #include "Structure.h"
+#include "Effect_Teleport.h"
 
 void Scene_Tutorial::Init()
 {
@@ -62,6 +63,7 @@ void Scene_Tutorial::Init()
 		else
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Structure, mStructureList[i]);
 	}
+	mPortal = (Structure*)ObjectManager::GetInstance()->FindObject("Portal");
 	//
 
 	//방추가 , 우측상단부터 1,2,3,4번
@@ -152,11 +154,15 @@ void Scene_Tutorial::Init()
 	camera->SetTarget(mPlayer);
 	CameraManager::GetInstance()->SetMainCamera(camera);
 
+	
+	Effect_Teleport* teleport = new Effect_Teleport(mPlayer->GetX(), mPlayer->GetY()+50, false);
 }
 
 void Scene_Tutorial::Release()
 {
 	ObjectManager::GetInstance()->Release();
+	mMonsterList.clear();
+
 }
 
 void Scene_Tutorial::Update()
@@ -178,6 +184,16 @@ void Scene_Tutorial::Update()
 					centerX, centerY,
 					mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize)
 			);
+		}
+	}
+
+	if (mPortal->GetPortalOn())
+	{
+
+		if (Input::GetInstance()->GetKeyDown('F'))
+		{
+			Effect_Teleport* teleport = new Effect_Teleport(mPortal->GetX(), mPortal->GetY(), true,L"Tutorial", L"House");
+			return;
 		}
 	}
 

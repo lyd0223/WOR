@@ -53,6 +53,7 @@ void Scene_MapTool::Init()
 	mLoadButton = new Button("Load", 1040, 150, 60, 50);
 	mRedoButton = new Button("Redo", 1130, 150, 60, 50);
 	mUndoButton = new Button("Undo", 1220, 150, 60, 50);
+	mTitlebutton = new Button("TitleButton", 1220, 180, 60, 50);
 	mPalleteMainButton = new Button("Back", 950, 200, 50, 50);
 	mPalleteLeftButton = new Button("Left", 920, 380, 50, 50);
 	mPalleteRihgtButton = new Button("Right", 1250, 380, 50, 50);
@@ -464,6 +465,7 @@ void Scene_MapTool::Update()
 	mLoadButton->Update();
 	mRedoButton->Update();
 	mUndoButton->Update();
+	mTitlebutton->Update();
 	if (Input::GetInstance()->GetKeyDown(VK_TAB))
 	{
 		if (mBookIsOpen)
@@ -709,6 +711,15 @@ void Scene_MapTool::Update()
 		rctemp = mUndoButton->GetRect();
 		if (PtInRect(&rctemp, _mousePosition))
 			Undo();
+		rctemp = mTitlebutton->GetRect();
+		if (PtInRect(&rctemp, _mousePosition))
+		{
+			SceneManager::GetInstance()->LoadScene(L"Title");
+			SceneManager::GetInstance()->DeleteScene(L"MapTool");
+			SceneManager::GetInstance()->AddScene(L"MapTool", new Scene_MapTool);
+			return;
+		}
+
 		rctemp = mPalleteRihgtButton->GetRect();
 		if (PtInRect(&rctemp, _mousePosition))
 		{
@@ -1188,6 +1199,7 @@ void Scene_MapTool::Render()
 	mLoadButton->Render();
 	mRedoButton->Render();
 	mUndoButton->Render();
+	mTitlebutton->Render();
 	if (mPalletePage == PalletePage::Main)     
 	{
 		mPalleteMainButton->Render();

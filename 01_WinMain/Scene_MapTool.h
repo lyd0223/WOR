@@ -76,6 +76,7 @@ class Scene_MapTool :public Scene
 	class Button* mPalleteRihgtButton;
 	class Button* mRedoButton;
 	class Button* mUndoButton;
+	class Button* mTitlebutton;
 
 	stack<class ICommand*> mRedoCommandList;
 	stack<class ICommand*> mUndoCommandList;

@@ -11,6 +11,7 @@ class MouseTracker;
 class Scene_Tutorial : public Scene
 {
 	class Player* mPlayer;
+	class Structure* mPortal;
 	class Monster_BigZombie* mBigZombie;
 	class Monster_Golem* mGolem;
 	class Monster_Mazition* mMazition;

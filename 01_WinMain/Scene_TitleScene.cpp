@@ -58,7 +58,7 @@ void Scene_TitleScene::Init()
 
 void Scene_TitleScene::Release()
 {
-
+	
 }
 
 void Scene_TitleScene::Update()
@@ -119,6 +119,8 @@ void Scene_TitleScene::Update()
 				break;
 			case 1:
 				SceneManager::GetInstance()->LoadScene(L"MapTool");
+				SceneManager::GetInstance()->DeleteScene(L"Title");
+				SceneManager::GetInstance()->AddScene(L"Title", new Scene_TitleScene);
 				break;
 			case 5:
 				PostQuitMessage(0);

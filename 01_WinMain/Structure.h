@@ -13,6 +13,7 @@ public:
 	void Release()override;
 	void Render()override;
 	
-	Image* GetImage() { return mImage; };
+	Image* GetImage() { return mImage; }
+	inline bool GetPortalOn() { return mPortalOn; }
 };
 

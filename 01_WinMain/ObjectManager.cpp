@@ -30,8 +30,13 @@ void ObjectManager::Release()
 	{
 		for (int i = 0; i < iter->second.size(); ++i)
 		{
-			iter->second[i]->Release();
-			SafeDelete(iter->second[i]);
+			if (iter->first != ObjectLayer::Player || iter->second[i]->GetName() != "TeleportEffect")
+			{
+				iter->second[i]->Release();
+				SafeDelete(iter->second[i]);
+				iter->second.erase(iter->second.begin() + i);
+				--i;
+			}
 		}
 	}
 }

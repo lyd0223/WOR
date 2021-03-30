@@ -10,6 +10,8 @@ class Scene_House : public Scene
 	class Player* mPlayer;
 	class TileMap* mTileMap;
 	vector<class Structure*> mStructureList;
+	Structure* mPortal;
+	bool mIsStart = 0;
 
 public:
 	void Init()override;

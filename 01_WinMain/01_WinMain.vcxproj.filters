@@ -429,6 +429,9 @@
     <ClInclude Include="SkillBook.h">
       <Filter>MainGame\Object\NPC</Filter>
     </ClInclude>
+    <ClInclude Include="Effect_Teleport.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -715,6 +718,9 @@
     </ClCompile>
     <ClCompile Include="Monster_SwoardMan.cpp">
       <Filter>MainGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_Teleport.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -10,9 +10,10 @@
 #include "Structure.h"
 #include "UserInterface.h"
 #include "SkillBook.h"
-
+#include "Effect_Teleport.h"
 void Scene_House::Init()
 {
+
 	Load_Image::GetInstance()->LoadSceneMapToolImage();
 	ImageManager::GetInstance()->LoadFromFile(L"SkillBook", Resources(L"Tile/Structure/SkillBook.png"), 14, 2);
 	ImageManager::GetInstance()->LoadFromFile(L"TutorialTile", Resources(L"Tile/TutorialMap.png"), 74, 43);
@@ -35,9 +36,17 @@ void Scene_House::Init()
 		else
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Structure, mStructureList[i]);
 	}
+	mPortal = (Structure*)ObjectManager::GetInstance()->FindObject("Portal");
 	//
 
-	mPlayer = new Player("Player", 55*TileSize+TileSize/2, 58*TileSize +TileSize/2);
+	if (ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player") != nullptr)
+	{
+		mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
+		mPlayer->SetX(55 * TileSize + TileSize / 2);
+		mPlayer->SetY(58 * TileSize + TileSize / 2);
+	}
+	else
+		mPlayer = new Player("Player", 55*TileSize+TileSize/2, 58*TileSize +TileSize/2);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 	
 	SkillBook* skillbook = new SkillBook(77 * TileSize - TileSize/2, 51 * TileSize);
@@ -51,6 +60,9 @@ void Scene_House::Init()
 	camera->ChangeMode(Camera::Mode::Follow);
 	camera->SetTarget(mPlayer);
 	CameraManager::GetInstance()->SetMainCamera(camera);
+
+	Effect_Teleport* teleport = new Effect_Teleport(mPlayer->GetX(), mPlayer->GetY()+50, false);
+
 }
 
 void Scene_House::Release()
@@ -65,10 +77,26 @@ void Scene_House::Update()
 	ObjectManager::GetInstance()->Update();
 
 	
+	if (mPortal->GetPortalOn())
+	{
+		
+		if (Input::GetInstance()->GetKeyDown('F'))
+		{
+			Effect_Teleport* teleport = new Effect_Teleport(mPortal->GetX(),mPortal->GetY(),true,L"House",L"FieldLoading");
+			return;
+		}
+	}
+	
 }
 
 void Scene_House::Render()
 {
 	ObjectManager::GetInstance()->Render();
 
+	if (mPortal->GetPortalOn())
+	{
+		Image* image = ImageManager::GetInstance()->FindImage(L"F");
+		image->SetScale(2.0f);
+		CameraManager::GetInstance()->GetMainCamera()->Render(image, mPlayer->GetX(), mPlayer->GetY() - 90);
+	}
 }

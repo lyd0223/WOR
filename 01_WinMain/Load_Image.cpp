@@ -8,6 +8,8 @@ void Load_Image::LoadSceneHouseImage()
 void Load_Image::LoadSceneMapToolImage()
 {
 
+	
+
 	ImageManager::GetInstance()->LoadFromFile(L"TutorialTile", Resources(L"Tile/TutorialMap.png"), 74, 43);
 	ImageManager::GetInstance()->LoadFromFile(L"TileSet", Resources(L"Tile/Tile.bmp"), 16, 16);
 	ImageManager::GetInstance()->LoadFromFile(L"Set", Resources(L"Tile/Set.bmp"));
@@ -16,10 +18,12 @@ void Load_Image::LoadSceneMapToolImage()
 	ImageManager::GetInstance()->LoadFromFile(L"Pallete", Resources(L"Tile/Pallete.png"));
 
 	//¹öÆ°ÀÌ¹ÌÁö
+	ImageManager::GetInstance()->LoadFromFile(L"F", Resources(L"UI/F.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"Save", Resources(L"Tile/Button/Save.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"Load", Resources(L"Tile/Button/Load.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"Redo", Resources(L"Tile/Button/Redo.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"Undo", Resources(L"Tile/Button/Undo.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"TitleButton", Resources(L"Tile/Button/Title.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"Back", Resources(L"Tile/Button/Back.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"Left", Resources(L"Tile/Button/Left.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"Right", Resources(L"Tile/Button/Right.png"));
@@ -77,8 +81,12 @@ void Load_Image::LoadSceneMapToolImage()
 	ImageManager::GetInstance()->LoadFromFile(L"Carpet1", Resources(L"Tile/Structure/Carpet.png"));
 	//ImageManager::GetInstance()->LoadFromFile(L"Carpet2", Resources(L"Tile/Structure/Carpet2.png"));
 
+	ImageManager::GetInstance()->LoadFromFile(L"Mirror", Resources(L"Tile/Structure/Mirror.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"ScareCrow", Resources(L"Tile/Structure/ScareCrow.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"PaperDebris", Resources(L"Tile/Structure/PaperDebris.png"));
+
+	//Æ÷Å»ÀÌÆåÆ®
+	ImageManager::GetInstance()->LoadFromFile(L"TeleportEffect", Resources(L"Tile/Structure/PortalEffect.png"),7,1);
 }
 
 void Load_Image::LoadSceneTutorialImage()

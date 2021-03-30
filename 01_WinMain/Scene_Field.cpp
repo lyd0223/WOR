@@ -24,9 +24,14 @@ void Scene_Field::Init()
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mTileMap);
 	//
 	
-	mPlayer = new Player("Player", 0, 0);
+	if (ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player") == nullptr)
+	{
+		mPlayer = new Player("Player", 0, 0);
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
+	}
+	else
+		mPlayer = (Player*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Player, "Player");
 	RandomMapGeneration::GetInstance()->RandomPlayerPosition(mPlayer);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 
 	RandomMapGeneration::GetInstance()->RandomMonsterCreate();
 

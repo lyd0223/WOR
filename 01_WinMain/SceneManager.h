@@ -23,6 +23,7 @@ public:
 	void AddScene(const wstring& sceneName,Scene* scene);
 	//로딩없이 로드하는 함수
 	void LoadScene(const wstring& sceneName);
+	void DeleteScene(const wstring& sceneName);
 	Scene* FindScene(const wstring& sceneName);
 	void LoadScene(const wstring& targetSceneName, const wstring& loadingSceneName);
 private:

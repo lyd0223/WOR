@@ -60,6 +60,23 @@ void SceneManager::LoadScene(const wstring & sceneName)
 	mCurrentScene = targetScene;
 }
 
+void SceneManager::DeleteScene(const wstring& sceneName)
+{
+	SceneIter iter = mSceneList.begin();
+	for (; iter != mSceneList.end(); ++iter)
+	{
+		//iter->second->Release();
+		if (iter->first == sceneName)
+		{
+			SafeDelete(iter->second);
+			iter->second->Release();
+			mSceneList.erase(sceneName);
+
+		}
+
+	}
+}
+
 Scene* SceneManager::FindScene(const wstring& sceneName)
 {
 	SceneIter iter = mSceneList.find(sceneName);
