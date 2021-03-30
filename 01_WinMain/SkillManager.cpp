@@ -28,6 +28,7 @@
 #include "MouseTracker.h"
 #include "Tile.h"
 #include "TileMap.h"
+#include "Camera.h"
 
 #define TileSize 48
 
@@ -99,6 +100,16 @@ SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y
 	{
 		Skill_WaterBall* waterBall = new Skill_WaterBall(name, x, y, angle);
 		return waterBall;
+	}
+	if (name == "Meteor")
+	{
+		float X = CameraManager::GetInstance()->GetMainCamera()->GetMousePosition().x;
+		float Y = CameraManager::GetInstance()->GetMainCamera()->GetMousePosition().y;
+		Effect_MagicCircle* magicCircle = new Effect_MagicCircle(name, 
+			CameraManager::GetInstance()->GetMainCamera()->GetMousePosition().x,
+			CameraManager::GetInstance()->GetMainCamera()->GetMousePosition().y, 
+			CastingSkill::Meteor);
+		return magicCircle;
 	}
 	return nullptr;
 }

@@ -7,12 +7,13 @@
 #include "Camera.h"
 
 Effect_MagicCircle::Effect_MagicCircle(const string & name, float x, float y, CastingSkill castingSkill)
-	:GameObject(name)
+	:SkillObject(name)
 {
 	mX = x;
 	mY = y;
 	mCastingSkill = castingSkill;
 	mIsActive = true;
+	mSkillType = SkillType::Install;
 }
 
 void Effect_MagicCircle::Init()
@@ -44,11 +45,12 @@ void Effect_MagicCircle::Update()
 	if (mCircleMakeAnimation->GetNowFrameX() == 15 && mCastingSkill == CastingSkill::Meteor) {
 		mMeteor = new Skill_Meteor("Meteor", mX, mY);
 		mMeteor->Init();
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, mMeteor);
 	}
 	
  	mTimeCount1 += Time::GetInstance()->DeltaTime();
 	mTimeCount2 += Time::GetInstance()->DeltaTime();
-	if (mCircleMakeAnimation->GetNowFrameX() == 23) {
+	if (mCircleMakeAnimation->GetNowFrameX() == 23 && mCastingSkill == CastingSkill::Burn) {
 		if (mTimeCount1 > 0.5) {
 			MakeFlameList();
 			mTimeCount1 = 0;
@@ -61,21 +63,21 @@ void Effect_MagicCircle::Update()
 		}
 	}
 
-	/*if ((mCircleMakeAnimation->GetNowFrameX() == 23 && mMeteor == nullptr)) {
-		mHitSpark = new HitSpark("HitSpark", mX, mY, 0);
-		mHitSpark->Init();
-		mIsDestroy = true;
-	}*/
+	//if ((mCircleMakeAnimation->GetNowFrameX() == 23 && mMeteor == nullptr)) {
+	//	mHitSpark = new HitSpark("HitSpark", mX, mY, 0);
+	//	mHitSpark->Init();
+	//	mIsDestroy = true;
+	//}
 
 	if (mMeteor != nullptr) 
 	{
 		mMeteor->Update();
-		if (mX < mMeteor->GetX()) 
+		if (mY > mMeteor->GetY()) 
 		{
 			ParticleManager::GetInstance()->MakeShorkWaveParticle(mMeteor->GetX(), mMeteor->GetRect().bottom, 3.f);
-			mMeteor->Release();
-			SafeDelete(mMeteor)
-		} 
+			ObjectManager::GetInstance()->FindObject("Meteor")->SetIsDestroy(true);
+			SafeDelete(mMeteor);
+		}
 	}
 
 	for (int i = 0; i < mFlameList.size(); i++) {

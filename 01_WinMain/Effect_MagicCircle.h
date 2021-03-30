@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "SkillObject.h"
 
 enum class CastingSkill : int {
 	Meteor,
@@ -13,7 +13,7 @@ class Skill_Meteor;
 class Skill_Flame;
 class Effect_HitSpark;
 class Animation;
-class Effect_MagicCircle : public GameObject
+class Effect_MagicCircle : public SkillObject
 {
 	Image* mImage;
 	Animation* mCircleMakeAnimation;

@@ -7,7 +7,7 @@ Skill_Meteor::Skill_Meteor(const string & name, float x, float y)
 	:SkillObject(name)
 {
 	mX = x - 200;
-	mY = 0;
+	mY = y - 720;
 	mEndX = x;
 	mEndY = y;
 	mSpeed = 10.f;

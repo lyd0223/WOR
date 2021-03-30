@@ -136,17 +136,17 @@ void Monster_FireBoss::Update()
 		}
 	}
 
-	if (Input::GetInstance()->GetKeyDown('M')) {
-		//AttackReady();
+	if (Input::GetInstance()->GetKeyDown('9')) {
+		AttackReady();
 		//FireBallThrowPattern();
 		//StempPattern();
 		//KickPattern();
-		Move();
+		//Move();
 		//MakePattern();
 		//mFireBossState = FireBossState::Dash;
 		//MakePatternFuncList();
 		//MeteorPattern();
-		SkillManager::GetInstance()->DragonArcSkill("DragonArc", mX, mY, mAngle, true);
+		//SkillManager::GetInstance()->DragonArcSkill("DragonArc", mX, mY, mAngle, true);
 		
 		if (mPatternList.size() == 0)
 		{
@@ -280,7 +280,6 @@ void Monster_FireBoss::AttackReady()
 	Effect_FireWing* fireWing = new Effect_FireWing("FireWing", mX, mY - 80);
 	fireWing->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, fireWing);
-
 	BossStateChange();
 }
 

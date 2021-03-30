@@ -24,8 +24,8 @@ void Camera::Release()
 
 void Camera::Update()
 {
-	mMousePosition.x = _mousePosition.x - mRect.left;
-	mMousePosition.y = _mousePosition.y - mRect.top;
+	mMousePosition.x = _mousePosition.x + mRect.left;
+	mMousePosition.y = _mousePosition.y + mRect.top;
 	switch (mMode)
 	{
 	case Camera::Mode::Follow:
