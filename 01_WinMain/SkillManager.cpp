@@ -177,11 +177,13 @@ void SkillManager::Update()
 						monster->SetIsCollision(true);
 						ParticleManager::GetInstance()->MakeHitSparkParticle(temp.left, temp.top);
 					}
+					monster->SetIsHit(true);
 				}
 
 				// ������ ��ų
 				if (skill->GetSkillType() == SkillType::Throw) 
 				{
+					
 					if (IntersectRect(temp, &skillrc, &monsterrc))
 					{
 
@@ -202,11 +204,10 @@ void SkillManager::Update()
 
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 						skill->SetIsDestroy(true);
+						monster->SetIsHit(true);
 						break;
 					}
-
 				}
-				monster->SetIsHit(true);
 			}
 
 			// �� to �÷��̾�
