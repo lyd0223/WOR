@@ -79,7 +79,7 @@ void Scene_Tutorial::Init()
 
 	//�����߰��ϱ�
 	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 11 * TileSize, MonsterName::RapidZombie, mRoomList[1]);
-	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 9 * TileSize, MonsterName::Zombie, mRoomList[1]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 9 * TileSize, MonsterName::SwoardMan, mRoomList[1]);
 	ParticleManager::GetInstance()->MakeEnemyCreate(35 * TileSize, 9 * TileSize, MonsterName::Zombie, mRoomList[1]);
 	ParticleManager::GetInstance()->MakeEnemyCreate(35 * TileSize, 11 * TileSize, MonsterName::Zombie, mRoomList[1]);
 
@@ -189,26 +189,26 @@ void Scene_Tutorial::Update()
 		}
 	}
 
-	for (int i = 0; i < mMonsterList.size(); i++)
-	{
-		if (mMonsterList[i]->GetIsActive())
-		{
-			MonsterObject* monster = (MonsterObject*)mMonsterList[i];
-			D2D1_RECT_F rc = monster->GetMovingRect();
-			float centerX = (rc.left + (rc.right - rc.left) / 2) / TileSize;
-			float centerY = (rc.top + (rc.bottom - rc.top) / 2) / TileSize;
-			if (monster == nullptr)
-			{
-				break;
-			}
-			monster->SetPathList(
-				PathFinder::GetInstance()->FindPath(
-					(TileMap*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Tile, "TileMap"),
-					centerX, centerY,
-					mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize)
-			);
-		}
-	}
+	//for (int i = 0; i < mMonsterList.size(); i++)
+	//{
+	//	if (mMonsterList[i]->GetIsActive())
+	//	{
+	//		MonsterObject* monster = (MonsterObject*)mMonsterList[i];
+	//		D2D1_RECT_F rc = monster->GetMovingRect();
+	//		float centerX = (rc.left + (rc.right - rc.left) / 2) / TileSize;
+	//		float centerY = (rc.top + (rc.bottom - rc.top) / 2) / TileSize;
+	//		if (monster == nullptr)
+	//		{
+	//			break;
+	//		}
+	//		monster->SetPathList(
+	//			PathFinder::GetInstance()->FindPath(
+	//				(TileMap*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Tile, "TileMap"),
+	//				centerX, centerY,
+	//				mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize)
+	//		);
+	//	}
+	//}
 
 }
 

@@ -39,7 +39,7 @@ void Gizmo::DrawRect(D2D1_RECT_F rc, D2D1::ColorF::Enum color)
 	wstring wstr;
 	wstr.assign(str.begin(), str.end());
 
-	D2DRenderer::GetInstance()->RenderText(rect.left, rect.top, wstr, D2D1::ColorF::Aqua, 1.f, 15.f);
+	//D2DRenderer::GetInstance()->RenderText(rect.left, rect.top, wstr, D2D1::ColorF::Aqua, 1.f, 15.f);
 
 	brush->Release();
 }

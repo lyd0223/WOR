@@ -113,7 +113,12 @@ void Monster_SwoardMan::Update()
 					}
 					
 					// ÀÌµ¿
-
+					float centerX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
+					float centerY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
+					mPathList = PathFinder::GetInstance()->FindPath(
+						(TileMap*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Tile, "TileMap"),
+						centerX / TileSize, centerY / TileSize,
+						mPlayer->GetX() / TileSize, mPlayer->GetY() / TileSize);
 					//if (mCurrentAnimation != mRightAttackAnimation || mCurrentAnimation != mLeftAttackAnimation && mCurrentAnimation != mUpAttackAnimation || mCurrentAnimation != mDownAttackAnimation ||
 					//	mCurrentAnimation != mRightIdleAnimation || mCurrentAnimation != mLeftIdleAnimation)
 					if (mCurrentAnimation == mRightWalkAnimation || mCurrentAnimation == mLeftWalkAnimation) 
@@ -121,8 +126,6 @@ void Monster_SwoardMan::Update()
 
 						if (mPathList.size() > 1)
 						{
-							float centerX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
-							float centerY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
 							float nextX = mPathList[1]->GetX() + (TileSize / 2);
 							float nextY = mPathList[1]->GetY() + (TileSize / 2);
 							float angle = Math::GetAngle(centerX, centerY, nextX, nextY);

@@ -142,23 +142,19 @@ void Monster_FireBoss::Update()
 	}
 
 	if (Input::GetInstance()->GetKeyDown('9')) {
-
-		if (mPatternList.size() == 0)
-		{
-			MakePatternList();
-		}
+		DragonArcWavePattern();
 	}
 
-	if (mCurrentAnimation == mRightIdleAnimation || mCurrentAnimation == mLeftIdleAnimation)
-	{
-		mFrameCount += Time::GetInstance()->DeltaTime();
-		
-		if (mFrameCount > 1.5)
-		{
-			mFrameCount = 0;
-			MakePatternList();
-		}
-	}
+	//if (mCurrentAnimation == mRightIdleAnimation || mCurrentAnimation == mLeftIdleAnimation)
+	//{
+	//	mFrameCount += Time::GetInstance()->DeltaTime();
+	//	
+	//	if (mFrameCount > 1.5)
+	//	{
+	//		mFrameCount = 0;
+	//		MakePatternList();
+	//	}
+	//}
 
 	if (!mPatternList.empty())
 	{
@@ -404,7 +400,67 @@ void Monster_FireBoss::MeteorPattern()
 
 void Monster_FireBoss::DragonArcWavePattern()
 {
-	
+	int random = Random::GetInstance()->RandomInt(4);
+
+	if (mIsOneCheck == false)
+	{
+		SoundPlayer::GetInstance()->Play(L"FireChargeup", 1.f);
+
+		switch (random)
+		{
+		case 0:	// 辑率
+			mX = mMapRect.left + 30;
+			mY = Random::GetInstance()->RandomInt(mMapRect.top + 30, mMapRect.bottom - 30);
+			break;
+		case 1: // 合率
+			mX = Random::GetInstance()->RandomInt(mMapRect.left + 30, mMapRect.right - 30);
+			mY = mMapRect.top + 30;
+			break;
+		case 2:	// 悼率
+			mX = mMapRect.right - 30;
+			mY = Random::GetInstance()->RandomInt(mMapRect.top + 30, mMapRect.bottom - 30);
+			break;
+		case 3:	// 巢率
+			mX = Random::GetInstance()->RandomInt(mMapRect.left + 30, mMapRect.right - 30);
+			mY = mMapRect.bottom - 30;
+			break;
+		}
+
+		//mAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
+		//POINT temp;
+		//switch (random)
+		//{
+		//case 0:
+		//	temp.x;
+		//	temp.y;
+		//	break;
+		//case 1:
+		//	temp.x;
+		//	temp.y;
+		//	break;
+		//case 2:
+		//	temp.x;
+		//	temp.y;
+		//	break;
+		//case 3:
+		//	temp.x;
+		//	temp.y;
+		//	break;
+		//}
+
+		//float distance = Math::GetDistance(mX, mY, temp.x, temp.y);
+
+		//for (int i = 0; i < distance / 5; i++)
+		//{
+		//	float x = mX + cosf(mAngle) * (i * 20);
+		//	float y = mY + -sinf(mAngle) * (i * 20);
+		//	Skill_Flame* flame = new Skill_Flame("Flame", x, y, 0);
+		//	flame->Init();
+		//	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, flame);
+		//}
+	}
+
+	mX += cosf(mAngle);
 }
 
 void Monster_FireBoss::KickPattern()
@@ -507,7 +563,7 @@ void Monster_FireBoss::Refresh()
 void Monster_FireBoss::Stun()
 {
 	mFrameCount += Time::GetInstance()->DeltaTime();
-	if (mCurrentAnimation != mRightStunAnimation || mCurrentAnimation != mLeftStunAnimation)
+	if (mCurrentAnimation != mRightStunAnimation && mCurrentAnimation != mLeftStunAnimation)
 	{
 		if (mX < mPlayer->GetX()) AnimationChange(mRightStunAnimation);
 		else AnimationChange(mLeftStunAnimation);

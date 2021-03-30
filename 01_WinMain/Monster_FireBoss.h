@@ -79,6 +79,7 @@ class Monster_FireBoss : public MonsterObject
 	bool mIsFireBall;
 	bool mIsRefreshChange;
 	bool mIsHitCountChange;
+	bool mIsOneCheck;
 public:
 	Monster_FireBoss(const string& name, float x, float y);
 
