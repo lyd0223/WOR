@@ -26,8 +26,8 @@ void Skill_WindSlash::Init()
 	mSizeX = mImage->GetWidth() / 5 * 1.5 - 30;
 	mSizeY = mImage->GetHeight() / 3 * 1.5;
 
-
-
+	mSkillPower = 5.f;
+	mSkillDamege = 11.f;
 
 	mSlashAnimation = new Animation;
 	mSlashAnimation->InitFrameByStartEnd(0, 0, 4, 0, false);

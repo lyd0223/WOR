@@ -67,7 +67,7 @@ void Monster_RapidZombie::Update()
 				
 
 				//아이들
-				if (mMonsterToPlayerDistance >= 5.5f)
+				if (mMonsterToPlayerDistance >= 20.5)
 				{
 					AnimationChange(mRightIdleAnimation);
 					mMonsterActState = MonsterActState::RightIdle;
@@ -77,7 +77,7 @@ void Monster_RapidZombie::Update()
 
 				}
 				//추격
-				if (mMonsterToPlayerDistance < 5.5f && mMonsterToPlayerDistance >= 1.5f)
+				if (mMonsterToPlayerDistance < 20.5f && mMonsterToPlayerDistance >= 2.f)
 				{
 
 					if (mRightWalkAnimation->GetIsPlay() == false)mIsAct = false;
@@ -132,7 +132,7 @@ void Monster_RapidZombie::Update()
 				}
 
 
-				if (mMonsterToPlayerDistance < 1.5f)
+				if (mMonsterToPlayerDistance < 2.f)
 				{
 
 					//오른쪽 공격

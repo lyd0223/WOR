@@ -205,9 +205,22 @@ void SkillManager::Update()
 							monster->SetHitCount(temp);
 							return;
 						}
+						else
+						{
+							int temp = monster->GetHP();
+							temp -= skill->GetSkillDamege();
+							monster->SetHP(temp);
+							return;
+						}
 						ParticleManager::GetInstance()->MakeHitSparkParticle(temp.left, temp.top);
 						monster->SetSkillHitAngle(skill->GetAngle());
 						monster->SetSkillHitPower(skill->GetSkillPower());
+					if (skill->GetName() == "WindSlash")
+					{
+						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						monster->SetSkillHitAngle(skill->GetAngle());
+						monster->SetSkillHitPower(skill->GetSkillPower());
+					}
 					}
 				}
 
@@ -259,6 +272,13 @@ void SkillManager::Update()
 							monster->SetHP(temp);
 							return;
 						}
+						else
+						{
+							int temp = monster->GetHP();
+							temp -= skill->GetSkillDamege();
+							monster->SetHP(temp);
+							return;
+						}
 
 						break;
 					}
@@ -277,7 +297,27 @@ void SkillManager::Update()
 					// 근접
 					if (skill->GetSkillType() == SkillType::Melee)
 					{
-
+						if (skill->GetName() == "MonsterSmallSlash")
+						{
+							ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						
+							player->SetSkillHitAngle(skill->GetAngle());
+							player->SetSkillHitPower(skill->GetSkillPower());
+						}
+						if (skill->GetName() == "MonsterMiddleSlash")
+						{
+							ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						
+							player->SetSkillHitAngle(skill->GetAngle());
+							player->SetSkillHitPower(skill->GetSkillPower());
+						}
+						if (skill->GetName() == "MonsterBigSlash")
+						{
+							ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+							
+							player->SetSkillHitAngle(skill->GetAngle());
+							player->SetSkillHitPower(skill->GetSkillPower());
+						}
 					}
 
 					// 투척

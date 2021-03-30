@@ -1397,6 +1397,14 @@ void Player::Update()
 	}
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
  }
+ // 넉백
+ if (mSkillHitPower > 0)
+ {
+	 mX += cosf(mSkillHitAngle) * mSkillHitPower;
+	 mY += -sinf(mSkillHitAngle) * mSkillHitPower;
+	 mSkillHitPower -= 0.2f;
+
+ }
 	//if (mTileList[(int)mPlayer->GetY() / TileSize][(int)mPlayer->GetX() / TileSize]->GetType() == Type::Cliff)
 	//{
 	//

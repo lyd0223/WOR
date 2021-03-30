@@ -21,16 +21,19 @@ void Skill_MonsterBigSlash::Init()
 	mSizeX = mImage->GetWidth() / 5 ;
 	mSizeY = mImage->GetHeight() / 3;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-
-
+	mSkillPower = 7.f;
+	mSkillType = SkillType::Melee;
+	mSkillElement = SkillElement::Wind;
+	mSkillTarget = SkillTarget::Enemy;
+	mSkillArcana = SkillArcana::Standard;
 	mSlashAnimation = new Animation;
 	mSlashAnimation->InitFrameByStartEnd(0, 0, 4, 0, false);
 	mSlashAnimation->SetIsLoop(false);
 	mSlashAnimation->SetFrameUpdateTime(0.1f);
 	mSlashAnimation->Play();
+	mSkillHitCount = 1;
 
-	mSkillTarget = SkillTarget::Enemy;
-	mSkillType = SkillType::Melee;
+	
 }
 
 void Skill_MonsterBigSlash::Release()

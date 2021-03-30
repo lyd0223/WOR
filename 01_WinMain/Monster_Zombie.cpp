@@ -30,13 +30,13 @@ void Monster_Zombie::Init()
 	mHp = 1;
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
 	AnimationSet(&mLeftIdleAnimation, false, false, 5, 0, 5, 0, AnimationTime);
-	AnimationSet(&mRightAttackAnimation, false, true, 1, 0, 2, 0, AnimationTime);
-	AnimationReverseSet(&mLeftAttackAnimation, false, true, 4, 0, 3, 0, AnimationTime);
-	AnimationSet(&mRightWalkAnimation, false, true, 0, 1, 5, 1, AnimationTime);
-	AnimationReverseSet(&mLeftWalkAnimation, false, true, 5, 2, 0, 2, AnimationTime);
+	AnimationSet(&mRightAttackAnimation, false, false, 1, 0, 2, 0, 0.5f);
+	AnimationReverseSet(&mLeftAttackAnimation, false, false, 4, 0, 3, 0, 0.5f);
+	AnimationSet(&mRightWalkAnimation, false, false, 0, 1, 5, 1, AnimationTime);
+	AnimationReverseSet(&mLeftWalkAnimation, false, false, 5, 2, 0, 2, AnimationTime);
 	AnimationSet(&mRightHitAnimation, false, false, 0, 3, 0, 3, AnimationTime);
 	AnimationSet(&mLeftHitAnimation, false, false, 6, 2, 6, 2, AnimationTime);
-	AnimationSet(&mDieAnimation, false, true, 0, 3, 9, 3, AnimationTime);
+	AnimationSet(&mDieAnimation, false, false, 0, 3, 9, 3, AnimationTime);
 
 	mCurrentAnimation = mRightIdleAnimation;
 	mCurrentAnimation->Play();
@@ -94,7 +94,7 @@ void Monster_Zombie::Update()
 				}
 			}
 			//아이들
-			if (mMonsterToPlayerDistance >= 5.5f)
+			if (mMonsterToPlayerDistance >= 20.5f)
 			{
 				AnimationChange(mRightIdleAnimation);
 				mMonsterActState = MonsterActState::RightIdle;
@@ -104,7 +104,7 @@ void Monster_Zombie::Update()
 
 			}
 			//추격
-			if (mMonsterToPlayerDistance < 5.5f && mMonsterToPlayerDistance >= 1.5f)
+			if (mMonsterToPlayerDistance < 20.5f && mMonsterToPlayerDistance >= 1.5f)
 			{
 
 				if (mRightWalkAnimation->GetIsPlay() == false)mIsAct = false;
@@ -172,7 +172,7 @@ void Monster_Zombie::Update()
 							{
 								AnimationChange(mRightAttackAnimation);
 							}
-							if (mCurrentAnimation->GetNowFrameX() == 3 && mCurrentAnimation->GetNowFrameY() == 0)
+							if (mCurrentAnimation->GetNowFrameX() == 2 && mCurrentAnimation->GetNowFrameY() == 0)
 							{
 								SkillManager::GetInstance()->MonsterSmallSlashSkill("MonsterSmallSlash", lineX, lineY, mMonsterToPlayerAngle);
 							}
@@ -180,7 +180,7 @@ void Monster_Zombie::Update()
 							mMonsterActState = MonsterActState::RightAttack;
 							mMonsterState = MonsterState::Attack;
 							mIsAct = false;
-							if (mRightAttackAnimation->GetNowFrameX() == 3)
+							if (mRightAttackAnimation->GetNowFrameX() == 2)
 							{
 								AnimationChange(mRightIdleAnimation);
 							}
@@ -199,7 +199,7 @@ void Monster_Zombie::Update()
 							{
 								AnimationChange(mLeftAttackAnimation);
 							}
-							if (mCurrentAnimation->GetNowFrameX() == 4 && mCurrentAnimation->GetNowFrameY() == 0)
+							if (mCurrentAnimation->GetNowFrameX() == 3 && mCurrentAnimation->GetNowFrameY() == 0)
 							{
 								SkillManager::GetInstance()->MonsterSmallSlashSkill("MonsterSmallSlash", lineX, lineY, mMonsterToPlayerAngle);
 							}
@@ -207,7 +207,7 @@ void Monster_Zombie::Update()
 							mMonsterActState = MonsterActState::LeftAttack;
 							mMonsterState = MonsterState::Attack;
 							mIsAct = false;
-							if (mLeftAttackAnimation->GetNowFrameX() == 4)
+							if (mLeftAttackAnimation->GetNowFrameX() == 3)
 							{
 								AnimationChange(mRightIdleAnimation);
 							}
@@ -310,9 +310,12 @@ void Monster_Zombie::Update()
 			mX += cosf(mSkillHitAngle) * mSkillHitPower;
 			mY += -sinf(mSkillHitAngle) * mSkillHitPower;
 			mSkillHitPower -= 0.2f;
+			
 		}
 
 	}
+	if (mDieAnimation->GetNowFrameX() == 9)mIsDestroy = true;
+	return;
 }
 
 void Monster_Zombie::Render()

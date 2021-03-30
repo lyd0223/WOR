@@ -38,7 +38,7 @@ void Skill_IceSpear::Init()
 	mIceSpearAnimation->SetFrameUpdateTime(0.1f);
 	mIceSpearAnimation->Play();
 
-	mSkillPower = 5.f;
+	mSkillPower = 10.f;
 }
 
 void Skill_IceSpear::Release()

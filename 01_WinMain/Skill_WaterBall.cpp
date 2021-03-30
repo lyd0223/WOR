@@ -50,7 +50,7 @@ void Skill_WaterBall::Init()
 	mWaterBallAnimation->SetFrameUpdateTime(0.02f);
 	mWaterBallAnimation->Play();
 
-	mSkillPower = 2.f;
+	mSkillPower = 3.f;
 
 	SoundPlayer::GetInstance()->Play(L"WaterBall", 1.f);
 }

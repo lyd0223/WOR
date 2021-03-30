@@ -22,13 +22,17 @@ void Skill_MonsterMiddleSlash::Init()
 	mSizeY = mImage->GetHeight() / 3;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 
+	mSkillPower = 3.f;
 	mSkillType = SkillType::Melee;
-
+	mSkillElement = SkillElement::Wind;
+	mSkillTarget = SkillTarget::Enemy;
+	mSkillArcana = SkillArcana::Standard;
 	mSlashAnimation = new Animation;
 	mSlashAnimation->InitFrameByStartEnd(0, 1, 4, 1, false);
 	mSlashAnimation->SetIsLoop(false);
 	mSlashAnimation->SetFrameUpdateTime(0.1f);
 	mSlashAnimation->Play();
+	mSkillHitCount = 1;
 
 
 }

@@ -75,13 +75,13 @@ void Scene_Tutorial::Init()
 
 	mPlayer = new Player("Player",87*TileSize + TileSize/2, 10 * TileSize + TileSize / 2);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
-	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize + TileSize / 2, 10 * TileSize + TileSize / 2, MonsterName::Mazition, mRoomList[1]);
+	//ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize + TileSize / 2, 10 * TileSize + TileSize / 2, MonsterName::Mazition, mRoomList[1]);
 
 	//�����߰��ϱ�
-	//ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 11 * TileSize, MonsterName::RapidZombie, mRoomList[1]);
-	//ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 9 * TileSize, MonsterName::Zombie, mRoomList[1]);
-	//ParticleManager::GetInstance()->MakeEnemyCreate(35 * TileSize, 9 * TileSize, MonsterName::Zombie, mRoomList[1]);
-	//ParticleManager::GetInstance()->MakeEnemyCreate(35 * TileSize, 11 * TileSize, MonsterName::Zombie, mRoomList[1]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 11 * TileSize, MonsterName::RapidZombie, mRoomList[1]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 9 * TileSize, MonsterName::Zombie, mRoomList[1]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(35 * TileSize, 9 * TileSize, MonsterName::Zombie, mRoomList[1]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(35 * TileSize, 11 * TileSize, MonsterName::Zombie, mRoomList[1]);
 
 	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 31 * TileSize, MonsterName::SwoardMan, mRoomList[2]);
 	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 29* TileSize, MonsterName::SwoardMan, mRoomList[2]);
@@ -197,6 +197,10 @@ void Scene_Tutorial::Update()
 			D2D1_RECT_F rc = monster->GetMovingRect();
 			float centerX = (rc.left + (rc.right - rc.left) / 2) / TileSize;
 			float centerY = (rc.top + (rc.bottom - rc.top) / 2) / TileSize;
+			if (monster == nullptr)
+			{
+				break;
+			}
 			monster->SetPathList(
 				PathFinder::GetInstance()->FindPath(
 					(TileMap*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Tile, "TileMap"),
