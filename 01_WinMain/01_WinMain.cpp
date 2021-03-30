@@ -3,12 +3,13 @@
 //미리 컴파일된 헤더 참조
 #include "pch.h"
 #include "MainGame.h"
+#include "resource.h"
 
 HINSTANCE	_hInstance;		//APP 고유번호
 //HWND : Handler Window
 HWND		_hWnd;			//나중에 (그럴일은 없지만) WinAPI창을 여러개 생성했을 때 각 창을 컨트롤할 수 있는 Hanlder가 필요하다. 그게 바료 요 녀석
 
-wstring _className = L"플밍26기";	//유니코드는 아스키코드랑 다르게 2byte씩 처리한다(한글등등 그런 언어들을 처리하기 위해서) 
+wstring _className = L"Wizard Of Legend";	//유니코드는 아스키코드랑 다르게 2byte씩 처리한다(한글등등 그런 언어들을 처리하기 위해서) 
 //wchar라는 녀석을 쓰기 편하게 만든 클래스
 
 POINT _mousePosition;	//마우스 좌표
@@ -36,7 +37,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	wndClass.cbWndExtra = 0;										//윈도우 여분 메모리 설정
 	wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);	//윈도우 백그라운드
 	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);					//윈도우 커서 모양
-	wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);				//윈도우 아이콘 모양
+	wndClass.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));				//윈도우 아이콘 모양
 	wndClass.hInstance = hInstance;									//윈도우 인스턴스 번호
 	wndClass.lpfnWndProc = (WNDPROC)WndProc;						//윈도우 프로시져
 	wndClass.lpszClassName = _className.c_str();					//윈도우 클래스 이름

@@ -141,20 +141,20 @@ void Monster_FireBoss::Update()
 		}
 	}
 
-	if (Input::GetInstance()->GetKeyDown('9')) {
-		DragonArcWavePattern();
-	}
-
-	//if (mCurrentAnimation == mRightIdleAnimation || mCurrentAnimation == mLeftIdleAnimation)
-	//{
-	//	mFrameCount += Time::GetInstance()->DeltaTime();
-	//	
-	//	if (mFrameCount > 1.5)
-	//	{
-	//		mFrameCount = 0;
-	//		MakePatternList();
-	//	}
+	//if (Input::GetInstance()->GetKeyDown('9')) {
+	//	DragonArcWavePattern();
 	//}
+
+	if (mCurrentAnimation == mRightIdleAnimation || mCurrentAnimation == mLeftIdleAnimation)
+	{
+		mFrameCount += Time::GetInstance()->DeltaTime();
+		
+		if (mFrameCount > 1.5)
+		{
+			mFrameCount = 0;
+			MakePatternList();
+		}
+	}
 
 	if (!mPatternList.empty())
 	{

@@ -29,17 +29,17 @@ void Scene_TitleScene::Init()
 	mBackImageList.push_back(ImageManager::GetInstance()->FindImage(L"BackGround8"));
 	mTitleImage = ImageManager::GetInstance()->FindImage(L"Title");
 	
-	TitleButton temp0{ RectMakeCenter(WINSIZEX / 2, 350 + 0 * 55, 200, 40), L"�̱� �÷��̾�" , 20, true };
+	TitleButton temp0{ RectMakeCenter(WINSIZEX / 2, 350 + 0 * 55, 200, 40), L"새로운 게임" , 20, true };
 	mButtonList.push_back(temp0);
-	TitleButton temp1{ RectMakeCenter(WINSIZEX / 2, 350 + 1 * 55, 200, 40), L"����", 20, true };
+	TitleButton temp1{ RectMakeCenter(WINSIZEX / 2, 350 + 1 * 55, 200, 40), L"맵툴", 20, true };
 	mButtonList.push_back(temp1);
-	TitleButton temp2{ RectMakeCenter(WINSIZEX / 2, 350 + 2 * 55, 200, 40), L"����", 20, false };
+	TitleButton temp2{ RectMakeCenter(WINSIZEX / 2, 350 + 2 * 55, 200, 40), L"대전", 20, false };
 	mButtonList.push_back(temp2);
-	TitleButton temp3{ RectMakeCenter(WINSIZEX / 2, 350 + 3 * 55, 200, 40), L"�ɼ�", 20, true };
+	TitleButton temp3{ RectMakeCenter(WINSIZEX / 2, 350 + 3 * 55, 200, 40), L"옵션", 20, false };
 	mButtonList.push_back(temp3);
-	TitleButton temp4{ RectMakeCenter(WINSIZEX / 2, 350 + 4 * 55, 200, 40), L"������", 20, true };
+	TitleButton temp4{ RectMakeCenter(WINSIZEX / 2, 350 + 4 * 55, 200, 40), L"제작진", 20, false };
 	mButtonList.push_back(temp4);
-	TitleButton temp5{ RectMakeCenter(WINSIZEX / 2, 350 + 5 * 55, 200, 40), L"����", 20, true };
+	TitleButton temp5{ RectMakeCenter(WINSIZEX / 2, 350 + 5 * 55, 200, 40), L"종료", 20, true };
 	mButtonList.push_back(temp5);
 	
 	for (int i = 0; i < mButtonList.size(); i++) 

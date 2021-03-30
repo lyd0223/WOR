@@ -636,9 +636,6 @@ void Player::Update()
 				{
 
 					SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX - 20, mY, mAngle);
-
-
-
 					//SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX -20, mY, mAngle);
 				}
 				else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
@@ -660,51 +657,49 @@ void Player::Update()
 			}
 
 			//if (skill == nullptr)
-			SkillObject* skill = (SkillObject*)ObjectManager::GetInstance()->FindObject("IceSpear");
-			if (skill == nullptr)
+			SkillObject* skill = (SkillObject*)ObjectManager::GetInstance()->FindObject(mRB_ButtonSkill);
+			if (skill->GetName() == "IceSpear")
 			{
-				return;
-			}
-			if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
-			{
-				AnimationChange(mRightThrowWationgAnimation);
-				mPlayerState = PlayerState::RightThrowWating;
-				skill->SetX(mX - 25);
-				skill->SetY(mY - 5);
-				skill->SetAngle(mAngle);
+				if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
+				{
+					AnimationChange(mRightThrowWationgAnimation);
+					mPlayerState = PlayerState::RightThrowWating;
+					skill->SetX(mX - 25);
+					skill->SetY(mY - 5);
+					skill->SetAngle(mAngle);
 
-			}
-			else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
-			{
-				AnimationChange(mUpThrowWatingAnimation);
-				mPlayerState = PlayerState::UpThrowWating;
-				skill->SetX(mX);
-				skill->SetY(mY);
-				skill->SetAngle(mAngle);
-			}
-			else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
-			{
-				AnimationChange(mLeftThrowWatingAnimation);
-				mPlayerState = PlayerState::LeftThrowWaitng;
-				skill->SetX(mX + 55);
-				skill->SetY(mY - 20);
-				skill->SetAngle(mAngle);
-			}
-			else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
-			{
-				AnimationChange(mDownThrowWatingAnimation);
-				mPlayerState = PlayerState::DownThorwWating;
-				skill->SetX(mX + 25);
-				skill->SetY(mY - 50);
-				skill->SetAngle(mAngle);
-
+				}
+				else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
+				{
+					AnimationChange(mUpThrowWatingAnimation);
+					mPlayerState = PlayerState::UpThrowWating;
+					skill->SetX(mX);
+					skill->SetY(mY);
+					skill->SetAngle(mAngle);
+				}
+				else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
+				{
+					AnimationChange(mLeftThrowWatingAnimation);
+					mPlayerState = PlayerState::LeftThrowWaitng;
+					skill->SetX(mX + 55);
+					skill->SetY(mY - 20);
+					skill->SetAngle(mAngle);
+				}
+				else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
+				{
+					AnimationChange(mDownThrowWatingAnimation);
+					mPlayerState = PlayerState::DownThorwWating;
+					skill->SetX(mX + 25);
+					skill->SetY(mY - 50);
+					skill->SetAngle(mAngle);
+				}
 			}
 		}
 		if (Input::GetInstance()->GetKeyUp(VK_RBUTTON) && mRB_ButtonSkillCool < 0)
 		{
 			mRB_ButtonSkillCool = SkillManager::GetInstance()->FindSkill(mRB_ButtonSkill)->GetSkillCool();
-			SkillObject* skill = (SkillObject*)ObjectManager::GetInstance()->FindObject("IceSpear");
-			if (skill->GetSkillType() == SkillType::Hold)
+			SkillObject* skill = (SkillObject*)ObjectManager::GetInstance()->FindObject(mRB_ButtonSkill);
+			if (skill->GetSkillType() == SkillType::Hold && skill->GetName() == "IceSpear")
 			{
 				skill->SetSkillType(SkillType::Throw);
 			}

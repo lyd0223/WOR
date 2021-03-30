@@ -203,14 +203,12 @@ void SkillManager::Update()
 							float temp = monster->GetHitCount();
 							temp += skill->GetSkillDamege();
 							monster->SetHitCount(temp);
-							return;
 						}
 						else
 						{
 							int temp = monster->GetHP();
 							temp -= skill->GetSkillDamege();
 							monster->SetHP(temp);
-							return;
 						}
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 						monster->SetSkillHitAngle(skill->GetAngle());
@@ -270,14 +268,12 @@ void SkillManager::Update()
 							int temp = monster->GetHP();
 							temp -= skill->GetSkillDamege();
 							monster->SetHP(temp);
-							return;
 						}
 						else
 						{
 							int temp = monster->GetHP();
 							temp -= skill->GetSkillDamege();
 							monster->SetHP(temp);
-							return;
 						}
 
 						break;
