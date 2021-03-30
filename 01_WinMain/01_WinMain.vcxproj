@@ -23,7 +23,7 @@
     <ProjectGuid>{ADD52605-596E-43E8-879D-E81A28A8BB13}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My01WinMain</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -232,6 +232,7 @@
     <ClInclude Include="Skill_WaterBall.h" />
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="Monster_SpearMan.h" />
+    <ClInclude Include="SoundSet.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="Monster_SwoardMan.h" />
     <ClInclude Include="targetver.h" />
@@ -239,7 +240,6 @@
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TilePallete.h" />
     <ClInclude Include="Time.h" />
-    <ClInclude Include="UI_ESC.h" />
     <ClInclude Include="UI_SkillChangeInterface.h" />
     <ClInclude Include="UI_SpellBook.h" />
     <ClInclude Include="UserInterface.h" />
@@ -337,13 +337,13 @@
     <ClCompile Include="Skill_WaterBall.cpp" />
     <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="Monster_SpearMan.cpp" />
+    <ClCompile Include="SoundSet.cpp" />
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="Monster_SwoardMan.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TilePallete.cpp" />
     <ClCompile Include="Time.cpp" />
-    <ClCompile Include="UI_ESC.cpp" />
     <ClCompile Include="UI_SkillChangeInterface.cpp" />
     <ClCompile Include="UI_SpellBook.cpp" />
     <ClCompile Include="UserInterface.cpp" />

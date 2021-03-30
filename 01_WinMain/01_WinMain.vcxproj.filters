@@ -133,6 +133,9 @@
     <Filter Include="MainGame\Object\Player">
       <UniqueIdentifier>{5fcb1c73-0516-4c7b-936c-d66ce5fe1f65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\Soundset">
+      <UniqueIdentifier>{52576a19-df2c-4db9-a7d8-652150af7787}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -432,8 +435,8 @@
     <ClInclude Include="Effect_Teleport.h">
       <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="UI_ESC.h">
-      <Filter>MainGame\Object\UI</Filter>
+    <ClInclude Include="SoundSet.h">
+      <Filter>FrameWork\Soundset</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -725,8 +728,8 @@
     <ClCompile Include="Effect_Teleport.cpp">
       <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="UI_ESC.cpp">
-      <Filter>MainGame\Object\UI</Filter>
+    <ClCompile Include="SoundSet.cpp">
+      <Filter>FrameWork\Soundset</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
