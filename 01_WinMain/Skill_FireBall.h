@@ -22,7 +22,7 @@ class Skill_FireBall : public SkillObject
 	
 	int mDelay;
 	float mFrameCount;
-	float mAngle;
+	
 	float mSpeed;
 	
 	float mStartX;

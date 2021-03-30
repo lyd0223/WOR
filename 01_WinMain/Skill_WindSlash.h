@@ -10,7 +10,7 @@ class Skill_WindSlash : public SkillObject
 	float mEndX;
 	float mEndY;
 	float mImageAngle;
-	float mAngle;
+	
 	float mSpeed;
 	Animation* mSlashAnimation;
 public:

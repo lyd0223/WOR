@@ -67,17 +67,17 @@ SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y
 {
 	!mIsUp;
 
+	if (name == "FireBall")
+	{
+		Skill_FireBall* fireBall = new Skill_FireBall(name, x, y, angle);
+		return fireBall;
+	}
 	if (name == "IceSpear")
 	{
 		
 		SoundPlayer::GetInstance()->Play(L"IceSpearSound", 1.f);
 		Skill_IceSpear* iceSpear = new Skill_IceSpear(name, x, y, angle);
 		return iceSpear;
-	}
-	if (name == "FireBall")
-	{
-		Skill_FireBall* fireBall = new Skill_FireBall(name, x, y, angle);
-		return fireBall;
 	}
 	if (name == "DragonArc")
 	{

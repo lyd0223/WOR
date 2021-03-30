@@ -11,7 +11,7 @@ class Skill_MonsterBigSlash : public SkillObject
 	float mEndX;
 	float mEndY;
 	float mImageAngle;
-	float mAngle;
+	
 	float mSpeed;
 	Animation* mSlashAnimation;
 public:
