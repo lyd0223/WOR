@@ -600,8 +600,8 @@ void RandomMapGeneration::RandomPlayerPosition(Player* player)
 	Structure* structure = new Structure(
 		"Portal",
 		ImageManager::GetInstance()->FindImage(L"Portal"),
-		mRoot->mRoomList[mPlayerSpawnRoomNum]->centerX*TileSize,
-		mRoot->mRoomList[mPlayerSpawnRoomNum]->centerY*TileSize,
+		mRoot->mRoomList[mPortalRoomNum]->centerX*TileSize,
+		mRoot->mRoomList[mPortalRoomNum]->centerY*TileSize,
 		100,100);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, structure);
 }
