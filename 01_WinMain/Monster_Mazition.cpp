@@ -61,6 +61,7 @@ void Monster_Mazition::Release()
 
 void Monster_Mazition::Update()
 {
+	mHitTime += Time::GetInstance()->DeltaTime();
 	D2D1_RECT_F cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	if (cameraRect.right > mRect.left && cameraRect.left < mRect.right && cameraRect.bottom > mRect.top && cameraRect.top < mRect.bottom)
 	{
@@ -68,6 +69,19 @@ void Monster_Mazition::Update()
 		mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
 		if (mHp > 0)
 		{
+
+			if (mMonsterActState == MonsterActState::LeftHit && mCurrentAnimation == mLeftHitAnimation)
+			{
+				AnimationChange(mLeftIdleAnimation);
+				mMonsterActState = MonsterActState::LeftIdle;
+				mIsHit = false;
+			}
+
+			if (mIsHit)
+			{
+				AnimationChange(mLeftHitAnimation);
+				mMonsterActState = MonsterActState::LeftHit;
+			}
 
 			//¾ÆÀÌµé
 			if (mMonsterToPlayerDistance >= 5.5f)

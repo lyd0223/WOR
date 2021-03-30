@@ -32,13 +32,15 @@ protected:
 	float mAtkFrameCount;
 	float mMonsterToPlayerDistance;
 	float mMonsterToPlayerAngle;
-	
+	float mHitTime;
+
 	Room mRoom;
 	MonsterType mMonsterType;
 	MonsterName mMonsterName;
 	int mHitCount;
-	
+
 	bool mIsCollision;
+	bool mIsHit;
 public:
 	MonsterObject(const string& name);
 
@@ -59,5 +61,8 @@ public:
 
 	void SetIsCollision(bool IsCollision) { mIsCollision = IsCollision; }
 	bool GetIsCollision() { return mIsCollision; }
+	void SetIsHit(bool isHit) { mIsHit = isHit; }
+	bool GetIsHit() { return mIsHit; }
+		
 };
 

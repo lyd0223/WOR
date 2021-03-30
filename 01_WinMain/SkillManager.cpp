@@ -206,6 +206,7 @@ void SkillManager::Update()
 					}
 
 				}
+				monster->SetIsHit(true);
 			}
 
 			// �� to �÷��̾�

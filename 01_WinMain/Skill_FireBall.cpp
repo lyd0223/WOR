@@ -19,6 +19,7 @@ Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angl
 	mSkillTarget = SkillTarget::Player;
 	mSkillElement = SkillElement::Fire;
 	mSkillType = SkillType::Throw;
+	mSkillPower = 10.f;
 }
 
 Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angle, int delay)

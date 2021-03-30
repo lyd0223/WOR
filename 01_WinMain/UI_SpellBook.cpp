@@ -119,6 +119,7 @@ void UI_SpellBook::Init()
 		ImageManager::GetInstance()->FindImage(L"SpellbookUISkillUIElementOn")
 	);
 
+	// 
 	map<SkillElement, UIObject*>::iterator iter = mSpellbookUISkillElemantalList.begin();
 	for (; iter != mSpellbookUISkillElemantalList.end(); iter++)
 	{
@@ -171,13 +172,14 @@ void UI_SpellBook::Update()
 	{
 		map<SkillElement, UIObject*>::iterator iter = mSpellbookUISkillElemantalList.find(mCurrentSkillElement);
 		map<SkillElement, vector<SkillObject*>>::iterator iter2 = mSkillList.find(mCurrentSkillElement);
-		//vector<SkillObject*>::iterator iter3 = mSkillList.find(mCurrentSkillElement)->second;
+		int maxIndex = iter2->second.size();
 		if (Input::GetInstance()->GetKeyDown(VK_UP) || Input::GetInstance()->GetKeyDown('W'))
 		{
 			mSpellbookUIUpArrow->Image->SetScale(1.5f);
+			mIndex = 0;
 			if(iter->first != mSpellbookUISkillElemantalList.begin()->first)
 				iter--;
-			mCurrentSkill = iter2->second[0];
+			mCurrentSkill = iter2->second[mIndex];
 			mCurrentSkillElement = iter->first;
 			mSpellbookUISkillElementalOn->X = iter->second->X;
 			mSpellbookUISkillElementalOn->Y = iter->second->Y;
@@ -185,24 +187,32 @@ void UI_SpellBook::Update()
 		else if (Input::GetInstance()->GetKeyDown(VK_DOWN) || Input::GetInstance()->GetKeyDown('S'))
 		{
 			mSpellbookUIDownArrow->Image->SetScale(1.5f);
+			mIndex = 0;
 			iter++;
 			if (iter == mSpellbookUISkillElemantalList.end())
 			{
 				iter--;
 			}
 			mCurrentSkillElement = iter->first;
-			mCurrentSkill = iter2->second[0];
+			mCurrentSkill = iter2->second[mIndex];
 			mSpellbookUISkillElementalOn->X = iter->second->X;
 			mSpellbookUISkillElementalOn->Y = iter->second->Y;
 		}
 		else if (Input::GetInstance()->GetKeyDown(VK_LEFT) || Input::GetInstance()->GetKeyDown('A'))
 		{
 			mSpellbookUILeftArrow->Image->SetScale(1.5f);
-			
+			mIndex--;
+			if (mIndex < 0)
+				mIndex++;
+			mCurrentSkill = iter2->second[mIndex];
 		}
 		else if (Input::GetInstance()->GetKeyDown(VK_RIGHT) || Input::GetInstance()->GetKeyDown('D'))
 		{
 			mSpellbookUIRightArrow->Image->SetScale(1.5f);
+			mIndex++;
+			if (mIndex >= maxIndex)
+				mIndex--;
+			mCurrentSkill = iter2->second[mIndex];
 		}
 
 		if (Input::GetInstance()->GetKeyDown(VK_ESCAPE))

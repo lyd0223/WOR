@@ -82,9 +82,6 @@
     <Filter Include="FrameWork\D2D">
       <UniqueIdentifier>{3ed860f3-ee0a-4b06-89d1-95be56a0fc30}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Object\Player">
-      <UniqueIdentifier>{5fcb1c73-0516-4c7b-936c-d66ce5fe1f65}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\Object\Enemy">
       <UniqueIdentifier>{67db523c-7cf5-41cc-ab2b-f71d136059a2}</UniqueIdentifier>
     </Filter>
@@ -132,6 +129,9 @@
     </Filter>
     <Filter Include="MainGame\Object\NPC">
       <UniqueIdentifier>{e4c395f7-9118-45f5-b927-f513bd7ccdd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Object\Player">
+      <UniqueIdentifier>{5fcb1c73-0516-4c7b-936c-d66ce5fe1f65}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -593,9 +593,6 @@
     <ClCompile Include="Monster_SpearMan.cpp">
       <Filter>MainGame\Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Monster_SwoardMan.cpp">
-      <Filter>MainGame\Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Monster_Ward.cpp">
       <Filter>MainGame\Object\Enemy</Filter>
     </ClCompile>
@@ -715,6 +712,9 @@
     </ClCompile>
     <ClCompile Include="SkillBook.cpp">
       <Filter>MainGame\Object\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_SwoardMan.cpp">
+      <Filter>MainGame\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

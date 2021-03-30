@@ -72,6 +72,7 @@ void Scene_Tutorial::Init()
 
 	mPlayer = new Player("Player",87*TileSize + TileSize/2, 10 * TileSize + TileSize / 2);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
+	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize + TileSize / 2, 10 * TileSize + TileSize / 2, MonsterName::Mazition, mRoomList[1]);
 
 	//몬스터추가하기
 	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 11 * TileSize, MonsterName::RapidZombie, mRoomList[1]);

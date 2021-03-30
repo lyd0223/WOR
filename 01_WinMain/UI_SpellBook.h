@@ -34,6 +34,8 @@ class UI_SpellBook : public UserInterface
 	float mCardPositionX;
 	float mCardPositionY;
 	D2D1_RECT_F rc;
+	
+	int mIndex;
 	int mIndexY;
 public:
 	UI_SpellBook(const string& name, int index);

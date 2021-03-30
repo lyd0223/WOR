@@ -54,7 +54,7 @@ void UserInterface::Init()
 
 void UserInterface::Update()
 {
-	if (Input::GetInstance()->GetKeyDown('F'))
+	if (Input::GetInstance()->GetKeyDown('0'))
 	{
 		UI_SkillChangeInterface* skillChangeInterface = new UI_SkillChangeInterface();
 		skillChangeInterface->Init();
