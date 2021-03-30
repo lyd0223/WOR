@@ -27,6 +27,8 @@
 
 void Scene_Tutorial::Init()
 {
+	SoundPlayer::GetInstance()->Play(L"Tutorial", 1.f);
+
 	Load_Image::GetInstance()->LoadSceneMapToolImage();
 
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"TutorialTile");
@@ -193,6 +195,7 @@ void Scene_Tutorial::Update()
 		if (Input::GetInstance()->GetKeyDown('F'))
 		{
 			Effect_Teleport* teleport = new Effect_Teleport(mPortal->GetX(), mPortal->GetY(), true,L"Tutorial", L"House");
+			SoundPlayer::GetInstance()->Stop(L"Tutorial");
 			return;
 		}
 	}

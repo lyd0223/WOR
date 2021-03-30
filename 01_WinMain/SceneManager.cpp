@@ -71,9 +71,7 @@ void SceneManager::DeleteScene(const wstring& sceneName)
 			SafeDelete(iter->second);
 			iter->second->Release();
 			mSceneList.erase(sceneName);
-
 		}
-
 	}
 }
 

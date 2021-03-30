@@ -60,6 +60,7 @@ void SkillBook::Update()
 			
 			if (Input::GetInstance()->GetKeyDown('F'))
 			{
+				SoundPlayer::GetInstance()->Play(L"MenuOpen", 1.f);
 				UI_SkillChangeInterface* skillChangeInterface = new UI_SkillChangeInterface();
 				skillChangeInterface->Init();
 				ObjectManager::GetInstance()->AddInterface(skillChangeInterface);

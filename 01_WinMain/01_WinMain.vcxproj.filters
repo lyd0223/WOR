@@ -438,6 +438,9 @@
     <ClInclude Include="SoundSet.h">
       <Filter>FrameWork\Soundset</Filter>
     </ClInclude>
+    <ClInclude Include="UI_ESC.h">
+      <Filter>MainGame\Object\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -730,6 +733,9 @@
     </ClCompile>
     <ClCompile Include="SoundSet.cpp">
       <Filter>FrameWork\Soundset</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_ESC.cpp">
+      <Filter>MainGame\Object\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,8 @@
 void Scene_TitleScene::Init()
 {
 	if (!mBackImageList.empty()) return;
+	SoundPlayer::GetInstance()->Play(L"TitleScreen", 1.f);
+
 	ImageManager::GetInstance()->LoadFromFile(L"BackGround0", Resources(L"Title/BackGround0.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"BackGround1", Resources(L"Title/BackGround1.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"BackGround2", Resources(L"Title/BackGround2.png"));
@@ -102,12 +104,14 @@ void Scene_TitleScene::Update()
 		{
 			mButtonCount--;
 			if (mButtonCount < 0) mButtonCount = 5;
+			SoundPlayer::GetInstance()->Play(L"MenuMove", 1.f);
 		}
 
 		if (Input::GetInstance()->GetKeyDown(VK_DOWN))
 		{
 			mButtonCount++;
 			if (mButtonCount > 5) mButtonCount = 0;
+			SoundPlayer::GetInstance()->Play(L"MenuMove", 1.f);
 		}
 
 		if ((Input::GetInstance()->GetKeyDown(VK_SPACE) && mButtonList[mButtonCount].IsActive) ||
@@ -116,12 +120,12 @@ void Scene_TitleScene::Update()
 			switch (mButtonCount)
 			{
 			case 0:
+				SoundPlayer::GetInstance()->Stop(L"TitleScreen");
 				SceneManager::GetInstance()->LoadScene(L"Tutorial");
 				break;
 			case 1:
+				SoundPlayer::GetInstance()->Stop(L"TitleScreen");
 				SceneManager::GetInstance()->LoadScene(L"MapTool");
-				SceneManager::GetInstance()->DeleteScene(L"Title");
-				SceneManager::GetInstance()->AddScene(L"Title", new Scene_TitleScene);
 				break;
 			case 5:
 				PostQuitMessage(0);

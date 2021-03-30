@@ -175,6 +175,7 @@ void UI_SpellBook::Update()
 		int maxIndex = iter2->second.size();
 		if (Input::GetInstance()->GetKeyDown(VK_UP) || Input::GetInstance()->GetKeyDown('W'))
 		{
+			SoundPlayer::GetInstance()->Play(L"MenuOpen", 1.f);
 			mSpellbookUIUpArrow->Image->SetScale(1.5f);
 			mIndex = 0;
 			if(iter->first != mSpellbookUISkillElemantalList.begin()->first)
@@ -186,6 +187,7 @@ void UI_SpellBook::Update()
 		}
 		else if (Input::GetInstance()->GetKeyDown(VK_DOWN) || Input::GetInstance()->GetKeyDown('S'))
 		{
+			SoundPlayer::GetInstance()->Play(L"MenuOpen", 1.f);
 			mSpellbookUIDownArrow->Image->SetScale(1.5f);
 			mIndex = 0;
 			iter++;
@@ -200,6 +202,7 @@ void UI_SpellBook::Update()
 		}
 		else if (Input::GetInstance()->GetKeyDown(VK_LEFT) || Input::GetInstance()->GetKeyDown('A'))
 		{
+			SoundPlayer::GetInstance()->Play(L"MenuMove", 1.f);
 			mSpellbookUILeftArrow->Image->SetScale(1.5f);
 			mIndex--;
 
@@ -217,6 +220,7 @@ void UI_SpellBook::Update()
 		}
 		else if (Input::GetInstance()->GetKeyDown(VK_RIGHT) || Input::GetInstance()->GetKeyDown('D'))
 		{
+			SoundPlayer::GetInstance()->Play(L"MenuMove", 1.f);
 			mSpellbookUIRightArrow->Image->SetScale(1.5f);
 			mIndex++;
 
@@ -237,6 +241,7 @@ void UI_SpellBook::Update()
 
 		if (Input::GetInstance()->GetKeyDown(VK_SPACE))
 		{
+			SoundPlayer::GetInstance()->Play(L"MenuClose", 1.f);
 			switch (mCurrentSkillArcana)
 			{
 			case SkillArcana::Basic:
@@ -257,6 +262,7 @@ void UI_SpellBook::Update()
 
 		if (Input::GetInstance()->GetKeyDown(VK_ESCAPE))
 		{
+			SoundPlayer::GetInstance()->Play(L"MenuClose", 1.f);
 			ObjectManager::GetInstance()->PopInterface();
 		}
 	}

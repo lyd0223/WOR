@@ -36,7 +36,6 @@ Skill_FireBall::Skill_FireBall(const string & name, float x, float y, float angl
 
 void Skill_FireBall::Init()
 {
-
 	ImageManager::GetInstance()->LoadFromFile(L"FireBall", Resources(L"Skill/FireBall.png"), 9, 1);
 	mImage = ImageManager::GetInstance()->FindImage(L"FireBall");
 	mSizeX = mImage->GetWidth() / 9;
@@ -70,12 +69,15 @@ void Skill_FireBall::Update()
 	}
 
 	mCurrentAnimation->Update();
+
 	if (mState == FireBallState::Ready && mCurrentAnimation->GetNowFrameX() == 4) {
 		if (mDelay < 0) {
 			mState = FireBallState::Fire;
 			AnimationChange(mFireBallFireAnimation);
+			SoundPlayer::GetInstance()->Play(L"FireBallCast", 1.f);
 			ParticleManager::GetInstance()->MakeFireCircleParticle(mX, mY);
 			ParticleManager::GetInstance()->MakeHitSparkParticle(mX, mY);
+			
 		}
 	}
 

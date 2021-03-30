@@ -18,6 +18,7 @@ Skill_WaterBall::Skill_WaterBall(const string& name, float x, float y, float ang
 	mSkillTarget = SkillTarget::Enemy;
 	mSkillType = SkillType::Throw;
 	mSkillArcana = SkillArcana::Standard;
+	mSkillCool = 5.f;
 }
 
 void Skill_WaterBall::Init()
@@ -33,7 +34,7 @@ void Skill_WaterBall::Init()
 	mWaterBallAnimation = new Animation;
 	mWaterBallAnimation->InitFrameByStartEnd(0, 0, 2, 0, false);
 	mWaterBallAnimation->SetIsLoop(false);
-	mWaterBallAnimation->SetFrameUpdateTime(0.1f);
+	mWaterBallAnimation->SetFrameUpdateTime(0.02f);
 	mWaterBallAnimation->Play();
 
 	mSkillPower = 2.f;

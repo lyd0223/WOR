@@ -27,6 +27,8 @@ void MainGame::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"Loading", Resources(L"UI/Loading.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"LoadingCharacter", Resources(L"UI/LoadingCharacter.png"));
 
+	SoundSet::GetInstance();
+
 	//로딩씬 함수채워넣기
 	Scene_Loading* loadingScene = new Scene_Loading();
 	loadingScene->AddLoadFunc([]() { Load_Image::GetInstance()->LoadSceneMapToolImage(); });

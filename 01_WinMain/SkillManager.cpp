@@ -95,6 +95,11 @@ SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y
 		Skill_ThunderBolt* thunderBolt = new Skill_ThunderBolt(name, x, y, angle);
 		return thunderBolt;
 	}
+	if (name == "WaterBall")
+	{
+		Skill_WaterBall* waterBall = new Skill_WaterBall(name, x, y, angle);
+		return waterBall;
+	}
 	return nullptr;
 }
 
@@ -130,11 +135,18 @@ void SkillManager::Update()
 				D2D1_RECT_F tilerc = tile->GetRect();
 				if (tile->GetType() == Type::Wall && IntersectRect(temp, &skillrc, &tilerc) && skill->GetSkillType() == SkillType::Throw)
 				{
-					if (skill->GetName() == "FireBall" ||
-						skill->GetName() == "DragonArc")
+					if (skill->GetName() == "FireBall")
 					{
 						ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						SoundPlayer::GetInstance()->Play(L"FireBallExplode", 1.f);
+					}
+
+					if (skill->GetName() == "DragonArc")
+					{
+						ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
+						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						SoundPlayer::GetInstance()->Play(L"FireArcEnd", 1.f);
 					}
 
 					if (skill->GetName() == "IceSpear")

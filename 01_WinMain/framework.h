@@ -58,6 +58,7 @@ using namespace std;
 #include "Vector2.h"
 #include "PathFinder.h"
 #include "ParticleManager.h"
+#include "SoundSet.h"
 
 extern POINT _mousePosition;	//마우스 좌표
 extern HWND	_hWnd;

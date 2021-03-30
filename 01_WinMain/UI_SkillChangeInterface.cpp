@@ -69,12 +69,14 @@ void UI_SkillChangeInterface::Update()
 		{
 			mIndex--;
 			if (mIndex < 0) mIndex = 3;
+			SoundPlayer::GetInstance()->Play(L"MenuMove", 1.f);
 		}
 
 		if (Input::GetInstance()->GetKeyDown(VK_RIGHT))
 		{
 			mIndex++;
 			if (mIndex > 3) mIndex = 0;
+			SoundPlayer::GetInstance()->Play(L"MenuMove", 1.f);
 		}
 
 		if (mSkillChangeInterface->Y > 400)

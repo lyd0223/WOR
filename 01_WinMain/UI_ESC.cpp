@@ -54,12 +54,14 @@ void UI_ESC::Update()
 	{
 		mIndex--;
 		if (mIndex < 0) mIndex = 2;
+		SoundPlayer::GetInstance()->Play(L"MenuMove", 1.f);
 	}
 
 	else if (Input::GetInstance()->GetKeyDown(VK_DOWN))
 	{
 		mIndex++;
 		if (mIndex > 2) mIndex = 0;
+		SoundPlayer::GetInstance()->Play(L"MenuMove", 1.f);
 	}
 
 	for (int i = 0; i < mEscTextList.size(); i++)

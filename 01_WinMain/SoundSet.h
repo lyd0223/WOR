@@ -6,4 +6,3 @@ class SoundSet
 public:
 	SoundSet();
 };
-
