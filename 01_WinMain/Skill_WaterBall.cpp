@@ -43,7 +43,7 @@ void Skill_WaterBall::Init()
 	mSizeY = mImage->GetHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mSpeed = 60.f;
-
+	mSkillDamege = 10;
 	mWaterBallAnimation = new Animation;
 	mWaterBallAnimation->InitFrameByStartEnd(0, 0, 2, 0, false);
 	mWaterBallAnimation->SetIsLoop(false);

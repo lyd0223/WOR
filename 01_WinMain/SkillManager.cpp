@@ -314,6 +314,16 @@ void SkillManager::Update()
 							player->SetSkillHitAngle(skill->GetAngle());
 							player->SetSkillHitPower(skill->GetSkillPower());
 						}
+						if (player->GetName() == "Player")
+						{
+							int temp = player->GetHP();
+							temp -= skill->GetSkillDamege();
+							player->SetHP(temp);
+						}
+						
+						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						player->SetSkillHitAngle(skill->GetAngle());
+						player->SetSkillHitPower(skill->GetSkillPower());
 					}
 
 					// 투척
@@ -335,7 +345,12 @@ void SkillManager::Update()
 							player->SetSkillHitAngle(skill->GetAngle());
 							player->SetSkillHitPower(skill->GetSkillPower());
 						}
-
+						if (player->GetName() == "Player")
+						{
+							int temp = player->GetHP();
+							temp -= skill->GetSkillDamege();
+							player->SetHP(temp);
+						}
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 						skill->SetIsDestroy(true);
 						break;

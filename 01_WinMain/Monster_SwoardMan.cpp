@@ -295,16 +295,6 @@ void Monster_SwoardMan::Update()
 
 				}
 
-			if (mHp <= 0)
-			{
-				if (mCurrentAnimation != mDieAnimation)
-				{
-					AnimationChange(mDieAnimation);
-					mMonsterActState = MonsterActState::Die;
-					mMonsterState = MonsterState::Die;
-
-				}
-			}
 		}
 
 
@@ -394,6 +384,18 @@ void Monster_SwoardMan::Update()
 			mSkillHitPower -= 0.2f;
 		}
 		if (mDieAnimation->GetNowFrameX() == 7) mIsDestroy = true;
+
+		if (mHp <= 0)
+		{
+			if (mCurrentAnimation != mDieAnimation)
+			{
+				SoundPlayer::GetInstance()->Play(L"EnemyDeadSound", 1.f);
+				AnimationChange(mDieAnimation);
+				mMonsterActState = MonsterActState::Die;
+				mMonsterState = MonsterState::Die;
+
+			}
+		}
 	}
 }
 

@@ -26,7 +26,7 @@ void Monster_BigZombie::Init()
 	mSizeX = mImage->GetFrameSize().__typeToGetX() * 4 - 120;
 	mSizeY = mImage->GetFrameSize().__typeToGetY() * 4 - 100;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-	mHp = 5;
+	mHp = 200;
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 	mMonsterToPlayerDistance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize;
 	mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
@@ -167,6 +167,7 @@ void Monster_BigZombie::Update()
 					AnimationChange(mDieAnimation);
 					mMonsterActState = MonsterActState::Die;
 					mMonsterState = MonsterState::Die;
+					SoundPlayer::GetInstance()->Play(L"EnemyDeadSound", 1.f);
 					
 				}
 			}

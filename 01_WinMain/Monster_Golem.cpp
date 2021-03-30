@@ -28,7 +28,7 @@ void Monster_Golem::Init()
 	mSizeX = mImage->GetFrameSize().__typeToGetX() * 4 - 120;
 	mSizeY = mImage->GetFrameSize().__typeToGetY() * 4 - 50;
 	mIsAct = false;
-	mHp = 1;
+	mHp = 250;
 	mMonsterToPlayerDistance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize;
 	mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
@@ -253,17 +253,6 @@ void Monster_Golem::Update()
 				}
 			}
 
-		}
-			if (mHp <= 0)
-			{
-				if (mCurrentAnimation != mDieAnimation)
-				{
-					AnimationChange(mDieAnimation);
-					mMonsterActState = MonsterActState::Die;
-					mMonsterState = MonsterState::Die;
-
-				}
-			}
 
 
 
@@ -343,6 +332,18 @@ void Monster_Golem::Update()
 				}
 			}
 		}
+		}
+			if (mHp <= 0)
+			{
+				if (mCurrentAnimation != mDieAnimation)
+				{
+					SoundPlayer::GetInstance()->Play(L"EnemyDeadSound", 1.f);
+					AnimationChange(mDieAnimation);
+					mMonsterActState = MonsterActState::Die;
+					mMonsterState = MonsterState::Die;
+
+				}
+			}
 
 		
 		if (mDieAnimation->GetNowFrameX() == 5) mIsDestroy = true;

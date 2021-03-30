@@ -27,7 +27,7 @@ void Monster_Zombie::Init()
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mMonsterType = MonsterType::Normal;
 	mMonsterName = MonsterName::Zombie;
-	mHp = 1;
+	mHp = 100;
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
 	AnimationSet(&mLeftIdleAnimation, false, false, 5, 0, 5, 0, AnimationTime);
 	AnimationSet(&mRightAttackAnimation, false, false, 1, 0, 2, 0, 0.5f);
@@ -230,16 +230,7 @@ void Monster_Zombie::Update()
 
 
 
-		if (mHp <= 0)
-		{
-			if (mCurrentAnimation != mDieAnimation)
-			{
-				AnimationChange(mDieAnimation);
-				mMonsterActState = MonsterActState::Die;
-				mMonsterState = MonsterState::Die;
-
-			}
-		}
+		
 		//공격 라인--
 		lineX = mX + 50 * cosf(mMonsterToPlayerAngle);
 		lineY = mY + 50 * -sinf(mMonsterToPlayerAngle);
@@ -320,7 +311,17 @@ void Monster_Zombie::Update()
 			mSkillHitPower -= 0.2f;
 			
 		}
+		if (mHp <= 0)
+		{
+			if (mCurrentAnimation != mDieAnimation)
+			{
+				SoundPlayer::GetInstance()->Play(L"EnemyDeadSound", 1.f);
+				AnimationChange(mDieAnimation);
+				mMonsterActState = MonsterActState::Die;
+				mMonsterState = MonsterState::Die;
 
+			}
+		}
 	}
 	if (mDieAnimation->GetNowFrameX() == 9)mIsDestroy = true;
 	return;

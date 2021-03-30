@@ -23,8 +23,8 @@ void Monster_Mazition::Init()
 	mMonsterActState = MonsterActState::RightIdle;
 	mMonsterState = MonsterState::Idle;
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
-	mSpeed = 150.f;
-	mHp = 1;
+	mSpeed = 500.f;
+		mHp = 100;
 	mSizeX = mImage->GetFrameSize().__typeToGetX() *2;
 	mSizeY = mImage->GetFrameSize().__typeToGetY()  * 2 - 20;
 	mIsAct = false;
@@ -36,8 +36,8 @@ void Monster_Mazition::Init()
 	AnimationSet(&mLeftIdleAnimation, false, false, 4, 2, 4, 2, AnimationTime);
 	AnimationSet(&mRightWalkAnimation, false, false, 1, 0, 3, 0, AnimationTime);
 	AnimationReverseSet(&mLeftWalkAnimation, false, false, 3, 2, 1, 2, AnimationTime);
-	AnimationSet(&mRightAttackAnimation, false, false, 0, 1, 4, 1, AnimationTime);
-	AnimationReverseSet(&mLeftAttackAnimation, false, false, 4, 3, 0, 3, AnimationTime);
+	AnimationSet(&mRightAttackAnimation, false, false, 0, 1, 4, 1, 0.5f);
+	AnimationReverseSet(&mLeftAttackAnimation, false, false, 4, 3, 0, 3, 0.5f);
 	AnimationSet(&mRightHitAnimation, false, false, 5, 0, 5, 0, AnimationTime);
 	AnimationSet(&mLeftHitAnimation, false, false, 5, 1, 5, 1, AnimationTime);
 	AnimationSet(&mDieAnimation, false, false, 0, 4, 5, 4, AnimationTime);
@@ -246,6 +246,7 @@ void Monster_Mazition::Update()
 		{
 			if (mCurrentAnimation != mDieAnimation)
 			{
+				SoundPlayer::GetInstance()->Play(L"EnemyDeadSound", 1.f);
 				AnimationChange(mDieAnimation);
 				mMonsterActState = MonsterActState::Die;
 				mMonsterState = MonsterState::Die;

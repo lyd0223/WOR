@@ -22,7 +22,7 @@ void Monster_Slime::Init()
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 	mMonsterActState = MonsterActState::RightIdle;
 	mMonsterState = MonsterState::Idle;
-	mHp = 1;
+	mHp = 20;
 	mSpeed = 100.f;
 	mSizeX = TileSize / 2;
 	mSizeY = TileSize/2;
@@ -170,20 +170,6 @@ void Monster_Slime::Update()
 
 
 
-			}
-
-
-
-			if (mHp <= 0)
-			{
-				if (mCurrentAnimation != mDieAnimation)
-				{
-					AnimationChange(mDieAnimation);
-					mMonsterActState = MonsterActState::Die;
-					mMonsterState = MonsterState::Die;
-
-				}
-			}
 		
 
 		mCurrentAnimation->Update();
@@ -266,6 +252,21 @@ void Monster_Slime::Update()
 			mSkillHitPower -= 0.2f;
 		}
 		if (mDieAnimation->GetNowFrameX() == 9) mIsDestroy = true;
+			}
+
+
+
+			if (mHp <= 0)
+			{
+				if (mCurrentAnimation != mDieAnimation)
+				{
+					SoundPlayer::GetInstance()->Play(L"EnemyDeadSound", 1.f);
+					AnimationChange(mDieAnimation);
+					mMonsterActState = MonsterActState::Die;
+					mMonsterState = MonsterState::Die;
+
+				}
+			}
 	}
 }
 
