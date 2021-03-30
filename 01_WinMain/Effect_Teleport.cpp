@@ -19,7 +19,7 @@ Effect_Teleport::Effect_Teleport(float x, float y, bool isSceneChange, wstring n
 	mAnimation = new Animation();
 	mAnimation->InitFrameByStartEnd(0, 0, 6, 0, false);
 	mAnimation->SetIsLoop(false);
-	mAnimation->SetFrameUpdateTime(0.2f);
+	mAnimation->SetFrameUpdateTime(0.1f);
 	mAnimation->Play();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, this);
 	mChangeSceneName = changeSceneName;

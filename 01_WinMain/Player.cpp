@@ -1387,6 +1387,7 @@ void Player::Update()
 		if (mPlayerState == PlayerState::DownHit)
 		{
 			mX = mX + 200;
+			mY = mY - 50;
 			mCurrentAnimation->Stop();
 			mCurrentAnimation = mLeftIdleAnimation;
 			mCurrentAnimation->Play();
@@ -1395,6 +1396,7 @@ void Player::Update()
 		Effect_Teleport* t = new Effect_Teleport(mX, mY + 50, false);
 		mIsFalling = 0;
 	}
+	
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
  }
  // 넉백
