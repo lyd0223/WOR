@@ -18,7 +18,7 @@ Skill_IceSpear::Skill_IceSpear(const string& name, float x, float y, float angle
 	mSkillTarget = SkillTarget::Player;
 	mSkillType = SkillType::Hold;
 	mSkillElement = SkillElement::Water;
-	mSkillCool = 10.f;
+	mSkillCool = 1.f;
 }
 
 void Skill_IceSpear::Init()
@@ -27,7 +27,7 @@ void Skill_IceSpear::Init()
 	mImage = ImageManager::GetInstance()->FindImage(L"IceSpear");
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 	mSizeX = mImage->GetWidth() -20;
-	mSizeY = mImage->GetHeight() - 20;
+	mSizeY = mImage->GetHeight() -20;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mSpeed = 20.f;
 	

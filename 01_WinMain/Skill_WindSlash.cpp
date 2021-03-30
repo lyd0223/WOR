@@ -25,14 +25,14 @@ void Skill_WindSlash::Init()
 
 	mSizeX = mImage->GetWidth() / 5 * 1.5 - 30;
 	mSizeY = mImage->GetHeight() / 3 * 1.5;
-	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+
 
 
 
 	mSlashAnimation = new Animation;
 	mSlashAnimation->InitFrameByStartEnd(0, 0, 4, 0, false);
 	mSlashAnimation->SetIsLoop(false);
-	mSlashAnimation->SetFrameUpdateTime(0.1f);
+	mSlashAnimation->SetFrameUpdateTime(0.02f);
 	mSlashAnimation->Play();
 
 	mSkillHitCount = 1;
@@ -45,18 +45,20 @@ void Skill_WindSlash::Release()
 
 void Skill_WindSlash::Update()
 {
-	if (mSlashAnimation->GetNowFrameX() == 4)mIsDestroy = true;
+	if (mSlashAnimation->GetNowFrameX() == 3) mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	if (mSlashAnimation->GetNowFrameX() == 4) mIsDestroy = true;
 	//D2D1_RECT_F rctemp = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	//mAngle = Math::GetAngle(mX, mY, _mousePosition.x + rctemp.left, _mousePosition.y + rctemp.top);
 	mX += cosf(mAngle) * mSpeed;
 	mY += -sinf(mAngle) * mSpeed;
-	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	//mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mSlashAnimation->Update();
 }
 
 void Skill_WindSlash::Render()
 {
-	mImage->SetScale(1.5f);
+	
+	mImage->SetScale(2.f);
 	mImage->SetAngle(mAngle * -(180/PI));
 	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mSlashAnimation->GetNowFrameX(), mSlashAnimation->GetNowFrameY());

@@ -71,13 +71,13 @@ void Monster_MuscleMan::Update()
 	//	POINT point;
 	//	point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
 	//	point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
-
+	//
 	//	D2D1_RECT_F rctemp = mPathList[0]->GetRect();
 	//	if (!PtInRect(&rctemp, point))
 	//	{
 	//		mPathList.erase(mPathList.begin());
 	//	}
-
+	//
 	//	mX += cosf(angle) * mSpeed;
 	//	mY += -sinf(angle) * mSpeed;
 	//}

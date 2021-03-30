@@ -55,7 +55,8 @@ void SceneManager::LoadScene(const wstring & sceneName)
 	if (mCurrentScene)
 		mCurrentScene->Release();
 
-	targetScene->Init();
+	if(!targetScene->GetIsAlreadyInit())
+		targetScene->Init();
 
 	mCurrentScene = targetScene;
 }

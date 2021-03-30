@@ -26,7 +26,6 @@ Player::Player(const string& name, float x, float y)
 
 void Player::Init()
 {
-	SoundPlayer::GetInstance()->LoadFromFile(L"EnemyHitSound", Resources(L"Sound/EnemyHit.wav"), false);
 	ImageManager::GetInstance()->LoadFromFile(L"Player", Resources(L"Player/WizardPlayer.png"), 10, 29);
 	mImage = ImageManager::GetInstance()->FindImage(L"Player");
 	mPlayerState = PlayerState::DownIdle;
@@ -35,11 +34,12 @@ void Player::Init()
 	mSizeY = mImage->GetHeight() / 25;
 	mAngle = 0.f;
 	mHp = 500;
+	mMp = 0;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mMoveAngle = 0;
-	mMovingRect = RectMakeCenter(mX, mY+50, TileSize, TileSize);
+	mMovingRect = RectMakeCenter(mX, mY + 50, TileSize, TileSize);
 
-	
+
 	//ouseTracker::Init(mMovingRect.left + (mMovingRect.right - mMovingRect.left), mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) + 20, mAngle);
 	//mDownIdleAnimation = new Animation;
 	//mDownIdleAnimation->InitFrameByStartEnd(0, 0, 0, 0, true);
@@ -112,7 +112,7 @@ void Player::Init()
 		}
 
 	}
-	
+
 	if (mPlayerHeightShadow == nullptr)
 	{
 		if (mCurrentAnimation == mUpThrowWatingAnimation || mCurrentAnimation == mDownThrowWatingAnimation || mCurrentAnimation == mDownAttackAnimation || mCurrentAnimation == mUpAttackAnimation ||
@@ -122,7 +122,7 @@ void Player::Init()
 			mPlayerHeightShadow->Init();
 		}
 	}
-	
+
 	if (mPlayerWideShadow == nullptr)
 	{
 		if (mCurrentAnimation == mUpDashAnimation || mCurrentAnimation == mDownDashAnimation || mCurrentAnimation == mLeftDashAnimation || mCurrentAnimation == mRightDashAnimation ||
@@ -160,7 +160,7 @@ void Player::Init()
 			SafeDelete(mPlayerWideShadow)
 		}
 	}
-	
+
 }
 
 void Player::Release()

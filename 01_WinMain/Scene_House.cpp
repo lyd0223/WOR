@@ -11,9 +11,12 @@
 #include "UserInterface.h"
 #include "SkillBook.h"
 #include "Effect_Teleport.h"
+#include "Monster_CrowScare.h"
 void Scene_House::Init()
 {
-	SoundPlayer::GetInstance()->Play(L"PlayerRoom", 0.5f);
+	mIsAlreadyInit = 1;
+
+	SoundPlayer::GetInstance()->Play(L"PlayerRoom", 1.f);
 	Load_Image::GetInstance()->LoadSceneMapToolImage();
 	ImageManager::GetInstance()->LoadFromFile(L"SkillBook", Resources(L"Tile/Structure/SkillBook.png"), 14, 2);
 	ImageManager::GetInstance()->LoadFromFile(L"TutorialTile", Resources(L"Tile/TutorialMap.png"), 74, 43);
@@ -22,17 +25,24 @@ void Scene_House::Init()
 
 	UserInterface* ui = new UserInterface();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, ui);
-	//타일맵추가
+	//???????
 
 	mTileMap = new TileMap("House");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mTileMap);
 	//
-	//스트럭쳐 받아오기
+	//??????? ??????
 	mStructureList = mTileMap->GetStructureList();
 	for (int i = 0; i < mStructureList.size(); i++)
 	{
 		if(mStructureList[i]->GetName() == "Portal" || mStructureList[i]->GetName() == "Penta")
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mStructureList[i]);
+		else if (mStructureList[i]->GetName() == "ScareCrow")
+		{
+			Monster_CrowScare* crowscare = new Monster_CrowScare("ScareCrow", mStructureList[i]->GetX(), mStructureList[i]->GetY());
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, crowscare);
+			mStructureList.erase(mStructureList.begin() + i);
+			i--;
+		}
 		else
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Structure, mStructureList[i]);
 	}

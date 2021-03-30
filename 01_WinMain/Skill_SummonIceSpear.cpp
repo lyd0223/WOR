@@ -20,8 +20,8 @@ void Skill_SummonIceSpear::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"SummonIceSpear", Resources(L"Skill/IceSpear.png"), 1, 7);
 	mImage = ImageManager::GetInstance()->FindImage(L"SummonIceSpear");
 
-	mSizeX = mImage->GetWidth();
-	mSizeY = mImage->GetHeight();
+	mSizeX = mImage->GetWidth() - 20;
+	mSizeY = mImage->GetHeight() - 20;
 	mRect = RectMake(mX, mY, mSizeX, mSizeY);
 	mAngle = 0.f;
 

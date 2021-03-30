@@ -25,7 +25,7 @@ class Scene_Tutorial : public Scene
 	class Monster_Zombie* mZombie;
 	vector<Room> mRoomList;
 	//class MonsterObject* mMonsterList[11];
-	vector<class MonsterObject*> mMonsterList;
+	vector<class GameObject*> mMonsterList;
 	//class Tile* mTileList[TileCountY][TileCountX];
 	class TileMap* mTileMap;
 	vector<class Structure*> mStructureList;

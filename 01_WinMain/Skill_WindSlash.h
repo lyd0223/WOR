@@ -7,7 +7,6 @@ class Skill_WindSlash : public SkillObject
 {
 	Image* mImage;
 	class Player* mPlayer;
-
 	float mEndX;
 	float mEndY;
 	float mImageAngle;

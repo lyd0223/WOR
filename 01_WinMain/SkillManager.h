@@ -31,6 +31,7 @@ public:
 	void IceSwordSkill(const string& name, float x, float y, float angle);
 	void MonsterBigSlashSkill(const string& name, float x, float y, float angle);
 	void WaterBallSkill(const string& name, float x, float y, float angle);
+	void WaterBallSkill(const string& name, float x, float y, float angle, float temp);
 	void MonsterSmallSlashSkill(const string& name, float x, float y, float angle);
 	void SpearSkill(const string& name, float x, float y, float angle);
 	void SpearWaveSkill(const string& name, float x, float y, float angle);

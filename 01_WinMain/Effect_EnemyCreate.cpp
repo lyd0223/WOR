@@ -18,11 +18,11 @@ Effect_EnemyCreate::Effect_EnemyCreate(const string & name, float x, float y, Mo
 	mY = y;
 	mMonsterName = monsterName;
 
-	ImageManager::GetInstance()->LoadFromFile(L"EnemyCreate", Resources(L"Effect/EnemyCreate.png"), 1, 30);
+	ImageManager::GetInstance()->LoadFromFile(L"EnemyCreate", Resources(L"Effect/EnemyCreate.png"), 1, 31);
 	mImage = ImageManager::GetInstance()->FindImage(L"EnemyCreate");
 
 	mEnemyCreateAnimation = new Animation();
-	mEnemyCreateAnimation->InitFrameByStartEnd(0, 0, 0, 29, false);
+	mEnemyCreateAnimation->InitFrameByStartEnd(0, 0, 0, 30, false);
 	mEnemyCreateAnimation->SetIsLoop(false);
 	mEnemyCreateAnimation->SetFrameUpdateTime(0.13f);
 	mEnemyCreateAnimation->Play();
@@ -49,9 +49,28 @@ void Effect_EnemyCreate::Update()
 	{
 		mEnemyCreateAnimation->Update();
 	}
-	if (mEnemyCreateAnimation->GetNowFrameY() == 26 && RespawnOn == true)
+	if (mEnemyCreateAnimation->GetNowFrameY() == 27 && RespawnOn == true)
 	{
-		//ObjectManager::GetInstance()->FindObject(mName)->SetIsActive(true);
+		string str;
+		switch (mMonsterName)
+		{
+		case MonsterName::BigZombie:
+			str = "BigZombie";
+			break;
+		case MonsterName::Golem:
+			break;
+		case MonsterName::Mazition:
+			break;
+		case MonsterName::RapidZombie:
+			break;
+		case MonsterName::Slime:
+			break;
+		case MonsterName::SwoardMan:
+			break;
+		case MonsterName::Zombie:
+			break;
+		}
+		//ObjectManager::GetInstance()->FindObject(str)->SetIsActive(true);
 		if (mMonsterName == MonsterName::BigZombie)
 		{
 			Monster_BigZombie* bigzombie = new Monster_BigZombie("BigZombie", mX, mY);
@@ -102,7 +121,7 @@ void Effect_EnemyCreate::Update()
 			RespawnOn = false;
 		}
 	}
-	if (mEnemyCreateAnimation->GetNowFrameY() == 29)
+	if (mEnemyCreateAnimation->GetNowFrameY() == 30)
 	{
 		mIsDestroy = true;
 	}

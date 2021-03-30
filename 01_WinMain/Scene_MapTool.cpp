@@ -13,6 +13,7 @@
 
 void Scene_MapTool::Init()
 {
+	mIsAlreadyInit = 1;
 
 	Load_Image::GetInstance()->LoadSceneMapToolImage();
 
@@ -715,8 +716,7 @@ void Scene_MapTool::Update()
 		if (PtInRect(&rctemp, _mousePosition))
 		{
 			SceneManager::GetInstance()->LoadScene(L"Title");
-			SceneManager::GetInstance()->DeleteScene(L"MapTool");
-			SceneManager::GetInstance()->AddScene(L"MapTool", new Scene_MapTool);
+
 			return;
 		}
 

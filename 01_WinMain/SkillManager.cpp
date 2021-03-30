@@ -69,7 +69,7 @@ SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y
 
 	if (name == "IceSpear")
 	{
-		SoundPlayer::GetInstance()->LoadFromFile(L"IceSpearSound", Resources(L"Sound/IceSpear.wav"), false);
+		
 		SoundPlayer::GetInstance()->Play(L"IceSpearSound", 1.f);
 		Skill_IceSpear* iceSpear = new Skill_IceSpear(name, x, y, angle);
 		return iceSpear;
@@ -86,7 +86,7 @@ SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y
 	}
 	if (name == "WindSlash")
 	{
-		SoundPlayer::GetInstance()->LoadFromFile(L"WindSlashSound", Resources(L"Sound/WindSlash.wav"), false);
+
 		SoundPlayer::GetInstance()->Play(L"WindSlashSound", 1.f);
 		Skill_WindSlash* windSlash = new Skill_WindSlash(name, x, y, angle);
 		return windSlash;
@@ -191,17 +191,15 @@ void SkillManager::Update()
 				// ���� ��ų
 				if (skill->GetSkillType() == SkillType::Melee)
 				{
-					// ���� ��ų�� ������ ��Ʈ�� ������� �ʴ´�
-					// ����� ��ų �ϳ��� �� �Ѹ����� �ѹ����� ���ظ� ��ߴ�
-					// �׷��� �װ� ��� �ϴ°� ������
+
 					bool isCollision = false;
-					if (IntersectRect(temp, &skillrc, &monsterrc) && 
-						(skill->GetIsCollision() == false && monster->GetIsCollision() == false))
+					if (IntersectRect(temp, &skillrc, &monsterrc) /*&& 
+						(skill->GetIsCollision() == false && monster->GetIsCollision() == false)*/)
 					{
-						monster->SetIsCollision(true);
+						//monster->SetIsCollision(true);
 						ParticleManager::GetInstance()->MakeHitSparkParticle(temp.left, temp.top);
 					}
-					monster->SetIsHit(true);
+					//monster->SetIsHit(true);
 				}
 
 				// ������ ��ų
@@ -235,6 +233,14 @@ void SkillManager::Update()
 							monster->SetSkillHitPower(skill->GetSkillPower());
 						}
 
+						if (skill->GetName() == "WaterBall")
+						{
+							ParticleManager::GetInstance()->MakeWaterExplosion(skillX, skillY);
+							SoundPlayer::GetInstance()->Play(L"WaterExplode", 1.f);
+							monster->SetSkillHitAngle(skill->GetAngle());
+							monster->SetSkillHitPower(skill->GetSkillPower());
+						}
+
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 						skill->SetIsDestroy(true);
 						monster->SetIsHit(true);
@@ -246,24 +252,31 @@ void SkillManager::Update()
 			// �� to �÷��̾�
 			if (skill->GetSkillTarget() == SkillTarget::Enemy)
 			{
-				if (skill->GetSkillType() == SkillType::Melee)
+				D2D1_RECT_F temp;
+				D2D1_RECT_F playerRc = player->GetRect();
+				if (IntersectRect(temp, &skillrc, &playerRc))
 				{
 
-				}
-
-				if (skill->GetSkillType() == SkillType::Throw)
-				{
-					if (skill->GetName() == "WaterBall")
+					if (skill->GetSkillType() == SkillType::Melee)
 					{
-						ParticleManager::GetInstance()->MakeWaterExplosion(skillX, skillY);
-						SoundPlayer::GetInstance()->Play(L"WaterExplode", 1.f);
-						player->SetSkillHitAngle(skill->GetAngle());
-						player->SetSkillHitPower(skill->GetSkillPower());
+
 					}
 
-					ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
-					skill->SetIsDestroy(true);
-					break;
+					if (skill->GetSkillType() == SkillType::Throw)
+					{
+						if (skill->GetName() == "WaterBall")
+						{
+							ParticleManager::GetInstance()->MakeWaterExplosion(skillX, skillY);
+							SoundPlayer::GetInstance()->Play(L"WaterExplode", 1.f);
+							player->SetSkillHitAngle(skill->GetAngle());
+							player->SetSkillHitPower(skill->GetSkillPower());
+						}
+
+						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						skill->SetIsDestroy(true);
+						break;
+					}
+
 				}
 			}
 		}
@@ -376,7 +389,7 @@ void SkillManager::IceSpearSkill(const string& name, float x, float y, float ang
 
 void SkillManager::SummonIceSpearSkill(const string& name, float x, float y, float angle)
 {
-	SoundPlayer::GetInstance()->LoadFromFile(L"SummonIceSpearSound", Resources(L"Sound/SummonIceSpear.wav"), false);
+	
 	SoundPlayer::GetInstance()->Play(L"SummonIceSpearSound", 1.f);
 	Skill_SummonIceSpear* summonIceSpear = new Skill_SummonIceSpear(name, x, y, angle);
 	summonIceSpear->Init();
@@ -392,7 +405,7 @@ void SkillManager::IceSwordSkill(const string& name, float x, float y, float ang
 
 void SkillManager::MonsterBigSlashSkill(const string& name, float x, float y, float angle)
 {
-	SoundPlayer::GetInstance()->LoadFromFile(L"GolemAttackSound", Resources(L"Sound/GolemAttack.wav"), false);
+	
 	SoundPlayer::GetInstance()->Play(L"GolemAttackSound", 1.f);
 	Skill_MonsterBigSlash* monsterBigSlash = new Skill_MonsterBigSlash(name, x, y, angle);
 	monsterBigSlash->Init();
@@ -401,16 +414,25 @@ void SkillManager::MonsterBigSlashSkill(const string& name, float x, float y, fl
 
 void SkillManager::WaterBallSkill(const string& name, float x, float y, float angle)
 {
-	SoundPlayer::GetInstance()->LoadFromFile(L"WaterBallSound", Resources(L"Sound/WaterBall.wav"), false);
+
 	SoundPlayer::GetInstance()->Play(L"WaterBallSound", 1.f);
 	Skill_WaterBall* waterBall = new Skill_WaterBall(name, x, y, angle);
 	waterBall->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, waterBall);
 }
 
+void SkillManager::WaterBallSkill(const string& name, float x, float y, float angle, float temp)
+{
+	
+	SoundPlayer::GetInstance()->Play(L"WaterBallSound", 1.f);
+	Skill_WaterBall* waterBall = new Skill_WaterBall(name, x, y, angle, temp);
+	waterBall->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, waterBall);
+}
+
 void SkillManager::MonsterSmallSlashSkill(const string& name, float x, float y, float angle)
 {
-	SoundPlayer::GetInstance()->LoadFromFile(L"ZombieAttackSound", Resources(L"Sound/ZombieAttack.wav"), false);
+	
 	SoundPlayer::GetInstance()->Play(L"ZombieAttackSound", 1.f);
 	Skill_MonsterSmallSlash* monsterSmallSlash = new Skill_MonsterSmallSlash(name, x, y, angle);
 	monsterSmallSlash->Init();
@@ -433,7 +455,7 @@ void SkillManager::SpearWaveSkill(const string& name, float x, float y, float an
 
 void SkillManager::MonsterMiddleSlashSkill(const string& name, float x, float y, float angle)
 {
-	SoundPlayer::GetInstance()->LoadFromFile(L"SwoardManAttackSound", Resources(L"Sound/SwoardManAttack.wav"), false);
+	
 	SoundPlayer::GetInstance()->Play(L"SwoardManAttackSound", 1.f);
 	Skill_MonsterMiddleSlash* monsterMiddleSlash = new Skill_MonsterMiddleSlash(name, x, y, angle);
 	monsterMiddleSlash->Init();
@@ -442,7 +464,7 @@ void SkillManager::MonsterMiddleSlashSkill(const string& name, float x, float y,
 
 void SkillManager::ThunderBolt(const string& name, float x, float y, float angle)
 {
-	SoundPlayer::GetInstance()->LoadFromFile(L"ThunderBoltSound", Resources(L"Sound/ThunderBolt.wav"), false);
+	
 	SoundPlayer::GetInstance()->Play(L"ThunderBoltSound", 1.f);
 	for (int i = 0; i < 6; i++)
 	{

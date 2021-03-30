@@ -18,17 +18,18 @@ Monster_Mazition::Monster_Mazition(const string& name, float x, float y)
 void Monster_Mazition::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"Mazition", Resources(L"Monster/Mazition.png"), 6, 5);
+	
 	mImage = ImageManager::GetInstance()->FindImage(L"Mazition");
 	mMonsterActState = MonsterActState::RightIdle;
 	mMonsterState = MonsterState::Idle;
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
-	mSpeed = 3.f;
+	mSpeed = 150.f;
 	mHp = 1;
-	mSizeX = mImage->GetFrameSize().__typeToGetX() ;
-	mSizeY = mImage->GetFrameSize().__typeToGetY() ;
+	mSizeX = mImage->GetFrameSize().__typeToGetX() *2;
+	mSizeY = mImage->GetFrameSize().__typeToGetY()  * 2 - 20;
 	mIsAct = false;
 
-	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mRect = RectMakeCenter(mX, mY - 20, mSizeX, mSizeY);
 	mMonsterType = MonsterType::Normal;
 	mMonsterName = MonsterName::Mazition;
 	AnimationSet(&mRightIdleAnimation, false, false, 0, 0, 0, 0, AnimationTime);
@@ -70,21 +71,39 @@ void Monster_Mazition::Update()
 		if (mHp > 0)
 		{
 
+			
 			if (mMonsterActState == MonsterActState::LeftHit && mCurrentAnimation == mLeftHitAnimation)
 			{
 				AnimationChange(mLeftIdleAnimation);
 				mMonsterActState = MonsterActState::LeftIdle;
 				mIsHit = false;
 			}
+			if (mMonsterActState == MonsterActState::RightHit && mCurrentAnimation == mRightHitAnimation)
+			{
+				AnimationChange(mRightIdleAnimation);
+				mMonsterActState = MonsterActState::RightIdle;
+				mIsHit = false;
+			}
 
 			if (mIsHit)
 			{
-				AnimationChange(mLeftHitAnimation);
-				mMonsterActState = MonsterActState::LeftHit;
+				if (mMonsterToPlayerAngle > PI / 2 && mMonsterToPlayerAngle < PI / 2 + PI)
+				{
+					
+					SoundPlayer::GetInstance()->Play(L"EnemyHitSound", 1.f);
+					AnimationChange(mLeftHitAnimation);
+					mMonsterActState = MonsterActState::LeftHit;
+				}
+				if (mMonsterToPlayerAngle <PI / 2 || mMonsterToPlayerAngle > PI / 2 + PI)
+				{
+					SoundPlayer::GetInstance()->Play(L"EnemyHitSound", 1.f);
+					AnimationChange(mRightHitAnimation);
+					mMonsterActState = MonsterActState::RightHit;
+				}
 			}
 
 			//아이들
-			if (mMonsterToPlayerDistance >= 5.5f)
+			if (mMonsterToPlayerDistance >= 20.5f)
 			{
 				AnimationChange(mRightIdleAnimation);
 				mMonsterActState = MonsterActState::RightIdle;
@@ -94,49 +113,64 @@ void Monster_Mazition::Update()
 
 			}
 			//추격
-			if (mCurrentAnimation->GetIsPlay() == false)
-			{
-				if (mMonsterToPlayerDistance < 5.5f && mMonsterToPlayerDistance >= 4.5f)
+			
+				if (mMonsterToPlayerDistance < 20.5f && mMonsterToPlayerDistance >= 15.f)
 				{
 
 					if (mRightWalkAnimation->GetIsPlay() == false)mIsAct = false;
 					if (mLeftWalkAnimation->GetIsPlay() == false)mIsAct = false;
-					if (mMonsterToPlayerAngle <PI / 2 || mMonsterToPlayerAngle > PI / 2 + PI)
+					if (mCurrentAnimation->GetIsPlay() == false)
 					{
-
-						if (mIsAct == false)
+						if (mMonsterToPlayerAngle <PI / 2 || mMonsterToPlayerAngle > PI / 2 + PI)
 						{
-							AnimationChange(mRightWalkAnimation);
-							mMonsterActState = MonsterActState::RightWalk;
-							mMonsterState = MonsterState::Chase;
-							mIsAct = true;
-						}
-					}
-					if (mMonsterToPlayerAngle > PI / 2 && mMonsterToPlayerAngle < PI / 2 + PI)
-					{
-						if (mIsAct == false)
-						{
-							AnimationChange(mLeftWalkAnimation);
-							mMonsterActState == MonsterActState::LeftWalk;
-							mMonsterState = MonsterState::Chase;
-							mIsAct = true;
-						}
-					}
-					//길 찾기
-					if (mPathList.size() != 0)
-					{
-						float nextX = mPathList[1]->GetX();
-						float nextY = mPathList[1]->GetY();
-						float angle = Math::GetAngle(mX, mY, nextX, nextY);
-						float distance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY());
 
-						mX += cosf(angle) * mSpeed;
-						mY += -sinf(angle) * mSpeed;
+							if (mIsAct == false)
+							{
+								AnimationChange(mRightWalkAnimation);
+								mMonsterActState = MonsterActState::RightWalk;
+								mMonsterState = MonsterState::Chase;
+								mIsAct = true;
+							}
+						}
+						if (mMonsterToPlayerAngle > PI / 2 && mMonsterToPlayerAngle < PI / 2 + PI)
+						{
+							if (mIsAct == false)
+							{
+								AnimationChange(mLeftWalkAnimation);
+								mMonsterActState == MonsterActState::LeftWalk;
+								mMonsterState = MonsterState::Chase;
+								mIsAct = true;
+							}
+						}
+						// 이동
+					}
+					if (mPathList.size() > 1)
+					{
+						float centerX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
+						float centerY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
+						float nextX = mPathList[1]->GetX() + (TileSize / 2);
+						float nextY = mPathList[1]->GetY() + (TileSize / 2);
+						float angle = Math::GetAngle(centerX, centerY, nextX, nextY);
+
+						POINT point;
+						point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
+						point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
+
+						D2D1_RECT_F rctemp = mPathList[0]->GetRect();
+						if (!PtInRect(&rctemp, point))
+						{
+							mPathList.erase(mPathList.begin());
+						}
+
+						mX += cosf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
+						mY += -sinf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
 					}
 				}
+			
 
-
-				if (mMonsterToPlayerDistance < 4.5f)
+			if (mCurrentAnimation->GetIsPlay() == false)
+			{
+				if (mMonsterToPlayerDistance < 15.5f)
 				{
 
 					//오른쪽 공격
@@ -150,7 +184,7 @@ void Monster_Mazition::Update()
 							}
 							if (mCurrentAnimation->GetNowFrameX() == 4 && mCurrentAnimation->GetNowFrameY() == 1)
 							{
-								SkillManager::GetInstance()->WaterBallSkill("WaterBall", lineX, lineY, mMonsterToPlayerAngle);
+								SkillManager::GetInstance()->WaterBallSkill("WaterBall", lineX, lineY, mMonsterToPlayerAngle, 0);
 							}
 							int frame = mCurrentAnimation->GetNowFrameX();
 							mMonsterActState = MonsterActState::RightAttack;
@@ -176,7 +210,7 @@ void Monster_Mazition::Update()
 							}
 							if (mCurrentAnimation->GetNowFrameX() == 0 && mCurrentAnimation->GetNowFrameY() == 3)
 							{
-								SkillManager::GetInstance()->WaterBallSkill("WaterBall", lineX, lineY, mMonsterToPlayerAngle);
+								SkillManager::GetInstance()->WaterBallSkill("WaterBall", lineX, lineY, mMonsterToPlayerAngle, 0);
 
 							}
 							int frame = mCurrentAnimation->GetNowFrameX();
@@ -213,8 +247,8 @@ void Monster_Mazition::Update()
 		lineY = mY + 100 * -sinf(mMonsterToPlayerAngle);
 		//---
 		mCurrentAnimation->Update();
-		mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-		mMovingRect = RectMakeCenter(mX, mY, TileSize, TileSize);
+		mRect = RectMakeCenter(mX, mY - 20 , mSizeX, mSizeY);
+		mMovingRect = RectMakeCenter(mX, mY + 10, TileSize, TileSize);
 		float mMovingX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
 		float mMovingY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
 		TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");

@@ -21,9 +21,9 @@ void Monster_Zombie::Init()
 	mImage = ImageManager::GetInstance()->FindImage(L"Zombie");
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 	mMonsterActState = MonsterActState::RightIdle;
-	mSpeed = 3.f;
-	mSizeX = mImage->GetWidth()/10;
-	mSizeY = mImage->GetHeight() / 4+ 30;
+	mSpeed = 100.f;
+	mSizeX = mImage->GetWidth() / 10;
+	mSizeY = mImage->GetHeight() / 4 + 30;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mMonsterType = MonsterType::Normal;
 	mMonsterName = MonsterName::Zombie;
@@ -61,27 +61,56 @@ void Monster_Zombie::Update()
 	{
 		mMonsterToPlayerDistance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize;
 		mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
-		if (mCurrentAnimation->GetIsPlay() == false)
+
+		if (mHp > 0)
 		{
-			if (mHp > 0)
+			if (mMonsterActState == MonsterActState::LeftHit && mCurrentAnimation == mLeftHitAnimation)
+			{
+				AnimationChange(mLeftIdleAnimation);
+				mMonsterActState = MonsterActState::LeftIdle;
+				mIsHit = false;
+			}
+			if (mMonsterActState == MonsterActState::RightHit && mCurrentAnimation == mRightHitAnimation)
+			{
+				AnimationChange(mRightIdleAnimation);
+				mMonsterActState = MonsterActState::RightIdle;
+				mIsHit = false;
+			}
+
+			if (mIsHit)
+			{
+				if (mMonsterToPlayerAngle > PI / 2 && mMonsterToPlayerAngle < PI / 2 + PI)
+				{
+
+					SoundPlayer::GetInstance()->Play(L"EnemyHitSound", 1.f);
+					AnimationChange(mLeftHitAnimation);
+					mMonsterActState = MonsterActState::LeftHit;
+				}
+				if (mMonsterToPlayerAngle <PI / 2 || mMonsterToPlayerAngle > PI / 2 + PI)
+				{
+					SoundPlayer::GetInstance()->Play(L"EnemyHitSound", 1.f);
+					AnimationChange(mRightHitAnimation);
+					mMonsterActState = MonsterActState::RightHit;
+				}
+			}
+			//아이들
+			if (mMonsterToPlayerDistance >= 5.5f)
+			{
+				AnimationChange(mRightIdleAnimation);
+				mMonsterActState = MonsterActState::RightIdle;
+				mMonsterState = MonsterState::Idle;
+				//mPathList.clear();
+				mIsAct = false;
+
+			}
+			//추격
+			if (mMonsterToPlayerDistance < 5.5f && mMonsterToPlayerDistance >= 1.5f)
 			{
 
-				//아이들
-				if (mMonsterToPlayerDistance >= 5.5f)
+				if (mRightWalkAnimation->GetIsPlay() == false)mIsAct = false;
+				if (mLeftWalkAnimation->GetIsPlay() == false)mIsAct = false;
+				if (mCurrentAnimation->GetIsPlay() == false)
 				{
-					AnimationChange(mRightIdleAnimation);
-					mMonsterActState = MonsterActState::RightIdle;
-					mMonsterState = MonsterState::Idle;
-					//mPathList.clear();
-					mIsAct = false;
-
-				}
-				//추격
-				if (mMonsterToPlayerDistance < 5.5f && mMonsterToPlayerDistance >= 1.5f)
-				{
-
-					if (mRightWalkAnimation->GetIsPlay() == false)mIsAct = false;
-					if (mLeftWalkAnimation->GetIsPlay() == false)mIsAct = false;
 					if (mMonsterToPlayerAngle <PI / 2 || mMonsterToPlayerAngle > PI / 2 + PI)
 					{
 
@@ -103,25 +132,38 @@ void Monster_Zombie::Update()
 							mIsAct = true;
 						}
 					}
-					//길 찾기
-					if (mPathList.size() != 0)
-					{
-						float nextX = mPathList[1]->GetX();
-						float nextY = mPathList[1]->GetY();
-						float angle = Math::GetAngle(mX, mY, nextX, nextY);
-						float distance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY());
-
-						mX += cosf(angle) * mSpeed;
-						mY += -sinf(angle) * mSpeed;
-					}
 				}
-
-
-				if (mMonsterToPlayerDistance < 1.5f)
+				//길찾기
+				if (mPathList.size() > 1)
 				{
+					float centerX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
+					float centerY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
+					float nextX = mPathList[1]->GetX() + (TileSize / 2);
+					float nextY = mPathList[1]->GetY() + (TileSize / 2);
+					float angle = Math::GetAngle(centerX, centerY, nextX, nextY);
 
-					//오른쪽 공격
+					POINT point;
+					point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
+					point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
 
+					D2D1_RECT_F rctemp = mPathList[0]->GetRect();
+					if (!PtInRect(&rctemp, point))
+					{
+						mPathList.erase(mPathList.begin());
+					}
+
+					mX += cosf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
+					mY += -sinf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
+				}
+			}
+
+
+			if (mMonsterToPlayerDistance < 1.5f)
+			{
+
+				//오른쪽 공격
+				if (mCurrentAnimation->GetIsPlay() == false)
+				{
 					if (mMonsterToPlayerAngle <= PI / 2 || mMonsterToPlayerAngle >= PI + PI / 2)
 					{
 						if (mIsAct == true)
@@ -175,19 +217,19 @@ void Monster_Zombie::Update()
 					}
 				}
 			}
+		}
 
 
 
-			if (mHp <= 0)
+		if (mHp <= 0)
+		{
+			if (mIsAct == false)
+
 			{
-				if (mIsAct == false)
-
-				{
-					AnimationChange(mDieAnimation);
-					mMonsterActState = MonsterActState::Die;
-					mMonsterState = MonsterState::Die;
-					mIsAct = true;
-				}
+				AnimationChange(mDieAnimation);
+				mMonsterActState = MonsterActState::Die;
+				mMonsterState = MonsterState::Die;
+				mIsAct = true;
 			}
 		}
 		//공격 라인--
@@ -269,6 +311,7 @@ void Monster_Zombie::Update()
 			mY += -sinf(mSkillHitAngle) * mSkillHitPower;
 			mSkillHitPower -= 0.2f;
 		}
+
 	}
 }
 

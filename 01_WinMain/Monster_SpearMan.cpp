@@ -66,7 +66,35 @@ void Monster_SpearMan::Update()
 	mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
 	if (mHp > 0)
 	{
+		if (mMonsterActState == MonsterActState::LeftHit && mCurrentAnimation == mLeftHitAnimation)
+		{
+			AnimationChange(mLeftIdleAnimation);
+			mMonsterActState = MonsterActState::LeftIdle;
+			mIsHit = false;
+		}
+		if (mMonsterActState == MonsterActState::RightHit && mCurrentAnimation == mRightHitAnimation)
+		{
+			AnimationChange(mRightIdleAnimation);
+			mMonsterActState = MonsterActState::RightIdle;
+			mIsHit = false;
+		}
 
+		if (mIsHit)
+		{
+			if (mMonsterToPlayerAngle > PI / 2 && mMonsterToPlayerAngle < PI / 2 + PI)
+			{
+
+				SoundPlayer::GetInstance()->Play(L"EnemyHitSound", 1.f);
+				AnimationChange(mLeftHitAnimation);
+				mMonsterActState = MonsterActState::LeftHit;
+			}
+			if (mMonsterToPlayerAngle <PI / 2 || mMonsterToPlayerAngle > PI / 2 + PI)
+			{
+				SoundPlayer::GetInstance()->Play(L"EnemyHitSound", 1.f);
+				AnimationChange(mRightHitAnimation);
+				mMonsterActState = MonsterActState::RightHit;
+			}
+		}
 		if (mCurrentAnimation->GetIsPlay() == false)
 		{
 			//พฦภฬต้

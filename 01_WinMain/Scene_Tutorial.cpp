@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "Scene_Tutorial.h"
 #include "Image.h"
 #include "Tile.h"
@@ -49,14 +49,14 @@ void Scene_Tutorial::Init()
 	}
 	Load();*/
 
-	//Å¸ÀÏ¸ÊÃß°¡
+	//Å¸ï¿½Ï¸ï¿½ï¿½ß°ï¿½
 	UserInterface* ui = new UserInterface();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, ui);
 
 	mTileMap = new TileMap("Tutorial");
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Tile, mTileMap);
 	//
-	//½ºÆ®·°ÃÄ ¹Þ¾Æ¿À±â
+	//ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½
 	mStructureList = mTileMap->GetStructureList();
 	for (int i = 0; i < mStructureList.size(); i++)
 	{
@@ -68,7 +68,7 @@ void Scene_Tutorial::Init()
 	mPortal = (Structure*)ObjectManager::GetInstance()->FindObject("Portal");
 	//
 
-	//¹æÃß°¡ , ¿ìÃø»ó´ÜºÎÅÍ 1,2,3,4¹ø
+	//ï¿½ï¿½ï¿½ß°ï¿½ , ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Üºï¿½ï¿½ï¿½ 1,2,3,4ï¿½ï¿½
 	mRoomList.push_back({ 41,4,31,11 });
 	mRoomList.push_back({ 27,4,11,10 });
 	mRoomList.push_back({ 25,24,19,14 });
@@ -78,11 +78,11 @@ void Scene_Tutorial::Init()
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Player, mPlayer);
 	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize + TileSize / 2, 10 * TileSize + TileSize / 2, MonsterName::Mazition, mRoomList[1]);
 
-	//¸ó½ºÅÍÃß°¡ÇÏ±â
-	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 11 * TileSize, MonsterName::RapidZombie, mRoomList[1]);
-	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 9 * TileSize, MonsterName::Zombie, mRoomList[1]);
-	ParticleManager::GetInstance()->MakeEnemyCreate(35 * TileSize, 9 * TileSize, MonsterName::Zombie, mRoomList[1]);
-	ParticleManager::GetInstance()->MakeEnemyCreate(35 * TileSize, 11 * TileSize, MonsterName::Zombie, mRoomList[1]);
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ß°ï¿½ï¿½Ï±ï¿½
+	//ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 11 * TileSize, MonsterName::RapidZombie, mRoomList[1]);
+	//ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 9 * TileSize, MonsterName::Zombie, mRoomList[1]);
+	//ParticleManager::GetInstance()->MakeEnemyCreate(35 * TileSize, 9 * TileSize, MonsterName::Zombie, mRoomList[1]);
+	//ParticleManager::GetInstance()->MakeEnemyCreate(35 * TileSize, 11 * TileSize, MonsterName::Zombie, mRoomList[1]);
 
 	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 31 * TileSize, MonsterName::SwoardMan, mRoomList[2]);
 	ParticleManager::GetInstance()->MakeEnemyCreate(32 * TileSize, 29* TileSize, MonsterName::SwoardMan, mRoomList[2]);
@@ -93,48 +93,48 @@ void Scene_Tutorial::Init()
 	ParticleManager::GetInstance()->MakeEnemyCreate(15 * TileSize, 31 * TileSize, MonsterName::BigZombie, mRoomList[3]);
 	ParticleManager::GetInstance()->MakeEnemyCreate(10 * TileSize, 29 * TileSize, MonsterName::Slime, mRoomList[3]);
 	ParticleManager::GetInstance()->MakeEnemyCreate(10 * TileSize, 31 * TileSize, MonsterName::Slime, mRoomList[3]);
-	ParticleManager::GetInstance()->MakeEnemyCreate(10 * TileSize, 20 * TileSize, MonsterName::Slime, mRoomList[3]);
+	ParticleManager::GetInstance()->MakeEnemyCreate(10 * TileSize, 28 * TileSize, MonsterName::Slime, mRoomList[3]);
 	ParticleManager::GetInstance()->MakeEnemyCreate(10 * TileSize, 32 * TileSize, MonsterName::Slime, mRoomList[3]);
 	//
 
 
-	mGolem = new Monster_Golem("Golem", 200, 2000);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mGolem);
+	//mGolem = new Monster_Golem("Golem", 200, 2000);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mGolem);
 
-	mMuscleMan = new Monster_MuscleMan("MuscleMan", 200, 1800);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMuscleMan);
+	//mMuscleMan = new Monster_MuscleMan("MuscleMan", 200, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMuscleMan);
 
-	mBigZombie = new Monster_BigZombie("BigZombie", 400, 1600);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mBigZombie);
+	//mBigZombie = new Monster_BigZombie("BigZombie", 400, 1600);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mBigZombie);
 
-	mMazition = new Monster_Mazition("Mazition", 800, 1600);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazition);
-	
-	mMazitionBullet = new Monster_MazitionBullet("MazitionBullet", 1000, 1600);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazitionBullet);
-	
-	mMuscleMan = new Monster_MuscleMan("MuscleMan", 200, 1800);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMuscleMan);
-	
-	mRapidZombie = new Monster_RapidZombie("RapidZombie", 400, 1800);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mRapidZombie);
-	
-	mSlime = new Monster_Slime("Slime", 600, 1800);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSlime);
-	
-	mSwoardMan = new Monster_SwoardMan("SwoardMan", 800, 1800);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSwoardMan);
+	//mMazition = new Monster_Mazition("Mazition", 800, 1600);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazition);
+	//
+	//mMazitionBullet = new Monster_MazitionBullet("MazitionBullet", 1000, 1600);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMazitionBullet);
+	//
+	//mMuscleMan = new Monster_MuscleMan("MuscleMan", 200, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mMuscleMan);
+	//
+	//mRapidZombie = new Monster_RapidZombie("RapidZombie", 400, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mRapidZombie);
+	//
+	//mSlime = new Monster_Slime("Slime", 600, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSlime);
+	//
+	//mSwoardMan = new Monster_SwoardMan("SwoardMan", 800, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSwoardMan);
 	
 	//mSpearMan = new Monster_SpearMan("SpearMan", 200, 1300);
 	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mSpearMan);
 	
-	mWard = new Monster_Ward("Ward", 1200, 1800);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mWard);
-	
-	mZombie = new Monster_Zombie("Zombie", 1200, 1600);
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie);
+	//mWard = new Monster_Ward("Ward", 1200, 1800);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mWard);
+	//
+	//mZombie = new Monster_Zombie("Zombie", 1200, 1600);
+	//ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mZombie);
 
-	mMonsterList.push_back((MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "BigZombie"));
+	//mMonsterList.push_back((MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "BigZombie"));
 	//mMonsterList.push_back((MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "Golem"));
 	//mMonsterList.push_back((MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "Mazition"));
 	//mMonsterList.push_back((MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "MazitionBullet"));
@@ -145,7 +145,7 @@ void Scene_Tutorial::Init()
 	//mMonsterList.push_back((MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "SwoardMan"));
 	//mMonsterList.push_back((MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "Ward"));
 	//mMonsterList.push_back((MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "Zombie"));
-	mMonsterList.push_back((MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "MuscleMan"));
+	//mMonsterList.push_back((MonsterObject*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Enemy, "MuscleMan"));
 
 	ObjectManager::GetInstance()->Init();
 
@@ -169,18 +169,36 @@ void Scene_Tutorial::Release()
 
 void Scene_Tutorial::Update()
 {
+	//if (mMonsterList.size() == 0)
+		mMonsterList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
 	CameraManager::GetInstance()->Update();
 	SkillManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();
+
+
+
+	if (mPortal->GetPortalOn())
+	{
+
+		if (Input::GetInstance()->GetKeyDown('F'))
+		{
+			ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy).clear();
+			mMonsterList.clear();
+			Effect_Teleport* teleport = new Effect_Teleport(mPortal->GetX(), mPortal->GetY(), true,L"Tutorial", L"House");
+			SoundPlayer::GetInstance()->Stop(L"Tutorial");
+			return;
+		}
+	}
 
 	for (int i = 0; i < mMonsterList.size(); i++)
 	{
 		if (mMonsterList[i]->GetIsActive())
 		{
-			D2D1_RECT_F rc = mMonsterList[i]->GetMovingRect();
+			MonsterObject* monster = (MonsterObject*)mMonsterList[i];
+			D2D1_RECT_F rc = monster->GetMovingRect();
 			float centerX = (rc.left + (rc.right - rc.left) / 2) / TileSize;
 			float centerY = (rc.top + (rc.bottom - rc.top) / 2) / TileSize;
-			mMonsterList[i]->SetPathList(
+			monster->SetPathList(
 				PathFinder::GetInstance()->FindPath(
 					(TileMap*)ObjectManager::GetInstance()->FindObject(ObjectLayer::Tile, "TileMap"),
 					centerX, centerY,
@@ -188,18 +206,6 @@ void Scene_Tutorial::Update()
 			);
 		}
 	}
-
-	if (mPortal->GetPortalOn())
-	{
-
-		if (Input::GetInstance()->GetKeyDown('F'))
-		{
-			Effect_Teleport* teleport = new Effect_Teleport(mPortal->GetX(), mPortal->GetY(), true,L"Tutorial", L"House");
-			SoundPlayer::GetInstance()->Stop(L"Tutorial");
-			return;
-		}
-	}
-
 
 }
 

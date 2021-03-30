@@ -23,7 +23,7 @@ void Monster_Slime::Init()
 	mMonsterActState = MonsterActState::RightIdle;
 	mMonsterState = MonsterState::Idle;
 	mHp = 1;
-	mSpeed = 3.f;
+	mSpeed = 100.f;
 	mSizeX = TileSize / 2;
 	mSizeY = TileSize/2;
 	mRect = RectMakeCenter(mX, mY + 10, mSizeX, mSizeY);
@@ -62,10 +62,38 @@ void Monster_Slime::Update()
 	{
 		mMonsterToPlayerDistance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize;
 		mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
-		if (mCurrentAnimation->GetIsPlay() == false)
-		{
+		
 			if (mHp > 0)
 			{
+				if (mMonsterActState == MonsterActState::LeftHit && mCurrentAnimation == mLeftHitAnimation)
+				{
+					AnimationChange(mLeftIdleAnimation);
+					mMonsterActState = MonsterActState::LeftIdle;
+					mIsHit = false;
+				}
+				if (mMonsterActState == MonsterActState::RightHit && mCurrentAnimation == mRightHitAnimation)
+				{
+					AnimationChange(mRightIdleAnimation);
+					mMonsterActState = MonsterActState::RightIdle;
+					mIsHit = false;
+				}
+
+				if (mIsHit)
+				{
+					if (mMonsterToPlayerAngle > PI / 2 && mMonsterToPlayerAngle < PI / 2 + PI)
+					{
+
+						
+						AnimationChange(mLeftHitAnimation);
+						mMonsterActState = MonsterActState::LeftHit;
+					}
+					if (mMonsterToPlayerAngle <PI / 2 || mMonsterToPlayerAngle > PI / 2 + PI)
+					{
+						
+						AnimationChange(mRightHitAnimation);
+						mMonsterActState = MonsterActState::RightHit;
+					}
+				}
 
 				//아이들
 				if (mMonsterToPlayerDistance >= 5.5f)
@@ -83,37 +111,52 @@ void Monster_Slime::Update()
 
 					if (mRightWalkAnimation->GetIsPlay() == false)mIsAct = false;
 					if (mLeftWalkAnimation->GetIsPlay() == false)mIsAct = false;
-					if (mMonsterToPlayerAngle <PI / 2 || mMonsterToPlayerAngle > PI / 2 + PI)
+					if (mCurrentAnimation->GetIsPlay() == false)
 					{
-
-						if (mIsAct == false)
+						if (mMonsterToPlayerAngle <PI / 2 || mMonsterToPlayerAngle > PI / 2 + PI)
 						{
-							AnimationChange(mRightWalkAnimation);
-							mMonsterActState = MonsterActState::RightWalk;
-							mMonsterState = MonsterState::Chase;
-							mIsAct = true;
+
+							if (mIsAct == false)
+							{
+								AnimationChange(mRightWalkAnimation);
+								mMonsterActState = MonsterActState::RightWalk;
+								mMonsterState = MonsterState::Chase;
+								mIsAct = true;
+							}
+						}
+						if (mMonsterToPlayerAngle > PI / 2 && mMonsterToPlayerAngle < PI / 2 + PI)
+						{
+							if (mIsAct == false)
+							{
+								AnimationChange(mLeftWalkAnimation);
+								mMonsterActState == MonsterActState::LeftWalk;
+								mMonsterState = MonsterState::Chase;
+								mIsAct = true;
+							}
 						}
 					}
-					if (mMonsterToPlayerAngle > PI / 2 && mMonsterToPlayerAngle < PI / 2 + PI)
-					{
-						if (mIsAct == false)
-						{
-							AnimationChange(mLeftWalkAnimation);
-							mMonsterActState == MonsterActState::LeftWalk;
-							mMonsterState = MonsterState::Chase;
-							mIsAct = true;
-						}
-					}
-					//길 찾기
-					if (mPathList.size() != 0)
-					{
-						float nextX = mPathList[1]->GetX();
-						float nextY = mPathList[1]->GetY();
-						float angle = Math::GetAngle(mX, mY, nextX, nextY);
-						float distance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY());
+					// 이동
 
-						mX += cosf(angle) * mSpeed;
-						mY += -sinf(angle) * mSpeed;
+					if (mPathList.size() > 1)
+					{
+						float centerX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
+						float centerY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
+						float nextX = mPathList[1]->GetX() + (TileSize / 2);
+						float nextY = mPathList[1]->GetY() + (TileSize / 2);
+						float angle = Math::GetAngle(centerX, centerY, nextX, nextY);
+
+						POINT point;
+						point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
+						point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
+
+						D2D1_RECT_F rctemp = mPathList[0]->GetRect();
+						if (!PtInRect(&rctemp, point))
+						{
+							mPathList.erase(mPathList.begin());
+						}
+
+						mX += cosf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
+						mY += -sinf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
 					}
 				}
 
@@ -134,7 +177,7 @@ void Monster_Slime::Update()
 					mIsAct = true;
 				}
 			}
-		}
+		
 
 		mCurrentAnimation->Update();
 		mRect = RectMakeCenter(mX, mY + 10, mSizeX, mSizeY);

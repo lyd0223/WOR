@@ -22,10 +22,11 @@ void Monster_BigZombie::Init()
 	mImage = ImageManager::GetInstance()->FindImage(L"BigZombie");
 	mMonsterActState = MonsterActState::RightIdle;
 	mMonsterState = MonsterState::Idle;
-	mSpeed = 3.f;
+	mSpeed = 10.f;
 	mSizeX = mImage->GetFrameSize().__typeToGetX() * 4 - 120;
 	mSizeY = mImage->GetFrameSize().__typeToGetY() * 4 - 100;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
+	mHp = 5;
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 	mMonsterToPlayerDistance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize;
 	mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
@@ -58,10 +59,7 @@ void Monster_BigZombie::Update()
 	D2D1_RECT_F cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	if (cameraRect.right > mRect.left && cameraRect.left < mRect.right && cameraRect.bottom > mRect.top && cameraRect.top < mRect.bottom)
 	{
-		if (mIsActive == false)
-		{
-			return;
-		}
+		
 
 		mMonsterToPlayerDistance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize;
 		mMonsterToPlayerAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
@@ -69,7 +67,7 @@ void Monster_BigZombie::Update()
 		{
 
 			//아이들
-			if (mMonsterToPlayerDistance >= 5.5f)
+			if (mMonsterToPlayerDistance >= 10.5f)
 			{
 				AnimationChange(mRightIdleAnimation);
 				mMonsterActState = MonsterActState::RightIdle;
@@ -78,9 +76,8 @@ void Monster_BigZombie::Update()
 				mIsAct = false;
 
 			}
-			if (mCurrentAnimation->GetIsPlay() == false)
-			{
-				if (mMonsterToPlayerDistance < 5.5f && mMonsterToPlayerDistance >= 2.1f)
+			
+				if (mMonsterToPlayerDistance < 10.5f && mMonsterToPlayerDistance >= 2.1f)
 				{
 
 					if (mRightWalkAnimation->GetIsPlay() == false)mIsAct = false;
@@ -91,20 +88,33 @@ void Monster_BigZombie::Update()
 						mMonsterState = MonsterState::Chase;
 						mIsAct = true;
 					}
-					//길 찾기
-					if (mPathList.size() != 0)
-					{
-						float nextX = mPathList[1]->GetX();
-						float nextY = mPathList[1]->GetY();
-						float angle = Math::GetAngle(mX, mY, nextX, nextY);
-						float distance = Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY());
+					// 이동
 
-						mX += cosf(angle) * mSpeed;
-						mY += -sinf(angle) * mSpeed;
+					if (mPathList.size() > 1)
+					{
+						float centerX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
+						float centerY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
+						float nextX = mPathList[1]->GetX() + (TileSize / 2);
+						float nextY = mPathList[1]->GetY() + (TileSize / 2);
+						float angle = Math::GetAngle(centerX, centerY, nextX, nextY);
+
+						POINT point;
+						point.x = mMovingRect.left + (mMovingRect.right - mMovingRect.left);
+						point.y = mMovingRect.top + (mMovingRect.bottom - mMovingRect.top);
+
+						D2D1_RECT_F rctemp = mPathList[0]->GetRect();
+						if (!PtInRect(&rctemp, point))
+						{
+							mPathList.erase(mPathList.begin());
+						}
+
+						mX += cosf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
+						mY += -sinf(angle) * mSpeed * Time::GetInstance()->DeltaTime();
 					}
 				}
 
-
+				if (mCurrentAnimation->GetIsPlay() == false)
+				{
 				if (mMonsterToPlayerDistance < 2.1f)
 				{
 
@@ -253,6 +263,7 @@ void Monster_BigZombie::Render()
 	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
 		CameraManager::GetInstance()->GetMainCamera()->FrameRenderFromBottom(mImage, mX, mY + 20, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 	}
+
 	//string str = to_string(Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY())/ TileSize);
 	//wstring wstr;
 	//wstr.assign(str.begin(), str.end());

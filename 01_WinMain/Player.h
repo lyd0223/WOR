@@ -100,7 +100,6 @@ class Player : public MovingObject
 	float lineX;
 	float lineY;
 	float mAttackMotion;
-
 	float mLB_ButtonSkillCool;
 	float mRB_ButtonSkillCool;
 	float mQ_ButtonSkillCool;
@@ -141,6 +140,7 @@ public:
 	float GetQ_ButtonSkillCool() { return mQ_ButtonSkillCool; }
 
 	float GetMp() { return mMp; }
+
 
 	string GetLB_ButtonSkill() { return mLB_ButtonSkill; }
 	string GetRB_ButtonSkill() { return mRB_ButtonSkill; }

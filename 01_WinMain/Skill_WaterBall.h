@@ -16,6 +16,7 @@ class Skill_WaterBall : public SkillObject
 public:
 	Skill_WaterBall(const string& name) : SkillObject(name) {};
 	Skill_WaterBall(const string& name, float x, float y, float angle);
+	Skill_WaterBall(const string& name, float x, float y, float angle, float temp);
 
 	void Init() override;
 	void Release() override;

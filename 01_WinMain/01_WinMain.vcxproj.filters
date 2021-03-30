@@ -441,6 +441,9 @@
     <ClInclude Include="UI_ESC.h">
       <Filter>MainGame\Object\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Monster_CrowScare.h">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -725,9 +728,6 @@
     <ClCompile Include="SkillBook.cpp">
       <Filter>MainGame\Object\NPC</Filter>
     </ClCompile>
-    <ClCompile Include="Monster_SwoardMan.cpp">
-      <Filter>MainGame\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Effect_Teleport.cpp">
       <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
@@ -736,6 +736,12 @@
     </ClCompile>
     <ClCompile Include="UI_ESC.cpp">
       <Filter>MainGame\Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_SwoardMan.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_CrowScare.cpp">
+      <Filter>MainGame\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

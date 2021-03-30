@@ -15,10 +15,23 @@ Skill_WaterBall::Skill_WaterBall(const string& name, float x, float y, float ang
 	mY = y;
 	mAngle = angle;
 	mSkillElement = SkillElement::Water;
-	mSkillTarget = SkillTarget::Enemy;
+	mSkillTarget = SkillTarget::Player;
 	mSkillType = SkillType::Throw;
 	mSkillArcana = SkillArcana::Standard;
 	mSkillCool = 5.f;
+}
+
+Skill_WaterBall::Skill_WaterBall(const string& name, float x, float y, float angle, float temp)
+	:SkillObject(name)
+{
+	mX = x;
+	mY = y;
+	mAngle = angle;
+	mSkillElement = SkillElement::Water;
+	mSkillTarget = SkillTarget::Enemy;
+	mSkillType = SkillType::Throw;
+	mSkillArcana = SkillArcana::Standard;
+	mSkillCool = 0.f;
 }
 
 void Skill_WaterBall::Init()
@@ -29,7 +42,7 @@ void Skill_WaterBall::Init()
 	mSizeX = mImage->GetWidth()/3;
 	mSizeY = mImage->GetHeight();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
-	mSpeed = 20.f;
+	mSpeed = 60.f;
 
 	mWaterBallAnimation = new Animation;
 	mWaterBallAnimation->InitFrameByStartEnd(0, 0, 2, 0, false);
@@ -53,8 +66,8 @@ void Skill_WaterBall::Update()
 
 	//D2D1_RECT_F rctemp = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	//mAngle = Math::GetAngle(mX, mY, _mousePosition.x + rctemp.left, _mousePosition.y + rctemp.top);
-	mX += cosf(mAngle) * mSpeed;
-	mY += -sinf(mAngle) * mSpeed;
+	mX += cosf(mAngle) * mSpeed * Time::GetInstance()->DeltaTime();
+	mY += -sinf(mAngle) * mSpeed * Time::GetInstance()->DeltaTime();
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mWaterBallAnimation->Update();
 }
