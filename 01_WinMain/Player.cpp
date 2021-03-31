@@ -100,8 +100,7 @@ void Player::Init()
 		mMouseTracker->Init();
 	}
 	//
-
-	mSkillStackCount = SkillManager::GetInstance()->FindSkill("DragonArc")->GetSkillStack();
+	mSkillStackCount = SkillManager::GetInstance()->FindSkill(mRB_ButtonSkill)->GetSkillStack();
 }
 
 void Player::Release()
@@ -144,10 +143,16 @@ void Player::Update()
 	D2D1_RECT_F rctemp = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	mAngle = Math::GetAngle(mX, mY, _mousePosition.x + rctemp.left, _mousePosition.y + rctemp.top);
 
-	//if (mRB_ButtonSkill == "DragonArc")
-	//{
-	//	mSkillStackCount = SkillManager::GetInstance()->FindSkill("DragonArc")->GetSkillStack();
-	//}
+	if (mSkillStackCount < SkillManager::GetInstance()->FindSkill(mRB_ButtonSkill)->GetSkillStack())
+	{
+		mFrameCount += Time::GetInstance()->DeltaTime();
+		if (mFrameCount > SkillManager::GetInstance()->FindSkill(mRB_ButtonSkill)->GetSkillCool())
+		{
+			mFrameCount = 0;
+			mSkillStackCount++;
+		}
+	}
+	mFrameCount += Time::GetInstance()->DeltaTime();
 	//-----
 	//�׸���-------
 	if (mHp > 0)
@@ -608,9 +613,11 @@ void Player::Update()
 			}
 
 			// ��Ŭ�� ��ų
-			if (Input::GetInstance()->GetKeyDown(VK_RBUTTON) && mRB_ButtonSkillCool < 0)
+			if ((Input::GetInstance()->GetKeyDown(VK_RBUTTON) && mRB_ButtonSkillCool < 0) ||
+				(Input::GetInstance()->GetKeyDown(VK_RBUTTON) && mSkillStackCount != 0))
 			{
-
+				if (mSkillStackCount == 0) return;
+				mSkillStackCount--;
 				if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
 				{
 					AnimationChange(mRightThrowWationgAnimation);
@@ -636,30 +643,55 @@ void Player::Update()
 
 				}
 			}
-			if (Input::GetInstance()->GetKey(VK_RBUTTON) && mRB_ButtonSkillCool < 0)
+
+			if ((Input::GetInstance()->GetKey(VK_RBUTTON) && mRB_ButtonSkillCool < 0) ||
+				(Input::GetInstance()->GetKeyDown(VK_RBUTTON) && mSkillStackCount != 0))
 			{
 				//SkillObject* skill = nullptr;
 				if (mIsAct == false)
 				{
 					if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
 					{
-
-						SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX - 20, mY, mAngle);
+						if (mRB_ButtonSkill == "DragonArc")
+						{
+							SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX - 20, mY, mAngle, mIsUp);
+							mIsUp = !mIsUp;
+						}
+						else
+							SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX - 20, mY, mAngle);
 						//SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX -20, mY, mAngle);
 					}
 					else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
 					{
-						SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX, mY, mAngle);
+						if (mRB_ButtonSkill == "DragonArc")
+						{
+							SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX - 20, mY, mAngle, mIsUp);
+							mIsUp = !mIsUp;
+						}
+						else
+							SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX, mY, mAngle);
 						//SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX, mY, mAngle);
 					}
 					else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
 					{
-						SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX + 35, mY - 20, mAngle);
+						if (mRB_ButtonSkill == "DragonArc")
+						{
+							SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX - 20, mY, mAngle, mIsUp);
+							mIsUp = !mIsUp;
+						}
+						else
+							SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX + 35, mY - 20, mAngle);
 						//SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX + 35, mY - 20, mAngle);
 					}
 					else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
 					{
-						SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX + 20, mY - 20, mAngle);
+						if (mRB_ButtonSkill == "DragonArc")
+						{
+							SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX - 20, mY, mAngle, mIsUp);
+							mIsUp = !mIsUp;
+						}
+						else
+							SkillManager::GetInstance()->SkillCasting(mRB_ButtonSkill, mX + 20, mY - 20, mAngle);
 						//SkillManager::GetInstance()->SummonIceSpearSkill("SummonIceSpear", mX + 20, mY - 20, mAngle);
 					}
 					mIsAct = true;
@@ -705,7 +737,8 @@ void Player::Update()
 					}
 				}
 			}
-			if (Input::GetInstance()->GetKeyUp(VK_RBUTTON) && mRB_ButtonSkillCool < 0)
+			if ((Input::GetInstance()->GetKeyUp(VK_RBUTTON) && mRB_ButtonSkillCool < 0) ||
+				(Input::GetInstance()->GetKeyDown(VK_RBUTTON) && mSkillStackCount != 0))
 			{
 				mRB_ButtonSkillCool = SkillManager::GetInstance()->FindSkill(mRB_ButtonSkill)->GetSkillCool();
 				SkillObject* skill = (SkillObject*)ObjectManager::GetInstance()->FindObject(mRB_ButtonSkill);
@@ -1461,6 +1494,8 @@ void Player::Render()
 	mImage->SetScale(1.5f);
 	//CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
+	//wstring str = to_wstring(mSkillStackCount);
+	//D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, 100, str, 30.f);
 	//string str = to_string(_mousePosition.x) + "," + to_string(_mousePosition.y);
 	//wstring wstr;
 	//wstr.assign(str.begin(), str.end());

@@ -50,14 +50,14 @@ void UI_ESC::Update()
 		}
 	}
 
-	if (Input::GetInstance()->GetKeyDown(VK_UP))
+	if (Input::GetInstance()->GetKeyDown(VK_UP) || Input::GetInstance()->GetKeyDown('W'))
 	{
 		mIndex--;
 		if (mIndex < 0) mIndex = 2;
 		SoundPlayer::GetInstance()->Play(L"MenuMove", 1.f);
 	}
 
-	else if (Input::GetInstance()->GetKeyDown(VK_DOWN))
+	else if (Input::GetInstance()->GetKeyDown(VK_DOWN) || Input::GetInstance()->GetKeyDown('S'))
 	{
 		mIndex++;
 		if (mIndex > 2) mIndex = 0;

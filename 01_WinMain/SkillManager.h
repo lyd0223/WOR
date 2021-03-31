@@ -16,7 +16,9 @@ public:
 
 	void AddSkillList(SkillElement element, SkillObject* skillObject);
 	void SkillCasting(const string& name, float x, float y, float angle);
+	void SkillCasting(const string& name, float x, float y, float angle, bool b);
 	SkillObject* MakeSkillClass(const string& name, float x, float y, float angle);
+	SkillObject* MakeSkillClass(const string& name, float x, float y, float angle, bool b);
 
 	void Update();
 

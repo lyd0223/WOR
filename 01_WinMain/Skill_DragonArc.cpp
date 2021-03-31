@@ -15,7 +15,7 @@ Skill_DragonArc::Skill_DragonArc(const string & name, float x, float y, float an
 	mSkillElement = SkillElement::Fire;
 	mSkillType = SkillType::Throw;
 
-	mSkillCool = 1.f;
+	mSkillCool = 2.f;
 	mSkillStack = 5;
 }
 
@@ -32,8 +32,8 @@ void Skill_DragonArc::Init()
 	mFrameCount = 0;
 	mSkillDamege = 5.f;
 	mMoveAngle = mAngle;
-	mUpAngle = mAngle + (PI / 3);
-	mDownAngle = mAngle - (PI / 3);
+	mUpAngle = mAngle + (PI / 4);
+	mDownAngle = mAngle - (PI / 4);
 
 	SoundPlayer::GetInstance()->Play(L"FireArcStart", 1.f);
 }

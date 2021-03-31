@@ -109,8 +109,10 @@ class Player : public MovingObject
 
 	int mSkillStackCount;
 
+	bool mIsUp;
 	bool mIsAct;
 	bool mIsDashEffect;
+	bool mIsSkillChange;
 	class Animation* mCurrentAnimation;
 
 	string mLB_ButtonSkill;
@@ -137,11 +139,12 @@ public:
 	void SetSpacebar_ButtonSkill(string skillName) { mSpacebar_ButtonSkill = skillName; }
 	void SetQ_ButtonSkill(string skillName) { mQ_ButtonSkill = skillName; }
 
+	void SetSkillStackCount(int stack) { mSkillStackCount = stack; }
+
 	float GetRB_ButtonSkillCool() { return mRB_ButtonSkillCool; }
 	float GetQ_ButtonSkillCool() { return mQ_ButtonSkillCool; }
 
 	float GetMp() { return mMp; }
-
 
 	string GetLB_ButtonSkill() { return mLB_ButtonSkill; }
 	string GetRB_ButtonSkill() { return mRB_ButtonSkill; }

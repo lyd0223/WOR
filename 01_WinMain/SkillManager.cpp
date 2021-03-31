@@ -63,10 +63,17 @@ void SkillManager::SkillCasting(const string & name, float x, float y, float ang
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, skill);
 }
 
+void SkillManager::SkillCasting(const string & name, float x, float y, float angle, bool b)
+{
+	SkillObject* skill = MakeSkillClass(name, x, y, angle, b);
+
+	skill->Init();
+
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, skill);
+}
+
 SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y, float angle)
 {
-	!mIsUp;
-
 	if (name == "FireBall")
 	{
 		Skill_FireBall* fireBall = new Skill_FireBall(name, x, y, angle);
@@ -79,11 +86,7 @@ SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y
 		Skill_IceSpear* iceSpear = new Skill_IceSpear(name, x, y, angle);
 		return iceSpear;
 	}
-	if (name == "DragonArc")
-	{
-		Skill_DragonArc* dragonArc = new Skill_DragonArc(name, x, y, angle, mIsUp);
-		return dragonArc;
-	}
+
 	if (name == "WindSlash")
 	{
 
@@ -110,6 +113,16 @@ SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y
 			CameraManager::GetInstance()->GetMainCamera()->GetMousePosition().y, 
 			CastingSkill::Meteor);
 		return magicCircle;
+	}
+	return nullptr;
+}
+
+SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y, float angle, bool b)
+{
+	if (name == "DragonArc")
+	{
+		Skill_DragonArc* dragonArc = new Skill_DragonArc(name, x, y, angle, b);
+		return dragonArc;
 	}
 	return nullptr;
 }
@@ -213,12 +226,13 @@ void SkillManager::Update()
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 						monster->SetSkillHitAngle(skill->GetAngle());
 						monster->SetSkillHitPower(skill->GetSkillPower());
-					if (skill->GetName() == "WindSlash")
-					{
-						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
-						monster->SetSkillHitAngle(skill->GetAngle());
-						monster->SetSkillHitPower(skill->GetSkillPower());
-					}
+						if (skill->GetName() == "WindSlash")
+						{
+							ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+							monster->SetSkillHitAngle(skill->GetAngle());
+							monster->SetSkillHitPower(skill->GetSkillPower());
+						}
+						
 					}
 				}
 

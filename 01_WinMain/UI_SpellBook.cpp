@@ -252,6 +252,7 @@ void UI_SpellBook::Update()
 				break;
 			case SkillArcana::Standard:
 				mPlayer->SetRB_ButtonSkill(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetName());
+				mPlayer->SetSkillStackCount(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetSkillStack());
 				break;
 			case SkillArcana::Signature:
 				mPlayer->SetQ_ButtonSkill(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetName());
