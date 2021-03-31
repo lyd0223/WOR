@@ -441,6 +441,9 @@
     <ClInclude Include="Monster_CrowScare.h">
       <Filter>MainGame\Object\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Effect_Number.h">
+      <Filter>MainGame\Object\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -736,6 +739,9 @@
     </ClCompile>
     <ClCompile Include="Monster_CrowScare.cpp">
       <Filter>MainGame\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_Number.cpp">
+      <Filter>MainGame\Object\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

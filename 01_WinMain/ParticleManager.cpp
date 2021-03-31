@@ -9,7 +9,7 @@
 #include "Effect_DashEffect.h"
 #include "Effect_Smoke.h"
 #include "Effect_EnemyCreate.h"
-
+#include "Effect_Number.h"
 
 
 void ParticleManager::MakeDustParticle(float x, float y, float angle, float scale)
@@ -164,4 +164,13 @@ void ParticleManager::MakeEnemyCreate(float x, float y, MonsterName name, Room* 
 	enemyCreate->SetRoom(room);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, enemyCreate);
 
+}
+
+void ParticleManager::MakeNumber(float x, float y, int index)
+{
+	Effect_Number* number;
+
+	number = new Effect_Number("Number", x, y, index);
+	number->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, number);
 }

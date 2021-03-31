@@ -232,7 +232,7 @@ void SkillManager::Update()
 							monster->SetSkillHitAngle(skill->GetAngle());
 							monster->SetSkillHitPower(skill->GetSkillPower());
 						}
-						
+						ParticleManager::GetInstance()->MakeNumber(monster->GetX(), monster->GetRect().top - 10, skill->GetSkillDamege());
 					}
 				}
 
@@ -289,8 +289,7 @@ void SkillManager::Update()
 							temp -= skill->GetSkillDamege();
 							monster->SetHP(temp);
 						}
-
-						break;
+						ParticleManager::GetInstance()->MakeNumber(monster->GetX(), monster->GetRect().top - 10, skill->GetSkillDamege());
 					}
 				}
 			}
@@ -309,21 +308,21 @@ void SkillManager::Update()
 						if (skill->GetName() == "MonsterSmallSlash")
 						{
 							ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
-						
+
 							player->SetSkillHitAngle(skill->GetAngle());
 							player->SetSkillHitPower(skill->GetSkillPower());
 						}
 						if (skill->GetName() == "MonsterMiddleSlash")
 						{
 							ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
-						
+
 							player->SetSkillHitAngle(skill->GetAngle());
 							player->SetSkillHitPower(skill->GetSkillPower());
 						}
 						if (skill->GetName() == "MonsterBigSlash")
 						{
 							ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
-							
+
 							player->SetSkillHitAngle(skill->GetAngle());
 							player->SetSkillHitPower(skill->GetSkillPower());
 						}
@@ -333,7 +332,7 @@ void SkillManager::Update()
 							temp -= skill->GetSkillDamege();
 							player->SetHP(temp);
 						}
-						
+
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 						player->SetSkillHitAngle(skill->GetAngle());
 						player->SetSkillHitPower(skill->GetSkillPower());
@@ -366,8 +365,8 @@ void SkillManager::Update()
 						}
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 						skill->SetIsDestroy(true);
-						break;
 					}
+					ParticleManager::GetInstance()->MakeNumber(player->GetX(), player->GetRect().top - 10, skill->GetSkillDamege());
 				}
 			}
 		}
