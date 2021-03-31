@@ -207,6 +207,7 @@ void Monster_RapidZombie::Update()
 			{
 				if (mCurrentAnimation != mDieAnimation)
 				{
+					SoundPlayer::GetInstance()->Play(L"EnemyDeadSound", 1.f);
 					AnimationChange(mDieAnimation);
 					mMonsterActState = MonsterActState::Die;
 					mMonsterState = MonsterState::Die;
