@@ -172,5 +172,5 @@ void ParticleManager::MakeNumber(float x, float y, int index)
 
 	number = new Effect_Number("Number", x, y, index);
 	number->Init();
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, number);
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, number);
 }
