@@ -107,6 +107,7 @@ class Player : public MovingObject
 
 	float mFrameCount;
 
+	int mSkillStackCount;
 
 	bool mIsAct;
 	bool mIsDashEffect;

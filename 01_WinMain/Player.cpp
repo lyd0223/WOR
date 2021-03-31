@@ -101,7 +101,7 @@ void Player::Init()
 	}
 	//
 
-
+	mSkillStackCount = SkillManager::GetInstance()->FindSkill("DragonArc")->GetSkillStack();
 }
 
 void Player::Release()
@@ -143,6 +143,11 @@ void Player::Update()
 	mQ_ButtonSkillCool -= Time::GetInstance()->DeltaTime();
 	D2D1_RECT_F rctemp = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	mAngle = Math::GetAngle(mX, mY, _mousePosition.x + rctemp.left, _mousePosition.y + rctemp.top);
+
+	//if (mRB_ButtonSkill == "DragonArc")
+	//{
+	//	mSkillStackCount = SkillManager::GetInstance()->FindSkill("DragonArc")->GetSkillStack();
+	//}
 	//-----
 	//�׸���-------
 	if (mHp > 0)
@@ -532,7 +537,6 @@ void Player::Update()
 			if (Input::GetInstance()->GetKeyDown(VK_LBUTTON))
 			{
 
-
 				if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
 				{
 					if (mAttackMotion == 1)
@@ -663,6 +667,7 @@ void Player::Update()
 
 				//if (skill == nullptr)
 				SkillObject* skill = (SkillObject*)ObjectManager::GetInstance()->FindObject(mRB_ButtonSkill);
+				if (skill == nullptr) return;
 				if (skill->GetName() == "IceSpear")
 				{
 					if (mAngle < (PI / 4) || mAngle >(PI2 - (PI / 4)))
@@ -704,6 +709,11 @@ void Player::Update()
 			{
 				mRB_ButtonSkillCool = SkillManager::GetInstance()->FindSkill(mRB_ButtonSkill)->GetSkillCool();
 				SkillObject* skill = (SkillObject*)ObjectManager::GetInstance()->FindObject(mRB_ButtonSkill);
+				if (skill == nullptr)
+				{
+					mIsAct = false;
+					return;
+				}
 				if (skill->GetSkillType() == SkillType::Hold && skill->GetName() == "IceSpear")
 				{
 					skill->SetSkillType(SkillType::Throw);
