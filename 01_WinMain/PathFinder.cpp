@@ -3,7 +3,7 @@
 #include "Tile.h"
 #include "TileMap.h"
 
-#define TileSize 64
+#define TileSize 48
 
 int PathFinder::CalcHeuristic(int idX1, int idY1, int idX2, int idY2, int tileSize) 
 {
@@ -19,8 +19,8 @@ vector<class Tile*> PathFinder::FindPath(class TileMap* tileList, int startIndex
 
 	if (startIndexX == arrivalX && startIndexY == arrivalY) return result;
 
-	int tileCountX = TileCountX;
-	int tileCountY = TileCountY;
+	int tileCountX = tileList->GetTileList().size();
+	int tileCountY = tileList->GetTileList()[0].size();
 
 	if (startIndexX < 0 || startIndexX >= tileCountX) return result;
 	if (startIndexY < 0 || startIndexY >= tileCountY) return result;
@@ -49,8 +49,8 @@ vector<class Tile*> PathFinder::FindPath(class TileMap* tileList, int startIndex
 	while (true) {
 		if (currentTile == nullptr) return result;
 
-		int currentIndexX = currentTile->GetFrameIndexX();
-		int currentIndexY = currentTile->GetFrameIndexY();
+		int currentIndexX = currentTile->GetX() / TileSize;
+		int currentIndexY = currentTile->GetY() / TileSize;		
 
 		bool b=0;
 		for (int y = currentIndexY - 1; y <= currentIndexY + 1; y++) {
@@ -79,7 +79,7 @@ vector<class Tile*> PathFinder::FindPath(class TileMap* tileList, int startIndex
 				{
 					dummyList[y][x].IsOpen = true;
 					dummyList[y][x].Parent = currentTile;
-					dummyList[y][x].CostFromStart = dummyList[currentTile->GetFrameIndexY()][currentTile->GetFrameIndexX()].CostFromStart + 1;
+					dummyList[y][x].CostFromStart = dummyList[currentTile->GetY() / TileSize][currentTile->GetX() / TileSize].CostFromStart + 1;
 					dummyList[y][x].CostToEnd = CalcHeuristic(x, y, arrivalX, arrivalY, TileSize);
 					dummyList[y][x].CostTotal = dummyList[y][x].CostFromStart + dummyList[y][x].CostToEnd;
 
@@ -113,15 +113,15 @@ vector<class Tile*> PathFinder::FindPath(class TileMap* tileList, int startIndex
 				continue;
 			}
 
-			if (dummyList[openList[i]->GetFrameIndexY()][openList[i]->GetFrameIndexX()].CostTotal <
-				dummyList[tileMin->GetFrameIndexY()][tileMin->GetFrameIndexX()].CostToEnd) {
+			if (dummyList[openList[i]->GetY() / TileSize][openList[i]->GetX() / TileSize].CostTotal <
+				dummyList[tileMin->GetY() / TileSize][tileMin->GetX() / TileSize].CostToEnd) {
 
 				tileMin = openList[i];
 			}
 		}
 
 		if (tileMin != nullptr) {
-			dummyList[tileMin->GetFrameIndexY()][tileMin->GetFrameIndexX()].IsClose = true;
+			dummyList[tileMin->GetY() / TileSize][tileMin->GetX() / TileSize].IsClose = true;
 			currentTile = tileMin;
 		}
 		else {
@@ -131,8 +131,8 @@ vector<class Tile*> PathFinder::FindPath(class TileMap* tileList, int startIndex
 		if (tileMin == arrivalTile) {
 			Tile* temp = tileMin;
 			result.push_back(temp);
-			while (dummyList[temp->GetFrameIndexY()][temp->GetFrameIndexX()].Parent != nullptr) {
-				temp = dummyList[temp->GetFrameIndexY()][temp->GetFrameIndexX()].Parent;
+			while (dummyList[temp->GetY() / TileSize][temp->GetX() / TileSize].Parent != nullptr) {
+				temp = dummyList[temp->GetY() / TileSize][temp->GetX() / TileSize].Parent;
 				result.push_back(temp);
 			}
 
