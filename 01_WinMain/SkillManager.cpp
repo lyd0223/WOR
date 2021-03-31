@@ -301,7 +301,6 @@ void SkillManager::Update()
 				D2D1_RECT_F temp;
 				D2D1_RECT_F playerRc = player->GetRect();
 
-
 				if (IntersectRect(temp, &skillrc, &playerRc))
 				{
 					// 근접

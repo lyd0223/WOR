@@ -34,6 +34,9 @@ class UserInterface : public GameObject
 
 	UIObject* mBossHP;
 	UIObject* mBossHPBar;
+
+	UIObject* mRB_SkillNumber;
+	UIObject* mQ_SkillNumber;
 	
 	Image* mHPBarImage;
 	Image* mMPBarImage;

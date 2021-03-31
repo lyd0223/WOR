@@ -23,6 +23,8 @@ void UserInterface::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"SpaceButton", Resources(L"UI/Space.png"));
 
 	ImageManager::GetInstance()->LoadFromFile(L"BossHP", Resources(L"UI/BossHP.png"));
+
+	ImageManager::GetInstance()->LoadFromFile(L"NumberWhite", Resources(L"UI/NumberWhite.png"), 10, 1);
 	
 	mSkillIndexList.insert(make_pair("FireBall", Vector2(0, 0)));		// FireBall
 	mSkillIndexList.insert(make_pair("DragonArc", Vector2(1, 0)));		// DragonArc
@@ -52,6 +54,9 @@ void UserInterface::Init()
 
 	mBossHP = new UIObject(WINSIZEX / 2, 200, 200, 50, ImageManager::GetInstance()->FindImage(L"BossHP"));
 	mBossHPBar = new UIObject(WINSIZEX / 2, 200, 180, 45, ImageManager::GetInstance()->FindImage(L"HPBard"));
+
+	mRB_SkillNumber = new UIObject(mRB_ButtonSkillIcon->X, mRB_ButtonSkillIcon->Y, 25, 40, ImageManager::GetInstance()->FindImage(L"NumberWhite"));
+	mQ_SkillNumber = new UIObject(mQ_ButtonSkillIcon->X, mQ_ButtonSkillIcon->Y, 25, 40, ImageManager::GetInstance()->FindImage(L"NumberWhite"));
 
 	mPlayer = (Player*) ObjectManager::GetInstance()->FindObject("Player");
 
@@ -103,18 +108,20 @@ void UserInterface::Render()
 	mRB_ButtonSkillIcon->Image->ScaleFrameRender(mRB_ButtonSkillIcon->X, mRB_ButtonSkillIcon->Y, RB.X, RB.Y, mRB_ButtonSkillIcon->SizeX, mRB_ButtonSkillIcon->SizeY);
 	if (mPlayer->GetRB_ButtonSkillCool() > 0)
 	{
-		wstring str = to_wstring((int)mPlayer->GetRB_ButtonSkillCool());
+		mRB_SkillNumber->Image->ScaleFrameRender(mRB_SkillNumber->X, mRB_SkillNumber->Y, (int)mPlayer->GetRB_ButtonSkillCool(), 0, mRB_SkillNumber->SizeX, mRB_SkillNumber->SizeY);
+		/*wstring str = to_wstring((int)mPlayer->GetRB_ButtonSkillCool());
 		D2DRenderer::GetInstance()->RenderTextField(mRB_ButtonSkillIcon->X, mRB_ButtonSkillIcon->Y,
-			str, 15.f, mRB_ButtonSkillIcon->SizeX, mRB_ButtonSkillIcon->SizeY, D2D1::ColorF::Black,
-			DWRITE_TEXT_ALIGNMENT_CENTER);
+			str, 15.f, mRB_ButtonSkillIcon->SizeX, mRB_ButtonSkillIcon->SizeY, D2D1::ColorF::Blue,
+			DWRITE_TEXT_ALIGNMENT_CENTER);*/
 	}
 	mQ_ButtonSkillIcon->Image->ScaleFrameRender(mQ_ButtonSkillIcon->X, mQ_ButtonSkillIcon->Y, Q.X, Q.Y, mQ_ButtonSkillIcon->SizeX, mQ_ButtonSkillIcon->SizeY);
 	if (mPlayer->GetQ_ButtonSkillCool() > 0)
 	{
-		wstring str = to_wstring((int)mPlayer->GetQ_ButtonSkillCool());
-		D2DRenderer::GetInstance()->RenderTextField(mQ_ButtonSkillIcon->X, mQ_ButtonSkillIcon->Y,
-			str, 15.f, mQ_ButtonSkillIcon->SizeX, mQ_ButtonSkillIcon->SizeY, D2D1::ColorF::Black,
-			DWRITE_TEXT_ALIGNMENT_CENTER);
+		mQ_SkillNumber->Image->ScaleFrameRender(mQ_SkillNumber->X, mQ_SkillNumber->Y, (int)mPlayer->GetQ_ButtonSkillCool(), 0, mQ_SkillNumber->SizeX, mQ_SkillNumber->SizeY);
+		//wstring str = to_wstring((int)mPlayer->GetQ_ButtonSkillCool());
+		//D2DRenderer::GetInstance()->RenderTextField(mQ_ButtonSkillIcon->X, mQ_ButtonSkillIcon->Y,
+		//	str, 15.f, mQ_ButtonSkillIcon->SizeX, mQ_ButtonSkillIcon->SizeY, D2D1::ColorF::Blue,
+		//	DWRITE_TEXT_ALIGNMENT_CENTER);
 	}
 
 	//mSpecialSkillBox->Image->ScaleRender(mSpecialSkillBox->X, mSpecialSkillBox->Y, mSpecialSkillBox->SizeX, mSpecialSkillBox->SizeY);
