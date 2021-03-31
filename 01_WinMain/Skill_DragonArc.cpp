@@ -15,8 +15,8 @@ Skill_DragonArc::Skill_DragonArc(const string & name, float x, float y, float an
 	mSkillElement = SkillElement::Fire;
 	mSkillType = SkillType::Throw;
 
-	mSkillCool = 3.f;
-	
+	mSkillCool = 1.f;
+	mSkillStack = 5;
 }
 
 void Skill_DragonArc::Init()

@@ -52,6 +52,7 @@ protected:
 	float mSkillDamege;
 	float mSkillPower;
 	float mSkillCool;
+	int mSkillStack;
 	int mSkillHitCount;
 
 	bool mIsCollision;
@@ -76,6 +77,9 @@ public:
 	float GetSkillPower() { return mSkillPower; }
 	int GetSkillHitCount() { return mSkillHitCount; }
 	float GetSkillCool() { return mSkillCool; }
+	
+	void SetskillStack(int stack) { mSkillStack = stack; }
+	int GetSkillStack() { return mSkillStack; }
 	
 	void SetIsCollision(bool isCollision) {	mIsCollision = isCollision; }
 	bool GetIsCollision() { return mIsCollision; }
