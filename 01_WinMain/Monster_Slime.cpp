@@ -170,7 +170,21 @@ void Monster_Slime::Update()
 
 
 
-		
+		}
+
+
+
+		if (mHp <= 0)
+		{
+			if (mCurrentAnimation != mDieAnimation)
+			{
+				
+				AnimationChange(mDieAnimation);
+				mMonsterActState = MonsterActState::Die;
+				mMonsterState = MonsterState::Die;
+
+			}
+		}
 
 		mCurrentAnimation->Update();
 		mRect = RectMakeCenter(mX, mY + 10, mSizeX, mSizeY);
@@ -252,23 +266,9 @@ void Monster_Slime::Update()
 			mSkillHitPower -= 0.2f;
 		}
 		if (mDieAnimation->GetNowFrameX() == 9) mIsDestroy = true;
-			}
-
-
-
-			if (mHp <= 0)
-			{
-				if (mCurrentAnimation != mDieAnimation)
-				{
-					SoundPlayer::GetInstance()->Play(L"EnemyDeadSound", 1.f);
-					AnimationChange(mDieAnimation);
-					mMonsterActState = MonsterActState::Die;
-					mMonsterState = MonsterState::Die;
-
-				}
-			}
 	}
 }
+			
 
 void Monster_Slime::Render()
 {
@@ -276,8 +276,7 @@ void Monster_Slime::Render()
 	D2D1_RECT_F cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	if (cameraRect.right > mRect.left && cameraRect.left < mRect.right && cameraRect.bottom > mRect.top && cameraRect.top < mRect.bottom)
 	{
-		CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
-		CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
+	
 		CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY+15, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 	}
 }

@@ -18,7 +18,7 @@ Skill_IceSpear::Skill_IceSpear(const string& name, float x, float y, float angle
 	mSkillTarget = SkillTarget::Player;
 	mSkillType = SkillType::Hold;
 	mSkillElement = SkillElement::Water;
-	mSkillCool = 1.f;
+	mSkillCool = 5.f;
 }
 
 void Skill_IceSpear::Init()
@@ -37,7 +37,7 @@ void Skill_IceSpear::Init()
 	mIceSpearAnimation->SetIsLoop(false);
 	mIceSpearAnimation->SetFrameUpdateTime(0.1f);
 	mIceSpearAnimation->Play();
-
+	mSkillDamege = 30.f;
 	mSkillPower = 10.f;
 }
 

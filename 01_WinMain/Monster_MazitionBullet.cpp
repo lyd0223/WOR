@@ -104,7 +104,7 @@ void Monster_MazitionBullet::Update()
 void Monster_MazitionBullet::Render()
 {
 	mImage->SetScale(1.f);
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+	
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 
 }

@@ -1436,7 +1436,7 @@ void Player::Update()
 
 void Player::Render()
 {
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+	//CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	//for (int y = 0; y < TileCountY; ++y)
 	//{
 	//	for (int x = 0; x < TileCountX; ++x)
@@ -1449,13 +1449,13 @@ void Player::Render()
 	if (mPlayerHeightShadow != nullptr)mPlayerHeightShadow->Render();
 	if (mPlayerWideShadow != nullptr)mPlayerWideShadow->Render();
 	mImage->SetScale(1.5f);
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
+	//CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
-	string str = to_string(_mousePosition.x) + "," + to_string(_mousePosition.y);
-	wstring wstr;
-	wstr.assign(str.begin(), str.end());
-	D2DRenderer::GetInstance()->RenderText(100, WINSIZEY / 100, wstr, 30.f);
-	D2DRenderer::GetInstance()->RenderText(300, WINSIZEY / 200, to_wstring(mAngle), 30.f);
+	//string str = to_string(_mousePosition.x) + "," + to_string(_mousePosition.y);
+	//wstring wstr;
+	//wstr.assign(str.begin(), str.end());
+	//D2DRenderer::GetInstance()->RenderText(100, WINSIZEY / 100, wstr, 30.f);
+	//D2DRenderer::GetInstance()->RenderText(300, WINSIZEY / 200, to_wstring(mAngle), 30.f);
 
 }
 

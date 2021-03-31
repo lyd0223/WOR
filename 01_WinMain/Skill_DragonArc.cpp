@@ -30,7 +30,7 @@ void Skill_DragonArc::Init()
 
 	mSpeed = 15.f;
 	mFrameCount = 0;
-
+	mSkillDamege = 5.f;
 	mMoveAngle = mAngle;
 	mUpAngle = mAngle + (PI / 3);
 	mDownAngle = mAngle - (PI / 3);

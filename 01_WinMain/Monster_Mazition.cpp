@@ -24,7 +24,7 @@ void Monster_Mazition::Init()
 	mMonsterState = MonsterState::Idle;
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 	mSpeed = 500.f;
-		mHp = 100;
+		mHp = 50;
 	mSizeX = mImage->GetFrameSize().__typeToGetX() *2;
 	mSizeY = mImage->GetFrameSize().__typeToGetY()  * 2 - 20;
 	mIsAct = false;
@@ -347,8 +347,7 @@ void Monster_Mazition::Render()
 	D2D1_RECT_F cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	if (cameraRect.right > mRect.left && cameraRect.left < mRect.right && cameraRect.bottom > mRect.top && cameraRect.top < mRect.bottom)
 	{
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
+
 		CameraManager::GetInstance()->GetMainCamera()->FrameRenderFromBottom(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
 	}
 	//string str = to_string(Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize);

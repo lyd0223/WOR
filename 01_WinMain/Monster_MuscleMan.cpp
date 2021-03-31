@@ -162,8 +162,7 @@ void Monster_MuscleMan::Update()
 void Monster_MuscleMan::Render()
 {
 	mImage->SetScale(2.f);
-	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
+
 	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 }
 void Monster_MuscleMan::AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)

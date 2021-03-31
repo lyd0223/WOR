@@ -361,13 +361,9 @@ void Monster_SpearMan::Update()
 void Monster_SpearMan::Render()
 {
 	mImage->SetScale(3.f);
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
-	string str = to_string(Math::GetDistance(mX, mY, mPlayer->GetX(), mPlayer->GetY()) / TileSize);
-	wstring wstr;
-	wstr.assign(str.begin(), str.end());
-	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, WINSIZEY / 2, wstr, 30.f);
+	
 }
 void Monster_SpearMan::AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)
 {

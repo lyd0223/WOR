@@ -29,10 +29,10 @@ void Skill_MonsterSmallSlash::Init()
 	mSlashAnimation = new Animation;
 	mSlashAnimation->InitFrameByStartEnd(0, 2, 4, 2, false);
 	mSlashAnimation->SetIsLoop(false);
-	mSlashAnimation->SetFrameUpdateTime(0.1f);
+	mSlashAnimation->SetFrameUpdateTime(0.02f);
 	mSlashAnimation->Play();
 	mSkillHitCount = 1;
-	mSkillDamege = 11;
+	mSkillDamege = 1;
 
 
 }

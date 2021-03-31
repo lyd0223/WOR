@@ -92,8 +92,7 @@ void Monster_CrowScare::Render()
 	D2D1_RECT_F cameraRect = CameraManager::GetInstance()->GetMainCamera()->GetRect();
 	if (cameraRect.right > mRect.left && cameraRect.left < mRect.right && cameraRect.bottom > mRect.top && cameraRect.top < mRect.bottom)
 	{
-		CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
-		CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMovingRect);
+		
 		CameraManager::GetInstance()->GetMainCamera()->FrameRenderFromBottom(mImage, mX, mY + 20, 0, 0);
 	}
 

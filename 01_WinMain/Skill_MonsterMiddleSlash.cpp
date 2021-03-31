@@ -30,10 +30,10 @@ void Skill_MonsterMiddleSlash::Init()
 	mSlashAnimation = new Animation;
 	mSlashAnimation->InitFrameByStartEnd(0, 1, 4, 1, false);
 	mSlashAnimation->SetIsLoop(false);
-	mSlashAnimation->SetFrameUpdateTime(0.1f);
+	mSlashAnimation->SetFrameUpdateTime(0.02f);
 	mSlashAnimation->Play();
 	mSkillHitCount = 1;
-	mSkillDamege = 15;
+	mSkillDamege = 2;
 
 
 }
