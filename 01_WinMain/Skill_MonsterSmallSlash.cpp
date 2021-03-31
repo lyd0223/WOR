@@ -57,6 +57,6 @@ void Skill_MonsterSmallSlash::Render()
 {
 	mImage->SetScale(1.f);
 	mImage->SetAngle(mAngle * -(180 / PI));
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+	//CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mSlashAnimation->GetNowFrameX(), mSlashAnimation->GetNowFrameY());
 }

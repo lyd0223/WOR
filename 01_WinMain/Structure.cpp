@@ -41,7 +41,7 @@ void Structure::Release()
 
 void Structure::Render()
 {
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+	//CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	mImage->SetScale(1.5f);
 	CameraManager::GetInstance()->GetMainCamera()->Render(mImage, mX, mY);
 	

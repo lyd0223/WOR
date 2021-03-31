@@ -83,6 +83,6 @@ void Skill_DragonArc::Render()
 	mImage->SetAngle(mMoveAngle * -(180 / PI));
 	mImage->SetScale(2.f);
 	
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+	//CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	CameraManager::GetInstance()->GetMainCamera()->Render(mImage, mX, mY);
 }

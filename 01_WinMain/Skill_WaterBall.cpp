@@ -77,6 +77,6 @@ void Skill_WaterBall::Render()
 	mImage->SetScale(1.5f);
 	mImage->SetAlpha(0.9f);
 	mImage->SetAngle((mAngle) * -(180 / PI));
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+	//CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mWaterBallAnimation->GetNowFrameX(), mWaterBallAnimation->GetNowFrameY());
 }

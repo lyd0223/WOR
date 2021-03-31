@@ -65,6 +65,6 @@ void Skill_IceSpear::Render()
 {
 	mImage->SetScale(2.5f);
 	mImage->SetAngle((mAngle) * -(180 / PI));
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+	//CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mIceSpearAnimation->GetNowFrameX(), mIceSpearAnimation->GetNowFrameY());
 }
