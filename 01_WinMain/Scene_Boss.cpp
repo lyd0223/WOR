@@ -29,9 +29,7 @@ void Scene_Boss::Init()
 		ImageManager::GetInstance()->FindImage(L"BossHP")->GetWidth() / 2,
 		ImageManager::GetInstance()->FindImage(L"BossHP")->GetHeight() / 2,
 		ImageManager::GetInstance()->FindImage(L"BossHP"));
-	mBossHPBar = new BossInterface(WINSIZEX / 2, 100,
-		ImageManager::GetInstance()->FindImage(L"HPBar")->GetWidth() / 5,
-		ImageManager::GetInstance()->FindImage(L"HPBar")->GetHeight() * 2.5,
+	mBossHPBar = new BossInterface(552, 93, 180, 15,
 		ImageManager::GetInstance()->FindImage(L"HPBar"));
 
 
@@ -147,12 +145,15 @@ void Scene_Boss::Update()
 			}
 		}
 	}
-	if (mPlayer->GetY() / TileSize < 21 && mIsInterfaceInit == false)
+	if (mPlayer->GetY() / TileSize < 20 && mIsInterfaceInit == false)
 	{
 		mFireBoss->SetIsActive(true);
 		mIsInterfaceInit = true;
+		SoundPlayer::GetInstance()->Play(L"FireBlast", 1.f);
+		ParticleManager::GetInstance()->MakeFireExlposionParticle(mFireBoss->GetX(), mFireBoss->GetY(), 10.f);
 	}
 
+	mFireBoss = (Monster_FireBoss*)ObjectManager::GetInstance()->FindObject("FireBoss");
 	if (mIsInterfaceInit) 
 	{
 		
@@ -161,12 +162,12 @@ void Scene_Boss::Update()
 
 void Scene_Boss::Render()
 {
-
+	//mHPBar->SizeX * mPlayer->GetHP() / 200
 	ObjectManager::GetInstance()->Render();
-	if (mIsInterfaceInit)
+	if (mIsInterfaceInit && mFireBoss != nullptr)
 	{
 		float length = Math::Lerp(0, mFireBoss->GetHP(), 1);
 		mBossHP->Image->ScaleRender(mBossHP->X, mBossHP->Y, mBossHP->SizeX, mBossHP->SizeY);
-		mBossHPBar->Image->ScaleRender(mBossHPBar->X, mBossHPBar->Y, length, mBossHPBar->SizeY );
+		mBossHPBar->Image->ScaleRenderFromLeft(mBossHPBar->X, mBossHPBar->Y, mBossHPBar->SizeX * mFireBoss->GetHP() / 500, mBossHPBar->SizeY );
 	}
 }

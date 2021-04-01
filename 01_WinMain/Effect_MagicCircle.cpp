@@ -28,7 +28,7 @@ void Effect_MagicCircle::Init()
 
 	mCircleMakeAnimation = new Animation();
 	mCircleMakeAnimation->InitFrameByStartEnd(0, 0, 23, 0, false);
-	mCircleMakeAnimation->SetFrameUpdateTime(0.02f);
+	mCircleMakeAnimation->SetFrameUpdateTime(0.03f);
 
 	mCircleMakeAnimation->Play();
 }
@@ -51,12 +51,21 @@ void Effect_MagicCircle::Update()
  	mTimeCount1 += Time::GetInstance()->DeltaTime();
 	mTimeCount2 += Time::GetInstance()->DeltaTime();
 	if (mCircleMakeAnimation->GetNowFrameX() == 23 && mCastingSkill == CastingSkill::Burn) {
+		if (mIsOneCheck == false)
+		{
+			SoundPlayer::GetInstance()->Play(L"FireBlastODStart", 0.1f);
+			mIsOneCheck = true;
+		}
 		if (mTimeCount1 > 0.5) {
 			MakeFlameList();
 			mTimeCount1 = 0;
+			SoundPlayer::GetInstance()->Play(L"FireBlastODLoop", 0.2f);
 		}
 
 		if (mTimeCount2 > 2) {
+			SoundPlayer::GetInstance()->Play(L"FireBlast", 0.2f);
+			ParticleManager::GetInstance()->MakeFireExlposionParticle(mX, mY, 15.f);
+			mIsOneCheck = false;
 			mIsActive = false;
 			//mIsDestroy = true;
 			mTimeCount2 = 0;
@@ -107,7 +116,7 @@ void Effect_MagicCircle::MakeFlameList()
 {
 	float radius = mSizeX / 3;
 	float endX = mX;
-	float endY = mY - mSizeY ;
+	float endY = mY - mSizeY - 100;
 	for (int i = 1; i < 14; i++) {
 		float x = mX + (cosf(PI / 6 * i) * radius);
 		float y = mY - (sinf(PI / 6 * i) * radius);

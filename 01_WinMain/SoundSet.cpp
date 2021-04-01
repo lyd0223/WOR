@@ -17,6 +17,11 @@ SoundSet::SoundSet()
 	SoundPlayer::GetInstance()->LoadFromFile(L"FireBallExplode", Resources(L"Sound/FireballExplode.wav"), false);
 	SoundPlayer::GetInstance()->LoadFromFile(L"FireArcStart", Resources(L"Sound/FireArcStart.wav"), false);
 	SoundPlayer::GetInstance()->LoadFromFile(L"FireArcEnd", Resources(L"Sound/FireArcEnd.wav"), false);
+	SoundPlayer::GetInstance()->LoadFromFile(L"FireBlast", Resources(L"Sound/FireBlast.wav"), false);
+	SoundPlayer::GetInstance()->LoadFromFile(L"FireBlastODStart", Resources(L"Sound/FireBlastODStart.wav"), false);
+	SoundPlayer::GetInstance()->LoadFromFile(L"FireBLastODLoop", Resources(L"Sound/FireBLastODLoop.wav"), true);
+	SoundPlayer::GetInstance()->LoadFromFile(L"FireBlastODEnd", Resources(L"Sound/FireBlastODEnd.wav"), false);
+	SoundPlayer::GetInstance()->LoadFromFile(L"FireBurn", Resources(L"Sound/FireBurn.wav"), false);
 
 	SoundPlayer::GetInstance()->LoadFromFile(L"FireBossFlex0", Resources(L"Sound/FireBossFlex0.wav"), false);
 	SoundPlayer::GetInstance()->LoadFromFile(L"FireBossFlex1", Resources(L"Sound/FireBossFlex1.wav"), false);

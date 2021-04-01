@@ -30,7 +30,7 @@ void Monster_FireBoss::Init()
 	AnimationSet(&mRightIdleAnimation, false, true, 0, 0, 0, 0, 0.2f);
 
 	AnimationSet(&mLeftDashStartAnimation, false, true, 1, 1, 1, 1, 0.1f);
-	AnimationSet(&mRightDashStartAnimation, false, true, 0, 1, 0, 1, 0.1f);
+	AnimationSet(&mRightDashStartAnimation, false, true, 1, 0, 1, 0, 0.1f);
 
 	AnimationSet(&mLeftDashAnimation, false, true, 2, 1, 2, 1, 0.1f);
 	AnimationSet(&mRightDashAnimation, false, true, 2, 0, 2, 0, 0.1f);
@@ -63,14 +63,17 @@ void Monster_FireBoss::Init()
 	AnimationSet(&mLeftStempAnimation, false, false, 10, 9, 11, 9, 0.7f);
 	AnimationSet(&mRightStempAnimation, false, false, 10, 8, 11, 8, 0.7f);
 
+	AnimationSet(&mDeathAnimation, false, false, 5, 6, 5, 6, 1.f);
+
 	mMonsterType = MonsterType::Boss;
 	mCurrentAnimation = mLeftIdleAnimation;
 	mFireBossState = FireBossState::Idle;
 	mCurrentAnimation->Play();
 
 	mHitCount = 0;
-	mHp = 500;
+	mHp = 50;
 	mMapRect = RectMake(10 * TileSize, 8 * TileSize, 20 * TileSize, 16 * TileSize);
+	mAlpha = 1.f;
 
 	mPlayer = (Player*) ObjectManager::GetInstance()->FindObject("Player");
 	mAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
@@ -106,95 +109,83 @@ void Monster_FireBoss::Release()
 
 void Monster_FireBoss::Update()
 {
-	mCurrentAnimation->Update();
-
-	mAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
-
-	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
-	vector<vector<Tile*>> tilelist = tilemap->GetTileList();
-
-	D2D1_RECT_F temp;
-	for (int y = mY / TileSize - 1; y < mY / TileSize + 1; y++)
+	if (mHp > 0)
 	{
-		for (int x = mX / TileSize - 1; x < mX / TileSize + 1; x++)
+		mCurrentAnimation->Update();
+
+		mAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
+
+		if (Input::GetInstance()->GetKeyDown('9')) {
+			mPatternList.emplace(FireBossState::DragonArc);
+			//StempPattern();
+		}
+
+		if (mCurrentAnimation == mRightIdleAnimation || mCurrentAnimation == mLeftIdleAnimation)
 		{
-			if (tilelist[y][x]->GetType() == Type::Wall)
+			mFrameCount += Time::GetInstance()->DeltaTime();
+		
+			if (mFrameCount > 1.5)
 			{
-				D2D1_RECT_F tileRect = tilelist[y][x]->GetRect();
-				D2D1_RECT_F tempRect;
-				if (tilelist[y][x]->GetType() == Type::Wall)
-				{
-					if (IntersectRect(tempRect, &tileRect, &mRect))
-					{
-						if (y == (int)mY / TileSize && x == (int)mX / TileSize - 1)
-							mX = tileRect.right + mSizeX / 2;
-						else if (y == (int)mY / TileSize && x == (int)mX / TileSize + 1)
-							mX = tileRect.left - mSizeX / 2;
-						else if (y == (int)mY / TileSize - 1 && x == (int)mX / TileSize)
-							mY = tileRect.bottom + mSizeY / 2;
-						else if (y == (int)mY / TileSize + 1 && x == (int)mX / TileSize)
-							mY = tileRect.top - mSizeY / 2;
-
-
-					}
-				}
+				mFrameCount = 0;
+				MakePatternList();
 			}
 		}
+
+		if (!mPatternList.empty())
+		{
+			switch (mPatternList.front())
+			{
+			case FireBossState::AttackReady:
+				AttackReady();
+				break;
+			case FireBossState::Dash:
+				Move();
+				break;
+			case FireBossState::Kick:
+				KickPattern();
+				break;
+			case FireBossState::Throw:
+				FireBallThrowPattern();
+				break;
+			case FireBossState::Stemp:
+				StempPattern();
+				break;
+			case FireBossState::DragonArc:
+				DragonArcWavePattern();
+				break;
+			case FireBossState::Stun:
+				Stun();
+				break;
+			case FireBossState::Refresh:
+				Refresh();
+				break;
+			}
+		}
+
+		mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	}
-
-	//if (Input::GetInstance()->GetKeyDown('9')) {
-	//	DragonArcWavePattern();
-	//}
-
-	if (mCurrentAnimation == mRightIdleAnimation || mCurrentAnimation == mLeftIdleAnimation)
+	else
 	{
+		if (mIsOneCheck == false)
+		{
+			//ParticleManager::GetInstance()->MakeFireParticle(mX, mY, 20.f);
+		}
 		mFrameCount += Time::GetInstance()->DeltaTime();
-		
-		if (mFrameCount > 1.5)
-		{
-			mFrameCount = 0;
-			MakePatternList();
-		}
-	}
+		AnimationChange(mDeathAnimation);
+		mAlpha -= 0.02f;
 
-	if (!mPatternList.empty())
-	{
-		switch (mPatternList.front())
-		{
-		case FireBossState::AttackReady:
-			AttackReady();
-			break;
-		case FireBossState::Dash:
-			Move();
-			break;
-		case FireBossState::Kick:
-			KickPattern();
-			break;
-		case FireBossState::Throw:
-			FireBallThrowPattern();
-			break;
-		case FireBossState::Stemp:
-			StempPattern();
-			break;
-		case FireBossState::Stun:
-			Stun();
-			break;
-		case FireBossState::Refresh:
-			Refresh();
-			break;
-		}
+		if (mFrameCount > 2) mIsDestroy = true;
 	}
-
-	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 }
 
 void Monster_FireBoss::Render()
 {
 	mImage->SetScale(3.f);
+	mImage->SetAlpha(mAlpha);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mCurrentAnimation->GetNowFrameX(), mCurrentAnimation->GetNowFrameY());
-	wstring str = to_wstring(mHp);
-	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2, 20, str, 20);
-	//CameraManager::GetInstance()->GetMainCamera()->RenderRect(mMapRect, D2D1::ColorF::Aqua);
+	wstring str = L"阂采 咯空 龙";
+	D2DRenderer::GetInstance()->RenderText(WINSIZEX / 2 - 53, 53, str, D2D1::ColorF::White, 20, 20);
+	//CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect, D2D1::ColorF::Aqua);
 }
 
 void Monster_FireBoss::AnimationSet(Animation ** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime)
@@ -269,7 +260,7 @@ void Monster_FireBoss::Move()
 	if (distance < 100) {
 		if (mIsWing == false)
 		{
-			MakeFireWing(mX, mY + 20);
+			MakeFireWing(mX, mY - 20);
 			mIsWing = true;
 		}
 		if (mX < mPlayer->GetX()) AnimationChange(mRightDashEndAnimation);
@@ -305,19 +296,35 @@ void Monster_FireBoss::AttackReady()
 
 void Monster_FireBoss::StempPattern()
 {
-	if (mX < mPlayer->GetX()) AnimationChange(mRightStempAnimation);
-	else AnimationChange(mLeftStempAnimation);
-
-	mFireBossState = FireBossState::Stemp;
-	if (mCurrentAnimation->GetNowFrameX() == 10) {
-		for (int i = 1; i < 5; i++) {
-			float x = mPlayer->GetX() + cosf(PI / 4 * i * 2 + 45) * 150;
-			float y = mPlayer->GetY() - sinf(PI / 4 * i * 2 + 45) * 150;
-			int randomX = Random::GetInstance()->RandomInt(x - 50, x + 50);
-			int randomY = Random::GetInstance()->RandomInt(y - 50, y + 50);
-			SkillManager::GetInstance()->FlameSkill("Flame", randomX, randomY, mAngle);
+	if (mIsOneCheck == false)
+	{
+		if (mX < mPlayer->GetX()) AnimationChange(mRightStempAnimation);
+		else AnimationChange(mLeftStempAnimation);
+	
+		//mFireBossState = FireBossState::Stemp;
+		if (mCurrentAnimation->GetNowFrameX() == 10) 
+		{
+			for (int i = 1; i < 5; i++)
+			{
+				float x = mPlayer->GetX() + cosf(PI / 4 * i * 2 + 45) * 150;
+				float y = mPlayer->GetY() - sinf(PI / 4 * i * 2 + 45) * 150;
+				int randomX = Random::GetInstance()->RandomInt(x - 50, x + 50);
+				int randomY = Random::GetInstance()->RandomInt(y - 50, y + 50);
+				SkillManager::GetInstance()->FlameSkill("Flame", randomX, randomY, mAngle);
+			}
+			SkillManager::GetInstance()->FlameSkill("Flame", mPlayer->GetX(), mPlayer->GetY(), mAngle);
+			mIsOneCheck = true;
 		}
-		SkillManager::GetInstance()->FlameSkill("Flame", mPlayer->GetX(), mPlayer->GetY(), mAngle);
+	}
+
+	mFrameCount += Time::GetInstance()->DeltaTime();
+	
+	if (mFrameCount > 2.5)
+	{
+
+		mFrameCount = 0;
+		mPatternList.pop();
+		mIsOneCheck = false;
 	}
 }
 
@@ -406,62 +413,99 @@ void Monster_FireBoss::DragonArcWavePattern()
 	if (mIsOneCheck == false)
 	{
 		SoundPlayer::GetInstance()->Play(L"FireChargeup", 1.f);
+		mFireBossState = FireBossState::DragonArc;
 
 		switch (random)
 		{
 		case 0:	// 辑率
-			mX = mMapRect.left + 30;
-			mY = Random::GetInstance()->RandomInt(mMapRect.top + 30, mMapRect.bottom - 30);
+			mX = mMapRect.left + 100;
+			mY = Random::GetInstance()->RandomInt(mMapRect.top + 100, mMapRect.bottom - 100);
 			break;
 		case 1: // 合率
-			mX = Random::GetInstance()->RandomInt(mMapRect.left + 30, mMapRect.right - 30);
-			mY = mMapRect.top + 30;
+			mX = Random::GetInstance()->RandomInt(mMapRect.left + 100, mMapRect.right - 100);
+			mY = mMapRect.top + 100;
 			break;
 		case 2:	// 悼率
-			mX = mMapRect.right - 30;
-			mY = Random::GetInstance()->RandomInt(mMapRect.top + 30, mMapRect.bottom - 30);
+			mX = mMapRect.right - 100;
+			mY = Random::GetInstance()->RandomInt(mMapRect.top + 100, mMapRect.bottom - 100);
 			break;
 		case 3:	// 巢率
-			mX = Random::GetInstance()->RandomInt(mMapRect.left + 30, mMapRect.right - 30);
-			mY = mMapRect.bottom - 30;
+			mX = Random::GetInstance()->RandomInt(mMapRect.left + 100, mMapRect.right - 100);
+			mY = mMapRect.bottom - 100;
 			break;
 		}
+		ParticleManager::GetInstance()->MakeFireExlposionParticle(mX, mY, 10.f);
 
-		//mAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
-		//POINT temp;
-		//switch (random)
-		//{
-		//case 0:
-		//	temp.x;
-		//	temp.y;
-		//	break;
-		//case 1:
-		//	temp.x;
-		//	temp.y;
-		//	break;
-		//case 2:
-		//	temp.x;
-		//	temp.y;
-		//	break;
-		//case 3:
-		//	temp.x;
-		//	temp.y;
-		//	break;
-		//}
+		if (mX < mPlayer->GetX()) AnimationChange(mRightDashStartAnimation);
+		else AnimationChange(mLeftDashStartAnimation);
+		
 
-		//float distance = Math::GetDistance(mX, mY, temp.x, temp.y);
+		mIsOneCheck = true;
+		mTempAngle = Math::GetAngle(mX, mY, mPlayer->GetX(), mPlayer->GetY());
+		
+		POINT temp;
 
-		//for (int i = 0; i < distance / 5; i++)
-		//{
-		//	float x = mX + cosf(mAngle) * (i * 20);
-		//	float y = mY + -sinf(mAngle) * (i * 20);
-		//	Skill_Flame* flame = new Skill_Flame("Flame", x, y, 0);
-		//	flame->Init();
-		//	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, flame);
-		//}
+		temp.x = mX + cosf(mTempAngle) * 100;
+		temp.y = mY + -sinf(mTempAngle) * 100;
+
+		float distance = Math::GetDistance(mX, mY, temp.x, temp.y);
+
+		for (int i = 0; i < distance / 5; i++)
+		{
+			float x = mX + cosf(mTempAngle) * (i * 45);
+			float y = mY + -sinf(mTempAngle) * (i * 45);
+			Skill_Flame* flame = new Skill_Flame("Flame", x, y, 0);
+			flame->Init();
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, flame);
+		}
 	}
 
-	mX += cosf(mAngle);
+	mFrameCount += Time::GetInstance()->DeltaTime();
+	if ((mCurrentAnimation == mLeftDashStartAnimation || mCurrentAnimation == mRightDashStartAnimation) &&
+		 mFrameCount > 1.5)
+	{
+		mFrameCount = 0;
+		if (mX < mPlayer->GetX()) AnimationChange(mRightDashAnimation);
+		else AnimationChange(mLeftDashAnimation);
+	}
+
+	if (mCurrentAnimation == mLeftDashAnimation || mCurrentAnimation == mRightDashAnimation)
+	{
+		mX += cosf(mTempAngle) * 15.f;
+		mY -= sinf(mTempAngle) * 15.f;
+
+		TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
+		vector<vector<Tile*>> tilelist = tilemap->GetTileList();
+
+		D2D1_RECT_F temp;
+		for (int y = mY / TileSize - 1; y < mY / TileSize + 1; y++)
+		{
+			for (int x = mX / TileSize - 1; x < mX / TileSize + 1; x++)
+			{
+				D2D1_RECT_F tileRect = tilelist[y][x]->GetRect();
+				D2D1_RECT_F tempRect;
+				if (tilelist[y][x]->GetType() == Type::Wall)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+						if (y == (int)mY / TileSize && x == (int)mX / TileSize - 1)
+							mX = tileRect.right + mSizeX / 2;
+						else if (y == (int)mY / TileSize && x == (int)mX / TileSize + 1)
+							mX = tileRect.left - mSizeX / 2;
+						else if (y == (int)mY / TileSize - 1 && x == (int)mX / TileSize)
+							mY = tileRect.bottom + mSizeY / 2;
+						else if (y == (int)mY / TileSize + 1 && x == (int)mX / TileSize)
+							mY = tileRect.top - mSizeY / 2;
+
+						if (mCurrentAnimation == mLeftDashAnimation) AnimationChange(mLeftDashEndAnimation);
+						else AnimationChange(mRightDashAnimation);
+					}
+				}
+			}
+		}
+	}
+
+
 }
 
 void Monster_FireBoss::KickPattern()
@@ -497,6 +541,32 @@ void Monster_FireBoss::KickPattern()
 		mY += -sinf(mKickAngle) * 5.f;
 	}
 
+	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
+	vector<vector<Tile*>> tilelist = tilemap->GetTileList();
+
+	D2D1_RECT_F temp;
+	for (int y = mY / TileSize - 1; y < mY / TileSize + 1; y++)
+	{
+		for (int x = mX / TileSize - 1; x < mX / TileSize + 1; x++)
+		{
+			D2D1_RECT_F tileRect = tilelist[y][x]->GetRect();
+			D2D1_RECT_F tempRect;
+			if (tilelist[y][x]->GetType() == Type::Wall)
+			{
+				if (IntersectRect(tempRect, &tileRect, &mRect))
+				{
+					if (y == (int)mY / TileSize && x == (int)mX / TileSize - 1)
+						mX = tileRect.right + mSizeX / 2;
+					else if (y == (int)mY / TileSize && x == (int)mX / TileSize + 1)
+						mX = tileRect.left - mSizeX / 2;
+					else if (y == (int)mY / TileSize - 1 && x == (int)mX / TileSize)
+						mY = tileRect.bottom + mSizeY / 2;
+					else if (y == (int)mY / TileSize + 1 && x == (int)mX / TileSize)
+						mY = tileRect.top - mSizeY / 2;
+				}
+			}
+		}
+	}
 }
 
 void Monster_FireBoss::MakeFlame()
@@ -557,6 +627,7 @@ void Monster_FireBoss::Refresh()
 		mFrameCount = 0;
 		mHitCount = 0;
 		mPatternList.push(FireBossState::Stun);
+		mFireBossState = FireBossState::Stun;
 		mPatternList.pop();
 	}
 }
@@ -576,7 +647,7 @@ void Monster_FireBoss::Stun()
 		else if (mCurrentAnimation == mLeftStunAnimation) AnimationChange(mRightStunAnimation);
 	}
 
-	if (mFrameCount > 5)
+	if (mFrameCount > 4)
 	{
 		mFrameCount = 0;
 		mIsHitCountChange = false;
@@ -589,6 +660,42 @@ void Monster_FireBoss::Stun()
 
 }
 
+bool Monster_FireBoss::TileRectCollision()
+{
+	TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
+	vector<vector<Tile*>> tilelist = tilemap->GetTileList();
+
+	D2D1_RECT_F temp;
+	for (int y = mY / TileSize - 1; y < mY / TileSize + 1; y++)
+	{
+		for (int x = mX / TileSize - 1; x < mX / TileSize + 1; x++)
+		{
+			if (tilelist[y][x]->GetType() == Type::Wall)
+			{
+				D2D1_RECT_F tileRect = tilelist[y][x]->GetRect();
+				D2D1_RECT_F tempRect;
+				if (tilelist[y][x]->GetType() == Type::Wall)
+				{
+					if (IntersectRect(tempRect, &tileRect, &mRect))
+					{
+						if (y == (int)mY / TileSize && x == (int)mX / TileSize - 1)
+							mX = tileRect.right + mSizeX / 2;
+						else if (y == (int)mY / TileSize && x == (int)mX / TileSize + 1)
+							mX = tileRect.left - mSizeX / 2;
+						else if (y == (int)mY / TileSize - 1 && x == (int)mX / TileSize)
+							mY = tileRect.bottom + mSizeY / 2;
+						else if (y == (int)mY / TileSize + 1 && x == (int)mX / TileSize)
+							mY = tileRect.top - mSizeY / 2;
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
 void Monster_FireBoss::MakePatternList()
 {
 	while (!mPatternList.empty())
@@ -597,8 +704,47 @@ void Monster_FireBoss::MakePatternList()
 	}
 
 	mPatternList.push(FireBossState::AttackReady);
-	mPatternList.push(FireBossState::Dash);
-	mPatternList.push(FireBossState::Kick);
-	mPatternList.push(FireBossState::Throw);
+
+	vector<int> randomList;
+	randomList.push_back(Random::GetInstance()->RandomInt(3, 5));
+	while (true)
+	{
+		int random = Random::GetInstance()->RandomInt(3, 5);
+		if (randomList[0] != random)
+		{
+			randomList.push_back(random);
+			break;
+		}
+	}
+	while (true)
+	{
+		int random = Random::GetInstance()->RandomInt(3, 5);
+		if (randomList[0] != random && randomList[1] != random)
+		{
+			randomList.push_back(random);
+			break;
+		}
+	}
+
+	for (int i = 0; i < randomList.size(); i++)
+	{
+		if (randomList[i] == (int)FireBossState::Kick)
+		{
+			mPatternList.emplace(FireBossState::Dash);
+			mPatternList.emplace((FireBossState)randomList[i]);
+			randomList.erase(randomList.begin() + i);
+			i--;
+		}
+		else
+		{
+			mPatternList.emplace((FireBossState)randomList[i]);
+			randomList.erase(randomList.begin() + i);
+			i--;
+		}
+	}
+	//mPatternList.push(FireBossState::Dash);
+	//mPatternList.push(FireBossState::Kick);
+	//mPatternList.push(FireBossState::Throw);
+	//mPatternList.push(FireBossState::Stemp);
 	mPatternList.push(FireBossState::Refresh);
 }

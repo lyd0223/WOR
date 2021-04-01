@@ -572,7 +572,8 @@ void Player::Update()
 							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
 					}
 					mPlayerState = PlayerState::RightAttack;
-					mX += 15;
+					if (mLB_ButtonSkill == "WindSlash")
+						mX += 15;
 
 				}
 				else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
@@ -604,7 +605,8 @@ void Player::Update()
 					}
 
 					mPlayerState = PlayerState::UpAttack;
-					mY -= 15;
+					if (mLB_ButtonSkill == "WindSlash")
+						mY -= 15;
 
 				}
 				else if (mAngle > ((PI / 2) + (PI / 4)) && mAngle < (PI + (PI / 4)))
@@ -635,7 +637,8 @@ void Player::Update()
 					}
 
 					mPlayerState = PlayerState::LeftAttack;
-					mX -= 15;
+					if (mLB_ButtonSkill == "WindSlash")
+						mX -= 15;
 				}
 				else if (mAngle > (PI + (PI / 4)) && mAngle < (PI2 - (PI / 4)))
 				{
@@ -665,7 +668,8 @@ void Player::Update()
 					}
 
 					mPlayerState = PlayerState::DownAttack;
-					mY += 15;
+					if (mLB_ButtonSkill == "WindSlash")
+						mY += 15;
 				}
 			}
 

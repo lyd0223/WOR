@@ -24,7 +24,7 @@ void Skill_Flame::Init()
 
 	mFlameAnimation = new Animation();
 	mFlameAnimation->InitFrameByStartEnd(0, 0, 31, 0, false);
-	mFlameAnimation->SetFrameUpdateTime(0.02f);
+	mFlameAnimation->SetFrameUpdateTime(0.03f);
 	mFlameAnimation->Play();
 
 	mSkillType = SkillType::Hold;

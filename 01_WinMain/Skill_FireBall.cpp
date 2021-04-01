@@ -81,7 +81,7 @@ void Skill_FireBall::Update()
 		if (mDelay < 0) {
 			mState = FireBallState::Fire;
 			AnimationChange(mFireBallFireAnimation);
-			SoundPlayer::GetInstance()->Play(L"FireBallCast", 1.f);
+			SoundPlayer::GetInstance()->Play(L"FireBallCast", 0.5f);
 			ParticleManager::GetInstance()->MakeFireCircleParticle(mX, mY);
 			ParticleManager::GetInstance()->MakeHitSparkParticle(mX, mY);
 			

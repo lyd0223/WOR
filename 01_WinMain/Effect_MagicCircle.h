@@ -26,6 +26,8 @@ class Effect_MagicCircle : public SkillObject
 	float mTimeCount1;
 	float mTimeCount2;
 	float mAngle;
+
+	bool mIsOneCheck;
 public:
 	Effect_MagicCircle(const string& name, float x, float y, CastingSkill mCastingSkill);
 

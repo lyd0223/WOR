@@ -5,12 +5,12 @@ enum class FireBossState : int {
 	Idle			= 0,
 	AttackReady		= 1,
 	Dash			= 2,
-	Throw			= 3,
-	Stemp			= 4,
-	Meteor			= 5,
+	Kick			= 3,
+	Throw			= 4,
+	Stemp			= 5,
 	DragonArc		= 6,
-	SpecialAttack	= 7,
-	Kick			= 8,
+	Meteor			= 7,
+	SpecialAttack	= 8,
 	Refresh			= 9,
 	Stun			= 10,
 
@@ -58,6 +58,8 @@ class Monster_FireBoss : public MonsterObject
 	class Animation* mLeftStempAnimation;			// 10, 9, 11, 9
 	class Animation* mRightStempAnimation;			// 10, 8, 11, 8
 
+	class Animation* mDeathAnimation;				// 5, 6
+
 	class Animation* mCurrentAnimation;
 
 	Effect_FireWing* mFireWing;
@@ -73,7 +75,9 @@ class Monster_FireBoss : public MonsterObject
 	float mFrameCount;
 	float mMoveDistance;
 	float mAngle;
+	float mTempAngle;
 	float mKickAngle;
+	float mAlpha;
 	
 	bool mIsWing;
 	bool mIsFireBall;
@@ -93,6 +97,7 @@ public:
 
 	void AnimationSet(Animation** animation, bool Reverse, bool Loop, int StartindexX, int StartindexY, int EndindexX, int EndindexY, float animationTime);
 	void AnimationChange(Animation* changeanimation);
+	FireBossState GetFireBossState() { return mFireBossState; }
 	
 	void Move();
 	void AttackReady();
@@ -106,6 +111,8 @@ public:
 	void MakeFireWing(float x, float y);
 	void Refresh();
 	void Stun();
+
+	bool TileRectCollision();
 
 	void MakePatternList();
 };
