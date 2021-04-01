@@ -16,6 +16,7 @@ void Load_Image::LoadSceneMapToolImage()
 	ImageManager::GetInstance()->LoadFromFile(L"Page", Resources(L"Tile/Page.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"MainPage", Resources(L"Tile/MainPage.png"));
 	ImageManager::GetInstance()->LoadFromFile(L"Pallete", Resources(L"Tile/Pallete.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"PlayerIcon", Resources(L"UI/PlayerIcon.png"));
 
 	//버튼이미지
 	ImageManager::GetInstance()->LoadFromFile(L"F", Resources(L"UI/F.png"));

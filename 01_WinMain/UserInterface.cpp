@@ -88,11 +88,21 @@ void UserInterface::Render()
 	Vector2 RB = mSkillIndexList.find(mPlayer->GetRB_ButtonSkill())->second;
 	Vector2 Space = mSkillIndexList.find(mPlayer->GetSpacebar_ButtonSkill())->second;
 	Vector2 Q = mSkillIndexList.find(mPlayer->GetQ_ButtonSkill())->second;
-
+	ImageManager::GetInstance()->FindImage(L"PlayerIcon")->ScaleRenderFromLeft(mStatus->X+5, mStatus->Y, 48, mStatus->SizeY);
 	mStatus->Image->ScaleRenderFromLeft(mStatus->X, mStatus->Y, mStatus->SizeX  , mStatus->SizeY);
 	mHPBar->Image->ScaleRenderFromLeft(mHPBar->X, mHPBar->Y, mHPBar->SizeX * mPlayer->GetHP()/200, mHPBar->SizeY); //0.8f에 플레이어체력 %넣으세요
 	mMPBar->Image->ScaleRenderFromLeft(mMPBar->X, mMPBar->Y, mMPBar->SizeX * mPlayer->GetMp()/100, mMPBar->SizeY);
-
+	string str = to_string((int)mPlayer->GetHP()) + "/" + to_string(200);
+	wstring wstr;
+	wstr.assign(str.begin(), str.end());
+	D2DRenderer::GetInstance()->RenderText(
+		mHPBar->X+50, mHPBar->Y-15,
+		wstr,
+		COLORREF(RGB(255, 255, 255)),
+		1.f,
+		20.f,
+		DWRITE_TEXT_ALIGNMENT::DWRITE_TEXT_ALIGNMENT_CENTER
+	);
 	mSkillBox1->Image->ScaleRender(mSkillBox1->X, mSkillBox1->Y, mSkillBox1->SizeX, mSkillBox1->SizeY);
 	mSkillBox2->Image->ScaleRender(mSkillBox2->X, mSkillBox2->Y, mSkillBox2->SizeX, mSkillBox2->SizeY);
 	mSkillBox3->Image->ScaleRender(mSkillBox3->X, mSkillBox3->Y, mSkillBox3->SizeX, mSkillBox3->SizeY);
