@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "MonsterObject.h"
 #include "Player.h"
+#include "Monster_FireBoss.h"
 
 #include "Effect_MagicCircle.h"
 #include "Effect_FireParticle.h"
@@ -264,6 +265,19 @@ void SkillManager::Update()
 							float temp = monster->GetHitCount();
 							temp += skill->GetSkillDamege();
 							monster->SetHitCount(temp);
+							Monster_FireBoss* boss = (Monster_FireBoss*)monster;
+							if (boss->GetFireBossState() == FireBossState::Stun)
+							{
+								if (mFrameCount > 1)
+								{
+									mFrameCount = 0;
+									int random = Random::GetInstance()->RandomInt(2);
+									if (random == 1)
+										SoundPlayer::GetInstance()->Play(L"FireBossHurt0", 1.f);
+									if (random == 0)
+										SoundPlayer::GetInstance()->Play(L"FireBossHurt1", 1.f);
+								}
+							}
 						}
 						else
 						{
@@ -325,7 +339,8 @@ void SkillManager::Update()
 						if (skill->GetName() == "LightRing")
 						{
 							ParticleManager::GetInstance()->MakeElectEffect(skillX, skillY);
-
+							monster->SetSkillHitAngle(skill->GetAngle());
+							monster->SetSkillHitPower(skill->GetSkillPower());
 						}
 
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
@@ -333,9 +348,23 @@ void SkillManager::Update()
 
 						if (monster->GetName() == "FireBoss")
 						{
+							mFrameCount += Time::GetInstance()->DeltaTime();
 							int temp = monster->GetHP();
 							temp -= skill->GetSkillDamege();
 							monster->SetHP(temp);
+							Monster_FireBoss* boss = (Monster_FireBoss*)monster;
+							if (boss->GetFireBossState() == FireBossState::Stun)
+							{
+								if (mFrameCount > 0.5)
+								{
+									mFrameCount = 0;
+									int random = Random::GetInstance()->RandomInt(2);
+									if (random == 1)
+										SoundPlayer::GetInstance()->Play(L"FireBossHurt0", 1.f);
+									if (random == 0)
+										SoundPlayer::GetInstance()->Play(L"FireBossHurt1", 1.f);
+								}
+							}
 						}
 						else
 						{
