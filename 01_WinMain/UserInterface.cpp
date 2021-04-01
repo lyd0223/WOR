@@ -90,7 +90,7 @@ void UserInterface::Render()
 	Vector2 Q = mSkillIndexList.find(mPlayer->GetQ_ButtonSkill())->second;
 
 	mStatus->Image->ScaleRenderFromLeft(mStatus->X, mStatus->Y, mStatus->SizeX  , mStatus->SizeY);
-	mHPBar->Image->ScaleRenderFromLeft(mHPBar->X, mHPBar->Y, mHPBar->SizeX * mPlayer->GetHP()/500, mHPBar->SizeY); //0.8f에 플레이어체력 %넣으세요
+	mHPBar->Image->ScaleRenderFromLeft(mHPBar->X, mHPBar->Y, mHPBar->SizeX * mPlayer->GetHP()/200, mHPBar->SizeY); //0.8f에 플레이어체력 %넣으세요
 	mMPBar->Image->ScaleRenderFromLeft(mMPBar->X, mMPBar->Y, mMPBar->SizeX * mPlayer->GetMp()/100, mMPBar->SizeY);
 
 	mSkillBox1->Image->ScaleRender(mSkillBox1->X, mSkillBox1->Y, mSkillBox1->SizeX, mSkillBox1->SizeY);
