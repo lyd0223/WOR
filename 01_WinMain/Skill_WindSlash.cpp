@@ -23,8 +23,8 @@ void Skill_WindSlash::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"WindSlash", Resources(L"Skill/WindSlash.png"), 5, 3);
 	mImage = ImageManager::GetInstance()->FindImage(L"WindSlash");
 
-	mSizeX = mImage->GetWidth() / 5 * 1.5 - 30;
-	mSizeY = mImage->GetHeight() / 3 * 1.5;
+	mSizeX = mImage->GetWidth() / 5 * 2.5;
+	mSizeY = mImage->GetHeight() / 3 * 4;
 
 	mSkillPower = 5.f;
 	mSkillDamege = 11.f;
@@ -58,8 +58,8 @@ void Skill_WindSlash::Update()
 void Skill_WindSlash::Render()
 {
 	
-	mImage->SetScale(2.f);
+	mImage->SetScale(3.f);
 	mImage->SetAngle(mAngle * -(180/PI));
-	//CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
 	CameraManager::GetInstance()->GetMainCamera()->FrameRender(mImage, mX, mY, mSlashAnimation->GetNowFrameX(), mSlashAnimation->GetNowFrameY());
 }
