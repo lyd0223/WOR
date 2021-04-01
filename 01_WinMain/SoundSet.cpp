@@ -34,6 +34,8 @@ SoundSet::SoundSet()
 	SoundPlayer::GetInstance()->LoadFromFile(L"MenuMove", Resources(L"Sound/MenuMove.wav"), false);
 	SoundPlayer::GetInstance()->LoadFromFile(L"MenuClose", Resources(L"Sound/MenuClose.wav"), false);
 
+	SoundPlayer::GetInstance()->LoadFromFile(L"ThunderBounce", Resources(L"Sound/ThunderBounce.wav"), false);
+
 	SoundPlayer::GetInstance()->LoadFromFile(L"PlayerDashSound", Resources(L"Sound/PlayerDash.wav"), false);
 	SoundPlayer::GetInstance()->LoadFromFile(L"EnemyHitSound", Resources(L"Sound/EnemyHit.wav"), false);
 	SoundPlayer::GetInstance()->LoadFromFile(L"WindSlashSound", Resources(L"Sound/WindSlash.wav"), false);

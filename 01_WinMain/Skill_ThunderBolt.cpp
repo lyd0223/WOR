@@ -13,9 +13,11 @@ Skill_ThunderBolt::Skill_ThunderBolt(const string& name, float x, float y, float
 	mY = y;
 	mAngle = angle;
 	mSkillTarget = SkillTarget::Player;
-	mSkillType = SkillType::Throw;
+	mSkillType = SkillType::Melee;
 	mSkillElement = SkillElement::Elect;
-	mSkillArcana = SkillArcana::Standard;
+	mSkillArcana = SkillArcana::Signature;
+
+	mIsActive = false;
 }
 
 void Skill_ThunderBolt::Init()
@@ -28,14 +30,14 @@ void Skill_ThunderBolt::Init()
 	mRect = RectMakeCenter(mX , mY , mSizeX, mSizeY );
 	mSpeed = 0;
 
-
 	mThunderBoltAnimation = new Animation;
 	mThunderBoltAnimation->InitFrameByStartEnd(0, 0, 3, 0, false);
 	mThunderBoltAnimation->SetIsLoop(false);
-	mThunderBoltAnimation->SetFrameUpdateTime(0.1f);
+	mThunderBoltAnimation->SetFrameUpdateTime(0.02f);
 	mThunderBoltAnimation->Play();
 
 	mSkillPower = 5.f;
+	mSkillDamege = 10;
 }
 
 void Skill_ThunderBolt::Release()
@@ -45,24 +47,33 @@ void Skill_ThunderBolt::Release()
 
 void Skill_ThunderBolt::Update()
 {
-	if (mThunderBoltAnimation->GetNowFrameX() == 3)mIsDestroy = true;
+	if (mIsActive)
+	{
+		if (mThunderBoltAnimation->GetNowFrameX() == 2)
+		{
+			SoundPlayer::GetInstance()->LoadFromFile(L"ThunderBoltSound", Resources(L"Sound/ThunderBolt.wav"), false);
+			SoundPlayer::GetInstance()->Play(L"ThunderBoltSound", 1.f);
+			ParticleManager::GetInstance()->MakeElectEffect(mX, mY);
+		}
+		if (mThunderBoltAnimation->GetNowFrameX() == 3)
+		{
+			
+			mIsDestroy = true;
+		}
 
-	//D2D1_RECT_F rctemp = CameraManager::GetInstance()->GetMainCamera()->GetRect();
-	//mAngle = Math::GetAngle(mX, mY, _mousePosition.x + rctemp.left, _mousePosition.y + rctemp.top);
-
+		mRect = RectMakeCenter(mX , mY, mSizeX, mSizeY );
 	
-	mX += cosf(mAngle)  * 0;
-	mY += -sinf(mAngle) * 0;
-	mRect = RectMakeCenter(mX , mY, mSizeX, mSizeY );
-	
-
-	mThunderBoltAnimation->Update();
+		mThunderBoltAnimation->Update();
+	}
 }
 
 void Skill_ThunderBolt::Render()
 {
-	mImage->SetScale(1.f);
-	//mImage->SetAngle((mAngle) * -(180 / PI));
-	CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
-	CameraManager::GetInstance()->GetMainCamera()->FrameRenderFromBottom(mImage, mX, mY + 100, mThunderBoltAnimation->GetNowFrameX(), mThunderBoltAnimation->GetNowFrameY());
+	if (mIsActive)
+	{
+		mImage->SetScale(1.5f);
+		//mImage->SetAngle((mAngle) * -(180 / PI));
+		CameraManager::GetInstance()->GetMainCamera()->RenderRect(mRect);
+		CameraManager::GetInstance()->GetMainCamera()->FrameRenderFromBottom(mImage, mX, mY, mThunderBoltAnimation->GetNowFrameX(), mThunderBoltAnimation->GetNowFrameY());
+	}
 }

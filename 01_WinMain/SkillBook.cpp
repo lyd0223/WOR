@@ -24,15 +24,15 @@ void SkillBook::Init()
 	mIdleAnimation = new Animation();
 	mIdleAnimation->InitFrameByStartEnd(0, 0, 3, 0, true);
 	mIdleAnimation->SetIsLoop(false);
-	mIdleAnimation->SetFrameUpdateTime(0.3f);
+	mIdleAnimation->SetFrameUpdateTime(0.02f);
 	mOpenAnimation = new Animation();
 	mOpenAnimation->InitFrameByStartEnd(9, 1, 13, 1, false);
 	mOpenAnimation->SetIsLoop(false);
-	mOpenAnimation->SetFrameUpdateTime(0.3f);
+	mOpenAnimation->SetFrameUpdateTime(0.02f);
 	mCloseAnimation = new Animation();
 	mCloseAnimation->InitFrameByBackStartEnd(13, 1, 9, 1, false);
 	mCloseAnimation->SetIsLoop(false);
-	mCloseAnimation->SetFrameUpdateTime(0.3f);
+	mCloseAnimation->SetFrameUpdateTime(0.02f);
 	mCurrentAnimation = mIdleAnimation;
 }
 

@@ -150,6 +150,7 @@
     <ClInclude Include="01_WinMain.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Effect_DashEffect.h" />
+    <ClInclude Include="Effect_ElectEffect.h" />
     <ClInclude Include="Effect_EnemyCreate.h" />
     <ClInclude Include="Effect_FireParticle.h" />
     <ClInclude Include="Effect_Number.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="Math.h" />
     <ClInclude Include="Monster_Mazition.h" />
     <ClInclude Include="Monster_MazitionBullet.h" />
+    <ClInclude Include="Skill_LightRing.h" />
     <ClInclude Include="Skill_Meteor.h" />
     <ClInclude Include="MonsterObject.h" />
     <ClInclude Include="Monster_FireBoss.h" />
@@ -254,6 +256,7 @@
     <ClCompile Include="01_WinMain.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Effect_DashEffect.cpp" />
+    <ClCompile Include="Effect_ElectEffect.cpp" />
     <ClCompile Include="Effect_EnemyCreate.cpp" />
     <ClCompile Include="Effect_FireParticle.cpp" />
     <ClCompile Include="Effect_Number.cpp" />
@@ -306,6 +309,7 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Monster_Mazition.cpp" />
     <ClCompile Include="Monster_MazitionBullet.cpp" />
+    <ClCompile Include="Skill_LightRing.cpp" />
     <ClCompile Include="Skill_Meteor.cpp" />
     <ClCompile Include="MonsterObject.cpp" />
     <ClCompile Include="Monster_FireBoss.cpp" />

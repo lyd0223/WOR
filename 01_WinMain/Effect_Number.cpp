@@ -52,7 +52,7 @@ void Effect_Number::Render()
 {
 	mNumberRed->SetScale(3.f);
 	mNumberRed->SetAlpha(mAlpha);
-	if (mIndex > 10)
+	if (mIndex > 9)
 	{
 		mNumberRed->SetScale(3.f);
 		mNumberRed->SetAlpha(mAlpha);

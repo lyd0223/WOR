@@ -10,7 +10,7 @@
 #include "Effect_Smoke.h"
 #include "Effect_EnemyCreate.h"
 #include "Effect_Number.h"
-
+#include "Effect_ElectEffect.h"
 
 void ParticleManager::MakeDustParticle(float x, float y, float angle, float scale)
 {
@@ -173,4 +173,11 @@ void ParticleManager::MakeNumber(float x, float y, int index)
 	number = new Effect_Number("Number", x, y, index);
 	number->Init();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, number);
+}
+
+void ParticleManager::MakeElectEffect(float x, float y)
+{
+	Effect_ElectEffect* elect = new Effect_ElectEffect("ElectEffect", x, y);
+	elect->Init();
+	ObjectManager::GetInstance()->AddObject(ObjectLayer::Particle, elect);
 }

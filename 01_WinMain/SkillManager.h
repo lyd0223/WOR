@@ -39,6 +39,7 @@ public:
 	void SpearWaveSkill(const string& name, float x, float y, float angle);
 	void MonsterMiddleSlashSkill(const string& name, float x, float y, float angle);
 	void ThunderBolt(const string& name, float x, float y, float angle);
+	void LightRing(const string& name, float x, float y, float angle);
 
 	map<SkillElement, vector<SkillObject*>> GetSkillList() { return mSkillList; }
 	vector<SkillObject*> GetSkillElementList(SkillElement element) { return mSkillList.find(element)->second; }

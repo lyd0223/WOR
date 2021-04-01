@@ -43,6 +43,7 @@ void UI_SpellBook::Init()
 	mSkillIndexList.insert(make_pair("IceSpear", Vector2(0, 2)));		// IceSpear
 	mSkillIndexList.insert(make_pair("WaterBall", Vector2(1, 2)));		// WaterBall
 	mSkillIndexList.insert(make_pair("ThunderBolt", Vector2(0, 3)));	// ThunderBolt
+	mSkillIndexList.insert(make_pair("LightRing", Vector2(1, 3)));	// LightRing
 
 	mPlayer = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 

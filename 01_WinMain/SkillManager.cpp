@@ -24,6 +24,7 @@
 #include "Skill_ThunderBolt.h"
 #include "Skill_Meteor.h"
 #include "Skill_WaterBall.h"
+#include "Skill_LightRing.h"
 
 #include "MouseTracker.h"
 #include "Tile.h"
@@ -47,6 +48,7 @@ SkillManager::SkillManager()
 	AddSkillList(SkillElement::Water, new Skill_IceSpear("IceSpear", 0, 0, 0));
 	AddSkillList(SkillElement::Water, new Skill_WaterBall("WaterBall", 0, 0, 0));
 	AddSkillList(SkillElement::Elect, new Skill_ThunderBolt("ThunderBolt", 0, 0, 0));
+	AddSkillList(SkillElement::Elect, new Skill_LightRing("LightRing", 0, 0, 0));
 }
 
 void SkillManager::AddSkillList(SkillElement element, SkillObject * skillObject)
@@ -56,11 +58,39 @@ void SkillManager::AddSkillList(SkillElement element, SkillObject * skillObject)
 
 void SkillManager::SkillCasting(const string & name, float x, float y, float angle)
 {
-	SkillObject* skill = MakeSkillClass(name, x, y, angle);
+	if (name == "ThunderBolt")
+	{
+		for (int i = 0; i < 6; i++)
+		{
+			POINT position;
+			position.x = x + cosf(angle) * (i * 100);
+			position.y = y + -sinf(angle) * (i * 100);
 
-	skill->Init();
+			vector<GameObject*> tileList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Tile);
 
-	ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, skill);
+			TileMap* tileMap = (TileMap*)tileList[0];
+			Tile* tile = (Tile*)tileMap->GetTileList(position.x / TileSize, position.y / TileSize);
+
+			if (tile->GetType() == Type::Wall) break;
+
+			SkillObject* skill = MakeSkillClass(name, position.x, position.y, angle);
+
+			Skill_ThunderBolt* thunderBolt = (Skill_ThunderBolt*)skill;
+			
+			thunderBolt->Init();
+			thunderBolt->SetDelay((i * 0.1));
+
+			ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, thunderBolt);
+		}
+	}
+	else
+	{
+		SkillObject* skill = MakeSkillClass(name, x, y, angle);
+
+		skill->Init();
+
+		ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, skill);
+	}
 }
 
 void SkillManager::SkillCasting(const string & name, float x, float y, float angle, bool b)
@@ -96,6 +126,8 @@ SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y
 	}
 	if (name == "ThunderBolt")
 	{
+		//SoundPlayer::GetInstance()->LoadFromFile(L"ThunderBoltSound", Resources(L"Sound/ThunderBolt.wav"), false);
+		//SoundPlayer::GetInstance()->Play(L"ThunderBoltSound", 1.f);
 		Skill_ThunderBolt* thunderBolt = new Skill_ThunderBolt(name, x, y, angle);
 		return thunderBolt;
 	}
@@ -113,6 +145,12 @@ SkillObject * SkillManager::MakeSkillClass(const string & name, float x, float y
 			CameraManager::GetInstance()->GetMainCamera()->GetMousePosition().y, 
 			CastingSkill::Meteor);
 		return magicCircle;
+	}
+	if (name == "LightRing")
+	{
+		Skill_LightRing* ring = new Skill_LightRing(name, x, y, angle);
+		ring->Init();
+		return  ring;
 	}
 	return nullptr;
 }
@@ -134,14 +172,16 @@ void SkillManager::Update()
 	vector<GameObject*> skillList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Skill);
 	vector<GameObject*> tileList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Tile);
 	vector<GameObject*> monsterList = ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy);
-	Player* player = (Player*) ObjectManager::GetInstance()->FindObject("Player");
+	Player* player = (Player*)ObjectManager::GetInstance()->FindObject("Player");
 
-	for (int i = 0; i < skillList.size(); i++) 
+	for (int i = 0; i < skillList.size(); i++)
 	{
 		SkillObject* skill = (SkillObject*)skillList[i];
 		D2D1_RECT_F temp;
 		D2D1_RECT_F skillrc = skill->GetRect();
-		
+
+		if (skill->GetIsActive() == false) continue;
+
 		int index = (skill->GetRect().right - skill->GetRect().left) / TileSize + 1;
 		int skillX = skill->GetX();
 		int skillY = skill->GetY();
@@ -189,6 +229,12 @@ void SkillManager::Update()
 						SoundPlayer::GetInstance()->Play(L"WaterExplode", 1.f);
 					}
 
+					if (skill->GetName() == "LightRing")
+					{
+						ParticleManager::GetInstance()->MakeElectEffect(skillX, skillY);
+
+					}
+
 					ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 					skill->SetIsDestroy(true);
 					break;
@@ -210,6 +256,8 @@ void SkillManager::Update()
 				{
 					bool isCollision = false;
 					if (IntersectRect(temp, &skillrc, &monsterrc))
+					if (IntersectRect(temp, &skillrc, &monsterrc) &&
+						(skill->GetIsCollision() == false && monster->GetIsCollision() == false))
 					{
 						if (monster->GetName() == "FireBoss")
 						{
@@ -237,9 +285,9 @@ void SkillManager::Update()
 				}
 
 				// 투척
-				if (skill->GetSkillType() == SkillType::Throw) 
+				if (skill->GetSkillType() == SkillType::Throw)
 				{
-					
+
 					if (IntersectRect(temp, &skillrc, &monsterrc))
 					{
 						if (skill->GetName() == "FireBall")
@@ -249,7 +297,7 @@ void SkillManager::Update()
 							monster->SetSkillHitAngle(skill->GetAngle());
 							monster->SetSkillHitPower(skill->GetSkillPower());
 						}
-						
+
 						if (skill->GetName() == "DragonArc")
 						{
 							ParticleManager::GetInstance()->MakeFireExlposionParticle(skillX, skillY, 10);
@@ -272,6 +320,12 @@ void SkillManager::Update()
 							SoundPlayer::GetInstance()->Play(L"WaterExplode", 1.f);
 							monster->SetSkillHitAngle(skill->GetAngle());
 							monster->SetSkillHitPower(skill->GetSkillPower());
+						}
+
+						if (skill->GetName() == "LightRing")
+						{
+							ParticleManager::GetInstance()->MakeElectEffect(skillX, skillY);
+
 						}
 
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
@@ -369,6 +423,19 @@ void SkillManager::Update()
 					ParticleManager::GetInstance()->MakeNumber(player->GetX(), player->GetRect().top - 10, skill->GetSkillDamege());
 				}
 			}
+		}
+	}
+
+	if (ObjectManager::GetInstance()->FindObject("ThunderBolt") != nullptr)
+	{
+		mFrameCount += Time::GetInstance()->DeltaTime();
+
+		SkillObject* skill = (SkillObject*)ObjectManager::GetInstance()->FindObject("ThunderBolt");
+
+		if (mFrameCount > skill->GetDelay())
+		{
+			
+			skill->SetIsActive(true);
 		}
 	}
 }
@@ -506,16 +573,19 @@ void SkillManager::MonsterMiddleSlashSkill(const string& name, float x, float y,
 
 void SkillManager::ThunderBolt(const string& name, float x, float y, float angle)
 {
-	
-	SoundPlayer::GetInstance()->Play(L"ThunderBoltSound", 1.f);
 	for (int i = 0; i < 6; i++)
 	{
-		float skillX = x + cosf(angle) * 100;
-		float skillY = y + -sinf(angle) * 100;
+		float skillX = x + cosf(angle) * (100 * i);
+		float skillY = y + -sinf(angle) * (100 * i);
 		Skill_ThunderBolt* thunderBolt = new Skill_ThunderBolt(name, skillX, skillY, angle);
 		thunderBolt->Init();
 		ObjectManager::GetInstance()->AddObject(ObjectLayer::Skill, thunderBolt);
 	}
+}
+
+void SkillManager::LightRing(const string & name, float x, float y, float angle)
+{
+	
 }
 
 SkillObject * SkillManager::FindSkill(string name)

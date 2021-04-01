@@ -19,4 +19,5 @@ public:
 	void MakeWaterExplosion(float x, float y);
 	void MakeEnemyCreate(float x, float y, MonsterName name,Room *room);
 	void MakeNumber(float x, float y, int index);
+	void MakeElectEffect(float x, float y);
 };

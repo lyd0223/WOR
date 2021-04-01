@@ -52,6 +52,8 @@ protected:
 	float mSkillDamege;
 	float mSkillPower;
 	float mSkillCool;
+	float mDelay;
+
 	int mSkillStack;
 	int mSkillHitCount;
 
@@ -77,6 +79,8 @@ public:
 	float GetSkillPower() { return mSkillPower; }
 	int GetSkillHitCount() { return mSkillHitCount; }
 	float GetSkillCool() { return mSkillCool; }
+	float GetDelay() { return mDelay; }
+	void SetDelay(float delay) { mDelay = delay; }
 	
 	void SetskillStack(int stack) { mSkillStack = stack; }
 	int GetSkillStack() { return mSkillStack; }

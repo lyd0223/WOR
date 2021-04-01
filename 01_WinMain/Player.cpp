@@ -87,10 +87,10 @@ void Player::Init()
 	mCurrentAnimation = mDownIdleAnimation;
 	mCurrentAnimation->Play();
 
-	mLB_ButtonSkill = "WindSlash";
+	mLB_ButtonSkill = "LightRing";
 	mRB_ButtonSkill = "IceSpear";
 	mSpacebar_ButtonSkill = "WindDash";
-	mQ_ButtonSkill = "FireBall";
+	mQ_ButtonSkill = "ThunderBolt";
 	mIsFalling = 0;
 	mYtemp = 0;
 	//���콺Ʈ��Ŀ
@@ -1183,8 +1183,6 @@ void Player::Update()
 		//}
 
 			//�������� ����--
-			lineX = mX + 50 * cosf(mAngle);
-			lineY = mY + 50 * -sinf(mAngle);
 			//-------
 			if (mPlayerNormalShadow != nullptr) mPlayerNormalShadow->Update();
 			if (mPlayerHeightShadow != nullptr) mPlayerHeightShadow->Update();
@@ -1195,6 +1193,9 @@ void Player::Update()
 			mMovingRect = RectMakeCenter(mX, mY + 25, TileSize, TileSize);
 			float mMovingX = (mMovingRect.left + (mMovingRect.right - mMovingRect.left) / 2);
 			float mMovingY = (mMovingRect.top + (mMovingRect.bottom - mMovingRect.top) / 2);
+
+			lineX = mX + 50 * cosf(mAngle);
+			lineY = mY + 50 * -sinf(mAngle);
 
 			TileMap* tilemap = (TileMap*)ObjectManager::GetInstance()->FindObject("TileMap");
 			vector<vector<Tile*>> tilelist = tilemap->GetTileList();
