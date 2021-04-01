@@ -22,6 +22,19 @@ void Scene_Boss::Init()
 	ImageManager::GetInstance()->LoadFromFile(L"TileSet", Resources(L"Tile/Tile.bmp"), 16, 16);
 	Image* tileImage = ImageManager::GetInstance()->FindImage(L"TutorialTile");
 
+	ImageManager::GetInstance()->LoadFromFile(L"BossHP", Resources(L"UI/BossHP.png"));
+	ImageManager::GetInstance()->LoadFromFile(L"HPBar", Resources(L"UI/HPBar.png"));
+
+	mBossHP = new BossInterface(WINSIZEX / 2, 100,
+		ImageManager::GetInstance()->FindImage(L"BossHP")->GetWidth() / 2,
+		ImageManager::GetInstance()->FindImage(L"BossHP")->GetHeight() / 2,
+		ImageManager::GetInstance()->FindImage(L"BossHP"));
+	mBossHPBar = new BossInterface(WINSIZEX / 2, 100,
+		ImageManager::GetInstance()->FindImage(L"HPBar")->GetWidth() / 5,
+		ImageManager::GetInstance()->FindImage(L"HPBar")->GetHeight() * 2.5,
+		ImageManager::GetInstance()->FindImage(L"HPBar"));
+
+
 	UserInterface* ui = new UserInterface();
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::UI, ui);
 	//Å¸ÀÏ¸ÊÃß°¡
@@ -74,7 +87,6 @@ void Scene_Boss::Update()
 	CameraManager::GetInstance()->Update();
 	SkillManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();
-
 	for (int i = 0; i < mRoomList.size(); i++)
 	{
 		if (mRoomList[i]->PlayerInRoom())
@@ -91,7 +103,7 @@ void Scene_Boss::Update()
 					ObjectManager::GetInstance()->FindObject("HorizonalPrison") == nullptr)
 				{
 					SoundPlayer::GetInstance()->Play(L"RoomLock", 1.0f);
-					
+
 					for (int x = 17; x <= 21; x++)
 					{
 						int y = 26;
@@ -117,8 +129,8 @@ void Scene_Boss::Update()
 				{
 					SoundPlayer::GetInstance()->Play(L"RoomUnLock", 1.0f);
 					ObjectManager::GetInstance()->DeleteObjects(ObjectLayer::Structure);
-					
-						
+
+
 					for (int x = 17; x <= 21; x++)
 					{
 						int y = 24;
@@ -130,10 +142,20 @@ void Scene_Boss::Update()
 							}
 						}
 					}
-						
+
 				}
 			}
 		}
+	}
+	if (mPlayer->GetY() / TileSize < 21 && mIsInterfaceInit == false)
+	{
+		mFireBoss->SetIsActive(true);
+		mIsInterfaceInit = true;
+	}
+
+	if (mIsInterfaceInit) 
+	{
+		
 	}
 }
 
@@ -141,5 +163,10 @@ void Scene_Boss::Render()
 {
 
 	ObjectManager::GetInstance()->Render();
-
+	if (mIsInterfaceInit)
+	{
+		float length = Math::Lerp(0, mFireBoss->GetHP(), 1);
+		mBossHP->Image->ScaleRender(mBossHP->X, mBossHP->Y, mBossHP->SizeX, mBossHP->SizeY);
+		mBossHPBar->Image->ScaleRender(mBossHPBar->X, mBossHPBar->Y, length, mBossHPBar->SizeY );
+	}
 }

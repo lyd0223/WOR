@@ -15,6 +15,7 @@ Monster_FireBoss::Monster_FireBoss(const string& name, float x, float y)
 {
 	mX = x;
 	mY = y;
+	mIsActive = false;
 }
 
 void Monster_FireBoss::Init()
