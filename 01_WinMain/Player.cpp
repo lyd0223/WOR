@@ -548,43 +548,59 @@ void Player::Update()
 					{
 						AnimationChange(mRightThrowSkillandAttackAnimation);
 						mAttackMotion = 2;
-						SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle + PI / 8);
+						if(mLB_ButtonSkill == "WindSlash")
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle + PI / 8);
+						else
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
 					}
 					else if (mAttackMotion == 2)
 					{
 						AnimationChange(mRightThrowSkillandAttackAnimation2);
 						mAttackMotion = 3;
-						SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle - PI / 8);
+						if (mLB_ButtonSkill == "WindSlash")
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle - PI / 8);
+						else
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
 					}
 					else if (mAttackMotion == 3)
 					{
 						AnimationChange(mRightThrowSkillandAttackAnimation);
 						mAttackMotion = 1;
-						SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
+						if (mLB_ButtonSkill == "WindSlash")
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
+						else
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
 					}
 					mPlayerState = PlayerState::RightAttack;
-					mX+= 15;
-					
+					mX += 15;
+
 				}
 				else if (mAngle > PI / 4 && mAngle < ((PI / 2) + (PI / 4)))
 				{
 					if (mAttackMotion == 1)
 					{
 						AnimationChange(mUpAttackAnimation);
-						mAttackMotion =2;
-						SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle+ PI / 8);
+						mAttackMotion = 2;
+						if (mLB_ButtonSkill == "WindSlash")
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle + PI / 8);
+						else
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
 					}
 					else if (mAttackMotion == 2)
 					{
 						AnimationChange(mUpAttackAnimation2);
 						mAttackMotion = 3;
-						SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle - PI / 8);
+						if (mLB_ButtonSkill == "WindSlash")
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle - PI / 8);
+						else
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
 					}
 					else if (mAttackMotion == 3)
 					{
 						AnimationChange(mUpAttackAnimation);
-						mAttackMotion = 1;
+						mAttackMotion = 1; 
 						SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
+						
 					}
 
 					mPlayerState = PlayerState::UpAttack;
@@ -597,13 +613,19 @@ void Player::Update()
 					{
 						AnimationChange(mLeftThrowSkillandAttackAnimation);
 						mAttackMotion = 2;
-						SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle + PI / 8);
+						if (mLB_ButtonSkill == "WindSlash")
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle + PI / 8);
+						else
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
 					}
 					else if (mAttackMotion == 2)
 					{
 						AnimationChange(mLeftThrowSkillandAttackAnimation2);
 						mAttackMotion = 3;
-						SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle - PI / 8);
+						if (mLB_ButtonSkill == "WindSlash")
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle - PI / 8);
+						else
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
 					}
 					else if (mAttackMotion == 3)
 					{
@@ -621,13 +643,19 @@ void Player::Update()
 					{
 						AnimationChange(mDownAttackAnimation);
 						mAttackMotion = 2;
-						SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle + PI / 8);
+						if (mLB_ButtonSkill == "WindSlash")
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle + PI / 8);
+						else
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
 					}
 					else if (mAttackMotion == 2)
 					{
 						AnimationChange(mDownAttackAnimation2);
 						mAttackMotion = 3;
-						SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle - PI / 8);
+						if (mLB_ButtonSkill == "WindSlash")
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle - PI / 8);
+						else
+							SkillManager::GetInstance()->SkillCasting(mLB_ButtonSkill, lineX, lineY, mAngle);
 					}
 					else if (mAttackMotion == 3)
 					{
