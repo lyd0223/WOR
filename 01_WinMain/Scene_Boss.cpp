@@ -15,6 +15,7 @@
 
 void Scene_Boss::Init()
 {
+
 	SoundPlayer::GetInstance()->Play(L"Boss", 0.5f);
 	Load_Image::GetInstance()->LoadSceneMapToolImage();
 	ImageManager::GetInstance()->LoadFromFile(L"TutorialTile", Resources(L"Tile/TutorialMap.png"), 74, 43);
@@ -45,6 +46,12 @@ void Scene_Boss::Init()
 	mFireBoss = new Monster_FireBoss("FireBoss", 20 * TileSize, 14 * TileSize);
 	ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, mFireBoss);
 
+	//방만들기
+	mRoomList.push_back(new Room(10, 8, 19, 15));
+	//방에 파이어보스 넣어주기.
+	mFireBoss->SetRoom(mRoomList[0]);
+	mRoomList[0]->monsterList.push_back(mFireBoss);
+
 	ObjectManager::GetInstance()->Init();
 
 	Camera* camera = new Camera();
@@ -68,7 +75,66 @@ void Scene_Boss::Update()
 	SkillManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();
 
+	for (int i = 0; i < mRoomList.size(); i++)
+	{
+		if (mRoomList[i]->PlayerInRoom())
+		{
 
+			if (mRoomList[i]->monsterList.size() != 0)
+			{
+				if (Input::GetInstance()->GetKeyDown('K'))
+				{
+					mRoomList[i]->monsterList.clear();
+					ObjectManager::GetInstance()->DeleteObjects(ObjectLayer::Structure);
+				}
+				if (ObjectManager::GetInstance()->FindObject("VerticalPrison") == nullptr &&
+					ObjectManager::GetInstance()->FindObject("HorizonalPrison") == nullptr)
+				{
+					SoundPlayer::GetInstance()->Play(L"RoomLock", 1.0f);
+					
+					for (int x = 17; x <= 21; x++)
+					{
+						int y = 26;
+						if (mTileMap->GetTileList()[y][x]->GetType() != Type::Wall)
+						{
+							mTileMap->GetTileList()[y][x]->SetType(Type::Wall);
+							Structure* structure = new Structure(
+								"HorizonalPrison",
+								ImageManager::GetInstance()->FindImage(L"HorizonalPrison"),
+								mTileMap->GetTileList()[y][x]->GetX() + TileSize / 2,
+								mTileMap->GetTileList()[y][x]->GetY() + TileSize / 2,
+								ImageManager::GetInstance()->FindImage(L"HorizonalPrison")->GetWidth() * 0.5f,
+								ImageManager::GetInstance()->FindImage(L"HorizonalPrison")->GetHeight() * 0.5f);
+							ObjectManager::GetInstance()->AddObject(ObjectLayer::Structure, structure);
+						}
+					}
+				}
+			}
+			else
+			{
+				if (ObjectManager::GetInstance()->FindObject("VerticalPrison") != nullptr ||
+					ObjectManager::GetInstance()->FindObject("HorizonalPrison") != nullptr)
+				{
+					SoundPlayer::GetInstance()->Play(L"RoomUnLock", 1.0f);
+					ObjectManager::GetInstance()->DeleteObjects(ObjectLayer::Structure);
+					
+						
+					for (int x = 17; x <= 21; x++)
+					{
+						int y = 24;
+						if (mTileMap->GetTileList()[y][x]->GetType() != Type::Wall)
+						{
+							if (mTileMap->GetTileList()[y][x]->GetType() == Type::Wall)
+							{
+								mTileMap->GetTileList()[y][x]->SetType(Type::Floor);
+							}
+						}
+					}
+						
+				}
+			}
+		}
+	}
 }
 
 void Scene_Boss::Render()

@@ -9,7 +9,7 @@ class Scene_Boss : public Scene
 	class TileMap* mTileMap;
 	vector<class Structure*> mStructureList;
 	bool mMapIsOpen;
-
+	vector<Room*> mRoomList;
 public:
 	void Init()override;
 	void Release()override;

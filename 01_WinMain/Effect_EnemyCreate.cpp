@@ -122,6 +122,7 @@ void Effect_EnemyCreate::Update()
 		else if (mMonsterName == MonsterName::Zombie)
 		{
 			Monster_Zombie* zombie = new Monster_Zombie("Zombie", mX, mY);
+			zombie->SetRoom(mRoom);
 			mRoom->monsterList.push_back(zombie);
 			zombie->Init();
 			ObjectManager::GetInstance()->AddObject(ObjectLayer::Enemy, zombie);

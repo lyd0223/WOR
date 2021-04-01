@@ -6,7 +6,7 @@
 #include"Monster_Zombie.h"
 #include "Tile.h"
 #include "TileMap.h"
-
+#include "Scene.h"
 Monster_Zombie::Monster_Zombie(const string& name, float x, float y)
 	: MonsterObject(name)
 {
@@ -319,6 +319,8 @@ void Monster_Zombie::Update()
 				AnimationChange(mDieAnimation);
 				mMonsterActState = MonsterActState::Die;
 				mMonsterState = MonsterState::Die;
+				if(mRoom != nullptr)
+					mRoom->monsterList.pop_back();
 
 			}
 		}

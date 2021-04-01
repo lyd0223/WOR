@@ -184,7 +184,7 @@ void Scene_Field::Update()
 			}
 			else
 			{
-				if (ObjectManager::GetInstance()->FindObject("VerticalPrison") !=nullptr && 
+				if (ObjectManager::GetInstance()->FindObject("VerticalPrison") !=nullptr ||
 					ObjectManager::GetInstance()->FindObject("HorizonalPrison") != nullptr)
 				{
 					SoundPlayer::GetInstance()->Play(L"RoomUnLock", 1.0f);

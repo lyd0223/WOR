@@ -2415,7 +2415,7 @@ Fire8Walls,1,2,1
 Fire8Walls,1,2,1
 Fire8Walls,1,2,1
 Fire4Walls,1,0,1
-FireFloor,1,0,5
+FireFloor,0,0,5
 FireFloor,0,0,2
 FireFloor,0,0,2
 FireFloor,0,0,3
@@ -2515,7 +2515,7 @@ Fire8Walls,0,1,1
 Fire8Walls,0,1,1
 Fire8Walls,0,1,1
 Fire8Walls,1,1,0
-FireFloor,1,1,5
+FireFloor,0,1,5
 FireFloor,0,0,0
 FireFloor,0,0,4
 FireFloor,0,0,0
@@ -2615,7 +2615,7 @@ Fire8Walls,0,1,1
 Fire8Walls,0,1,1
 Fire8Walls,0,1,1
 Fire8Walls,1,1,0
-FireFloor,1,1,5
+FireFloor,0,1,5
 FireFloor,0,1,6
 FireFloor,0,0,0
 FireFloor,0,0,7
@@ -2715,7 +2715,7 @@ Fire8Walls,0,1,1
 Fire8Walls,0,1,1
 Fire8Walls,0,1,1
 Fire8Walls,1,1,0
-FireFloor,1,0,5
+FireFloor,0,0,5
 FireFloor,0,0,1
 FireFloor,0,1,6
 FireFloor,0,1,5
@@ -2815,7 +2815,7 @@ Fire8Walls,0,1,1
 Fire8Walls,0,1,1
 Fire8Walls,0,1,1
 Fire8Walls,1,1,0
-FireFloor,1,0,3
+FireFloor,0,0,3
 FireFloor,0,1,5
 FireFloor,0,0,1
 FireFloor,0,0,3
@@ -2915,7 +2915,7 @@ Fire8Walls,0,1,1
 Fire8Walls,0,1,1
 Fire8Walls,0,1,1
 Fire8Walls,1,1,0
-FireFloor,1,1,4
+FireFloor,0,1,4
 FireFloor,0,0,3
 FireFloor,0,1,5
 FireFloor,0,0,5
@@ -3015,7 +3015,7 @@ Fire8Walls,0,1,1
 Fire8Walls,0,1,1
 Fire8Walls,0,1,1
 Fire8Walls,1,1,0
-FireFloor,1,0,2
+FireFloor,0,0,2
 FireFloor,0,0,3
 FireFloor,0,1,0
 FireFloor,0,1,2
@@ -3115,7 +3115,7 @@ Fire8Walls,1,0,1
 Fire8Walls,1,0,1
 Fire8Walls,1,0,1
 Fire4Walls,1,1,1
-FireFloor,1,0,6
+FireFloor,0,0,6
 FireFloor,0,0,0
 FireFloor,0,0,3
 FireFloor,0,0,5
