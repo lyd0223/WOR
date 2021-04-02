@@ -38,6 +38,7 @@ void Skill_ThunderBolt::Init()
 
 	mSkillPower = 5.f;
 	mSkillDamege = 10;
+	mSkillCool = 5;
 }
 
 void Skill_ThunderBolt::Release()

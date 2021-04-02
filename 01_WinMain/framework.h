@@ -59,6 +59,7 @@ using namespace std;
 #include "PathFinder.h"
 #include "ParticleManager.h"
 #include "SoundSet.h"
+#include "Storage.h"
 
 extern POINT _mousePosition;	//마우스 좌표
 extern HWND	_hWnd;

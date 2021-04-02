@@ -50,6 +50,11 @@ SkillManager::SkillManager()
 	AddSkillList(SkillElement::Water, new Skill_WaterBall("WaterBall", 0, 0, 0));
 	AddSkillList(SkillElement::Elect, new Skill_ThunderBolt("ThunderBolt", 0, 0, 0));
 	AddSkillList(SkillElement::Elect, new Skill_LightRing("LightRing", 0, 0, 0));
+
+	mPlayerLBSkill = "WindSlash";
+	mPlayerSpaceSkill = "WindDash";
+	mPlayerRBSkill = "IceSpear";
+	mPlayerQSkill = "FireBall";
 }
 
 void SkillManager::AddSkillList(SkillElement element, SkillObject * skillObject)
@@ -178,6 +183,7 @@ void SkillManager::Update()
 	for (int i = 0; i < skillList.size(); i++)
 	{
 		SkillObject* skill = (SkillObject*)skillList[i];
+		vector<GameObject*> skillCollisionList = skill->GetSkillCollisionList();
 		D2D1_RECT_F temp;
 		D2D1_RECT_F skillrc = skill->GetRect();
 
@@ -246,7 +252,13 @@ void SkillManager::Update()
 		// 스킬 충돌 적 or 플레이어
 		for (int j = 0; j < monsterList.size(); j++)
 		{
+			MovingObject* skillCollision = nullptr;
+			if (skillCollisionList.size() != 0)
+				skillCollision = (MovingObject*)skillCollisionList[i];
 			MonsterObject* monster = (MonsterObject*)monsterList[j];
+
+			if (skillCollision == monster || skillCollision == player) return;
+	
 			D2D1_RECT_F monsterrc = monsterList[j]->GetRect();
 
 			// 플레이어 -> 적
@@ -255,10 +267,7 @@ void SkillManager::Update()
 				// 근접
 				if (skill->GetSkillType() == SkillType::Melee)
 				{
-					bool isCollision = false;
 					if (IntersectRect(temp, &skillrc, &monsterrc))
-					if (IntersectRect(temp, &skillrc, &monsterrc) &&
-						(skill->GetIsCollision() == false && monster->GetIsCollision() == false))
 					{
 						if (monster->GetName() == "FireBoss")
 						{
@@ -288,13 +297,16 @@ void SkillManager::Update()
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 						monster->SetSkillHitAngle(skill->GetAngle());
 						monster->SetSkillHitPower(skill->GetSkillPower());
-						if (skill->GetName() == "WindSlash")
-						{
-							ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
-							monster->SetSkillHitAngle(skill->GetAngle());
-							monster->SetSkillHitPower(skill->GetSkillPower());
-						}
+						//if (skill->GetName() == "WindSlash")
+						//{
+						//	ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						//	monster->SetSkillHitAngle(skill->GetAngle());
+						//	monster->SetSkillHitPower(skill->GetSkillPower());
+						//}
 						ParticleManager::GetInstance()->MakeNumber(monster->GetX(), monster->GetRect().top - 10, skill->GetSkillDamege());
+						vector<GameObject*> tempList = skill->GetSkillCollisionList();
+						tempList.push_back(monster);
+						skill->SetSkillCollisionList(tempList);
 					}
 				}
 
@@ -388,34 +400,37 @@ void SkillManager::Update()
 					// 근접
 					if (skill->GetSkillType() == SkillType::Melee)
 					{
-						if (skill->GetName() == "MonsterSmallSlash")
-						{
-							ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						//if (skill->GetName() == "MonsterSmallSlash")
+						//{
+						//	ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 
-							player->SetSkillHitAngle(skill->GetAngle());
-							player->SetSkillHitPower(skill->GetSkillPower());
-						}
-						if (skill->GetName() == "MonsterMiddleSlash")
-						{
-							ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						//	player->SetSkillHitAngle(skill->GetAngle());
+						//	player->SetSkillHitPower(skill->GetSkillPower());
+						//}
+						//if (skill->GetName() == "MonsterMiddleSlash")
+						//{
+						//	ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 
-							player->SetSkillHitAngle(skill->GetAngle());
-							player->SetSkillHitPower(skill->GetSkillPower());
-						}
-						if (skill->GetName() == "MonsterBigSlash")
-						{
-							ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
+						//	player->SetSkillHitAngle(skill->GetAngle());
+						//	player->SetSkillHitPower(skill->GetSkillPower());
+						//}
+						//if (skill->GetName() == "MonsterBigSlash")
+						//{
+						//	ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 
-							player->SetSkillHitAngle(skill->GetAngle());
-							player->SetSkillHitPower(skill->GetSkillPower());
-						}
-						if (player->GetName() == "Player")
+						//	player->SetSkillHitAngle(skill->GetAngle());
+						//	player->SetSkillHitPower(skill->GetSkillPower());
+						//}
+						/*if (player->GetName() == "Player")
 						{
-							int temp = player->GetHP();
-							temp -= skill->GetSkillDamege();
-							player->SetHP(temp);
-						}
+						}*/
+						int temp = player->GetHP();
+						temp -= skill->GetSkillDamege();
+						player->SetHP(temp);
 
+						vector<GameObject*> tempList = skill->GetSkillCollisionList();
+						tempList.push_back(player);
+						skill->SetSkillCollisionList(tempList);
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 						player->SetSkillHitAngle(skill->GetAngle());
 						player->SetSkillHitPower(skill->GetSkillPower());

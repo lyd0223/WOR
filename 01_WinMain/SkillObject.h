@@ -48,6 +48,9 @@ protected:
 	SkillType mSkillType;
 	SkillTarget mSkillTarget;
 	SkillElement mSkillElement;
+
+	vector<GameObject*> mSkillCollisionList;
+
 	float mAngle;
 	float mSkillDamege;
 	float mSkillPower;
@@ -71,6 +74,8 @@ public:
 	SkillTarget GetSkillTarget() { return mSkillTarget; }
 	SkillType GetSkillType() { return mSkillType; }
 	SkillElement GetSkillElement() { return mSkillElement; }
+	vector<GameObject*> GetSkillCollisionList() { return mSkillCollisionList; }
+	void SetSkillCollisionList(vector<GameObject*> list) { mSkillCollisionList = list; }
 	void SetAngle(float angle) { mAngle = angle; }
 	float GetAngle() { return mAngle; }
 	void SetSkillDamege(float damege) { mSkillDamege = damege; }

@@ -175,6 +175,7 @@ void Monster_FireBoss::Update()
 		mAlpha -= 0.02f;
 
 		if (mFrameCount > 2) mIsDestroy = true;
+		SceneManager::GetInstance()->LoadScene(L"Ending");
 	}
 }
 

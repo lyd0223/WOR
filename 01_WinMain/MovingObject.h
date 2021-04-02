@@ -37,9 +37,6 @@ protected:
 	float mSkillHitAngle;
 	MonsterActState mMonsterActState;
 	D2D1_RECT_F mMovingRect;
-	
-	
-
 
 public:
 	MovingObject(const string& name) : GameObject(name) {};

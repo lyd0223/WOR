@@ -133,6 +133,7 @@ public:
 	float GetSpeed() { return mSpeed; }
 	float GetAngle() { return mAngle; }
 
+	void SetChangeSkill() { mIsSkillChange = true; }
 
 	void SetLB_ButtonSkill(string skillName) { mLB_ButtonSkill = skillName; }
 	void SetRB_ButtonSkill(string skillName) { mRB_ButtonSkill = skillName; }

@@ -110,10 +110,10 @@ void UI_SkillChangeInterface::Render()
 {
 	if (mIsActive)
 	{
-		Vector2 Basic = mSkillIndexList.find(mPlayer->GetLB_ButtonSkill())->second;
-		Vector2 Dash = mSkillIndexList.find(mPlayer->GetSpacebar_ButtonSkill())->second;
-		Vector2 Standard = mSkillIndexList.find(mPlayer->GetRB_ButtonSkill())->second;
-		Vector2 Signature = mSkillIndexList.find(mPlayer->GetQ_ButtonSkill())->second;
+		Vector2 Basic = mSkillIndexList.find(SkillManager::GetInstance()->GetPlayerLBSkill())->second;
+		Vector2 Dash = mSkillIndexList.find(SkillManager::GetInstance()->GetPlayerSpaceSkill())->second;
+		Vector2 Standard = mSkillIndexList.find(SkillManager::GetInstance()->GetPlayerRBSkill())->second;
+		Vector2 Signature = mSkillIndexList.find(SkillManager::GetInstance()->GetPlayerQSkill())->second;
 
 		mSkillChangeInterface->Image->Render(mSkillChangeInterface->X, mSkillChangeInterface->Y);
 		mBasicSkillIcon->Image->ScaleFrameRender(mBasicSkillIcon->X, mBasicSkillIcon->Y, Basic.X, Basic.Y, mBasicSkillIcon->SizeX, mBasicSkillIcon->SizeY);

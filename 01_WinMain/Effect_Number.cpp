@@ -24,7 +24,7 @@ void Effect_Number::Init()
 	mNumberGray = ImageManager::GetInstance()->FindImage(L"NumberGray");
 	mNumberRed = ImageManager::GetInstance()->FindImage(L"NumberRed");
 
-	if (mIndex > 10)
+	if (mIndex > 9)
 	{
 		mTen = mIndex / 10;
 		mOne = mIndex % 10;

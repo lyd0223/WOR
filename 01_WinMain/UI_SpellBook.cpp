@@ -246,20 +246,21 @@ void UI_SpellBook::Update()
 			switch (mCurrentSkillArcana)
 			{
 			case SkillArcana::Basic:
-				mPlayer->SetLB_ButtonSkill(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetName());
+				SkillManager::GetInstance()->SetPlayerLBSkill((SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetName()));
 				break;
 			case SkillArcana::Dash:
-				mPlayer->SetSpacebar_ButtonSkill(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetName());
+				SkillManager::GetInstance()->SetPlayerSpaceSkill(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetName());
 				break;
 			case SkillArcana::Standard:
-				mPlayer->SetRB_ButtonSkill(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetName());
-				mPlayer->SetSkillStackCount(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetSkillStack());
+				SkillManager::GetInstance()->SetPlayerRBSkill(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetName());
+				SkillManager::GetInstance()->SetPlayerSkillStack(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetSkillStack());
 				break;
 			case SkillArcana::Signature:
-				mPlayer->SetQ_ButtonSkill(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetName());
+				SkillManager::GetInstance()->SetPlayerQSkill(SkillManager::GetInstance()->FindSkill(mCurrentSkill->GetName())->GetName());
 				break;
 			}
 			ObjectManager::GetInstance()->PopInterface();
+			mPlayer->SetChangeSkill();
 		}
 
 		if (Input::GetInstance()->GetKeyDown(VK_ESCAPE))

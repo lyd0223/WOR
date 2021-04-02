@@ -10,6 +10,7 @@
 #include "Scene_TitleScene.h"
 #include "Scene_House.h"
 #include "Scene_Loading.h"
+#include "Scene_Ending.h"
 #include "Load_Image.h"
 #include "RandomMapGeneration.h"
 
@@ -46,6 +47,7 @@ void MainGame::Init()
 	SceneManager::GetInstance()->AddScene(L"Field", new Scene_Field);
 	SceneManager::GetInstance()->AddScene(L"Boss", new Scene_Boss);
 	SceneManager::GetInstance()->AddScene(L"Title", new Scene_TitleScene);
+	SceneManager::GetInstance()->AddScene(L"Ending", new Scene_Ending);
 	SceneManager::GetInstance()->LoadScene(L"House");
 }
 

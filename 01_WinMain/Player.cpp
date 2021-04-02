@@ -87,10 +87,12 @@ void Player::Init()
 	mCurrentAnimation = mDownIdleAnimation;
 	mCurrentAnimation->Play();
 
-	mLB_ButtonSkill = "LightRing";
-	mRB_ButtonSkill = "IceSpear";
-	mSpacebar_ButtonSkill = "WindDash";
-	mQ_ButtonSkill = "ThunderBolt";
+	mLB_ButtonSkill = SkillManager::GetInstance()->GetPlayerLBSkill();
+	mRB_ButtonSkill = SkillManager::GetInstance()->GetPlayerRBSkill();
+	mSpacebar_ButtonSkill = SkillManager::GetInstance()->GetPlayerSpaceSkill();
+	mQ_ButtonSkill = SkillManager::GetInstance()->GetPlayerQSkill();
+	mSkillStackCount = SkillManager::GetInstance()->GetPlayerSkillStack();
+
 	mIsFalling = 0;
 	mYtemp = 0;
 	//���콺Ʈ��Ŀ
@@ -137,6 +139,15 @@ void Player::Update()
 	//int indexY = mY / TileSize;
 	//int indexX = mX / TileSize;
 	//---------------------------------
+	if (mIsSkillChange)
+	{
+		mLB_ButtonSkill = SkillManager::GetInstance()->GetPlayerLBSkill();
+		mRB_ButtonSkill = SkillManager::GetInstance()->GetPlayerRBSkill();
+		mSpacebar_ButtonSkill = SkillManager::GetInstance()->GetPlayerSpaceSkill();
+		mQ_ButtonSkill = SkillManager::GetInstance()->GetPlayerQSkill();
+		mSkillStackCount = SkillManager::GetInstance()->GetPlayerSkillStack();
+		mIsSkillChange = false;
+	}
 
 	mRB_ButtonSkillCool -= Time::GetInstance()->DeltaTime();
 	mQ_ButtonSkillCool -= Time::GetInstance()->DeltaTime();

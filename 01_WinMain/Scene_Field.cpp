@@ -57,6 +57,7 @@ void Scene_Field::Release()
 
 void Scene_Field::Update()
 {
+	mTime += Time::GetInstance()->DeltaTime();
 	CameraManager::GetInstance()->Update();
 	SkillManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();
@@ -76,6 +77,7 @@ void Scene_Field::Update()
 			ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy).clear();
 			Effect_Teleport* teleport = new Effect_Teleport(mPortal->GetX(), mPortal->GetY(), true, L"Field", L"Boss");
 			SoundPlayer::GetInstance()->Stop(L"Field");
+			Storage::GetInstance()->SetGameTime(Storage::GetInstance()->GetGameTime());
 			return;
 		}
 	}

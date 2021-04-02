@@ -8,6 +8,12 @@ class SkillManager
 private:
 	map<SkillElement, vector<SkillObject*>> mSkillList;
 
+	string mPlayerLBSkill;
+	string mPlayerRBSkill;
+	string mPlayerSpaceSkill;
+	string mPlayerQSkill;
+	int mPlayerSkillStack;
+
 	bool mIsUp;
 
 	float mFrameCount;
@@ -40,6 +46,17 @@ public:
 	void MonsterMiddleSlashSkill(const string& name, float x, float y, float angle);
 	void ThunderBolt(const string& name, float x, float y, float angle);
 	void LightRing(const string& name, float x, float y, float angle);
+
+	void SetPlayerLBSkill(string skill) { mPlayerLBSkill = skill; }
+	string GetPlayerLBSkill() { return mPlayerLBSkill; }
+	void SetPlayerSpaceSkill(string skill) { mPlayerSpaceSkill = skill; }
+	string GetPlayerSpaceSkill() { return mPlayerSpaceSkill; }
+	void SetPlayerRBSkill(string skill) { mPlayerRBSkill = skill; }
+	string GetPlayerRBSkill() { return mPlayerRBSkill; }
+	void SetPlayerQSkill(string skill) { mPlayerQSkill = skill; }
+	string GetPlayerQSkill() { return mPlayerQSkill; }
+	void SetPlayerSkillStack(int stack) { mPlayerSkillStack = stack; }
+	int GetPlayerSkillStack() { return mPlayerSkillStack; }
 
 	map<SkillElement, vector<SkillObject*>> GetSkillList() { return mSkillList; }
 	vector<SkillObject*> GetSkillElementList(SkillElement element) { return mSkillList.find(element)->second; }

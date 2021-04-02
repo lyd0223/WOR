@@ -321,7 +321,8 @@ void Monster_Zombie::Update()
 				mMonsterState = MonsterState::Die;
 				if(mRoom != nullptr)
 					mRoom->monsterList.pop_back();
-
+				Storage::GetInstance()->SetMonsterDeathCount(Storage::GetInstance()->GetMonsterDeathCount() + 1);
+				
 			}
 		}
 	}

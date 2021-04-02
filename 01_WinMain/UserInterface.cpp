@@ -84,10 +84,10 @@ void UserInterface::Release()
 
 void UserInterface::Render()
 {
-	Vector2 LB = mSkillIndexList.find(mPlayer->GetLB_ButtonSkill())->second;
-	Vector2 RB = mSkillIndexList.find(mPlayer->GetRB_ButtonSkill())->second;
-	Vector2 Space = mSkillIndexList.find(mPlayer->GetSpacebar_ButtonSkill())->second;
-	Vector2 Q = mSkillIndexList.find(mPlayer->GetQ_ButtonSkill())->second;
+	Vector2 LB = mSkillIndexList.find(SkillManager::GetInstance()->GetPlayerLBSkill())->second;
+	Vector2 RB = mSkillIndexList.find(SkillManager::GetInstance()->GetPlayerRBSkill())->second;
+	Vector2 Space = mSkillIndexList.find(SkillManager::GetInstance()->GetPlayerSpaceSkill())->second;
+	Vector2 Q = mSkillIndexList.find(SkillManager::GetInstance()->GetPlayerQSkill())->second;
 	ImageManager::GetInstance()->FindImage(L"PlayerIcon")->ScaleRenderFromLeft(mStatus->X+5, mStatus->Y, 48, mStatus->SizeY);
 	mStatus->Image->ScaleRenderFromLeft(mStatus->X, mStatus->Y, mStatus->SizeX  , mStatus->SizeY);
 	mHPBar->Image->ScaleRenderFromLeft(mHPBar->X, mHPBar->Y, mHPBar->SizeX * mPlayer->GetHP()/200, mHPBar->SizeY); //0.8f에 플레이어체력 %넣으세요
@@ -120,20 +120,16 @@ void UserInterface::Render()
 	if (mPlayer->GetRB_ButtonSkillCool() > 0)
 	{
 		mRB_SkillNumber->Image->ScaleFrameRender(mRB_SkillNumber->X, mRB_SkillNumber->Y, (int)mPlayer->GetRB_ButtonSkillCool(), 0, mRB_SkillNumber->SizeX, mRB_SkillNumber->SizeY);
-		/*wstring str = to_wstring((int)mPlayer->GetRB_ButtonSkillCool());
-		D2DRenderer::GetInstance()->RenderTextField(mRB_ButtonSkillIcon->X, mRB_ButtonSkillIcon->Y,
-			str, 15.f, mRB_ButtonSkillIcon->SizeX, mRB_ButtonSkillIcon->SizeY, D2D1::ColorF::Blue,
-			DWRITE_TEXT_ALIGNMENT_CENTER);*/
 	}
 	mQ_ButtonSkillIcon->Image->ScaleFrameRender(mQ_ButtonSkillIcon->X, mQ_ButtonSkillIcon->Y, Q.X, Q.Y, mQ_ButtonSkillIcon->SizeX, mQ_ButtonSkillIcon->SizeY);
 	if (mPlayer->GetQ_ButtonSkillCool() > 0)
 	{
 		mQ_SkillNumber->Image->ScaleFrameRender(mQ_SkillNumber->X, mQ_SkillNumber->Y, (int)mPlayer->GetQ_ButtonSkillCool(), 0, mQ_SkillNumber->SizeX, mQ_SkillNumber->SizeY);
-		//wstring str = to_wstring((int)mPlayer->GetQ_ButtonSkillCool());
-		//D2DRenderer::GetInstance()->RenderTextField(mQ_ButtonSkillIcon->X, mQ_ButtonSkillIcon->Y,
-		//	str, 15.f, mQ_ButtonSkillIcon->SizeX, mQ_ButtonSkillIcon->SizeY, D2D1::ColorF::Blue,
-		//	DWRITE_TEXT_ALIGNMENT_CENTER);
 	}
+	
+	//wstring wstr;
+	//wstr = to_wstring(Storage::GetInstance()->GetGameTime());
+	
 
 	//mSpecialSkillBox->Image->ScaleRender(mSpecialSkillBox->X, mSpecialSkillBox->Y, mSpecialSkillBox->SizeX, mSpecialSkillBox->SizeY);
 }
