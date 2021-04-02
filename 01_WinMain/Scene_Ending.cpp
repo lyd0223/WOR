@@ -4,7 +4,7 @@
 
 void Scene_Ending::Init()
 {
-	ImageManager::GetInstance()->LoadFromFile(L"BackGround", Resources(L"Title/BackGround0/png");
+	ImageManager::GetInstance()->LoadFromFile(L"BackGround", Resources(L"Title/BackGround0/png"));
 	mImage = ImageManager::GetInstance()->FindImage(L"BackGround");
 
 	mAlpha = 1.f;
