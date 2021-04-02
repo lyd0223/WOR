@@ -77,10 +77,17 @@ void Scene_Field::Update()
 			ObjectManager::GetInstance()->GetObjectList(ObjectLayer::Enemy).clear();
 			Effect_Teleport* teleport = new Effect_Teleport(mPortal->GetX(), mPortal->GetY(), true, L"Field", L"Boss");
 			SoundPlayer::GetInstance()->Stop(L"Field");
-			Storage::GetInstance()->SetGameTime(Storage::GetInstance()->GetGameTime());
+			Storage::GetInstance()->SetGameTime(Storage::GetInstance()->GetGameTime() + mTime);
 			return;
 		}
 	}
+	if (mPlayer->GetHP() == 0)
+	{
+		Storage::GetInstance()->SetGameTime(Storage::GetInstance()->GetGameTime() + mTime);
+		SceneManager::GetInstance()->LoadScene(L"Ending");
+		return;
+	}
+
 	for (int i = 0; i < mRoomList.size(); i++)
 	{
 		if (mRoomList[i]->PlayerInRoom())

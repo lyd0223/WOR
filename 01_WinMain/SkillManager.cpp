@@ -256,6 +256,8 @@ void SkillManager::Update()
 			if (skillCollisionList.size() != 0)
 				skillCollision = (MovingObject*)skillCollisionList[i];
 			MonsterObject* monster = (MonsterObject*)monsterList[j];
+			if (monster->GetHP() < 0 && monster->GetName() == "FireBoss")
+				return;
 
 			if (skillCollision == monster || skillCollision == player) return;
 	
@@ -290,10 +292,10 @@ void SkillManager::Update()
 						}
 						else
 						{
-							int temp = monster->GetHP();
-							temp -= skill->GetSkillDamege();
-							monster->SetHP(temp);
 						}
+						int temp = monster->GetHP();
+						temp -= skill->GetSkillDamege();
+						monster->SetHP(temp);
 						ParticleManager::GetInstance()->MakeHitSparkParticle(skillX, skillY);
 						monster->SetSkillHitAngle(skill->GetAngle());
 						monster->SetSkillHitPower(skill->GetSkillPower());

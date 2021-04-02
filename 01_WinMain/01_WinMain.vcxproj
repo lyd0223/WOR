@@ -177,6 +177,7 @@
     <ClInclude Include="PlayerWideShadow.h" />
     <ClInclude Include="RandomMapGeneration.h" />
     <ClInclude Include="Scene_Boss.h" />
+    <ClInclude Include="Scene_Ending.h" />
     <ClInclude Include="Scene_Field.h" />
     <ClInclude Include="Scene_House.h" />
     <ClInclude Include="Scene_Loading.h" />
@@ -236,6 +237,7 @@
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="Monster_SpearMan.h" />
     <ClInclude Include="SoundSet.h" />
+    <ClInclude Include="Storage.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="Monster_SwoardMan.h" />
     <ClInclude Include="targetver.h" />
@@ -283,6 +285,7 @@
     <ClCompile Include="PlayerWideShadow.cpp" />
     <ClCompile Include="RandomMapGeneration.cpp" />
     <ClCompile Include="Scene_Boss.cpp" />
+    <ClCompile Include="Scene_Ending.cpp" />
     <ClCompile Include="Scene_Field.cpp" />
     <ClCompile Include="Scene_House.cpp" />
     <ClCompile Include="Scene_Loading.cpp" />
@@ -345,6 +348,7 @@
     <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="Monster_SpearMan.cpp" />
     <ClCompile Include="SoundSet.cpp" />
+    <ClCompile Include="Storage.cpp" />
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="Monster_SwoardMan.cpp" />
     <ClCompile Include="Tile.cpp" />

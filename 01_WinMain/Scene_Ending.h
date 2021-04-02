@@ -6,6 +6,10 @@ class Scene_Ending : public Scene
 {
 	Image* mImage;
 	
+	vector<D2D1_RECT_F> mRectList;
+	wstring mTime;
+	wstring mMonsterCount;
+
 	float mFrameCount;
 	float mAlpha;
 public:

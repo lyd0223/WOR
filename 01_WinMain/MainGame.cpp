@@ -48,7 +48,7 @@ void MainGame::Init()
 	SceneManager::GetInstance()->AddScene(L"Boss", new Scene_Boss);
 	SceneManager::GetInstance()->AddScene(L"Title", new Scene_TitleScene);
 	SceneManager::GetInstance()->AddScene(L"Ending", new Scene_Ending);
-	SceneManager::GetInstance()->LoadScene(L"House");
+	SceneManager::GetInstance()->LoadScene(L"Boss");
 }
 
 /*

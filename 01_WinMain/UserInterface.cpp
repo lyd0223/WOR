@@ -126,10 +126,6 @@ void UserInterface::Render()
 	{
 		mQ_SkillNumber->Image->ScaleFrameRender(mQ_SkillNumber->X, mQ_SkillNumber->Y, (int)mPlayer->GetQ_ButtonSkillCool(), 0, mQ_SkillNumber->SizeX, mQ_SkillNumber->SizeY);
 	}
-	
-	//wstring wstr;
-	//wstr = to_wstring(Storage::GetInstance()->GetGameTime());
-	
 
 	//mSpecialSkillBox->Image->ScaleRender(mSpecialSkillBox->X, mSpecialSkillBox->Y, mSpecialSkillBox->SizeX, mSpecialSkillBox->SizeY);
 }

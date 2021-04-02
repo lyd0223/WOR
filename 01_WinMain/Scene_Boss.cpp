@@ -82,9 +82,18 @@ void Scene_Boss::Release()
 
 void Scene_Boss::Update()
 {
+	mTime += Time::GetInstance()->DeltaTime();
 	CameraManager::GetInstance()->Update();
 	SkillManager::GetInstance()->Update();
 	ObjectManager::GetInstance()->Update();
+
+	if (mPlayer->GetHP() == 0)
+	{
+		Storage::GetInstance()->SetGameTime(Storage::GetInstance()->GetGameTime() + mTime);
+		SceneManager::GetInstance()->LoadScene(L"Ending");
+		return;
+	}
+
 	for (int i = 0; i < mRoomList.size(); i++)
 	{
 		if (mRoomList[i]->PlayerInRoom())
@@ -145,6 +154,7 @@ void Scene_Boss::Update()
 			}
 		}
 	}
+
 	if (mPlayer->GetY() / TileSize < 20 && mIsInterfaceInit == false)
 	{
 		mFireBoss->SetIsActive(true);
@@ -154,9 +164,10 @@ void Scene_Boss::Update()
 	}
 
 	mFireBoss = (Monster_FireBoss*)ObjectManager::GetInstance()->FindObject("FireBoss");
-	if (mIsInterfaceInit) 
+	if (mFireBoss == nullptr) 
 	{
-		
+		Storage::GetInstance()->SetGameTime(Storage::GetInstance()->GetGameTime() + mTime);
+		SceneManager::GetInstance()->LoadScene(L"Ending");
 	}
 }
 

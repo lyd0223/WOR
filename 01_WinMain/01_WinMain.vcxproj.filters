@@ -136,6 +136,9 @@
     <Filter Include="FrameWork\Soundset">
       <UniqueIdentifier>{52576a19-df2c-4db9-a7d8-652150af7787}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\Storage">
+      <UniqueIdentifier>{67f04111-0534-450f-8025-063aefdc5e6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -450,6 +453,12 @@
     <ClInclude Include="Effect_ElectEffect.h">
       <Filter>MainGame\Object\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_Ending.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage.h">
+      <Filter>MainGame\Object\Storage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01_WinMain.cpp">
@@ -754,6 +763,12 @@
     </ClCompile>
     <ClCompile Include="Effect_ElectEffect.cpp">
       <Filter>MainGame\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Ending.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage.cpp">
+      <Filter>MainGame\Object\Storage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
