@@ -71,7 +71,7 @@ void Monster_FireBoss::Init()
 	mCurrentAnimation->Play();
 
 	mHitCount = 0;
-	mHp = 50;
+	mHp = 500;
 	mMapRect = RectMake(10 * TileSize, 8 * TileSize, 20 * TileSize, 16 * TileSize);
 	mAlpha = 1.f;
 
