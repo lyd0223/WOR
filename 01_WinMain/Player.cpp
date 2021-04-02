@@ -33,7 +33,7 @@ void Player::Init()
 	mSizeX = mImage->GetWidth() / 10;
 	mSizeY = mImage->GetHeight() / 25;
 	mAngle = 0.f;
-	mHp = 1;
+	mHp = 200;
 	mMp = 0;
 	mRect = RectMakeCenter(mX, mY, mSizeX, mSizeY);
 	mMoveAngle = 0;
