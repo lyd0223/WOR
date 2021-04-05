@@ -787,8 +787,8 @@ void Scene_MapTool::Update()
 								else if (mCurrentPallete->GetImage()->GetKey() == L"Fire8Walls")
 								{
 									mTileList[y1][x1]->SetImage(mCurrentPallete->Image);
-									mTileList[y1][x1]->SetFrameIndexY(1);
-									mTileList[y1][x1]->SetFrameIndexX(1);
+									mTileList[y1][x1]->SetFrameIndexY(mCurrentPallete->GetFrameY());
+									mTileList[y1][x1]->SetFrameIndexX(mCurrentPallete->GetFrameX());
 								}
 							}
 						}

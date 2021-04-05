@@ -593,10 +593,20 @@ void RandomMapGeneration::RandomMonsterCreate()
 
 void RandomMapGeneration::RandomPlayerPosition(Player* player)
 {
-	mPlayerSpawnRoomNum = Random::GetInstance()->RandomInt(mRoot->mRoomList.size()/2);
+	while (1)
+	{
+		mPlayerSpawnRoomNum = Random::GetInstance()->RandomInt(mRoot->mRoomList.size() / 2);
+		if (mRoot->mRoomList[mPlayerSpawnRoomNum]->roadList.size() == 1)
+			break;
+	}
 	player->SetX(mRoot->mRoomList[mPlayerSpawnRoomNum]->centerX * TileSize);
 	player->SetY(mRoot->mRoomList[mPlayerSpawnRoomNum]->centerY * TileSize);
-	mPortalRoomNum = Random::GetInstance()->RandomInt(mRoot->mRoomList.size() / 2, mRoot->mRoomList.size());
+	while (1)
+	{
+		mPortalRoomNum = Random::GetInstance()->RandomInt(mRoot->mRoomList.size() / 2, mRoot->mRoomList.size()-1);
+		if (mRoot->mRoomList[mPortalRoomNum]->roadList.size() == 1)
+			break;
+	}
 	Structure* structure = new Structure(
 		"Portal",
 		ImageManager::GetInstance()->FindImage(L"Portal"),
