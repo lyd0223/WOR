@@ -1,6 +1,42 @@
 #include "pch.h"
 #include "Scene_Loading.h"
 #include "Image.h"
+
+
+void Scene_Loading::Func()
+{
+	mIsThread = true;
+
+	this_thread::sleep_for(chrono::milliseconds(1000));
+
+	function<void(void)> func = mLoadList[mLoadIndex];
+	func();
+
+	mLoadIndex++;
+	mCharacterX += 200;
+	mStr += ("\n" + mStr2);
+	if (mLoadIndex == 1)
+	{
+		mStr2 = "Load Image & Sound";
+	}
+
+	if (mLoadIndex == 2)
+	{
+		mStr2 = "Create Random Map";
+	}
+	if (mLoadIndex == 3)
+	{
+		mStr2 = "Put Roads Between the Rooms";
+	}
+	if (mLoadIndex == 4)
+	{
+		mStr2 = "Are You Ready?";
+	}
+
+	mTextY += 10;
+
+	mIsThread = false;
+}
 void Scene_Loading::AddLoadFunc(const function<void(void)>& func)
 {
 	mLoadList.push_back(func);
@@ -9,6 +45,7 @@ void Scene_Loading::AddLoadFunc(const function<void(void)>& func)
 
 void Scene_Loading::Init()
 {
+	mTime = 0.f;
 	mLoadIndex = 0;
 	mCharacterX = 50;
 	mTextY = WINSIZEY - 250;
@@ -26,26 +63,29 @@ void Scene_Loading::Update()
 		return;
 	}
 
-	function<void(void)> func = mLoadList[mLoadIndex];
-	func();
-	mLoadIndex++;
-	mCharacterX += 200;
-	mStr += ("\n" + mStr2);
-	if (mLoadIndex == 1)
+	float deltaTime = Time::GetInstance()->DeltaTime();
+	mTime += deltaTime;
+	if (mTime >= 0.5f)
 	{
-		mStr2 = "Load Image...\nLoad Sound...";
+		mTime = 0.f;
+		mTemp++;
+		if (mTemp >= 5)
+		{
+			mTemp = 0;
+		}
 	}
 
-	if (mLoadIndex == 2)
+	if (mIsThread == false)
 	{
-		mStr2 = "Create Random Map...";
+		if(mThread.joinable())
+			mThread.join();
+		mThread = thread(&Scene_Loading::Func, this);
 	}
-	if (mLoadIndex == 3)
-		mStr2 = "Put Roads Between the Rooms...";
-	if (mLoadIndex == 4)
-		mStr2 = "Are You Ready?";
-	
-	mTextY += 10;
+
+	if (mLoadIndex==0)
+	{
+		this_thread::sleep_for(chrono::milliseconds(100));
+	}
 }
 
 void Scene_Loading::Render()
@@ -53,10 +93,16 @@ void Scene_Loading::Render()
 	ImageManager::GetInstance()->FindImage(L"Loading")->Render(WINSIZEX/2, WINSIZEY/2);
 	ImageManager::GetInstance()->FindImage(L"LoadingCharacter")->Render(mCharacterX, 200);
 
+	string str = "";
+	for (int i = 0; i < mTemp; i++)
+	{
+		str += ".";
+	}
+	string tempStr = mStr2 + str;
 	
 	wstring wstr,wstr2; 
 	wstr.assign(mStr.begin(), mStr.end());
-	wstr2.assign(mStr2.begin(), mStr2.end());
+	wstr2.assign(tempStr.begin(), tempStr.end());
 	D2DRenderer::GetInstance()->RenderText(
 		WINSIZEX / 2 - 100,
 		mTextY,
@@ -76,4 +122,6 @@ void Scene_Loading::Render()
 		DWRITE_TEXT_ALIGNMENT::DWRITE_TEXT_ALIGNMENT_LEADING
 	);
 	
+	
+
 }

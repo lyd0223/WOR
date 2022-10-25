@@ -13,7 +13,6 @@ void RandomMapGeneration::Init()
 	mTileMap = new TileMap();
 
 	s.push(mRoot);
-
 }
 
 void RandomMapGeneration::CreateRandomMap1()
@@ -58,6 +57,13 @@ Node::Node(int x1, int y1, int sizex, int sizey)
 	mRightNode = nullptr;
 	mParentNode = nullptr;
 }
+
+
+Node::~Node()
+{
+	
+}
+
 
 void RandomMapGeneration::Devide(Node* node)
 {

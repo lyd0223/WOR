@@ -14,7 +14,7 @@ public:
 	vector<Line> roadList;
 	vector<GameObject*> monsterList;
 public:
-	Room();
+	Room() = delete;
 	Room(int X, int Y, int SizeX, int SizeY)
 	{
 		x = X;
@@ -53,9 +53,11 @@ class Node
 
 public:
 	Node(int x1, int y1, int x2, int y2);
+	~Node();
 
 	void MakeRoom(class TileMap* tilemap);
 };
+
 class RandomMapGeneration
 {
 	Singleton(RandomMapGeneration)

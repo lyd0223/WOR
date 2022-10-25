@@ -23,6 +23,7 @@ Initialize : 초기화
 앞으로 게임을 시작하기 전에 초기화 및 생성은 여기서 진행
 게임 시작하기 전에 딱 한번만 실행되는 함수
 */
+
 void MainGame::Init()
 {
 	ImageManager::GetInstance()->LoadFromFile(L"Loading", Resources(L"UI/Loading.png"));
@@ -39,6 +40,7 @@ void MainGame::Init()
 		Scene_Field* sf = (Scene_Field*)SceneManager::GetInstance()->FindScene(L"Field");
 		sf->SetTileMap( RandomMapGeneration::GetInstance()->GetTileMap());
 		});
+
 	SceneManager::GetInstance()->AddScene(L"FieldLoading", loadingScene);
 
 	SceneManager::GetInstance()->AddScene(L"MapTool", new Scene_MapTool);
@@ -48,7 +50,7 @@ void MainGame::Init()
 	SceneManager::GetInstance()->AddScene(L"Boss", new Scene_Boss);
 	SceneManager::GetInstance()->AddScene(L"Title", new Scene_TitleScene);
 	SceneManager::GetInstance()->AddScene(L"Ending", new Scene_Ending);
-	SceneManager::GetInstance()->LoadScene(L"Boss");
+	SceneManager::GetInstance()->LoadScene(L"FieldLoading");
 }
 
 /*

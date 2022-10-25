@@ -9,11 +9,18 @@ class Scene_Loading : public Scene
 	float mTextY;
 	string mStr;
 	string mStr2;
+
+	thread mThread;
+	bool mIsThread;
+	float mTime;
+	int mTemp;
 public:
 	void AddLoadFunc(const function<void(void)>& func);
 	void Init()override;
 	void Release()override;
 	void Update()override;
 	void Render()override;
+	
+	void Func();
 };
 
