@@ -20,8 +20,8 @@ public:
 	void Render()override;
 	void MiniMapRender();
 	void Load(string sceneName);
-	inline vector<class Structure*> GetStructureList() { return mStructureList; };
-	inline vector<vector<class Tile*>> GetTileList() { return mTileList; };
+	inline vector<class Structure*>& GetStructureList() { return mStructureList; };
+	inline vector<vector<class Tile*>>& GetTileList() { return mTileList; };
 	inline Tile* GetTileList(int x, int y) { return mTileList[y][x]; };
 };
 
