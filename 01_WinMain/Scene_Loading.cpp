@@ -57,6 +57,10 @@ void Scene_Loading::Release()
 
 void Scene_Loading::Update()
 {
+	//정규분포 mt19937 vs 그냥 랜덤 시간비교를위한 타임체크.
+	mClock = clock();
+
+
 	if (mLoadIndex >= mLoadList.size())
 	{
 		SceneManager::GetInstance()->LoadScene(L"Field");
@@ -122,6 +126,18 @@ void Scene_Loading::Render()
 		DWRITE_TEXT_ALIGNMENT::DWRITE_TEXT_ALIGNMENT_LEADING
 	);
 	
-	
+	//시간 그려주기.
+	string str2 = to_string(mClock);
+	wstring wstr3;
+	wstr3.assign(str2.begin(), str2.end());
+	D2DRenderer::GetInstance()->RenderText(
+		WINSIZEX - 100,
+		WINSIZEY - 100,
+		wstr3,
+		COLORREF(RGB(0, 255, 0)),
+		1.0f,
+		20.f,
+		DWRITE_TEXT_ALIGNMENT::DWRITE_TEXT_ALIGNMENT_LEADING
+	);
 
 }

@@ -14,6 +14,8 @@ class Scene_Loading : public Scene
 	bool mIsThread;
 	float mTime;
 	int mTemp;
+
+	clock_t mClock;
 public:
 	void AddLoadFunc(const function<void(void)>& func);
 	void Init()override;

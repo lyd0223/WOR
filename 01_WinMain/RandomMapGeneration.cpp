@@ -61,7 +61,21 @@ Node::Node(int x1, int y1, int sizex, int sizey)
 
 Node::~Node()
 {
-	
+	if (mLeftNode != nullptr)
+	{
+		delete(mLeftNode);
+		mLeftNode = nullptr;
+	}
+	if (mRightNode != nullptr)
+	{
+		delete(mRightNode);
+		mRightNode = nullptr;
+	}
+	if (mParentNode != nullptr)
+	{
+		delete(mParentNode);
+		mParentNode = nullptr;
+	}
 }
 
 
